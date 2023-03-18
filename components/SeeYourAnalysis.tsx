@@ -8,45 +8,57 @@ const _StyledButton = styled(Button)`
   border-width: 0.125rem;
   background-color: white;
   border-radius: 4rem;
-  cursor: pointer;
+  :hover{
+      cursor: pointer;
+      transform: scale(1.05);
+      background: #FFF;
+      color: #000;
+      }
 `;
-const StyledDiv = styled.div`
-  text-align: center;
+const Container = styled.div`
+  margin: 1rem;
   display  :flex ;
-  background-color: #0062D6;
+  background-color:#0062D6;
   justify-content: space-between;
-  padding: 0.5rem;
-  border-radius: 1rem;
-  font-family: Montserrat;
+  align-items: flex-end;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  font-size: 1.2rem;
+  font-family: cursive !important;
+
 `;
 const TextDiv = styled.div`
-  width:60%;
+    flex: 2;
   font-family: Montserrat, sans-serif;
+    font-weight: 500;
+    color: white;
+    padding-left:60px
 `;
 const ButtonDiv = styled.div`
   position: relative;
   display: flex;
+  padding:0.5rem;
   align-items: flex-end;
   font-family: Montserrat, sans-serif;
+  font-weight: 500;
 `;
+
 const StyledButton = createPolymorphicComponent<'button', ButtonProps>(_StyledButton);
 
 function SeeYourAnalysis() {
   return (
-      <StyledDiv>
-        <TextDiv>
-      <Text size="xl" color="white">
-       We provide <b>detailed analysis </b>of your transactions and offer insights to help you make informed financial decisions.
-      </Text>
+      <Container>
+     <TextDiv>
+       We provide <span style={{fontWeight : "600"}}>detailed analysis </span>of your <br/>transactions and offer insights to help you make informed financial decisions.
       </TextDiv>
       <ButtonDiv>
-     <StyledButton>
-     <Text size="xl" color="blue">
+     <StyledButton radius='3rem' variant="gradient" gradient={{ from: 'white', to: 'white' }}>
+     <span style={{color: "#0062D6",fontWeight : 600,fontFamily:"Montserrat",fontSize:"1.2rem" } }>
       See your analysis 
-      </Text>
+      </span>
      </StyledButton>
      </ButtonDiv>
-     </StyledDiv>
+     </Container>
    
   );
 }
