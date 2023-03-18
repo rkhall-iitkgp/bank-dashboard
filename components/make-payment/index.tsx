@@ -1,5 +1,25 @@
-import styled from '@emotion/styled/types/base';
+import styled from '@emotion/styled';
 import { Card, Image, Text, Badge, Button, Group, Stack } from '@mantine/core';
+
+const PaymentImage = styled(Card)`
+    background-color: #0062D6;
+    height: 120px;
+    width: 120px;
+    border-radius: 100px;
+    transition-duration: 0.2s;
+`;
+
+const PaymentStack = styled(Stack)`
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 15px;
+
+    &:hover {
+        transform: scale(1.05);
+        transition-duration: 0.3s;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+    }
+`;
 
 const Payment = () => {
     return (
@@ -13,48 +33,52 @@ const Payment = () => {
       </Group>
 
       <Group style={{justifyContent: 'space-evenly', alignItems: 'flex-start'}} my={20}>
-        <Stack>
-            <Card radius={100} bg={'#0062D6'} h={120} w={120}>
-                <Image src='icons/bank-building.png' height={80} width={80} mx={'auto'}/>
-            </Card>
+        <PaymentStack>
+            <PaymentImage><Image src='icons/bank-building.png' height={80} width={80} mx={'auto'}/></PaymentImage>
             <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{lineHeight: 1, textAlign: "center"}}>Bank Transfer</Text>
-        </Stack>
-        <Stack>
-            <Card radius={100} bg={'#0062D6'} h={120} w={120}>
+        </PaymentStack>
+
+        <PaymentStack>
+            <PaymentImage>
                 <Image src='icons/upi.png' height={90} width={90} mx={'auto'} fit={'contain'}/>
-            </Card>
+            </PaymentImage>
             <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{lineHeight: 1, textAlign: "center"}}>UPI Payment</Text>
-        </Stack>
-        <Stack>
-            <Card radius={100} bg={'#0062D6'} h={120} w={120}>
+        </PaymentStack>
+
+        <PaymentStack>
+            <PaymentImage>
                 <Image src='icons/payphone.png' height={80} width={80} mx={'auto'} fit={'contain'}/>
-            </Card>
+            </PaymentImage>
             <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{lineHeight: 1, textAlign: "center"}}>Pay Phone Number</Text>
-        </Stack>
-        <Stack>
-            <Card radius={100} bg={'#0062D6'} h={120} w={120}>
+        </PaymentStack>
+
+        <PaymentStack>
+            <PaymentImage>
                 <Image src='icons/person.png' height={80} width={80} mx={'auto'} fit={'contain'}/>
-            </Card>
+            </PaymentImage>
             <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{lineHeight: 1, textAlign: "center"}}>Self Transfer</Text>
-        </Stack>
-        <Stack>
-            <Card radius={100} bg={'#0062D6'} h={120} w={120}>
+        </PaymentStack>
+
+        <PaymentStack>
+            <PaymentImage>
                 <Image src='icons/investments.png' height={80} width={80} mx={'auto'} fit={'contain'} mt={5}/>
-            </Card>
+            </PaymentImage>
             <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{lineHeight: 1, textAlign: "center"}}>Make Investment</Text>
-        </Stack>
-        <Stack>
-            <Card radius={100} bg={'#0062D6'} h={120} w={120}>
+        </PaymentStack>
+
+        <PaymentStack>
+            <PaymentImage>
                 <Image src='icons/insurance.png' height={80} width={80} mx={'auto'}/>
-            </Card>
+            </PaymentImage>
             <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{lineHeight: 1, textAlign: "center"}}>Get Insurance</Text>
-        </Stack>
-        <Stack>
-            <Card radius={100} bg={'#0062D6'} h={120} w={120}>
+        </PaymentStack>
+
+        <PaymentStack>
+            <PaymentImage>
                 <Image src='icons/mobile-recharge.png' height={80} width={80} ml={1} fit={'contain'}/>
-            </Card>
+            </PaymentImage>
             <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{lineHeight: 1, textAlign: "center"}}>Mobile Recharge</Text>
-        </Stack>
+        </PaymentStack>
       </Group>
 
     </Card>
