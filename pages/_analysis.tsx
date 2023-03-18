@@ -1,12 +1,9 @@
-import SeeYourAnalysis from '../components/SeeYourAnalysis'
-import React from 'react'
+import Demo from '../components/SeeYourAnalysis'
 
-function SeeYourAnalysisPage() {
+function _analysis() {
   return (
-    <div>
-        <SeeYourAnalysis/>
-    </div>
-  )
+      <Demo/>
+  );
 }
 
-export default SeeYourAnalysisPage
+export default _analysis;
