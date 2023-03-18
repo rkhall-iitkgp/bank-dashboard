@@ -5,6 +5,7 @@ import {
     Group,
     rem,
   } from '@mantine/core';
+import Image from 'next/image';
   import {useState} from 'react'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 //   import { ContactIconsList } from '../ContactIcons/ContactIcons';
@@ -50,14 +51,6 @@ import {
       
     },
   
-    description: {
-      color:`#737373`,
-      fontSize:`1rem`,
-        padding:`0.5rem`,
-        textAlign:`center`,
-        marginTop:`10px`
-    },
-  
     form: {
       backgroundColor: theme.white,
       borderRadius: theme.radius.md,
@@ -66,37 +59,7 @@ import {
       color:`#0052B3`
     },
   
-  
-    input: {
-      backgroundColor: theme.white,
-      borderColor: theme.colors.gray[4],
-      color: theme.black,
-  
-      '&::placeholder': {
-        color: theme.colors.gray[5],
-      },
-      border:'0',
-      borderRadius:"0",
-      background:'transparent',
-      borderBottom:`2px solid #eee`
-    },
-  
-    inputLabel: {
-      color: theme.black,
-      position:`absolute`,
-      top:`1.5rem`,
-      transition:`0.25s ease`
-    },
-    inputcontainer:{
-        position:`relative`,
-        paddingTop:`0.75rem`,
-        marginTop:`0 !important`,
-    },
-  
-    control: {
-      backgroundColor: `#006AE4`,
-      borderRadius:`20px`
-    },
+    
     forminside:{
         maxWidth:`90%`,
         width:`500px`,
@@ -124,25 +87,77 @@ import {
       borderTopRightRadius: theme.radius.md,
       alignItems:`center`,
     },
-    
-    resndotp:{
-        textAlign:`end`,
-        color:`#0052B3`,
+    accountContainer:{
+        margin:`1rem`,
+        padding:`0 1rem`,
+        // display:`flex`,
+
+    },
+    account:{
+        width:`90%`,
+        height:`50px`,
+        background:`rgba(0, 82, 179, 0.1)`,
+        borderRadius:`30px`,
+        margin:`10px`,
+        padding:`10px`,
+        fontSize:`0.8rem`,
+        textAlign:`center`,
+        display:`flex`,
+        // flexDirection:`column`,
+        alignItems:`center`,
+        justifyContent:`space-between`,
         ':hover':{
-            color:`#68a7f3`
-        },
+            border:`2px dotted #0052B3;`,
+        boxShadow:` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
+    },
         ':active':{
-            color:`#0052B3`
-        }
+            border:`2px dotted #0052B3;`,
+        boxShadow:` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
     }
-    
+    },
+    active:{
+        boxShadow:` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
+        border:`2px solid #0052B3`
+    },
+    bankname:{
+        lineHeight:`0.9rem`,
+        fontWeight:600,
+        color:'black',
+        fontSize:`1.1rem`
+    },
+    bankdesc:{
+        color:'black',
+        fontSize:'0.8rem'
+    },
+    banknamecontainer:{
+        width:`100%`
+    }
   }));
   
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
-  
-  export function OTP() {
+  function AccountType(props: { id: any;setAccount: (arg0: any) => void;src:any;bankname:any;bankdesc:any; }){
     const { classes } = useStyles();
-  
+    return(
+        <div className={classes.account} id={props.id} onClick={(event)=>{
+            props.setAccount(props.id)
+            const accountlist = Array.from(document.getElementsByClassName(classes.account))
+            accountlist.forEach(e=>{
+                e.classList.remove(classes.active)
+            })
+            document.getElementById(props.id)?.classList.add(classes.active)
+        }}>
+            <Image src={props.src} width={30} height={30} alt={''}></Image>
+            <div className={classes.banknamecontainer}>
+                <div className={classes.bankname}>{props.bankname}</div>
+          
+                <div  className={classes.bankdesc}>{props.bankdesc}</div>
+                </div>
+        </div>
+    )
+  }
+  export function BeneficiaryBank() {
+    const { classes } = useStyles();
+  const [account, setAccount] = useState(2)
     // const icons = social.map((Icon, index) => (
     //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
     //     <Icon size="1.4rem" stroke={1.5} />
@@ -158,19 +173,14 @@ import {
             </div>
             <div className={classes.forminside}>
             <div className={classes.titlebox}>
-            <div className={classes.titlebold}><span >Pay Beneficiary</span></div>
+            <div className={classes.titlebold}><span >Select Your Bank Account</span></div>
             
             </div>
-           <div className={classes.description}>We have sent an OTP to your mobile number XXXXXX5728 registered with your bank account. Please enter OTP and proceed</div>
-
-                <TextInput
-                placeholder="OTP"
-              type={"number"}
-                required
-                mt="md"
-                classNames={{ input: classes.input, label: classes.inputLabel,root: classes.inputcontainer }}
-              />
-              <div className={classes.resndotp}>Resend OTP</div>
+            <div className={classes.accountContainer}>
+                <AccountType src='/../public/icons/sbi.png' id={1} setAccount={setAccount} bankname='State Bank Of India' bankdesc='(Beneficiary is a SBI account holder)'/>           
+                <AccountType src='/../public/icons/bank-building.png' id={2} setAccount={setAccount} bankname='Other Banks' bankdesc='(IFSC required)'/>           
+            </div>
+                
             
             <div className={classes.buttoncontainer}>
             <Button className={classes.button} onClick={()=>{

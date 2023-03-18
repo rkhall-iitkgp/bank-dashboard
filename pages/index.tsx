@@ -1,6 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { ContactUs } from '../components/AddAcoount'
+import { Banktransfer } from '../components/BankTransfer'
+import { BeneficiaryBank } from '../components/benfeicarybank'
 import { LoginSIgnupPage } from '../components/LoginSignup/LoginSIgnupPage'
 import { OTP } from '../components/otp'
 import { PayBenficiary } from '../components/PayBenificiary'
@@ -12,7 +14,9 @@ const Home: NextPage = () => {
       {/* <ContactUs/> */}
       {/* <LoginSIgnupPage/> */}
       {/* <PayBenficiary sbi={true}/> */}
-      <OTP/>
+      {/* <OTP/> */}
+      <Banktransfer/>
+      {/* <BeneficiaryBank/> */}
     </div>
   )
 }
