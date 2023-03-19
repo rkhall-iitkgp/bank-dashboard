@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import {
   ButtonProps,
   createPolymorphicComponent
-  
+
 } from "@mantine/core";
 import { Image } from "@mantine/core";
 import logo from "./sbi 1.png";
@@ -12,6 +12,8 @@ import {
   // Box, CSSObject, rem , Flex,
   Button,
 } from "@mantine/core";
+import { ContactUs } from './AddAcoount'
+import { useState } from 'react';
 
 const Oflex = styled.div`
   display: flex;
@@ -124,24 +126,29 @@ const Styledplus = styled.div`
   color: #0052b3;`;
 
 export default function BankAccount() {
+  const [addAccount, setAddAccount] = useState(false)
+
   return (
     <StyledContainer>
       <Iflex>
         <StyledText>Add Bank Account</StyledText>
-        <StyledButton>Add Account</StyledButton>
+
+        <StyledButton onClick={() => {
+          setAddAccount(true)
+        }}>Add Account</StyledButton>
       </Iflex>
       <Oflex>
         <StyledCard>
           <StyledImage>
-            <Image src={logo} />
+            <Image src='images/sbi 1.png' />
           </StyledImage>
           <Styledplus>STATE BANK OF INDIA</Styledplus>
           <StyledText1>9878</StyledText1>
         </StyledCard>
         <StyledAddCard>
-            <StyledImage1>
-            <Image src={circle} />
-            </StyledImage1>
+          <StyledImage1>
+            <Image src='images/frame .png' />
+          </StyledImage1>
         </StyledAddCard>
       </Oflex>
     </StyledContainer>

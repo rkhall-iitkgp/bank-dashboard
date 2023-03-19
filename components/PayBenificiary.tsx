@@ -11,6 +11,7 @@ import { useState } from 'react'
 //   import { ContactIconsList } from '../ContactIcons/ContactIcons';
 const useStyles = createStyles((theme) => ({
   wrapper: {
+    backgroundColor: `#EEEEEE`,
     minHeight: `100vh`,
     boxSizing: 'border-box',
     padding: `calc(${theme.spacing.xl} * 2.5)`,

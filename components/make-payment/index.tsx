@@ -1,5 +1,8 @@
 import styled from '@emotion/styled';
 import { Card, Image, Text, Badge, Button, Group, Stack } from '@mantine/core';
+import Link from 'next/link';
+import { ContactUs } from '../AddAcoount';
+import { useState } from 'react';
 
 const PaymentImage = styled(Card)`
     background-color: #0062D6;
@@ -22,6 +25,7 @@ const PaymentStack = styled(Stack)`
 `;
 
 const Payment = () => {
+    const [addAccount, setAddAccount] = useState(false)
     return (
         <div style={{ margin: '20px', marginTop: "30px" }}>
             <Card shadow="sm" padding="xs" radius="lg" withBorder bg={'#E0EEFF'}>
@@ -33,18 +37,18 @@ const Payment = () => {
                 </Group>
 
                 <Group style={{ justifyContent: 'space-evenly', alignItems: 'flex-start' }} my={20}>
-                    <PaymentStack>
+                    <Link href='/BankTransfer' style={{ textDecoration: 'none' }}><PaymentStack>
                         <PaymentImage><Image src='icons/bank-building.png' height={80} width={80} mx={'auto'} /></PaymentImage>
                         <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{ lineHeight: 1, textAlign: "center" }}>Bank Transfer</Text>
                     </PaymentStack>
-
-                    <PaymentStack>
+                    </Link>
+                    <Link href='/AddAccount'><PaymentStack>
                         <PaymentImage>
                             <Image src='icons/upi.png' height={90} width={90} mx={'auto'} fit={'contain'} />
                         </PaymentImage>
                         <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{ lineHeight: 1, textAlign: "center" }}>UPI Payment</Text>
                     </PaymentStack>
-
+                    </Link>
                     <PaymentStack>
                         <PaymentImage>
                             <Image src='icons/payphone.png' height={80} width={80} mx={'auto'} fit={'contain'} />
@@ -82,6 +86,9 @@ const Payment = () => {
                 </Group>
 
             </Card>
+            {
+                addAccount ? <ContactUs /> : <></>
+            }
         </div>
     )
 };

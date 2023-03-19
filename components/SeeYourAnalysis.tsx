@@ -49,7 +49,7 @@ function SeeYourAnalysis() {
   return (
     <Container>
       <TextDiv>
-        We provide <span style={{ fontWeight: "600" }}>detailed analysis </span>of your <br />transactions and offer insights to help you make informed financial decisions.
+        We provide <span style={{ fontWeight: "600" }}>detailed analysis </span>of your <br />transactions and offer insights to help you <br /> make informed financial decisions.
       </TextDiv>
       <ButtonDiv>
         <StyledButton radius='3rem' variant="gradient" gradient={{ from: 'white', to: 'white' }}>
