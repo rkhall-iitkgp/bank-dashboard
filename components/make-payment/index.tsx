@@ -23,7 +23,7 @@ const PaymentStack = styled(Stack)`
 
 const Payment = () => {
     return (
-        <div style={{ margin: '20px' }}>
+        <div style={{ margin: '20px', marginTop: "30px" }}>
             <Card shadow="sm" padding="xs" radius="lg" withBorder bg={'#E0EEFF'}>
                 <Group position="apart" mt="xs" mb="xs" mx={20}>
                     <Text c={'#0062D6'} fz={38} fw={500} ml={40} style={{ fontFamily: "'Montserrat', sans-serif" }}>Make Payment</Text>
