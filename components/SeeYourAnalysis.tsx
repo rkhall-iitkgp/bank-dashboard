@@ -12,7 +12,7 @@ const _StyledButton = styled(Button)`
       cursor: pointer;
       transform: scale(1.05);
       background: #FFF;
-      color: #000;
+      /* color: #000; */
       }
 `;
 const Container = styled.div`
