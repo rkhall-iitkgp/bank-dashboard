@@ -117,7 +117,7 @@ function SeeYourAnalysis() {
     <StyledContainer className="UpiTransferHome">
       <InnerDiv style={{ borderRadius: '50px' }}>
         <div className="upi_title">
-          <h2>UPI Transfer</h2>
+          <h2>UPI transfer</h2>
         </div>
         <LogoDiv className="logo_div">
           <h4>Make Payment</h4>

@@ -4,13 +4,11 @@ import {
   Button,
   Group,
   rem,
+  PinInput
 } from '@mantine/core';
-import { useState } from 'react'
-//   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
-//   import { ContactIconsList } from '../ContactIcons/ContactIcons';
+import Link from 'next/link';
 const useStyles = createStyles((theme) => ({
   wrapper: {
-    backgroundColor: `#EEEEEE`,
     minHeight: `100vh`,
     boxSizing: 'border-box',
     padding: `calc(${theme.spacing.xl} * 2.5)`,
@@ -23,7 +21,6 @@ const useStyles = createStyles((theme) => ({
     background: `grey`
   },
   titlebox: {
-    // marginBottom:`20px`,
     display: `flex`,
     justifyContent: `center`,
 
@@ -31,16 +28,13 @@ const useStyles = createStyles((theme) => ({
   },
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    //   color: theme.black,
     lineHeight: 1,
     fontWeight: 500,
     margin: `0.8rem`,
-    //   paddingBottom:`5px`,
-    //   marginBottom:`10px`
+
   },
   titlebold: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    //   color: theme.black,
     lineHeight: 1,
     fontWeight: 600,
     fontSize: `1.5rem`,
@@ -126,58 +120,39 @@ const useStyles = createStyles((theme) => ({
     alignItems: `center`,
   },
 
-  resndotp: {
-    textAlign: `end`,
-    color: `#0052B3`,
-    ':hover': {
-      color: `#68a7f3`
-    },
-    ':active': {
-      color: `#0052B3`
-    }
-  }
 
 }));
 
-//   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
-
-export function OTP() {
+function Demo() {
+  return (
+    <Group position="center">
+      <PinInput placeholder="" />
+    </Group>
+  );
+}
+export function UpiTransfer5() {
   const { classes } = useStyles();
-
-  // const icons = social.map((Icon, index) => (
-  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-  //     <Icon size="1.4rem" stroke={1.5} />
-  //   </ActionIcon>
-  // ));
   return (
     <div className={classes.wrapper}>
 
       <div className={classes.form}>
         <div className={classes.topheading}>
 
-          <div className={classes.title}>Bank Transfer</div>
+          <div className={classes.title}>UPI Transfer</div>
         </div>
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
-            <div className={classes.titlebold}><span >Pay Beneficiary</span></div>
+            <div className={classes.titlebold}><span >Enter PIN</span></div>
 
           </div>
-          <div className={classes.description}>We have sent an OTP to your mobile number XXXXXX5728 registered with your bank account. Please enter OTP and proceed</div>
-
-          <TextInput
-            placeholder="OTP"
-            type={"number"}
-            required
-            mt="md"
-            classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
-          />
-          <div className={classes.resndotp}>Resend OTP</div>
-
+          <div className={classes.description}>
+            <Demo />
+          </div>
           <div className={classes.buttoncontainer}>
-            <Button className={classes.button} onClick={() => {
-            }}>Back</Button>
-            <Button className={classes.button} onClick={() => {
-            }}>Continue</Button>
+            <Link href='/UPI/Review'><Button className={classes.button} onClick={() => {
+            }}>Back</Button></Link>
+            <Link href='/UPI/Success'><Button className={classes.button} onClick={() => {
+            }}>Continue</Button></Link>
           </div>
         </div>
       </div>

@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
-import {Image } from "@mantine/core";
+import { Image } from "@mantine/core";
 import tick from "./tick.png"
+import Link from "next/link";
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -45,11 +46,9 @@ const StyledBotCont = styled.div`
   align-items:center;
 `;
 const StyledText = styled.div`
-  font-weight: 500;
+  font-weight: 400;
   font-size: 1.5rem;
   color: #0052b3;
-  font-family: "Montserrat";
-  font-style: normal;
 `;
 const StyledBut = styled.div`
   padding:15px;
@@ -87,19 +86,14 @@ const StyledTexthead2 = styled.div`
   justify-content: center;
   text-align: center;
   color: #636363;
-  margin:30px 0;
+  margin-top:45px;
 `;
 const StyledTexthead3 = styled.div`
 
-font-weight: 400;
-font-size: 1.5rem;
-line-height: 29px;
-display: flex;
-align-items: center;
-justify-content: center;
-text-align: center;
-color: #636363;
-margin-top:10px;
+  font-weight: 600;
+  font-size: 2.3rem;
+  line-height: 43.88px;
+  text-align: center;
 `;
 const StyledTexthead4 = styled.div`
 font-family: 'Montserrat';
@@ -115,30 +109,26 @@ margin-top:20px;
 color: #636363;
 `;
 
-export default function GenOtp2() {
+export default function GenOtp() {
   return (
     <StyledContainer>
       <StyledCont>
         <StyledHead>
-          <StyledText>Bank Transfer</StyledText>
+          <StyledText>UPI Transfer</StyledText>
         </StyledHead>
         <StyledBot>
           <StyledBotCont>
             <StyledTexthead>Payment Successful</StyledTexthead>
-            <Image src={tick} width={75} height={75}/>
-            <StyledTexthead2>You have successfully paid John <span style={{"color":"black"}}> &nbsp;₹500</span></StyledTexthead2>
-            <StyledTexthead3>Remaining balance: <span style={{"color":"black"}}> &nbsp;₹11,845.67</span></StyledTexthead3>
-            <StyledTexthead3>A/c No. : <span style={{"color":"black"}}> &nbsp;XXXXXXX8989</span></StyledTexthead3>
-            {/* <StyledTexthead3>₹500</StyledTexthead3> */}
+            <Image src='images/tick.png' width={75} height={75} />
+            <StyledTexthead2>You have successfully paid John</StyledTexthead2>
+            <StyledTexthead3>₹500</StyledTexthead3>
             <StyledTexthead4>
-            {/* UPI ID : <span style={{"color":"black"}}> &nbsp;johndoe@oksbi</span> */}
+              UPI ID : <span style={{ "color": "black" }}> &nbsp;johndoe@oksbi</span>
             </StyledTexthead4>
           </StyledBotCont>
-          <StyledBut>Make Another Payment</StyledBut>
+          <Link href='/home'><StyledBut>Make Another Payment</StyledBut></Link>
         </StyledBot>
       </StyledCont>
     </StyledContainer>
   );
 }
-// Remaining balance : ₹11,845.67
-// A/c No. : XXXXXXX8989
