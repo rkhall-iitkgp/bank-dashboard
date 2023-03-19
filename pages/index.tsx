@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       {/* <ContactUs/> */}
-      {/* <LoginSIgnupPage/> */}
+      <LoginSIgnupPage/>
       {/* <PayBenficiary sbi={true}/> */}
       {/* <OTP/> */}
       {/* <Banktransfer/> */}

@@ -8,6 +8,7 @@ const Row = styled('div')`
   justify-content: space-between;
   gap: 20px;
   width: 100%;
+  margin: 30px;
 `
 const OfferCards = styled('div')`
   display: flex;
