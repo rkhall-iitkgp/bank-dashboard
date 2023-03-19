@@ -6,6 +6,7 @@ import {
   rem,
   getStylesRef,
 } from '@mantine/core';
+import Link from 'next/link';
 import { useState } from 'react'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 //   import { ContactIconsList } from '../ContactIcons/ContactIcons';
@@ -225,10 +226,8 @@ export function Reviewdetailsupi() {
 
 
           <div className={classes.buttoncontainer}>
-            <Button className={classes.button} onClick={() => {
-            }}>Back</Button>
-            <Button className={classes.button} onClick={() => {
-            }}>Continue</Button>
+            <Link href='/UPI/Payment'><Button className={classes.button} >Back</Button></Link>
+            <Link href='/UPI/Pin'><Button className={classes.button}>Continue</Button></Link>
           </div>
         </div>
       </div>

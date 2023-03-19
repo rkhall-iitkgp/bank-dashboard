@@ -1,9 +1,11 @@
 import React from 'react'
-import { Upitransfer3 } from '../../components/Upitransfer3'
+import { VerifyUPI } from '../../components/VerifyUPI'
 
 const Verify = () => {
     return (
-        <></>
+        <>
+            <VerifyUPI />
+        </>
     )
 }
 
