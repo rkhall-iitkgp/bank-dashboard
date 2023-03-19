@@ -12,8 +12,6 @@ import {
   // Box, CSSObject, rem , Flex,
   Button,
 } from "@mantine/core";
-import { ContactUs } from './AddAcoount'
-import { useState } from 'react';
 
 const Oflex = styled.div`
   display: flex;
@@ -125,8 +123,7 @@ const Styledplus = styled.div`
   text-align: center;
   color: #0052b3;`;
 
-export default function BankAccount() {
-  const [addAccount, setAddAccount] = useState(false)
+export default function BankAccount(props: { setAddAccount: (arg0: boolean) => void; }) {
 
   return (
     <StyledContainer>
@@ -134,7 +131,11 @@ export default function BankAccount() {
         <StyledText>Add Bank Account</StyledText>
 
         <StyledButton onClick={() => {
-          setAddAccount(true)
+          props.setAddAccount(true)
+          const body = document.body;
+          const scrollY = body.style.top;
+          body.style.position = 'fixed';
+
         }}>Add Account</StyledButton>
       </Iflex>
       <Oflex>

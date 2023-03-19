@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 import { Card, Image, Text, Badge, Button, Group, Stack } from '@mantine/core';
 import Link from 'next/link';
-import { ContactUs } from '../AddAcoount';
-import { useState } from 'react';
 
 const PaymentImage = styled(Card)`
     background-color: #0062D6;
@@ -25,7 +23,6 @@ const PaymentStack = styled(Stack)`
 `;
 
 const Payment = () => {
-    const [addAccount, setAddAccount] = useState(false)
     return (
         <div style={{ margin: '20px', marginTop: "30px" }}>
             <Card shadow="sm" padding="xs" radius="lg" withBorder bg={'#E0EEFF'}>
@@ -42,12 +39,13 @@ const Payment = () => {
                         <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{ lineHeight: 1, textAlign: "center" }}>Bank Transfer</Text>
                     </PaymentStack>
                     </Link>
-                    <Link href='/AddAccount'><PaymentStack>
-                        <PaymentImage>
-                            <Image src='icons/upi.png' height={90} width={90} mx={'auto'} fit={'contain'} />
-                        </PaymentImage>
-                        <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{ lineHeight: 1, textAlign: "center" }}>UPI Payment</Text>
-                    </PaymentStack>
+                    <Link href='/UPI'>
+                        <PaymentStack>
+                            <PaymentImage>
+                                <Image src='icons/upi.png' height={90} width={90} mx={'auto'} fit={'contain'} />
+                            </PaymentImage>
+                            <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{ lineHeight: 1, textAlign: "center" }}>UPI Payment</Text>
+                        </PaymentStack>
                     </Link>
                     <PaymentStack>
                         <PaymentImage>
@@ -86,9 +84,7 @@ const Payment = () => {
                 </Group>
 
             </Card>
-            {
-                addAccount ? <ContactUs /> : <></>
-            }
+
         </div>
     )
 };

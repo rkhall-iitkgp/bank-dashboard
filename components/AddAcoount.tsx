@@ -11,12 +11,12 @@ import { useState } from 'react'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#000000de`,
-    position: `absolute`,
+    position: `fixed`,
     inset: 0,
     width: `100%`,
     minHeight: `100vh`,
     boxSizing: 'border-box',
-    borderRadius: theme.radius.md,
+    // borderRadius: theme.radius.md,
     padding: `calc(${theme.spacing.xl} * 2.5)`,
     [theme.fn.smallerThan('sm')]: {
       padding: `calc(${theme.spacing.xl} * 1.5)`,
@@ -24,7 +24,8 @@ const useStyles = createStyles((theme) => ({
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
-    zIndex: 100
+    zIndex: 100,
+    // overflow: `hidden`
   },
   titlebox: {
     marginBottom: `10px`
@@ -186,6 +187,12 @@ export function ContactUs(props: { setAddAccount: (arg0: boolean) => void; }) {
               }}>{otp ? "Add Account" : "Get OTP"}</Button>
               <Button className={classes.control} onClick={() => {
                 props.setAddAccount(false)
+                console.log(props.setAddAccount)
+                const body = document.body;
+                const scrollY = body.style.top;
+                body.style.position = '';
+                body.style.top = '';
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
               }}>Back</Button>
             </Group>
           </div>
