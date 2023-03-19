@@ -1,7 +1,7 @@
-import { Button, Text, Group, Image, PinInput } from "@mantine/core";
+import { Button, Text, Group, Stack, Image, PinInput } from "@mantine/core";
+import {DateInput} from "@mantine/dates"
 import styled from '@emotion/styled';
 import { useState } from "react";
-import { setMaxIdleHTTPParsers } from "http";
 
 const PeriodButton = styled(Button)`
     width: 213px;
@@ -49,6 +49,19 @@ const Filter = () => {
     const [account, setAccount] = useState(0);
         
     return (<div style={{width: "585px"}}>
+
+        <Group mb={20}>
+            <Stack mr={40}>
+                <Text c={"#656565"} fz={"lg"} style={{letterSpacing: "0.1em"}}>From</Text>
+                <DateInput valueFormat="YYYY MMM DD" placeholder=""/>
+            </Stack>
+            <Stack ml={40}>
+                <Text c={"#656565"} fz={"lg"} style={{letterSpacing: "0.1em"}}>To</Text>
+                <DateInput valueFormat="YYYY MMM DD" placeholder=""/>
+            </Stack>
+        </Group>
+
+
     <div className="filter-period">
         <Text c={"#656565"} fz={"lg"} style={{letterSpacing: "0.1em"}}>Filter by period</Text>
 
@@ -89,9 +102,7 @@ const Filter = () => {
         
     </>}
 
-
     </div>
-
     </div>)
 }
 
