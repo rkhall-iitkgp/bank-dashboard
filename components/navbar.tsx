@@ -1,5 +1,6 @@
 import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core'
 import styled from '@emotion/styled'
+import { subtle } from 'crypto'
 
 const StyledNavbar = styled.nav`
     display: flex;
@@ -15,7 +16,6 @@ const BankName = styled.h1`
   vertical-align: middle;
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
-  font-weight: 500;
   font-size: 32px;
   color: #0052b3;
   float: left;
@@ -34,14 +34,18 @@ const _StyledButton = styled(Button)`
   border-width: 0rem;
   color: #0052b3;
   font-family: 'Montserrat', sans-serif;
-  font-style: normal;
-  font-weight: 500;
   font-size: 20px;
   background-color: white;
   padding: 0px;
   &:hover {
     cursor: pointer;
+    background: white;
+    transform: scale(1.05);
+    transition-duration: 0.25s;
   }
+    &:focus {
+        background-color: white;
+    }
 `
 
 const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
@@ -65,16 +69,16 @@ function Navbar() {
     <StyledNavbar>
       <BankName>shiftbank</BankName>
         <StyledButtonBar>
-          <StyledButton>
+          <StyledButton variant="gradient" gradient={{from: 'white', to: 'white'}}>
             <NavbarIcons src="/images/dashboard.png"></NavbarIcons>Dashboard
           </StyledButton>
-          <StyledButton>
+          <StyledButton variant="gradient" gradient={{from: 'white', to: 'white'}}>
             <NavbarIcons src="/images/aboutus.png"></NavbarIcons>About Us
           </StyledButton>
-          <StyledButton>
+          <StyledButton variant="gradient" gradient={{from: 'white', to: 'white'}}>
             <NavbarIcons src="/images/support.png"></NavbarIcons>Support
           </StyledButton>
-          <StyledButton>
+          <StyledButton variant="gradient" gradient={{from: 'white', to: 'white'}}>
             <NavbarIcons src="/images/FAQs.png"></NavbarIcons>FAQs
           </StyledButton>
           <StyledUserImage src="/images/dp.png"></StyledUserImage>
