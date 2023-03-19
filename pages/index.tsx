@@ -18,13 +18,14 @@ const Home: NextPage = () => {
       {/* <ContactUs/> */}
       {/* <LoginSIgnupPage/> */}
       {/* <PayBenficiary sbi={true}/> */}
-      {/* <OTP/> */}
+      {/* <OTP /> */}
+      <LoginSIgnupPage />
       {/* <Banktransfer/> */}
       {/* <BeneficiaryBank/> */}
       {/* <UpiTransferHome/> */}
       {/* <Upitransfer3/> */}
       {/* <Reviewdetailsupi/> */}
-      <Reviewdetailsbank sbi={false}/>
+      {/* <Reviewdetailsbank sbi={false} /> */}
     </div>
   )
 }
