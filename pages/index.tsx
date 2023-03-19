@@ -19,12 +19,12 @@ const Home: NextPage = () => {
     <div className={styles.container}>
 
       {/* <ContactUs/> */}
-      {/* <LoginSIgnupPage/> */}
+      <LoginSIgnupPage />
       {/* <PayBenficiary sbi={true}/> */}
       {/* <OTP/> */}
       {/* <Banktransfer/> */}
       {/* <BeneficiaryBank/> */}
-      <UpiTransferHome />
+      {/* <UpiTransferHome /> */}
       {/* <Upitransfer3/> */}
       {/* <Reviewdetailsupi/> */}
       {/* <Reviewdetailsbank sbi={false}/> */}
