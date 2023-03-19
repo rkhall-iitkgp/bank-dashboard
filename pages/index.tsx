@@ -1,5 +1,15 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { ContactUs } from '../components/AddAcoount'
+import { Banktransfer } from '../components/BankTransfer'
+import { BeneficiaryBank } from '../components/benfeicarybank'
+import { LoginSIgnupPage } from '../components/LoginSignup/LoginSIgnupPage'
+import { OTP } from '../components/otp'
+import { PayBenficiary } from '../components/PayBenificiary'
+import { Reviewdetailsbank } from '../components/ReviewDetailsbank'
+import { Reviewdetailsupi } from '../components/Reviewdetailsupi'
+import { Upitransfer3 } from '../components/Upitransfer3'
+import { UpiTransferHome } from '../components/Upitransferhome'
 import styles from '../styles/Home.module.css'
 import Demo from '../components/bank_account'
 
@@ -12,6 +22,16 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Demo></Demo>
+      {/* <ContactUs/> */}
+      <LoginSIgnupPage/>
+      {/* <PayBenficiary sbi={true}/> */}
+      {/* <OTP/> */}
+      {/* <Banktransfer/> */}
+      {/* <BeneficiaryBank/> */}
+      {/* <UpiTransferHome/> */}
+      {/* <Upitransfer3/> */}
+      {/* <Reviewdetailsupi/> */}
+      <Reviewdetailsbank sbi={false}/>
     </div>
   )
 }
