@@ -147,7 +147,7 @@ export function ContactUs(props: { setAddAccount: (arg0: boolean) => void; }) {
       <div className={classes.form}>
         <div className={classes.topheading}>
 
-          <div className={classes.title}>UPI Transfer</div>
+          <div className={classes.title}>Add Account</div>
         </div>
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
