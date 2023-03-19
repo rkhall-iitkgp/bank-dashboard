@@ -6,6 +6,10 @@ import { BeneficiaryBank } from '../components/benfeicarybank'
 import { LoginSIgnupPage } from '../components/LoginSignup/LoginSIgnupPage'
 import { OTP } from '../components/otp'
 import { PayBenficiary } from '../components/PayBenificiary'
+import { Reviewdetailsbank } from '../components/ReviewDetailsbank'
+import { Reviewdetailsupi } from '../components/Reviewdetailsupi'
+import { Upitransfer3 } from '../components/Upitransfer3'
+import { UpiTransferHome } from '../components/Upitransferhome'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
@@ -15,8 +19,12 @@ const Home: NextPage = () => {
       {/* <LoginSIgnupPage/> */}
       {/* <PayBenficiary sbi={true}/> */}
       {/* <OTP/> */}
-      <Banktransfer/>
+      {/* <Banktransfer/> */}
       {/* <BeneficiaryBank/> */}
+      {/* <UpiTransferHome/> */}
+      {/* <Upitransfer3/> */}
+      {/* <Reviewdetailsupi/> */}
+      <Reviewdetailsbank sbi={false}/>
     </div>
   )
 }
