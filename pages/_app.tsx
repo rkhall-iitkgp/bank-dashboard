@@ -1,7 +1,8 @@
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { MantineProvider } from '@mantine/core'
-
+import Navbar from '../components/navbar'
+import SeeYourAnalysisPage from './_analysis'
 export default function App(props: AppProps) {
   const { Component, pageProps } = props
 
@@ -14,7 +15,7 @@ export default function App(props: AppProps) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-
+      <Navbar/>
       <MantineProvider
         withGlobalStyles
         withNormalizeCSS
@@ -24,6 +25,7 @@ export default function App(props: AppProps) {
         }}
       >
         <Component {...pageProps} />
+        {/* <SeeYourAnalysisPage/> */}
       </MantineProvider>
     </>
   )
