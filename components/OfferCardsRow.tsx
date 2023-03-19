@@ -55,6 +55,28 @@ const OfferCardsRow = () => {
         <CardText style={{ color: '#E7F4F9' }}>Refer a friend</CardText>
         <Image width={100} height={100} src="/refer a friend.png" />
       </OfferCards>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
     </Row>
   )
 }
