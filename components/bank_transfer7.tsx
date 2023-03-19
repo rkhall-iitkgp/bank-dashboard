@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
-import {Image } from "@mantine/core";
+import { Image } from "@mantine/core";
 import tick from "./tick.png"
+import Link from "next/link";
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -125,16 +126,16 @@ export default function GenOtp2() {
         <StyledBot>
           <StyledBotCont>
             <StyledTexthead>Payment Successful</StyledTexthead>
-            <Image src={tick} width={75} height={75}/>
-            <StyledTexthead2>You have successfully paid John <span style={{"color":"black"}}> &nbsp;₹500</span></StyledTexthead2>
-            <StyledTexthead3>Remaining balance: <span style={{"color":"black"}}> &nbsp;₹11,845.67</span></StyledTexthead3>
-            <StyledTexthead3>A/c No. : <span style={{"color":"black"}}> &nbsp;XXXXXXX8989</span></StyledTexthead3>
+            <Image src='images/tick.png' width={75} height={75} />
+            <StyledTexthead2>You have successfully paid John <span style={{ "color": "black" }}> &nbsp;₹500</span></StyledTexthead2>
+            <StyledTexthead3>Remaining balance: <span style={{ "color": "black" }}> &nbsp;₹11,845.67</span></StyledTexthead3>
+            <StyledTexthead3>A/c No. : <span style={{ "color": "black" }}> &nbsp;XXXXXXX8989</span></StyledTexthead3>
             {/* <StyledTexthead3>₹500</StyledTexthead3> */}
             <StyledTexthead4>
-            {/* UPI ID : <span style={{"color":"black"}}> &nbsp;johndoe@oksbi</span> */}
+              {/* UPI ID : <span style={{"color":"black"}}> &nbsp;johndoe@oksbi</span> */}
             </StyledTexthead4>
           </StyledBotCont>
-          <StyledBut>Make Another Payment</StyledBut>
+          <Link href='/home'><StyledBut>Make Another Payment</StyledBut></Link>
         </StyledBot>
       </StyledCont>
     </StyledContainer>
