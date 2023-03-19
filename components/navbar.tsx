@@ -2,7 +2,7 @@ import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core'
 import styled from '@emotion/styled'
 
 const StyledNavbar = styled.nav`
-  display: flex;
+    display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
@@ -12,23 +12,22 @@ const StyledNavbar = styled.nav`
   width:100%;
 `
 const BankName = styled.h1`
+  vertical-align: middle;
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 500;
-  font-size: 28px;
+  font-size: 32px;
   color: #0052b3;
   float: left;
+  margin: auto 0;
 `
 const StyledButtonBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 50vw;
-  left: 48vw;
   min-width: 600px;
   padding: 0 1vw 0 1vw;
-  float: right;
-  position: absolute;
 `
 
 const _StyledButton = styled(Button)`
@@ -39,6 +38,10 @@ const _StyledButton = styled(Button)`
   font-weight: 500;
   font-size: 20px;
   background-color: white;
+  padding: 0px;
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
