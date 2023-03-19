@@ -16,7 +16,7 @@ const _StyledButton = styled(Button)`
       }
 `;
 const Container = styled.div`
-  margin: 1rem;
+  margin: 20px;
   display  :flex ;
   background-color:#0062D6;
   justify-content: space-between;
@@ -47,26 +47,26 @@ const StyledButton = createPolymorphicComponent<'button', ButtonProps>(_StyledBu
 
 function SeeYourAnalysis() {
   return (
-      <Container>
-     <TextDiv>
-       We provide <span style={{fontWeight : "600"}}>detailed analysis </span>of your <br/>transactions and offer insights to help you make informed financial decisions.
+    <Container>
+      <TextDiv>
+        We provide <span style={{ fontWeight: "600" }}>detailed analysis </span>of your <br />transactions and offer insights to help you make informed financial decisions.
       </TextDiv>
       <ButtonDiv>
-     <StyledButton radius='3rem' variant="gradient" gradient={{ from: 'white', to: 'white' }}>
-     <span style={{color: "#0062D6",fontWeight : 600,fontFamily:"Montserrat",fontSize:"1.2rem" } }>
-      See your analysis 
-      </span>
-     </StyledButton>
-     </ButtonDiv>
-     </Container>
-   
+        <StyledButton radius='3rem' variant="gradient" gradient={{ from: 'white', to: 'white' }}>
+          <span style={{ color: "#0062D6", fontWeight: 600, fontFamily: "Montserrat", fontSize: "1.2rem" }}>
+            See your analysis
+          </span>
+        </StyledButton>
+      </ButtonDiv>
+    </Container>
+
   );
 }
-function Demo(){
-    return (
-        <MantineProvider withGlobalStyles withNormalizeCSS>
-            <SeeYourAnalysis />
-        </MantineProvider>
-    )
+function Demo() {
+  return (
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+      <SeeYourAnalysis />
+    </MantineProvider>
+  )
 }
 export default Demo
