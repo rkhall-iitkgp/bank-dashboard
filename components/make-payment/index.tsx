@@ -1,211 +1,99 @@
 import styled from '@emotion/styled'
-import { Card, Image, Text, Badge, Button, Group, Stack } from '@mantine/core'
+import {
+  Button,
+  ButtonProps,
+  Card,
+  createPolymorphicComponent,
+  Group,
+  Text,
+} from '@mantine/core'
 import Link from 'next/link'
+import MakePaymentCard from './MakePaymentCards'
 
-const PaymentImage = styled(Group)`
-  background-color: #0062d6;
-  height: 120px;
-  width: 120px;
-  border-radius: 100px;
-  transition-duration: 0.2s;
-`
-
-const PaymentStack = styled(Stack)`
-  cursor: pointer;
-  padding: 15px;
-  border-radius: 15px;
-
-  &:hover {
-    transform: scale(1.05);
-    transition-duration: 0.3s;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+const _StyledButton = styled(Button)`
+  border-radius: 30px;
+  color: white;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 30px;
+  font-family: Montserrat, sans-serif;
+  padding: 4px 20px;
+  height: 42px;
+  :hover {
+    cursor: pointer;
+    transform: scale(1.02);
   }
 `
 
+const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
+  _StyledButton,
+)
+
 const Payment = () => {
   return (
-    <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '4vh' }}>
+    <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '3vh' }}>
       <Card shadow="sm" padding="xs" radius="lg" withBorder bg={'#E0EEFF'}>
         <Group position="apart" mt="xs" mb="xs" mx={20}>
           <Text
             c={'#0062D6'}
-            fz={38}
+            fz={30}
             fw={500}
-            ml={40}
+            ml={36}
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
             Make Payment
           </Text>
-          <Button
-            radius="xl"
-            size="md"
-            fz={22}
-            fw={400}
+          <StyledButton
             variant="gradient"
             gradient={{ from: '#0062D6', to: '#0062D6' }}
           >
             Click here to activate
-          </Button>
+          </StyledButton>
         </Group>
 
         <Group
           style={{ justifyContent: 'space-evenly', alignItems: 'flex-start' }}
-          my={20}
+          my={12}
         >
           <Link href="/BankTransfer" style={{ textDecoration: 'none' }}>
-            <PaymentStack>
-              <PaymentImage>
-                <Image
-                  src="icons/bank-building.png"
-                  height={80}
-                  width={80}
-                  mx={'auto'}
-                  alt = 'bank-building'
-                />
-              </PaymentImage>
-              <Text
-                c={'#0062D6'}
-                fz={'lg'}
-                fw={500}
-                w={120}
-                style={{ lineHeight: 1, textAlign: 'center' }}
-              >
-                Bank Transfer
-              </Text>
-            </PaymentStack>
+            <MakePaymentCard
+              imageAddress="icons/bank-building.png"
+              cardText="Bank Transfer"
+              alt="Bank Transfer"
+            />
           </Link>
           <Link href="/UPI">
-            <PaymentStack>
-              <PaymentImage>
-                <Image
-                  src="icons/upi.png"
-                  height={90}
-                  width={90}
-                  mx={'auto'}
-                  fit={'contain'}
-                  alt='upi image'
-                />
-              </PaymentImage>
-              <Text
-                c={'#0062D6'}
-                fz={'lg'}
-                fw={500}
-                w={120}
-                style={{ lineHeight: 1, textAlign: 'center' }}
-              >
-                UPI Payment
-              </Text>
-            </PaymentStack>
+            <MakePaymentCard
+              imageAddress="icons/upi.png"
+              cardText="UPI Payment"
+              alt="UPI Payment"
+            />
           </Link>
-          <PaymentStack>
-            <PaymentImage>
-              <Image
-                src="icons/payphone.png"
-                height={80}
-                width={80}
-                mx={'auto'}
-                fit={'contain'}
-                alt ='payphone'
-              />
-            </PaymentImage>
-            <Text
-              c={'#0062D6'}
-              fz={'lg'}
-              fw={500}
-              w={120}
-              style={{ lineHeight: 1, textAlign: 'center' }}
-            >
-              Pay Phone Number
-            </Text>
-          </PaymentStack>
-
-          <PaymentStack>
-            <PaymentImage>
-              <Image
-                src="icons/person.png"
-                height={80}
-                width={80}
-                mx={'auto'}
-                fit={'contain'}
-                alt = 'person'
-              />
-            </PaymentImage>
-            <Text
-              c={'#0062D6'}
-              fz={'lg'}
-              fw={500}
-              w={120}
-              style={{ lineHeight: 1, textAlign: 'center' }}
-            >
-              Self Transfer
-            </Text>
-          </PaymentStack>
-
-          <PaymentStack>
-            <PaymentImage>
-              <Image
-                src="icons/investments.png"
-                height={80}
-                width={80}
-                mx={'auto'}
-                fit={'contain'}
-                mt={5}
-                alt = 'investments'
-              />
-            </PaymentImage>
-            <Text
-              c={'#0062D6'}
-              fz={'lg'}
-              fw={500}
-              w={120}
-              style={{ lineHeight: 1, textAlign: 'center' }}
-            >
-              Make Investment
-            </Text>
-          </PaymentStack>
-
-          <PaymentStack>
-            <PaymentImage>
-              <Image
-                src="icons/insurance.png"
-                height={80}
-                width={80}
-                mx={'auto'}
-                alt = 'insurance'
-              />
-            </PaymentImage>
-            <Text
-              c={'#0062D6'}
-              fz={'lg'}
-              fw={500}
-              w={120}
-              style={{ lineHeight: 1, textAlign: 'center' }}
-            >
-              Get Insurance
-            </Text>
-          </PaymentStack>
-
-          <PaymentStack>
-            <PaymentImage>
-              <Image
-                src="icons/mobile-recharge.png"
-                height={80}
-                width={80}
-                ml={1}
-                fit={'contain'}
-                alt = 'recharge'
-              />
-            </PaymentImage>
-            <Text
-              c={'#0062D6'}
-              fz={'lg'}
-              fw={500}
-              w={120}
-              style={{ lineHeight: 1, textAlign: 'center' }}
-            >
-              Mobile Recharge
-            </Text>
-          </PaymentStack>
+          <MakePaymentCard
+            imageAddress="icons/payphone.png"
+            cardText="Pay Phone Number"
+            alt="Pay Phone Number"
+          />
+          <MakePaymentCard
+            imageAddress="icons/person.png"
+            cardText="Self Transfer"
+            alt="Self Transfer"
+          />
+          <MakePaymentCard
+            imageAddress="icons/investments.png"
+            cardText="Make Investment"
+            alt="investments"
+          />
+          <MakePaymentCard
+            imageAddress="icons/insurance.png"
+            cardText="Get Insurance"
+            alt="insurance"
+          />
+          <MakePaymentCard
+            imageAddress="icons/mobile-recharge.png"
+            cardText="Mobile Recharge"
+            alt="recharge"
+          />
         </Group>
       </Card>
     </div>

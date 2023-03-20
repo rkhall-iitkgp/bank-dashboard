@@ -1,8 +1,6 @@
 import { createStyles, TextInput, Button, Group, rem } from '@mantine/core'
 import { useState } from 'react'
-// import LongButton from './SmallComponents/LongButton'
-//   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
-//   import { ContactIconsList } from '../ContactIcons/ContactIcons';
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#000000de`,
@@ -11,7 +9,6 @@ const useStyles = createStyles((theme) => ({
     width: `100%`,
     minHeight: `100vh`,
     boxSizing: 'border-box',
-    // borderRadius: theme.radius.md,
     padding: `calc(${theme.spacing.xl} * 2.5)`,
     [theme.fn.smallerThan('sm')]: {
       padding: `calc(${theme.spacing.xl} * 1.5)`,
@@ -20,19 +17,15 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `center`,
     alignItems: `center`,
     zIndex: 100,
-    // overflow: `hidden`
   },
   titlebox: {
     marginBottom: `10px`,
   },
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    //   color: theme.black,
     lineHeight: 1,
     fontWeight: 500,
     margin: `0.8rem`,
-    //   paddingBottom:`5px`,
-    //   marginBottom:`10px`
   },
   titlebold: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,

@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 import { ButtonProps, createPolymorphicComponent } from '@mantine/core'
 import { Image } from '@mantine/core'
 import {
-  // Box, CSSObject, rem , Flex,
   Button,
 } from '@mantine/core'
 
@@ -14,7 +13,6 @@ const Oflex = styled.div`
 `
 
 const Iflex = styled.div`
-  //margin: 10px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

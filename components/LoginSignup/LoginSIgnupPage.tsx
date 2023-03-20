@@ -1,7 +1,17 @@
-import { createStyles, Text, Title, TextInput, Textarea, Button, Group, ActionIcon, rem, Stack, PinInput } from '@mantine/core';
-import { useContext, useState } from 'react';
-import axios from 'axios';
-import { useRouter } from 'next/router';
+import {
+  Button,
+  createStyles,
+  Group,
+  PinInput,
+  rem,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core'
+import axios from 'axios'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -9,19 +19,14 @@ const useStyles = createStyles((theme) => ({
     minHeight: `100vh`,
     boxSizing: 'border-box',
     borderRadius: theme.radius.md,
-    //   padding: `calc(${theme.spacing.xl} * 2.5)`,
-    //   [theme.fn.smallerThan('sm')]: {
-    //     padding: `calc(${theme.spacing.xl} * 1.5)`,
-    //   },
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
     background: `white`,
-    //   padding:`10px`
   },
 
   titlebox: {
-    marginBottom: `20px`
+    marginBottom: `20px`,
   },
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -29,7 +34,7 @@ const useStyles = createStyles((theme) => ({
     lineHeight: 1,
     fontWeight: 400,
     paddingBottom: `5px`,
-    fontSize: `2rem`
+    fontSize: `2rem`,
   },
   titlebold: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -37,7 +42,7 @@ const useStyles = createStyles((theme) => ({
     lineHeight: 1,
     fontWeight: 400,
     fontSize: `3rem`,
-    textAlign: `center`
+    textAlign: `center`,
   },
 
   description: {
@@ -55,15 +60,13 @@ const useStyles = createStyles((theme) => ({
     width: `400px`,
     color: `#0052B3`,
     display: `flex`,
-    margin: `auto`
+    margin: `auto`,
   },
   sideContainer: {
-
     width: `100%`,
     height: `100%`,
     minHeight: `100vh`,
     padding: `2vh`,
-
   },
   social: {
     color: theme.white,
@@ -82,17 +85,17 @@ const useStyles = createStyles((theme) => ({
       color: theme.colors.gray[5],
     },
     border: '0',
-    borderRadius: "0",
+    borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #eee`,
-    marginTop: `1rem`
+    marginTop: `1rem`,
   },
 
   inputLabel: {
     color: theme.black,
     position: `absolute`,
     top: `1.5rem`,
-    transition: `0.25s ease`
+    transition: `0.25s ease`,
   },
   inputcontainer: {
     position: `relative`,
@@ -103,12 +106,12 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: `#006AE4`,
     borderRadius: `20px`,
     margin: `1rem`,
-    width: `300px`
+    width: `300px`,
   },
   forminside: {
     maxWidth: `80%`,
     width: `300px`,
-    margin: `auto`
+    margin: `auto`,
   },
   grid: {
     display: `grid`,
@@ -127,108 +130,167 @@ const useStyles = createStyles((theme) => ({
   },
   buttoncontainer: {
     display: `flex`,
-    justifyContent: `space-around`
+    justifyContent: `space-around`,
   },
   button: {
     width: `100px`,
     backgroundColor: `black`,
     borderRadius: `20px`,
-  }
-}));
+  },
+}))
 
-//   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
-
-export function LoginSIgnupPage() {
-  const { classes } = useStyles();
-  const [mobile, setMobile] = useState('');
-  const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState('');
-  const BASEURL = "https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user";
-  const [signinLoading, setSignInLoading] = useState(false);
-  const [signUpLoading, setSignUpLoading] = useState(false);
-  const [enterOtp, setEnterOtp] = useState(false);
-  const router = useRouter();
+export function LoginSignupPage() {
+  const { classes } = useStyles()
+  const [mobile, setMobile] = useState('')
+  const [email, setEmail] = useState('')
+  const [otp, setOtp] = useState('')
+  const BASEURL =
+    'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user'
+  const [signinLoading, setSignInLoading] = useState(false)
+  const [signUpLoading, setSignUpLoading] = useState(false)
+  const [enterOtp, setEnterOtp] = useState(false)
+  const router = useRouter()
 
   const SignUp = (contact_no: string, email: string, si: number) => {
-    let res = axios.post(`${BASEURL}/sendotp/`, {
-      "contact_no": contact_no, "email": email, "signup": si
-    }).then(res => {
-      setEnterOtp(true);
-      return res.data;
-    }).catch((err) => console.log(err));
+    let res = axios
+      .post(`${BASEURL}/sendotp/`, {
+        contact_no: contact_no,
+        email: email,
+        signup: si,
+      })
+      .then((res) => {
+        setEnterOtp(true)
+        return res.data
+      })
+      .catch((err) => console.log(err))
 
-    res.then(v => console.log(v));
-    setSignUpLoading(false);
-    setSignUpLoading(false);
+    res.then((v) => console.log(v))
+    setSignUpLoading(false)
+    setSignUpLoading(false)
   }
 
   const validate = (contact_no: string, otp: string) => {
-    let res = axios.post(`${BASEURL}/validateotp/`, {
-      "contact_no": contact_no, "otp": parseInt(otp), "email": email
-    }).then(res => {
-      router.replace("/home");
-      return res.data;
-    }).catch((err) => console.log(err));
+    let res = axios
+      .post(`${BASEURL}/validateotp/`, {
+        contact_no: contact_no,
+        otp: parseInt(otp),
+        email: email,
+      })
+      .then((res) => {
+        router.replace('/home')
+        return res.data
+      })
+      .catch((err) => console.log(err))
 
-    res.then(v => console.log(v));
+    res.then((v) => console.log(v))
   }
 
   return (
     <div className={classes.wrapper}>
       <div className={classes.grid}>
-
         <div className={classes.form}>
           <div className={classes.forminside}>
             <div className={classes.titlebold}>Shiftbank</div>
 
-            {!enterOtp && <Stack my={10}>
-              <Stack><TextInput
-                placeholder="Mobile Number"
-                type={"number"}
-                required
-                classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
-                value={mobile}
-                onChange={(e) => setMobile(e.currentTarget.value)}
-              />
-                <TextInput
-                  placeholder="Email"
-                  type={"email"}
-                  mt="md"
-                  classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.currentTarget.value)}
-                />
-              </Stack>
+            {!enterOtp && (
+              <Stack my={10}>
+                <Stack>
+                  <TextInput
+                    placeholder="Mobile Number"
+                    type={'number'}
+                    required
+                    classNames={{
+                      input: classes.input,
+                      label: classes.inputLabel,
+                      root: classes.inputcontainer,
+                    }}
+                    value={mobile}
+                    onChange={(e) => setMobile(e.currentTarget.value)}
+                  />
+                  <TextInput
+                    placeholder="Email"
+                    type={'email'}
+                    mt="md"
+                    classNames={{
+                      input: classes.input,
+                      label: classes.inputLabel,
+                      root: classes.inputcontainer,
+                    }}
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.currentTarget.value)}
+                  />
+                </Stack>
 
-              <Group className={classes.buttoncontainer} mt={15}>
-                <Button className={classes.button} loading={signUpLoading} onClick={() => { SignUp(mobile, email, 1); setSignUpLoading(true); }}>Sign Up</Button>
-                <Button className={classes.button} loading={signinLoading} onClick={() => { SignUp(mobile, email, 0); setSignInLoading(true); }}>Sign In</Button>
-              </Group>
-            </Stack>}
+                <Group className={classes.buttoncontainer} mt={15}>
+                  <Button
+                    className={classes.button}
+                    loading={signUpLoading}
+                    onClick={() => {
+                      SignUp(mobile, email, 1)
+                      setSignUpLoading(true)
+                    }}
+                  >
+                    Sign Up
+                  </Button>
+                  <Button
+                    className={classes.button}
+                    loading={signinLoading}
+                    onClick={() => {
+                      SignUp(mobile, email, 0)
+                      setSignInLoading(true)
+                    }}
+                  >
+                    Sign In
+                  </Button>
+                </Group>
+              </Stack>
+            )}
 
             {enterOtp && (
               <Stack my={20}>
-                <Text c={"#656565"} fz={"lg"} style={{ letterSpacing: "0.1em" }} ml={15}>Enter OTP</Text>
-                <PinInput inputMode='numeric' value={otp} onChange={(e) => setOtp(e)} mx="auto" />
-                <Button className={classes.control} onClick={() => { console.log(otp); validate(mobile, otp); }}>Confirm</Button>
-              </Stack>)}
+                <Text
+                  c={'#656565'}
+                  fz={'lg'}
+                  style={{
+                    letterSpacing: '0.1em',
+                    fontFamily: 'Montserrat, sans-serif',
+                  }}
+                  ml={15}
+                >
+                  Enter OTP
+                </Text>
+                <PinInput
+                  inputMode="numeric"
+                  value={otp}
+                  onChange={(e) => setOtp(e)}
+                  mx="auto"
+                />
+                <Button
+                  className={classes.control}
+                  onClick={() => {
+                    console.log(otp)
+                    validate(mobile, otp)
+                  }}
+                >
+                  Confirm
+                </Button>
+              </Stack>
+            )}
           </div>
         </div>
 
         <div className={classes.sideContainer}>
           <div className={classes.sidecontainerinside}>
-            <Title className={classes.title}>A Comprehensive Analysis of your Transactions</Title>
+            <Title className={classes.title}>
+              A Comprehensive Analysis of your Transactions
+            </Title>
             <Text className={classes.description} mt="sm" mb={30}>
               Leave your email and we will get back to you within 24 hours
             </Text>
-
-            {/* <ContactIconsList variant="white" /> */}
-
-            {/* <Group mt="xl">{icons}</Group> */}
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

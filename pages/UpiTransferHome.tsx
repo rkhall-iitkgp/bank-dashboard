@@ -1,7 +1,4 @@
-import {
-  Image,
-  MantineProvider,
-} from '@mantine/core'
+import { Image, MantineProvider } from '@mantine/core'
 // import MantineProvider  from '@mantine/core';
 // import { ButtonProps, createPolymorphicComponent } from '@mantine/core'
 import styled from '@emotion/styled'

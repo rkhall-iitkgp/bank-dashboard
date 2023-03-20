@@ -8,7 +8,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: `#EEEEEE`,
     minHeight: `100vh`,
     boxSizing: 'border-box',
-    padding: `calc(${theme.spacing.xl} * 2.5)`,
+    padding: `calc(${theme.spacing.xl} * 1.5)`,
     [theme.fn.smallerThan('sm')]: {
       padding: `calc(${theme.spacing.xl} * 1.5)`,
     },
@@ -121,7 +121,6 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-//   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 function Account(props: {
   accountdata: {
     name: any
@@ -171,17 +170,10 @@ export function UpiTransferHome() {
     { id: 2, name: 'Bank Transfer', src: `bank-building-white` },
     { id: 3, name: 'Pay Phone Number', src: `payphone1` },
   ]
-  // const icons = social.map((Icon, index) => (
-  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-  //     <Icon size="1.4rem" stroke={1.5} />
-  //   </ActionIcon>
-  // ));
+
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        {/* <div className={classes.topheading}>
-          <div className={classes.title}>Bank Transfer</div>
-        </div> */}
         <Heading title="UPI Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
@@ -198,11 +190,6 @@ export function UpiTransferHome() {
               )
             })}
           </div>
-
-          {/* <div className={classes.buttoncontainer}>
-            <Link href='/home'><Button className={classes.button}>Back</Button></Link>
-            <Link href='/UPI/Verify'><Button className={classes.button} >Continue</Button></Link>
-          </div> */}
           <ButtonGroup href1="/home" href2="/UPI/Verify" />
         </div>
       </div>
