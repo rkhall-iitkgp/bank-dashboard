@@ -142,8 +142,8 @@ export function LoginSIgnupPage() {
   const { classes } = useStyles();
   const [mobile, setMobile] = useState('');
   const [email, setEmail] = useState('');
-  const BASEURL = "https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user";
   const [otp, setOtp] = useState('');
+  const BASEURL = "https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user";
   const [signinLoading, setSignInLoading] = useState(false);
   const [signUpLoading, setSignUpLoading] = useState(false);
   const [enterOtp, setEnterOtp] = useState(false);
@@ -173,13 +173,6 @@ export function LoginSIgnupPage() {
     res.then(v => console.log(v));
   }
 
-  // const [otp, setOtp] = useState(false)
-  // const icons = social.map((Icon, index) => (
-  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-  //     <Icon size="1.4rem" stroke={1.5} />
-  //   </ActionIcon>
-  // ));
-
   return (
     <div className={classes.wrapper}>
       <div className={classes.grid}>
@@ -189,68 +182,36 @@ export function LoginSIgnupPage() {
             <div className={classes.titlebold}>Shiftbank</div>
 
             {!enterOtp && (<Stack my={10}>
-
-              <TextInput
-                placeholder="Mobile Number"
+              <Stack><TextInput
+                placeholder="OTP"
                 type={"number"}
                 required
                 classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+                value={mobile}
+                onChange={(e) => setMobile(e.currentTarget.value)}
               />
-              <TextInput
-                placeholder="Email"
-                type={"email"}
-                mt="md"
-                classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
-                required
+                <TextInput
+                  placeholder="Email"
+                  type={"email"}
+                  mt="md"
+                  classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.currentTarget.value)}
+                />
 
-              />
-
-              {
-                otp && (
-                  <Stack><TextInput
-                    placeholder="OTP"
-                    type={"number"}
-                    required
-                    classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
-                    value={mobile}
-                    onChange={(e) => setMobile(e.currentTarget.value)}
-                  />
-                    <TextInput
-                      placeholder="Email"
-                      type={"email"}
-                      mt="md"
-                      classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.currentTarget.value)}
-                    />
-
-                    <Group className={classes.buttoncontainer} mt={15}>
-                      <Button className={classes.button} loading={signUpLoading} onClick={() => { SignUp(mobile, email, 1); setSignUpLoading(true); }}>Sign Up</Button>
-                      <Button className={classes.button} loading={signinLoading} onClick={() => { SignUp(mobile, email, 0); setSignInLoading(true); }}>Sign In</Button>
-                    </Group>
-                  </Stack>)}
+                <Group className={classes.buttoncontainer} mt={15}>
+                  <Button className={classes.button} loading={signUpLoading} onClick={() => { SignUp(mobile, email, 1); setSignUpLoading(true); }}>Sign Up</Button>
+                  <Button className={classes.button} loading={signinLoading} onClick={() => { SignUp(mobile, email, 0); setSignInLoading(true); }}>Sign In</Button>
+                </Group>
+              </Stack>
 
               {enterOtp && (
                 <Stack my={20}>
                   <Text c={"#656565"} fz={"lg"} style={{ letterSpacing: "0.1em" }} ml={15}>Enter OTP</Text>
                   <PinInput inputMode='numeric' value={otp} onChange={(e) => setOtp(e)} mx="auto" />
                   <Button className={classes.control} onClick={() => { console.log(otp); validate(mobile, otp); }}>Confirm</Button>
-                </Stack>
-
-              )}
-
-              <Group position="center" mt="md">
-                <Button className={classes.control} onClick={() => {
-                  setOtp(true)
-                }}>{otp ? "Confirm" : "Get OTP"}</Button>
-              </Group>
-              <div className={classes.buttoncontainer}>
-                <Button className={classes.button} onClick={() => {
-                }}>Sign Up</Button>
-                <Button className={classes.button} onClick={() => {
-                }}>Sign In</Button>
-              </div>
+                </Stack>)}
             </Stack>)}
           </div>
         </div>
