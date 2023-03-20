@@ -106,12 +106,13 @@ const useStyles = createStyles((theme) => ({
     alignItems: `center`,
     justifyContent: `space-between`,
     ':hover': {
-      border: `2px dotted #0052B3;`,
-      boxShadow: ` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
+      //border: `2px dotted #0052B3;`,
+      boxShadow: ` 0px 4px 10px rgba(0, 0, 0, 0.25)`,
+      cursor: `pointer`,
     },
     ':active': {
-      border: `2px dotted #0052B3;`,
-      boxShadow: ` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
+      //border: `2px dotted #0052B3;`,
+      boxShadow: ` 0px 4px 10px rgba(0, 0, 0, 0.25)`,
     },
   },
   active: {
