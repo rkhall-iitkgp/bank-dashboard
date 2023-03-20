@@ -28,8 +28,24 @@ const CashCard = (props: { n: number, type: string }) => {
     );
 };
 
-const TransactionCard = (props: { name: string, amount: number, method: string, }) => {
+const TransactionCard = (props: { name: string, amount: number, method: string, category: string, date: string }) => {
+    const { name, amount, method, category, date } = props;
 
+    return (
+        <Group style={{ borderRadius: "1rem" }}>
+            <Stack>
+                <Text c={"#4D4B4B"} fw={600}></Text>
+                <Text fw={500} fz={10}></Text>
+            </Stack>
+
+            <Text c={"#0062D6"}>{amount}</Text>
+
+            <Stack>
+                <Text fw={600}>{method}</Text>
+                <Text c={"#D56EEA"} fw={500}>{category}</Text>
+            </Stack>
+        </Group>
+    )
 }
 
 const Dashboard = () => {
