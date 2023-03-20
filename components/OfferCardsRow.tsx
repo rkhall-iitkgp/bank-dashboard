@@ -6,9 +6,10 @@ const Row = styled('div')`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
   width: 100%;
-  padding: 20px;
+  margin-top: 4vh;
+  margin-bottom: 3vh;
+  gap: 30px;
 `
 const OfferCards = styled.div`
   display: flex;
@@ -17,8 +18,8 @@ const OfferCards = styled.div`
   justify-content: space-around;
   align-items: center;
   border-radius: 8px;
-  padding: 24px 48px;
-  height: 180px;
+  padding: 20px 40px;
+  height: 120px;
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
   &:hover {
@@ -32,7 +33,7 @@ const CardText = styled('div')`
   flex: 1;
   font-style: normal;
   font-weight: 600;
-  font-size: 35px;
+  font-size: 24px;
   line-height: 43px;
   display: flex;
   align-items: center;
@@ -41,8 +42,8 @@ const CardText = styled('div')`
 
 const OfferCardsRow = () => {
   return (
-    <Row >
-      <OfferCards style={{ background: '#0062D6' }}>
+    <Row>
+      <OfferCards style={{ background: '#0062D6', marginLeft: '3vw' }}>
         <CardText style={{ color: '#E7F4F9' }}>Gift Offers</CardText>
         <Image width={120} height={120} src="/giftbox.png" alt='giftbox'/>
       </OfferCards>
@@ -52,7 +53,7 @@ const OfferCardsRow = () => {
         <Image width={120} height={120} src="/expert technical support.png" alt='support' />
       </OfferCards>
 
-      <OfferCards style={{ background: '#0062D6' }}>
+      <OfferCards style={{ background: '#0062D6', marginRight: '3vw' }}>
         <CardText style={{ color: '#E7F4F9' }}>Refer a friend</CardText>
         <Image width={100} height={100} src="/refer a friend.png" alt='refer-friend'/>
       </OfferCards>
