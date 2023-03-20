@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import {
   ButtonProps,
   createPolymorphicComponent
-  
+
 } from "@mantine/core";
 import { Image } from "@mantine/core";
 import logo from "./sbi 1.png";
@@ -127,25 +127,33 @@ const Styledplus = styled.div`
   text-align: center;
   color: #0052b3;`;
 
-export default function BankAccount() {
+export default function BankAccount(props: { setAddAccount: (arg0: boolean) => void; }) {
+
   return (
     <StyledContainer>
       <Iflex>
         <StyledText>Add Bank Account</StyledText>
-        <StyledButton>Add Account</StyledButton>
+
+        <StyledButton onClick={() => {
+          props.setAddAccount(true)
+          const body = document.body;
+          const scrollY = body.style.top;
+          body.style.position = 'fixed';
+
+        }}>Add Account</StyledButton>
       </Iflex>
       <Oflex>
         <StyledCard>
           <StyledImage>
-            <Image src={logo} />
+            <Image src='images/sbi 1.png' />
           </StyledImage>
           <Styledplus>STATE BANK OF INDIA</Styledplus>
           <StyledText1>9878</StyledText1>
         </StyledCard>
         <StyledAddCard>
-            <StyledImage1>
-            <Image src={circle} />
-            </StyledImage1>
+          <StyledImage1>
+            <Image src='images/frame .png' />
+          </StyledImage1>
         </StyledAddCard>
       </Oflex>
     </StyledContainer>
