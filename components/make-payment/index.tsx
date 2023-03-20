@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { Card, Image, Text, Badge, Button, Group, Stack } from '@mantine/core'
+import { useHover } from '@mantine/hooks'
 import Link from 'next/link'
 
 const PaymentImage = styled(Card)`
@@ -8,13 +9,14 @@ const PaymentImage = styled(Card)`
   width: 120px;
   border-radius: 100px;
   transition-duration: 0.2s;
+  box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.2);
 `
 
 const PaymentStack = styled(Stack)`
   cursor: pointer;
   padding: 15px;
   border-radius: 15px;
-
+  height: 200px;
   &:hover {
     transform: scale(1.05);
     transition-duration: 0.3s;
@@ -24,7 +26,7 @@ const PaymentStack = styled(Stack)`
 
 const Payment = () => {
   return (
-    <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '4vh' }}>
+    <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '4vh', boxShadow: '0px 12px 40px rgba(0, 0, 0, 0.2)', borderRadius: '1rem'}}>
       <Card shadow="sm" padding="xs" radius="lg" withBorder bg={'#E0EEFF'}>
         <Group position="apart" mt="xs" mb="xs" mx={20}>
           <Text
@@ -32,7 +34,7 @@ const Payment = () => {
             fz={38}
             fw={500}
             ml={40}
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
+            style={{ fontFamily: "'Montserrat', sans-serif", marginLeft: '0px' }}
           >
             Make Payment
           </Text>
@@ -49,10 +51,10 @@ const Payment = () => {
         </Group>
 
         <Group
-          style={{ justifyContent: 'space-evenly', alignItems: 'flex-start' }}
+          style={{ justifyContent: 'space-evenly', alignItems: 'flex-start', flexDirection: 'row', flexWrap: 'wrap', }}
           my={20}
         >
-          <Link href="/BankTransfer" style={{ textDecoration: 'none' }}>
+          <Link href="/BankTransfer" style={{ textDecoration: 'none', height: '150px'}}>
             <PaymentStack>
               <PaymentImage>
                 <Image
