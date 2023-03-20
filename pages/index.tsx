@@ -10,19 +10,22 @@ import { Reviewdetailsbank } from '../components/ReviewDetailsbank'
 import { Reviewdetailsupi } from '../components/Reviewdetailsupi'
 import { Upitransfer3 } from '../components/Upitransfer3'
 import { UpiTransferHome } from '../components/Upitransferhome'
+import Demo from '../components/SeeYourAnalysis'
 import styles from '../styles/Home.module.css'
+import OfferCardsRow from '../components/OfferCardsRow'
 
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
+
       {/* <ContactUs/> */}
-      {/* <LoginSIgnupPage/> */}
+      <LoginSIgnupPage />
       {/* <PayBenficiary sbi={true}/> */}
       {/* <OTP /> */}
       <LoginSIgnupPage />
       {/* <Banktransfer/> */}
       {/* <BeneficiaryBank/> */}
-      {/* <UpiTransferHome/> */}
+      {/* <UpiTransferHome /> */}
       {/* <Upitransfer3/> */}
       {/* <Reviewdetailsupi/> */}
       {/* <Reviewdetailsbank sbi={false} /> */}

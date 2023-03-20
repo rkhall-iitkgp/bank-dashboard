@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
+    backgroundColor: `#EEEEEE`,
     minHeight: `100vh`,
     boxSizing: 'border-box',
     borderRadius: theme.radius.md,
@@ -19,6 +20,9 @@ const useStyles = createStyles((theme) => ({
     //   padding:`10px`
   },
 
+  titlebox: {
+    marginBottom: `20px`
+  },
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     color: theme.white,
@@ -169,6 +173,13 @@ export function LoginSIgnupPage() {
     res.then(v => console.log(v));
   }
 
+  // const [otp, setOtp] = useState(false)
+  // const icons = social.map((Icon, index) => (
+  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
+  //     <Icon size="1.4rem" stroke={1.5} />
+  //   </ActionIcon>
+  // ));
+
   return (
     <div className={classes.wrapper}>
       <div className={classes.grid}>
@@ -180,6 +191,29 @@ export function LoginSIgnupPage() {
             {!enterOtp && <Stack my={10}>
               <TextInput
                 placeholder="Mobile Number"
+            />
+            <div className={classes.titlebox}>
+              <div className={classes.titlebold}>Shiftbank</div>
+            </div>
+
+            <TextInput
+              placeholder="Mobile Number"
+              type={"number"}
+              required
+              classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+            />
+            <TextInput
+              placeholder="Email"
+              type={"email"}
+              mt="md"
+              classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+              required
+
+            />
+
+            {
+              otp ? <TextInput
+                placeholder="OTP"
                 type={"number"}
                 required
                 classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
@@ -208,6 +242,21 @@ export function LoginSIgnupPage() {
                 <PinInput inputMode='numeric' value={otp} onChange={(e) => setOtp(e)} mx="auto" />
                 <Button className={classes.control} onClick={() => { console.log(otp); validate(mobile, otp); }}>Confirm</Button>
               </Stack>}
+
+              /> : <></>
+            }
+
+            <Group position="center" mt="md">
+              <Button className={classes.control} onClick={() => {
+                setOtp(true)
+              }}>{otp ? "Confirm" : "Get OTP"}</Button>
+            </Group>
+            <div className={classes.buttoncontainer}>
+              <Button className={classes.button} onClick={() => {
+              }}>Sign Up</Button>
+              <Button className={classes.button} onClick={() => {
+              }}>Sign In</Button>
+            </div>
           </div>
         </div>
         <div className={classes.sideContainer}>
@@ -216,6 +265,10 @@ export function LoginSIgnupPage() {
             <Text className={classes.description} mt="sm" mb={30}>
               Leave your email and we will get back to you within 24 hours
             </Text>
+
+            {/* <ContactIconsList variant="white" /> */}
+
+            {/* <Group mt="xl">{icons}</Group> */}
           </div>
         </div>
       </div>

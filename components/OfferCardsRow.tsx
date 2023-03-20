@@ -8,6 +8,7 @@ const Row = styled('div')`
   justify-content: space-between;
   gap: 20px;
   width: 100%;
+  padding: 20px;
 `
 const OfferCards = styled('div')`
   display: flex;
@@ -40,7 +41,7 @@ const CardText = styled('div')`
 
 const OfferCardsRow = () => {
   return (
-    <Row>
+    <Row >
       <OfferCards style={{ background: '#0062D6' }}>
         <CardText style={{ color: '#E7F4F9' }}>Gift Offers</CardText>
         <Image width={120} height={120} src="/giftbox.png" />
@@ -54,7 +55,7 @@ const OfferCardsRow = () => {
       <OfferCards style={{ background: '#0062D6' }}>
         <CardText style={{ color: '#E7F4F9' }}>Refer a friend</CardText>
         <Image width={100} height={100} src="/refer a friend.png" />
-      </OfferCards>      
+      </OfferCards>
     </Row>
   )
 }
