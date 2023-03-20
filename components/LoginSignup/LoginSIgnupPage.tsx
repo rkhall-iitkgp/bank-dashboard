@@ -166,7 +166,7 @@ export function LoginSIgnupPage() {
     let res = axios.post(`${BASEURL}/validateotp/`, {
       "contact_no": contact_no, "otp": parseInt(otp), "email": email
     }).then(res => {
-      router.push("/home");
+      router.replace("/home");
       return res.data;
     }).catch((err) => console.log(err));
 
@@ -181,9 +181,9 @@ export function LoginSIgnupPage() {
           <div className={classes.forminside}>
             <div className={classes.titlebold}>Shiftbank</div>
 
-            {!enterOtp && (<Stack my={10}>
+            {!enterOtp && <Stack my={10}>
               <Stack><TextInput
-                placeholder="OTP"
+                placeholder="Mobile Number"
                 type={"number"}
                 required
                 classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
@@ -199,20 +199,20 @@ export function LoginSIgnupPage() {
                   value={email}
                   onChange={(e) => setEmail(e.currentTarget.value)}
                 />
-
-                <Group className={classes.buttoncontainer} mt={15}>
-                  <Button className={classes.button} loading={signUpLoading} onClick={() => { SignUp(mobile, email, 1); setSignUpLoading(true); }}>Sign Up</Button>
-                  <Button className={classes.button} loading={signinLoading} onClick={() => { SignUp(mobile, email, 0); setSignInLoading(true); }}>Sign In</Button>
-                </Group>
               </Stack>
 
-              {enterOtp && (
-                <Stack my={20}>
-                  <Text c={"#656565"} fz={"lg"} style={{ letterSpacing: "0.1em" }} ml={15}>Enter OTP</Text>
-                  <PinInput inputMode='numeric' value={otp} onChange={(e) => setOtp(e)} mx="auto" />
-                  <Button className={classes.control} onClick={() => { console.log(otp); validate(mobile, otp); }}>Confirm</Button>
-                </Stack>)}
-            </Stack>)}
+              <Group className={classes.buttoncontainer} mt={15}>
+                <Button className={classes.button} loading={signUpLoading} onClick={() => { SignUp(mobile, email, 1); setSignUpLoading(true); }}>Sign Up</Button>
+                <Button className={classes.button} loading={signinLoading} onClick={() => { SignUp(mobile, email, 0); setSignInLoading(true); }}>Sign In</Button>
+              </Group>
+            </Stack>}
+
+            {enterOtp && (
+              <Stack my={20}>
+                <Text c={"#656565"} fz={"lg"} style={{ letterSpacing: "0.1em" }} ml={15}>Enter OTP</Text>
+                <PinInput inputMode='numeric' value={otp} onChange={(e) => setOtp(e)} mx="auto" />
+                <Button className={classes.control} onClick={() => { console.log(otp); validate(mobile, otp); }}>Confirm</Button>
+              </Stack>)}
           </div>
         </div>
 
