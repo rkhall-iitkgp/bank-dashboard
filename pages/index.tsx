@@ -13,13 +13,15 @@ import { UpiTransferHome } from '../components/Upitransferhome'
 import Demo from '../components/SeeYourAnalysis'
 import styles from '../styles/Home.module.css'
 import OfferCardsRow from '../components/OfferCardsRow'
+import Dashboard from './dashboard'
 
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
 
       {/* <ContactUs/> */}
-      <LoginSIgnupPage />
+      {/* <LoginSIgnupPage /> */}
+      <Dashboard />
       {/* <PayBenficiary sbi={true}/> */}
       {/* <OTP /> */}
       {/* <Banktransfer/> */}
