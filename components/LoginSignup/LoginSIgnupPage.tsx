@@ -1,15 +1,8 @@
-import {
-  createStyles,
-  Text,
-  Title,
-  TextInput,
-  Textarea,
-  Button,
-  Group,
-  ActionIcon,
-  rem,
-} from '@mantine/core';
-import { useState } from 'react';
+import { createStyles, Text, Title, TextInput, Textarea, Button, Group, ActionIcon, rem, Stack, PinInput } from '@mantine/core';
+import { useContext, useState } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -26,6 +19,7 @@ const useStyles = createStyles((theme) => ({
     background: `white`,
     //   padding:`10px`
   },
+
   titlebox: {
     marginBottom: `20px`
   },
@@ -105,7 +99,6 @@ const useStyles = createStyles((theme) => ({
     paddingTop: `0.75rem`,
     marginTop: `0 !important`,
   },
-
   control: {
     backgroundColor: `#006AE4`,
     borderRadius: `20px`,
@@ -147,7 +140,40 @@ const useStyles = createStyles((theme) => ({
 
 export function LoginSIgnupPage() {
   const { classes } = useStyles();
-  const [otp, setOtp] = useState(false)
+  const [mobile, setMobile] = useState('');
+  const [email, setEmail] = useState('');
+  const BASEURL = "https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user";
+  const [otp, setOtp] = useState('');
+  const [signinLoading, setSignInLoading] = useState(false);
+  const [signUpLoading, setSignUpLoading] = useState(false);
+  const [enterOtp, setEnterOtp] = useState(false);
+  const router = useRouter();
+
+  const SignUp = (contact_no: string, email: string, si: number) => {
+    let res = axios.post(`${BASEURL}/sendotp/`, {
+      "contact_no": contact_no, "email": email, "signup": si
+    }).then(res => {
+      setEnterOtp(true);
+      return res.data;
+    }).catch((err) => console.log(err));
+
+    res.then(v => console.log(v));
+    setSignUpLoading(false);
+    setSignUpLoading(false);
+  }
+
+  const validate = (contact_no: string, otp: string) => {
+    let res = axios.post(`${BASEURL}/validateotp/`, {
+      "contact_no": contact_no, "otp": parseInt(otp), "email": email
+    }).then(res => {
+      router.push("/home");
+      return res.data;
+    }).catch((err) => console.log(err));
+
+    res.then(v => console.log(v));
+  }
+
+  // const [otp, setOtp] = useState(false)
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
   //     <Icon size="1.4rem" stroke={1.5} />
@@ -160,6 +186,12 @@ export function LoginSIgnupPage() {
 
         <div className={classes.form}>
           <div className={classes.forminside}>
+            <div className={classes.titlebold}>Shiftbank</div>
+
+            {!enterOtp && <Stack my={10}>
+              <TextInput
+                placeholder="Mobile Number"
+            />
             <div className={classes.titlebox}>
               <div className={classes.titlebold}>Shiftbank</div>
             </div>
@@ -184,8 +216,33 @@ export function LoginSIgnupPage() {
                 placeholder="OTP"
                 type={"number"}
                 required
+                classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+                value={mobile}
+                onChange={(e) => setMobile(e.currentTarget.value)}
+              />
+              <TextInput
+                placeholder="Email"
+                type={"email"}
                 mt="md"
                 classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+                required
+                value={email}
+                onChange={(e) => setEmail(e.currentTarget.value)}
+              />
+
+              <Group className={classes.buttoncontainer} mt={15}>
+                <Button className={classes.button} loading={signUpLoading} onClick={() => { SignUp(mobile, email, 1); setSignUpLoading(true); }}>Sign Up</Button>
+                <Button className={classes.button} loading={signinLoading} onClick={() => { SignUp(mobile, email, 0); setSignInLoading(true); }}>Sign In</Button>
+              </Group>
+            </Stack>}
+
+            {enterOtp &&
+              <Stack my={20}>
+                <Text c={"#656565"} fz={"lg"} style={{ letterSpacing: "0.1em" }} ml={15}>Enter OTP</Text>
+                <PinInput inputMode='numeric' value={otp} onChange={(e) => setOtp(e)} mx="auto" />
+                <Button className={classes.control} onClick={() => { console.log(otp); validate(mobile, otp); }}>Confirm</Button>
+              </Stack>}
+
               /> : <></>
             }
 
