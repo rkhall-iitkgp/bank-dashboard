@@ -121,10 +121,10 @@ const StyledText1 = styled.div`
   text-align: center;
   color: #0052b3;
 `
-
-export default function BankAccount(props: {
-  setAddAccount: (arg0: boolean) => void
-}) {
+interface Props {
+  setAddAccount: Function;
+}
+export default function BankAccount({setAddAccount}:Props) {
   return (
     <StyledContainer>
       <Iflex>
@@ -132,7 +132,7 @@ export default function BankAccount(props: {
 
         <StyledButton
           onClick={() => {
-            props.setAddAccount(true)
+            setAddAccount(true)
             const body = document.body
             const scrollY = body.style.top
             body.style.position = 'fixed'
