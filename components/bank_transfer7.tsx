@@ -12,6 +12,7 @@ const StyledContainer = styled.div`
   height: 100vh;
   width: 100vw;
   font-family: 'Montserrat';
+  background-color: '#EEEEEE';
   font-style: normal;
 `
 const StyledCont = styled.div`
@@ -57,14 +58,13 @@ const StyledText = styled.div`
 const StyledBut = styled.div`
   padding: 15px;
   height: 5vh;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 1rem;
-  line-height: 20px;
+  line-height: 29px;
   background: #0062d6;
   border-radius: 30px;
   margin-top: 25px;
-  font-family: 'Montserrat';
-  font-style: normal;
+
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -126,7 +126,7 @@ export default function GenOtp2() {
         {/* <StyledHead>
           <StyledText>Bank Transfer</StyledText>
         </StyledHead> */}
-        <Heading />
+        <Heading title="Bank Transfer" />
         <StyledBot>
           <StyledBotCont>
             <StyledTexthead>Payment Successful</StyledTexthead>

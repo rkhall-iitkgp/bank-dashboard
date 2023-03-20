@@ -4,9 +4,11 @@ import {
   Button,
   Group,
   rem,
-  PinInput
-} from '@mantine/core';
-import Link from 'next/link';
+  PinInput,
+} from '@mantine/core'
+import Link from 'next/link'
+import ButtonGroup from './SmallComponents/ButtonGroup'
+import Heading from './SmallComponents/Heading'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: `100vh`,
@@ -18,31 +20,26 @@ const useStyles = createStyles((theme) => ({
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
-    background: `grey`
+    background: `grey`,
   },
   titlebox: {
     display: `flex`,
     justifyContent: `center`,
-
-
   },
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     lineHeight: 1,
     fontWeight: 500,
     margin: `0.8rem`,
-
   },
   titlebold: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: 'Montserrat',
     lineHeight: 1,
     fontWeight: 600,
-    fontSize: `1.5rem`,
+    fontSize: `20px`,
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
-
-
   },
 
   description: {
@@ -50,17 +47,16 @@ const useStyles = createStyles((theme) => ({
     fontSize: `1rem`,
     padding: `0.5rem`,
     textAlign: `center`,
-    marginTop: `10px`
+    marginTop: `30px`,
   },
 
   form: {
     backgroundColor: theme.white,
-    borderRadius: theme.radius.md,
+    borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    width: `500px`,
-    color: `#0052B3`
+    width: `40vw`,
+    color: `#0052B3`,
   },
-
 
   input: {
     backgroundColor: theme.white,
@@ -71,16 +67,16 @@ const useStyles = createStyles((theme) => ({
       color: theme.colors.gray[5],
     },
     border: '0',
-    borderRadius: "0",
+    borderRadius: '0',
     background: 'transparent',
-    borderBottom: `2px solid #eee`
+    borderBottom: `2px solid #eee`,
   },
 
   inputLabel: {
     color: theme.black,
     position: `absolute`,
     top: `1.5rem`,
-    transition: `0.25s ease`
+    transition: `0.25s ease`,
   },
   inputcontainer: {
     position: `relative`,
@@ -90,20 +86,21 @@ const useStyles = createStyles((theme) => ({
 
   control: {
     backgroundColor: `#006AE4`,
-    borderRadius: `20px`
+    borderRadius: `20px`,
   },
   forminside: {
     maxWidth: `90%`,
-    width: `500px`,
-    padding: theme.spacing.xl,
-    margin: `auto`
+    width: `40vw`,
+    // padding: theme.spacing.xl,
+    margin: `auto`,
+    padding: '30px',
   },
 
   buttoncontainer: {
     display: `flex`,
     justifyContent: `space-between   `,
     // margin:`1rem`,
-    marginTop: `2rem`
+    marginTop: `2rem`,
   },
   button: {
     width: `150px`,
@@ -119,43 +116,45 @@ const useStyles = createStyles((theme) => ({
     borderTopRightRadius: theme.radius.md,
     alignItems: `center`,
   },
-
-
-}));
+}))
 
 function Demo() {
   return (
     <Group position="center">
       <PinInput placeholder="" />
     </Group>
-  );
+  )
 }
 export function UpiTransfer5() {
-  const { classes } = useStyles();
+  const { classes } = useStyles()
   return (
     <div className={classes.wrapper}>
-
       <div className={classes.form}>
-        <div className={classes.topheading}>
-
-          <div className={classes.title}>UPI Transfer</div>
-        </div>
+        <Heading title="UPI Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
-            <div className={classes.titlebold}><span >Enter PIN</span></div>
-
+            <div className={classes.titlebold}>
+              <span>Enter PIN</span>
+            </div>
           </div>
           <div className={classes.description}>
             <Demo />
           </div>
-          <div className={classes.buttoncontainer}>
-            <Link href='/UPI/Review'><Button className={classes.button} onClick={() => {
-            }}>Back</Button></Link>
-            <Link href='/UPI/Success'><Button className={classes.button} onClick={() => {
-            }}>Continue</Button></Link>
-          </div>
+          {/* <div className={classes.buttoncontainer}>
+            <Link href="/UPI/Review">
+              <Button className={classes.button} onClick={() => {}}>
+                Back
+              </Button>
+            </Link>
+            <Link href="/UPI/Success">
+              <Button className={classes.button} onClick={() => {}}>
+                Continue
+              </Button>
+            </Link>
+          </div> */}
+          <ButtonGroup href1="/UPI/Review" href2="/UPI/Success" />
         </div>
       </div>
     </div>
-  );
+  )
 }
