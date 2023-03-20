@@ -145,14 +145,14 @@ export default function BankAccount(props: { setAddAccount: (arg0: boolean) => v
       <Oflex>
         <StyledCard>
           <StyledImage>
-            <Image src='images/sbi 1.png' />
+            <Image src='images/sbi 1.png' alt="sbi" />
           </StyledImage>
           <Styledplus>STATE BANK OF INDIA</Styledplus>
           <StyledText1>9878</StyledText1>
         </StyledCard>
         <StyledAddCard>
           <StyledImage1>
-            <Image src='images/frame .png' />
+            <Image src='images/frame .png' alt="add" />
           </StyledImage1>
         </StyledAddCard>
       </Oflex>

@@ -100,7 +100,7 @@ const LogoContainer = styled.div`
     text-align: center;
     font-size: 14px;
   }
-  img {
+  Image {
     width: 80px;
     aspect-ratio: 1;
     object-fit: cover;
@@ -123,15 +123,15 @@ function SeeYourAnalysis() {
           <h4>Make Payment</h4>
           <LogoContainer>
             <div>
-              <img src={url} alt="" />
+              <Image src={url} alt="" />
               <p>UPI Payment</p>
             </div>
             <div>
-              <img src={url} alt="" />
+              <Image src={url} alt="" />
               <p>Bank Transfer</p>
             </div>
             <div>
-              <img src={url} alt="" />
+              <Image src={url} alt="" />
               <p>Pay Phone Number</p>
             </div>
           </LogoContainer>

@@ -127,7 +127,7 @@ const useStyles = createStyles((theme) => ({
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
-export function ContactUs(props: { setAddAccount: (arg0: boolean) => void }) {
+export function ContactUs(type={} , props: { setAddAccount: (arg0: boolean) => void }) {
   const { classes } = useStyles()
 
   // const icons = social.map((Icon, index) => (
