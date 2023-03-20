@@ -1,4 +1,10 @@
 import styled from '@emotion/styled'
+import {
+  ReactElement,
+  JSXElementConstructor,
+  ReactFragment,
+  ReactPortal,
+} from 'react'
 const StyledText = styled.div`
   font-weight: 500;
   font-size: 1.2rem;
@@ -17,10 +23,20 @@ const StyledHead = styled.div`
   border-radius: 30px 30px 0 0;
 `
 
-function Heading() {
+function Heading(props: {
+  title:
+    | string
+    | number
+    | boolean
+    | ReactElement<any, string | JSXElementConstructor<any>>
+    | ReactFragment
+    | ReactPortal
+    | null
+    | undefined
+}) {
   return (
     <StyledHead>
-      <StyledText>Bank Transfer</StyledText>
+      <StyledText>{props.title}</StyledText>
     </StyledHead>
   )
 }

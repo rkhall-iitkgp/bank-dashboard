@@ -2,6 +2,8 @@ import { createStyles, TextInput, Button, Group, rem } from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
+import ButtonGroup from './SmallComponents/ButtonGroup'
+import Heading from './SmallComponents/Heading'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 //   import { ContactIconsList } from '../ContactIcons/ContactIcons';
 const useStyles = createStyles((theme) => ({
@@ -31,27 +33,31 @@ const useStyles = createStyles((theme) => ({
     //   marginBottom:`10px`
   },
   titlebold: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    //   color: theme.black,
+    fontFamily: 'Montserrat',
     lineHeight: 1,
     fontWeight: 600,
-    fontSize: `1.5rem`,
-    display: `flex`,
-    justifyContent: `center`,
-    alignItems: `center`,
+    fontSize: '20px',
+    // lineHeight: '39px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // textAlign:' center',
+    // height: '72px',
+    marginBottom: '20px',
   },
 
   form: {
     backgroundColor: theme.white,
-    borderRadius: theme.radius.md,
+    borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    width: `500px`,
+    width: `40vw`,
+    height: '56vh',
     color: `#0052B3`,
   },
 
   forminside: {
     maxWidth: `90%`,
-    width: `500px`,
+    width: `40vw`,
     padding: theme.spacing.xl,
     margin: `auto`,
   },
@@ -77,7 +83,7 @@ const useStyles = createStyles((theme) => ({
     alignItems: `baseline`,
   },
   accountContainer: {
-    margin: `1rem`,
+    margin: `1rem 1rem 1rem 3.5rem`,
     padding: `0 1rem`,
     display: `flex`,
   },
@@ -170,9 +176,10 @@ export function Banktransfer() {
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        <div className={classes.topheading}>
+        {/* <div className={classes.topheading}>
           <div className={classes.title}>Bank Transfer</div>
-        </div>
+        </div> */}
+        <Heading title="Bank Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
             <div className={classes.titlebold}>
@@ -189,14 +196,15 @@ export function Banktransfer() {
             })}
           </div>
 
-          <div className={classes.buttoncontainer}>
+          {/* <div className={classes.buttoncontainer}>
             <Link href="/home">
               <Button className={classes.button}>Back</Button>
             </Link>
             <Link href="/BankTransfer/benfeiciary">
               <Button className={classes.button}>Continue</Button>
             </Link>
-          </div>
+          </div> */}
+          <ButtonGroup href1="/home" href2="/BankTransfer/benfeiciary" />
         </div>
       </div>
     </div>

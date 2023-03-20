@@ -1,12 +1,8 @@
-import {
-  createStyles,
-  TextInput,
-  Button,
-  Group,
-  rem,
-} from '@mantine/core';
-import Link from 'next/link';
+import { createStyles, TextInput, Button, Group, rem } from '@mantine/core'
+import Link from 'next/link'
 import { useState } from 'react'
+import ButtonGroup from './SmallComponents/ButtonGroup'
+import Heading from './SmallComponents/Heading'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 //   import { ContactIconsList } from '../ContactIcons/ContactIcons';
 const useStyles = createStyles((theme) => ({
@@ -21,14 +17,12 @@ const useStyles = createStyles((theme) => ({
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
-    background: `grey`
+    background: `grey`,
   },
   titlebox: {
     // marginBottom:`20px`,
     display: `flex`,
     justifyContent: `space-between`,
-
-
   },
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -40,29 +34,28 @@ const useStyles = createStyles((theme) => ({
     //   marginBottom:`10px`
   },
   titlebold: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: 'Montserrat',
     //   color: theme.black,
     lineHeight: 1,
     fontWeight: 600,
-    fontSize: `1.5rem`,
+    fontSize: `20px`,
     display: `flex`,
     justifyContent: `center`,
-    alignItems: `center`
-
+    alignItems: `center`,
   },
 
   description: {
     color: `#737373`,
     fontSize: `0.5rem`,
-    padding: `0.5rem`
+    padding: `0.5rem`,
   },
 
   form: {
     backgroundColor: theme.white,
-    borderRadius: theme.radius.md,
+    borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    width: `500px`,
-    color: `#0052B3`
+    width: `40vw`,
+    color: `#0052B3`,
   },
 
   social: {
@@ -82,16 +75,16 @@ const useStyles = createStyles((theme) => ({
       color: theme.colors.gray[5],
     },
     border: '0',
-    borderRadius: "0",
+    borderRadius: '0',
     background: 'transparent',
-    borderBottom: `2px solid #eee`
+    borderBottom: `2px solid #eee`,
   },
 
   inputLabel: {
     color: theme.black,
     position: `absolute`,
     top: `1.5rem`,
-    transition: `0.25s ease`
+    transition: `0.25s ease`,
   },
   inputcontainer: {
     position: `relative`,
@@ -101,23 +94,23 @@ const useStyles = createStyles((theme) => ({
 
   control: {
     backgroundColor: `#006AE4`,
-    borderRadius: `20px`
+    borderRadius: `20px`,
   },
   forminside: {
     maxWidth: `90%`,
-    width: `500px`,
+    width: `40vw`,
     padding: theme.spacing.xl,
-    margin: `auto`
+    margin: `auto`,
   },
   beficiaryformcontainer: {
     width: `90%`,
-    margin: `auto`
+    margin: `auto`,
   },
   buttoncontainer: {
     display: `flex`,
     justifyContent: `space-between   `,
     // margin:`1rem`,
-    marginTop: `2rem`
+    marginTop: `2rem`,
   },
   button: {
     width: `150px`,
@@ -141,8 +134,7 @@ const useStyles = createStyles((theme) => ({
     color: `#0052B3`,
     padding: `10px`,
     minHeight: `60px`,
-    minWidth: `150px`
-
+    minWidth: `150px`,
   },
   amountinside: {
     maxWidth: `90%`,
@@ -155,28 +147,27 @@ const useStyles = createStyles((theme) => ({
     display: `flex`,
     justifyContent: `center`,
     textAlign: `end`,
-    alignItems: `center`
+    alignItems: `center`,
   },
   balance: {
     color: '#0052B3',
     fontSize: `1.2rem`,
     fontWeight: 600,
-    paddingLeft: `3px`
+    paddingLeft: `3px`,
   },
   accountnumber: {
     color: 'black',
     fontSize: `0.6rem`,
     fontWeight: 600,
     textAlign: `end`,
-    padding: `0 5px`
+    padding: `0 5px`,
   },
-
-}));
+}))
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
-export function PayBenficiary(props: { sbi: any; }) {
-  const { classes } = useStyles();
+export function PayBenficiary(props: { sbi: any }) {
+  const { classes } = useStyles()
 
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
@@ -186,17 +177,21 @@ export function PayBenficiary(props: { sbi: any; }) {
   const [otp, setOtp] = useState(false)
   return (
     <div className={classes.wrapper}>
-
       <div className={classes.form}>
-        <div className={classes.topheading}>
-
+        {/* <div className={classes.topheading}>
           <div className={classes.title}>Bank Transfer</div>
-        </div>
+        </div> */}
+        <Heading title="Bank Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
-            <div className={classes.titlebold}><span >Pay Beneficiary</span></div>
+            <div className={classes.titlebold}>
+              <span>Pay Beneficiary</span>
+            </div>
             <div className={classes.amountbox}>
-              <div className={classes.amountinside}><span>Balance:</span> <span className={classes.balance}> $5678.00</span></div>
+              <div className={classes.amountinside}>
+                <span>Balance:</span>{' '}
+                <span className={classes.balance}> $5678.00</span>
+              </div>
               <div className={classes.accountnumber}>XXXXXXXX1234</div>
             </div>
           </div>
@@ -204,59 +199,94 @@ export function PayBenficiary(props: { sbi: any; }) {
             <TextInput
               placeholder="Name*"
               mt="md"
-              classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+              classNames={{
+                input: classes.input,
+                label: classes.inputLabel,
+                root: classes.inputcontainer,
+              }}
               required
             />
             <TextInput
               placeholder="Account Number*"
-              type={"number"}
+              type={'number'}
               required
-              classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+              classNames={{
+                input: classes.input,
+                label: classes.inputLabel,
+                root: classes.inputcontainer,
+              }}
             />
             <TextInput
               placeholder="Re-enter Account Number*"
-              type={"number"}
+              type={'number'}
               required
-              classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+              classNames={{
+                input: classes.input,
+                label: classes.inputLabel,
+                root: classes.inputcontainer,
+              }}
             />
             <TextInput
               placeholder="Enter Amount*"
-              type={"number"}
+              type={'number'}
               mt="md"
-              classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+              classNames={{
+                input: classes.input,
+                label: classes.inputLabel,
+                root: classes.inputcontainer,
+              }}
               required
             />
-            {
-              props.sbi ? <>
+            {props.sbi ? (
+              <>
                 <TextInput
                   placeholder="IFSC*"
-                  type={"number"}
+                  type={'number'}
                   mt="md"
-                  classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+                  classNames={{
+                    input: classes.input,
+                    label: classes.inputLabel,
+                    root: classes.inputcontainer,
+                  }}
                   required
                 />
-                <div className={classes.description}>The user is responsible for ensuring the accuracy of the account number, name, and IFSC code entered, and the bank will not be held liable for any losses resulting from incorrect information</div>
-              </> : <></>
-
-            }
-
+                <div className={classes.description}>
+                  The user is responsible for ensuring the accuracy of the
+                  account number, name, and IFSC code entered, and the bank will
+                  not be held liable for any losses resulting from incorrect
+                  information
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
-          {
-            otp ? <TextInput
+          {otp ? (
+            <TextInput
               placeholder="OTP"
-              type={"number"}
+              type={'number'}
               required
               mt="md"
-              classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
-            /> : <></>
-          }
+              classNames={{
+                input: classes.input,
+                label: classes.inputLabel,
+                root: classes.inputcontainer,
+              }}
+            />
+          ) : (
+            <></>
+          )}
 
-          <div className={classes.buttoncontainer}>
+          {/* <div className={classes.buttoncontainer}>
             <Link href='/BankTransfer/benfeiciary'><Button className={classes.button} >Back</Button></Link>
             <Link href='/BankTransfer/Review'><Button className={classes.button}>Continue</Button></Link>
-          </div>
+          </div> */}
+          <ButtonGroup
+            href1="/BankTransfer/benfeiciary"
+            href2="/BankTransfer/Review"
+          />
         </div>
       </div>
     </div>
-  );
+  )
 }

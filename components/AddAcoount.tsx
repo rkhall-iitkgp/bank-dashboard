@@ -1,11 +1,6 @@
-import {
-  createStyles,
-  TextInput,
-  Button,
-  Group,
-  rem,
-} from '@mantine/core';
+import { createStyles, TextInput, Button, Group, rem } from '@mantine/core'
 import { useState } from 'react'
+import LongButton from './SmallComponents/LongButton'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 //   import { ContactIconsList } from '../ContactIcons/ContactIcons';
 const useStyles = createStyles((theme) => ({
@@ -28,7 +23,7 @@ const useStyles = createStyles((theme) => ({
     // overflow: `hidden`
   },
   titlebox: {
-    marginBottom: `10px`
+    marginBottom: `10px`,
   },
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -48,7 +43,7 @@ const useStyles = createStyles((theme) => ({
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
-    paddingBottom: `10px`
+    paddingBottom: `10px`,
   },
 
   description: {
@@ -65,7 +60,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.md,
     boxShadow: theme.shadows.lg,
     width: `500px`,
-    color: `#0052B3`
+    color: `#0052B3`,
   },
 
   social: {
@@ -79,7 +74,7 @@ const useStyles = createStyles((theme) => ({
     maxWidth: `90%`,
     width: `500px`,
     padding: theme.spacing.xl,
-    margin: `auto`
+    margin: `auto`,
   },
   input: {
     backgroundColor: theme.white,
@@ -90,16 +85,16 @@ const useStyles = createStyles((theme) => ({
       color: theme.colors.gray[5],
     },
     border: '0',
-    borderRadius: "0",
+    borderRadius: '0',
     background: 'transparent',
-    borderBottom: `2px solid #eee`
+    borderBottom: `2px solid #eee`,
   },
 
   inputLabel: {
     color: theme.black,
     position: `absolute`,
     top: `1.5rem`,
-    transition: `0.25s ease`
+    transition: `0.25s ease`,
   },
   inputcontainer: {
     position: `relative`,
@@ -112,7 +107,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: `20px`,
     width: `100%`,
     // marginTop: `20px`,
-    fontSize: `1rem`
+    fontSize: `1rem`,
   },
 
   topheading: {
@@ -126,14 +121,14 @@ const useStyles = createStyles((theme) => ({
   },
   beficiaryformcontainer: {
     width: `90%`,
-    margin: `auto`
+    margin: `auto`,
   },
-}));
+}))
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
-export function ContactUs(props: { setAddAccount: (arg0: boolean) => void; }) {
-  const { classes } = useStyles();
+export function ContactUs(props: { setAddAccount: (arg0: boolean) => void }) {
+  const { classes } = useStyles()
 
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
@@ -143,10 +138,8 @@ export function ContactUs(props: { setAddAccount: (arg0: boolean) => void; }) {
   const [otp, setOtp] = useState(false)
   return (
     <div className={classes.wrapper}>
-
       <div className={classes.form}>
         <div className={classes.topheading}>
-
           <div className={classes.title}>Add Account</div>
         </div>
         <div className={classes.forminside}>
@@ -156,48 +149,75 @@ export function ContactUs(props: { setAddAccount: (arg0: boolean) => void; }) {
           <div className={classes.beficiaryformcontainer}>
             <TextInput
               placeholder="Account Number"
-              type={"number"}
+              type={'number'}
               required
-              classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+              classNames={{
+                input: classes.input,
+                label: classes.inputLabel,
+                root: classes.inputcontainer,
+              }}
             />
             <TextInput
               placeholder="Mobile Number"
-              type={"number"}
+              type={'number'}
               mt="md"
-              classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+              classNames={{
+                input: classes.input,
+                label: classes.inputLabel,
+                root: classes.inputcontainer,
+              }}
             />
             <TextInput
               placeholder="IFSC"
               mt="md"
-              classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+              classNames={{
+                input: classes.input,
+                label: classes.inputLabel,
+                root: classes.inputcontainer,
+              }}
             />
-            {
-              otp ? <TextInput
+            {otp ? (
+              <TextInput
                 placeholder="OTP"
-                type={"number"}
-
+                type={'number'}
                 mt="md"
-                classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
-              /> : <></>
-            }
+                classNames={{
+                  input: classes.input,
+                  label: classes.inputLabel,
+                  root: classes.inputcontainer,
+                }}
+              />
+            ) : (
+              <></>
+            )}
 
             <Group mt="lg">
-              <Button className={classes.control} onClick={() => {
-                setOtp(true)
-              }}>{otp ? "Add Account" : "Get OTP"}</Button>
-              <Button className={classes.control} onClick={() => {
-                props.setAddAccount(false)
-                console.log(props.setAddAccount)
-                const body = document.body;
-                const scrollY = body.style.top;
-                body.style.position = '';
-                body.style.top = '';
-                window.scrollTo(0, parseInt(scrollY || '0') * -1);
-              }}>Back</Button>
+              <Button
+                className={classes.control}
+                onClick={() => {
+                  setOtp(true)
+                }}
+              >
+                {otp ? 'Add Account' : 'Get OTP'}
+              </Button>
+              <Button
+                className={classes.control}
+                onClick={() => {
+                  props.setAddAccount(false)
+                  console.log(props.setAddAccount)
+                  const body = document.body
+                  const scrollY = body.style.top
+                  body.style.position = ''
+                  body.style.top = ''
+                  window.scrollTo(0, parseInt(scrollY || '0') * -1)
+                }}
+              >
+                Back
+              </Button>
             </Group>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

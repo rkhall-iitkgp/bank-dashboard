@@ -1,13 +1,9 @@
-import {
-  createStyles,
-  TextInput,
-  Button,
-  Group,
-  rem,
-} from '@mantine/core';
-import Image from 'next/image';
-import Link from 'next/link';
+import { createStyles, TextInput, Button, Group, rem } from '@mantine/core'
+import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
+import ButtonGroup from './SmallComponents/ButtonGroup'
+import Heading from './SmallComponents/Heading'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 //   import { ContactIconsList } from '../ContactIcons/ContactIcons';
 const useStyles = createStyles((theme) => ({
@@ -22,14 +18,12 @@ const useStyles = createStyles((theme) => ({
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
-    background: `grey`
+    background: `grey`,
   },
   titlebox: {
     // marginBottom:`20px`,
     display: `flex`,
     justifyContent: `center`,
-
-
   },
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -41,39 +35,38 @@ const useStyles = createStyles((theme) => ({
     //   marginBottom:`10px`
   },
   titlebold: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: 'Montserrat',
     //   color: theme.black,
     lineHeight: 1,
     fontWeight: 600,
-    fontSize: `1.5rem`,
+    fontSize: `20px`,
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
-
-
+    // paddingBottom: `10px`,
   },
 
   form: {
     backgroundColor: theme.white,
-    borderRadius: theme.radius.md,
+    borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    width: `500px`,
-    color: `#0052B3`
+    // paddingBottom: '5px',
+    width: `40vw`,
+    color: `#0052B3`,
   },
-
 
   forminside: {
     maxWidth: `90%`,
-    width: `500px`,
+    width: `40vw`,
     padding: theme.spacing.xl,
-    margin: `auto`
+    margin: `auto`,
   },
 
   buttoncontainer: {
     display: `flex`,
     justifyContent: `space-between   `,
     // margin:`1rem`,
-    marginTop: `2rem`
+    marginTop: `2rem`,
   },
   button: {
     width: `150px`,
@@ -94,7 +87,6 @@ const useStyles = createStyles((theme) => ({
     // padding:`0 1rem`,
     display: `flex`,
     justifyContent: `center`,
-
   },
   account: {
     width: `80px`,
@@ -117,51 +109,71 @@ const useStyles = createStyles((theme) => ({
     ':active': {
       border: `2px dotted #0052B3;`,
       boxShadow: ` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
-    }
+    },
   },
   active: {
     boxShadow: ` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
-    border: `2px solid #0052B3`
+    border: `2px solid #0052B3`,
   },
   bankname: {
     lineHeight: `0.9rem`,
     fontSize: '0.80rem',
     fontWeight: 600,
     paddingTop: `4px`,
-    textAlign: `center`
-  }
-}));
+    textAlign: `center`,
+  },
+}))
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 function Account(props: {
   accountdata: {
-    name: any; id: any; src: any;
-  }; setAccount: (arg0: any) => void;
+    name: any
+    id: any
+    src: any
+  }
+  setAccount: (arg0: any) => void
 }) {
-  const { classes } = useStyles();
+  const { classes } = useStyles()
 
   return (
     <div>
-      <div className={classes.account} id={props.accountdata.id} onClick={(event) => {
-        props.setAccount(props.accountdata)
-        const accountlist = Array.from(document.getElementsByClassName(classes.account))
-        accountlist.forEach(e => {
-          e.classList.remove(classes.active)
-        })
-        document.getElementById(props.accountdata.id)?.classList.add(classes.active)
-      }}>
-        <Image src={'/../public/icons/' + props.accountdata.src + '.png'} width={50} height={50} alt={''} ></Image>
+      <div
+        className={classes.account}
+        id={props.accountdata.id}
+        onClick={(event) => {
+          props.setAccount(props.accountdata)
+          const accountlist = Array.from(
+            document.getElementsByClassName(classes.account),
+          )
+          accountlist.forEach((e) => {
+            e.classList.remove(classes.active)
+          })
+          document
+            .getElementById(props.accountdata.id)
+            ?.classList.add(classes.active)
+        }}
+      >
+        <Image
+          src={'/../public/icons/' + props.accountdata.src + '.png'}
+          width={50}
+          height={50}
+          alt={''}
+        ></Image>
       </div>
       <div className={classes.bankname}>{props.accountdata.name}</div>
     </div>
   )
 }
 export function UpiTransferHome() {
-  const { classes } = useStyles();
+  const { classes } = useStyles()
   const [account, setAccount] = useState({
-    id: 1
+    id: 1,
   })
-  let fetchedAccount = [{ id: 1, name: 'UPI Payment', src: `upi1` }, { id: 2, name: 'Bank Transfer', src: `bank-building-white` }, { id: 3, name: 'Pay Phone Number', src: `payphone1` }]
+  let fetchedAccount = [
+    { id: 1, name: 'UPI Payment', src: `upi1` },
+    { id: 2, name: 'Bank Transfer', src: `bank-building-white` },
+    { id: 3, name: 'Pay Phone Number', src: `payphone1` },
+  ]
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
   //     <Icon size="1.4rem" stroke={1.5} />
@@ -169,31 +181,34 @@ export function UpiTransferHome() {
   // ));
   return (
     <div className={classes.wrapper}>
-
       <div className={classes.form}>
-        <div className={classes.topheading}>
-
+        {/* <div className={classes.topheading}>
           <div className={classes.title}>Bank Transfer</div>
-        </div>
+        </div> */}
+        <Heading title="UPI Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
-            <div className={classes.titlebold}><span >Make Payment</span></div>
-
+            <div className={classes.titlebold}>
+              <span>Make Payment</span>
+            </div>
           </div>
           <div className={classes.accountContainer}>
-
             {fetchedAccount.map((ele) => {
-              return (<span key={ele.id}><Account setAccount={setAccount} accountdata={ele} /></span>)
+              return (
+                <span key={ele.id}>
+                  <Account setAccount={setAccount} accountdata={ele} />
+                </span>
+              )
             })}
           </div>
 
-
-          <div className={classes.buttoncontainer}>
+          {/* <div className={classes.buttoncontainer}>
             <Link href='/home'><Button className={classes.button}>Back</Button></Link>
             <Link href='/UPI/Verify'><Button className={classes.button} >Continue</Button></Link>
-          </div>
+          </div> */}
+          <ButtonGroup href1="/home" href2="/UPI/Verify" />
         </div>
       </div>
     </div>
-  );
+  )
 }
