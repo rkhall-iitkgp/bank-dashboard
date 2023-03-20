@@ -22,7 +22,6 @@ const Home: NextPage = () => {
       <LoginSIgnupPage />
       {/* <PayBenficiary sbi={true}/> */}
       {/* <OTP /> */}
-      <LoginSIgnupPage />
       {/* <Banktransfer/> */}
       {/* <BeneficiaryBank/> */}
       {/* <UpiTransferHome /> */}
