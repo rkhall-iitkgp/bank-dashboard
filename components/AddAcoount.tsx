@@ -1,6 +1,6 @@
 import { createStyles, TextInput, Button, Group, rem } from '@mantine/core'
 import { useState } from 'react'
-import LongButton from './SmallComponents/LongButton'
+// import LongButton from './SmallComponents/LongButton'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 //   import { ContactIconsList } from '../ContactIcons/ContactIcons';
 const useStyles = createStyles((theme) => ({

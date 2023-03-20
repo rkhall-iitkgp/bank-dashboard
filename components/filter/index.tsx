@@ -13,7 +13,7 @@ const PeriodButton = styled(Button)`
     margin: 1rem;
 `;
 
-const PeriodItem = (prop: {id:Number, curId: number, text:String, setId:Function}) => {
+const PeriodItem = (prop: {id:Number, curId: number, text:string, setId:Function}) => {
     const {id, text, setId, curId} = prop;
     return (
         <PeriodButton style={{
