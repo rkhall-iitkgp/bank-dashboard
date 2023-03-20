@@ -2,12 +2,7 @@ import {
   createStyles,
   TextInput,
   Button,
-  Group,
-  rem,
 } from '@mantine/core';
-import { useState } from 'react'
-//   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
-//   import { ContactIconsList } from '../ContactIcons/ContactIcons';
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,

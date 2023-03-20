@@ -3,15 +3,11 @@ import {
   TextInput,
   Button,
   Group,
-  rem,
   PinInput,
 } from '@mantine/core'
-import Link from 'next/link'
 import { useState } from 'react'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
-import styled from '@emotion/styled';
-import { ButtonProps, createPolymorphicComponent } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {

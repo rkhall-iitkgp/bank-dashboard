@@ -3,7 +3,6 @@ function _upiTransfer5() {
   return (
     <div>
         <UpiTransfer5 />
-        {/* hi */}
     </div>
   )
 }

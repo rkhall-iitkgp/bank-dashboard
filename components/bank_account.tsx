@@ -1,9 +1,6 @@
 import styled from '@emotion/styled'
 import { ButtonProps, createPolymorphicComponent } from '@mantine/core'
 import { Image } from '@mantine/core'
-import logo from './sbi 1.png'
-import circle from './Frame .png'
-import { Text } from '@mantine/core'
 import {
   // Box, CSSObject, rem , Flex,
   Button,

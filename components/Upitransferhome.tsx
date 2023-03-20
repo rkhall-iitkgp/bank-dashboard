@@ -1,11 +1,8 @@
-import { createStyles, TextInput, Button, Group, rem } from '@mantine/core'
+import { createStyles } from '@mantine/core'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useState } from 'react'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
-//   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
-//   import { ContactIconsList } from '../ContactIcons/ContactIcons';
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,

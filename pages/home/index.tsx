@@ -1,7 +1,3 @@
-// import Payment from "../../components/make-payment"
-
-// export default Payment;
-
 import type { NextPage } from 'next'
 import BankAccount from '../../components/bank_account'
 import Payment from "../../components/make-payment"

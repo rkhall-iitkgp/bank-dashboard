@@ -1,13 +1,6 @@
 import {
-  Card,
   Image,
-  Text,
-  Badge,
-  Button,
-  Group,
   MantineProvider,
-  Container,
-  Title,
 } from '@mantine/core'
 // import MantineProvider  from '@mantine/core';
 // import { ButtonProps, createPolymorphicComponent } from '@mantine/core'

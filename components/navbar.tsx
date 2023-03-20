@@ -1,16 +1,15 @@
 import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core'
 import styled from '@emotion/styled'
-import { subtle } from 'crypto'
 
 const StyledNavbar = styled.nav`
-    display: flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
   background-color: #fff;
   height: 4rem;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  width:100%;
+  width: 100%;
 `
 const BankName = styled.h1`
   vertical-align: middle;
@@ -43,9 +42,9 @@ const _StyledButton = styled(Button)`
     transform: scale(1.05);
     transition-duration: 0.25s;
   }
-    &:focus {
-        background-color: white;
-    }
+  &:focus {
+    background-color: white;
+  }
 `
 
 const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
@@ -68,21 +67,33 @@ function Navbar() {
   return (
     <StyledNavbar>
       <BankName>shiftbank</BankName>
-        <StyledButtonBar>
-          <StyledButton variant="gradient" gradient={{from: 'white', to: 'white'}}>
-            <NavbarIcons src="/images/dashboard.png"></NavbarIcons>Dashboard
-          </StyledButton>
-          <StyledButton variant="gradient" gradient={{from: 'white', to: 'white'}}>
-            <NavbarIcons src="/images/aboutus.png"></NavbarIcons>About Us
-          </StyledButton>
-          <StyledButton variant="gradient" gradient={{from: 'white', to: 'white'}}>
-            <NavbarIcons src="/images/support.png"></NavbarIcons>Support
-          </StyledButton>
-          <StyledButton variant="gradient" gradient={{from: 'white', to: 'white'}}>
-            <NavbarIcons src="/images/FAQs.png"></NavbarIcons>FAQs
-          </StyledButton>
-          <StyledUserImage src="/images/dp.png"></StyledUserImage>
-        </StyledButtonBar>
+      <StyledButtonBar>
+        <StyledButton
+          variant="gradient"
+          gradient={{ from: 'white', to: 'white' }}
+        >
+          <NavbarIcons src="/images/dashboard.png"></NavbarIcons>Dashboard
+        </StyledButton>
+        <StyledButton
+          variant="gradient"
+          gradient={{ from: 'white', to: 'white' }}
+        >
+          <NavbarIcons src="/images/aboutus.png"></NavbarIcons>About Us
+        </StyledButton>
+        <StyledButton
+          variant="gradient"
+          gradient={{ from: 'white', to: 'white' }}
+        >
+          <NavbarIcons src="/images/support.png"></NavbarIcons>Support
+        </StyledButton>
+        <StyledButton
+          variant="gradient"
+          gradient={{ from: 'white', to: 'white' }}
+        >
+          <NavbarIcons src="/images/FAQs.png"></NavbarIcons>FAQs
+        </StyledButton>
+        <StyledUserImage src="/images/dp.png"></StyledUserImage>
+      </StyledButtonBar>
     </StyledNavbar>
   )
 }

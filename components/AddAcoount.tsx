@@ -125,16 +125,11 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-//   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
-
-export function ContactUs(type={} , props: { setAddAccount: (arg0: boolean) => void }) {
+interface Props {
+  setAddAccount: Function
+}
+export function ContactUs({ setAddAccount }: Props) {
   const { classes } = useStyles()
-
-  // const icons = social.map((Icon, index) => (
-  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-  //     <Icon size="1.4rem" stroke={1.5} />
-  //   </ActionIcon>
-  // ));
   const [otp, setOtp] = useState(false)
   return (
     <div className={classes.wrapper}>
@@ -203,8 +198,7 @@ export function ContactUs(type={} , props: { setAddAccount: (arg0: boolean) => v
               <Button
                 className={classes.control}
                 onClick={() => {
-                  props.setAddAccount(false)
-                  console.log(props.setAddAccount)
+                  setAddAccount(false)
                   const body = document.body
                   const scrollY = body.style.top
                   body.style.position = ''
