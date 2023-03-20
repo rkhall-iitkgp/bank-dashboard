@@ -13,8 +13,7 @@ const StyledText = styled.div`
   font-style: normal;
 `
 const StyledHead = styled.div`
-  height: 10vh;
-  width: 40vw;
+  padding-top: 18px;
   background: #ddedff;
   display: flex;
   justify-content: center;

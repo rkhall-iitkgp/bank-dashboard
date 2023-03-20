@@ -51,13 +51,14 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
     width: `40vw`,
-    height: '56vh',
+    minWidth: `600px`,
     color: `#0052B3`,
   },
 
   forminside: {
     maxWidth: `90%`,
     width: `40vw`,
+    minWidth: `500px`,
     padding: theme.spacing.xl,
     margin: `auto`,
   },
@@ -83,9 +84,13 @@ const useStyles = createStyles((theme) => ({
     alignItems: `baseline`,
   },
   accountContainer: {
-    margin: `1rem 1rem 1rem 3.5rem`,
+    margin: `1rem 1rem 1rem 1rem`,
     padding: `0 1rem`,
     display: `flex`,
+    flexDirection: `row`,
+    justifyContent: `space-between`,
+    alignItems: `center`,
+    minWidth: `400px`,
   },
   account: {
     width: `100px`,
@@ -195,15 +200,7 @@ export function Banktransfer() {
               )
             })}
           </div>
-
-          {/* <div className={classes.buttoncontainer}>
-            <Link href="/home">
-              <Button className={classes.button}>Back</Button>
-            </Link>
-            <Link href="/BankTransfer/benfeiciary">
-              <Button className={classes.button}>Continue</Button>
-            </Link>
-          </div> */}
+          
           <ButtonGroup href1="/home" href2="/BankTransfer/benfeiciary" />
         </div>
       </div>
