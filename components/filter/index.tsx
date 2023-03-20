@@ -2,7 +2,6 @@ import { Button, Text, Group, Stack, Image, PinInput } from "@mantine/core";
 import {DateInput} from "@mantine/dates"
 import styled from '@emotion/styled';
 import { useState } from "react";
-
 const PeriodButton = styled(Button)`
     width: 213px;
     height: 48px;
@@ -16,12 +15,15 @@ const PeriodButton = styled(Button)`
 const PeriodItem = (prop: {id:Number, curId: number, text:string, setId:Function}) => {
     const {id, text, setId, curId} = prop;
     return (
-        <PeriodButton style={{
+        // <>
+        <Button style={{
+            
                 backgroundColor: id === curId ? '#0062D6' : '#FFFFFF',
                 color: id === curId ? '#FFFFFF' : '#0062D6',
         }} onClick = {() => setId(id)}>
             {text}
-        </PeriodButton> 
+         </Button>
+    
     )
 }
 
@@ -37,7 +39,7 @@ const AccountSelect = (prop: {account: number, setAccount: Function, curSelectio
             margin: "0.5rem"
         }} radius="xl"
          onClick={() => setAccount(account)} fw="bold" fz={"lg"} size="xl">
-            <Image src={"icons/sbi.png"} mr={25}/>
+            <Image src={"icons/sbi.png"} mr={25} alt="sbi"/>
             {account}
         </Button>
     )
@@ -81,7 +83,7 @@ const Filter = () => {
         </Text>
 
         <Group>
-            {accounts.map(v => <AccountSelect account={v} setAccount={setAccount}
+            {accounts.map((it,v) => <AccountSelect key={it} account={v} setAccount={setAccount}
                 curSelection={account} 
             />)}
         </Group>

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Card, Image, Text, Badge, Button, Group, Stack } from '@mantine/core';
 import Link from 'next/link';
 
-const PaymentImage = styled(Card)`
+const PaymentImage = styled(Group)`
     background-color: #0062D6;
     height: 120px;
     width: 120px;
@@ -35,49 +35,49 @@ const Payment = () => {
 
                 <Group style={{ justifyContent: 'space-evenly', alignItems: 'flex-start' }} my={20}>
                     <Link href='/BankTransfer' style={{ textDecoration: 'none' }}><PaymentStack>
-                        <PaymentImage><Image src='icons/bank-building.png' height={80} width={80} mx={'auto'} /></PaymentImage>
+                        <PaymentImage><Image src='icons/bank-building.png' alt='bank-building' height={80} width={80} mx={'auto'} /></PaymentImage>
                         <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{ lineHeight: 1, textAlign: "center" }}>Bank Transfer</Text>
                     </PaymentStack>
                     </Link>
                     <Link href='/UPI'>
                         <PaymentStack>
                             <PaymentImage>
-                                <Image src='icons/upi.png' height={90} width={90} mx={'auto'} fit={'contain'} />
+                                <Image src='icons/upi.png' alt="upi" height={90} width={90} mx={'auto'} fit={'contain'} />
                             </PaymentImage>
                             <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{ lineHeight: 1, textAlign: "center" }}>UPI Payment</Text>
                         </PaymentStack>
                     </Link>
                     <PaymentStack>
                         <PaymentImage>
-                            <Image src='icons/payphone.png' height={80} width={80} mx={'auto'} fit={'contain'} />
+                            <Image src='icons/payphone.png' alt='payphone' height={80} width={80} mx={'auto'} fit={'contain'} />
                         </PaymentImage>
                         <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{ lineHeight: 1, textAlign: "center" }}>Pay Phone Number</Text>
                     </PaymentStack>
 
                     <PaymentStack>
                         <PaymentImage>
-                            <Image src='icons/person.png' height={80} width={80} mx={'auto'} fit={'contain'} />
+                            <Image src='icons/person.png' alt='person' height={80} width={80} mx={'auto'} fit={'contain'} />
                         </PaymentImage>
                         <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{ lineHeight: 1, textAlign: "center" }}>Self Transfer</Text>
                     </PaymentStack>
 
                     <PaymentStack>
                         <PaymentImage>
-                            <Image src='icons/investments.png' height={80} width={80} mx={'auto'} fit={'contain'} mt={5} />
+                            <Image src='icons/investments.png' alt='investments' height={80} width={80} mx={'auto'} fit={'contain'} mt={5} />
                         </PaymentImage>
                         <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{ lineHeight: 1, textAlign: "center" }}>Make Investment</Text>
                     </PaymentStack>
 
                     <PaymentStack>
                         <PaymentImage>
-                            <Image src='icons/insurance.png' height={80} width={80} mx={'auto'} />
+                            <Image src='icons/insurance.png' alt='insurance' height={80} width={80} mx={'auto'} />
                         </PaymentImage>
                         <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{ lineHeight: 1, textAlign: "center" }}>Get Insurance</Text>
                     </PaymentStack>
 
                     <PaymentStack>
                         <PaymentImage>
-                            <Image src='icons/mobile-recharge.png' height={80} width={80} ml={1} fit={'contain'} />
+                            <Image src='icons/mobile-recharge.png' alt='mobile' height={80} width={80} ml={1} fit={'contain'} />
                         </PaymentImage>
                         <Text c={'#0062D6'} fz={"lg"} fw={500} w={120} style={{ lineHeight: 1, textAlign: "center" }}>Mobile Recharge</Text>
                     </PaymentStack>
