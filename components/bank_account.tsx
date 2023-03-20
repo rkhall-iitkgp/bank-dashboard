@@ -54,6 +54,10 @@ const StyledImage = styled.div`
 const StyledImage1 = styled.div`
   width: 140px;
   height: 140px;
+  &:hover{
+    width:160px;
+    height:160px;
+  }
 `;
 
 const StyledCard = styled.div`
