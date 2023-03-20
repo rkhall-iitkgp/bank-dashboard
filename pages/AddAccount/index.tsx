@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { ContactUs } from '../../components/AddAcoount'
-const index = () => {
+
+const Index = () => {
+  const [addAccount, setAddAccount] = useState<boolean>(false);
   return (
-    <ContactUs />
+    <ContactUs setAddAccount={setAddAccount} />
   )
 }
 
-export default index
+export default Index

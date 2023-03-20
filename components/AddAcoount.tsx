@@ -1,5 +1,5 @@
 import { createStyles, TextInput, Button, Group, rem } from '@mantine/core'
-import { useState } from 'react'
+import { useState, Dispatch, SetStateAction } from 'react'
 // import LongButton from './SmallComponents/LongButton'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 //   import { ContactIconsList } from '../ContactIcons/ContactIcons';
@@ -127,7 +127,11 @@ const useStyles = createStyles((theme) => ({
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
-export function ContactUs(type={} , props: { setAddAccount: (arg0: boolean) => void }) {
+type Props = {
+  setAddAccount: Dispatch<SetStateAction<boolean>>
+}
+
+export const ContactUs = ({setAddAccount}: Props) =>{
   const { classes } = useStyles()
 
   // const icons = social.map((Icon, index) => (
@@ -203,8 +207,7 @@ export function ContactUs(type={} , props: { setAddAccount: (arg0: boolean) => v
               <Button
                 className={classes.control}
                 onClick={() => {
-                  props.setAddAccount(false)
-                  console.log(props.setAddAccount)
+                  setAddAccount(false)
                   const body = document.body
                   const scrollY = body.style.top
                   body.style.position = ''
