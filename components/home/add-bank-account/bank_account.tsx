@@ -1,8 +1,9 @@
 import styled from '@emotion/styled'
-import { ButtonProps, createPolymorphicComponent } from '@mantine/core'
-import { Image } from '@mantine/core'
 import {
   Button,
+  ButtonProps,
+  createPolymorphicComponent,
+  Image,
 } from '@mantine/core'
 
 const Oflex = styled.div`
@@ -22,38 +23,41 @@ const Iflex = styled.div`
 `
 
 const _StyledButton = styled(Button)`
-  background: #0062d6;
   border-radius: 30px;
-  font-family: 'Montserrat';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 1.5rem;
+  color: white;
+  font-weight: 400;
+  font-size: 24px;
   line-height: 30px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  color: #ffffff;
-  //margin-right: 50px;
+  font-family: Montserrat, sans-serif;
+  padding: 4px 48px;
+  height: 42px;
+  :hover {
+    cursor: pointer;
+    transform: scale(1.02);
+  }
 `
-const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
+
+const AddAccountButton = createPolymorphicComponent<'button', ButtonProps>(
   _StyledButton,
 )
-const StyledImage = styled.div`
+const BankImage = styled.div`
   width: 90px;
   height: 30px;
 `
-const StyledImage1 = styled.div`
-  width: 140px;
-  height: 140px;
-  &:hover {
-    width: 160px;
-    height: 160px;
+
+const PlusImageContainer = styled.div`
+  width: 110px;
+  height: 120px;
+  :hover {
+    cursor: pointer;
+    transform: scale(1.4);
+    transition: all 0.1s ease-in-out;
   }
 `
 
 const StyledCard = styled.div`
-  width: 160px;
-  height: 190px;
+  min-width: 150px;
+  min-height: 150px;
   background: rgba(0, 82, 179, 0.1);
   border: 2px solid #0052b3;
   border-radius: 30px;
@@ -62,12 +66,12 @@ const StyledCard = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  padding: 20px 20px;
+  padding: 24px;
 `
 
-const StyledAddCard = styled.div`
-  width: 160px;
-  height: 190px;
+const AddAnotherBox = styled.div`
+  min-width: 150px;
+  min-height: 150px;
   background: rgba(0, 82, 179, 0.1);
   border: 2px dashed #0052b3;
   border-radius: 30px;
@@ -77,16 +81,16 @@ const StyledAddCard = styled.div`
   margin-right: 35px;
 `
 
-const StyledContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 4vh 3vw 0 3vw;
+  margin: 3vh 3vw 0 3vw;
   border-radius: 30px;
   box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.2);
   padding: 0 52px 40px 52px;
 `
 
-const StyledText = styled.div`
+const AddBankAccountText = styled.div`
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 600;
@@ -95,15 +99,13 @@ const StyledText = styled.div`
   display: flex;
   align-items: center;
   text-align: center;
-  //margin-left: 30px;
   color: #0052b3;
 `
-const StyledText2 = styled.div`
+const AccountNumber = styled.div`
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 600;
   font-size: 1.1rem;
-  line-height: 49px;
   text-align: center;
   color: black;
 `
@@ -119,40 +121,46 @@ const StyledText1 = styled.div`
   text-align: center;
   color: #0052b3;
 `
-interface Props {
-  setAddAccount: Function;
-}
-export default function BankAccount({setAddAccount}:Props) {
-  return (
-    <StyledContainer>
-      <Iflex>
-        <StyledText>Add Bank Account</StyledText>
 
-        <StyledButton
+interface Props {
+  setAddAccount: Function
+}
+export default function BankAccount({ setAddAccount }: Props) {
+  return (
+    <Container>
+      <Iflex>
+        <AddBankAccountText>Add Bank Account</AddBankAccountText>
+        <AddAccountButton
           onClick={() => {
             setAddAccount(true)
             const body = document.body
-            const scrollY = body.style.top
             body.style.position = 'fixed'
           }}
+          variant="gradient"
+          gradient={{ from: '#0062D6', to: '#0062D6' }}
         >
           Add Account
-        </StyledButton>
+        </AddAccountButton>
       </Iflex>
       <Oflex>
         <StyledCard>
-          <StyledImage>
-            <Image src="images/sbi 1.png" alt="sbi" />
-          </StyledImage>
-          <StyledText1>STATE BANK OF INDIA</StyledText1>
-          <StyledText2>9878</StyledText2>
+          <BankImage>
+            <Image src="images/sbi1.png" alt="sbi" />
+          </BankImage>
+          <AccountNumber>****9878</AccountNumber>
         </StyledCard>
-        <StyledAddCard>
-          <StyledImage1>
-            <Image src="images/frame .png" alt="add" />
-          </StyledImage1>
-        </StyledAddCard>
+        <AddAnotherBox>
+          <PlusImageContainer
+            onClick={() => {
+              setAddAccount(true)
+              const body = document.body
+              body.style.position = 'fixed'
+            }}
+          >
+            <Image src="images/frame.png" alt="add" />
+          </PlusImageContainer>
+        </AddAnotherBox>
       </Oflex>
-    </StyledContainer>
+    </Container>
   )
 }

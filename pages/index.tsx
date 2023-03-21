@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { LoginSignupPage } from '../components/LoginSignup/LoginSIgnupPage'
+import { LoginSignupPage } from '../components/login-signup/LoginSIgnupPage'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
