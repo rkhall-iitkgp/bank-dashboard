@@ -1,17 +1,7 @@
-import {
-  createStyles,
-  TextInput,
-  Button,
-  Group,
-  rem,
-  PinInput,
-} from '@mantine/core'
-import Link from 'next/link'
+import { createStyles, TextInput, Button, Group, PinInput } from '@mantine/core'
 import { useState } from 'react'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
-import styled from '@emotion/styled';
-import { ButtonProps, createPolymorphicComponent } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -114,13 +104,12 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: `#0062D6`,
     borderRadius: `20px`,
   },
- 
-  buttonVerify:{
-      // height:``,
-      width:`100px`,
-      backgroundColor: `#ffffff`,
-      // borderRadius:,
-   
+
+  buttonVerify: {
+    // height:``,
+    width: `100px`,
+    backgroundColor: `#ffffff`,
+    // borderRadius:,
   },
   topheading: {
     width: `100%`,
@@ -131,8 +120,7 @@ const useStyles = createStyles((theme) => ({
     borderTopRightRadius: theme.radius.md,
     alignItems: `center`,
   },
-  
-}));
+}))
 function Demo() {
   return (
     <Group position="center">
@@ -160,19 +148,38 @@ export function VerifyUPI() {
         <Heading title="UPI Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
-          <div className={classes.titlebold}><span >Verify UPI</span></div>
+            <div className={classes.titlebold}>
+              <span>Verify UPI</span>
+            </div>
           </div>
-         <div className={classes.description}>
-         <TextInput
-           placeholder="Enter UPI ID*" withAsterisk style={style}
-           rightSection={<Button className={classes.buttonVerify} style={style2}onClick={handleClick}>{buttonText}</Button>}
-          />
+          <div className={classes.description}>
+            <TextInput
+              placeholder="Enter UPI ID*"
+              withAsterisk
+              style={style}
+              rightSection={
+                <Button
+                  className={classes.buttonVerify}
+                  style={style2}
+                  onClick={handleClick}
+                >
+                  {buttonText}
+                </Button>
+              }
+            />
           </div>
           <div className={classes.buttoncontainer}>
-          <Button className={classes.button} onClick={()=>{
-            }}>Back</Button>
-            <Button variant="gradient" gradient={{ from: 'white', to: 'white' }} className={classes.button} onClick={()=>{
-            }}>Continue</Button>
+            <Button className={classes.button} onClick={() => {}}>
+              Back
+            </Button>
+            <Button
+              variant="gradient"
+              gradient={{ from: 'white', to: 'white' }}
+              className={classes.button}
+              onClick={() => {}}
+            >
+              Continue
+            </Button>
           </div>
           <div className={classes.description}>
             <TextInput

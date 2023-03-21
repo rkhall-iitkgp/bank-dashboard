@@ -1,18 +1,5 @@
-import {
-  Card,
-  Image,
-  Text,
-  Badge,
-  Button,
-  Group,
-  MantineProvider,
-  Container,
-  Title,
-} from '@mantine/core'
-// import MantineProvider  from '@mantine/core';
-// import { ButtonProps, createPolymorphicComponent } from '@mantine/core'
+import { Image, MantineProvider } from '@mantine/core'
 import styled from '@emotion/styled'
-// import { Text } from '@mantine/core';
 
 const StyledContainer = styled.div`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');

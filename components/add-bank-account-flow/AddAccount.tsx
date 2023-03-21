@@ -1,8 +1,6 @@
 import { createStyles, TextInput, Button, Group, rem } from '@mantine/core'
 import { useState } from 'react'
-// import LongButton from './SmallComponents/LongButton'
-//   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
-//   import { ContactIconsList } from '../ContactIcons/ContactIcons';
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#000000de`,
@@ -11,7 +9,6 @@ const useStyles = createStyles((theme) => ({
     width: `100%`,
     minHeight: `100vh`,
     boxSizing: 'border-box',
-    // borderRadius: theme.radius.md,
     padding: `calc(${theme.spacing.xl} * 2.5)`,
     [theme.fn.smallerThan('sm')]: {
       padding: `calc(${theme.spacing.xl} * 1.5)`,
@@ -20,19 +17,15 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `center`,
     alignItems: `center`,
     zIndex: 100,
-    // overflow: `hidden`
   },
   titlebox: {
     marginBottom: `10px`,
   },
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    //   color: theme.black,
     lineHeight: 1,
     fontWeight: 500,
     margin: `0.8rem`,
-    //   paddingBottom:`5px`,
-    //   marginBottom:`10px`
   },
   titlebold: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -125,17 +118,11 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-//   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
-
-export function ContactUs(type={} , props: { setAddAccount: (arg0: boolean) => void }) {
-  // setAddAccount: (arg0: boolean) => void; 
+interface Props {
+  setAddAccount: Function
+}
+export function ContactUs({ setAddAccount }: Props) {
   const { classes } = useStyles()
-
-  // const icons = social.map((Icon, index) => (
-  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-  //     <Icon size="1.4rem" stroke={1.5} />
-  //   </ActionIcon>
-  // ));
   const [otp, setOtp] = useState(false)
   return (
     <div className={classes.wrapper}>
@@ -204,8 +191,7 @@ export function ContactUs(type={} , props: { setAddAccount: (arg0: boolean) => v
               <Button
                 className={classes.control}
                 onClick={() => {
-                  props.setAddAccount(false)
-                  console.log(props.setAddAccount)
+                  setAddAccount(false)
                   const body = document.body
                   const scrollY = body.style.top
                   body.style.position = ''
