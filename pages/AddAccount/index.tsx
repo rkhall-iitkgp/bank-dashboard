@@ -1,9 +1,7 @@
 import React from 'react'
-import { ContactUs } from '../../components/AddAcoount'
+import { ContactUs } from '../../components/add-bank-account-flow/AddAccount'
 const index = () => {
-  return (
-    <ContactUs />
-  )
+  return <ContactUs setAddAccount={() => {}} />
 }
 
 export default index

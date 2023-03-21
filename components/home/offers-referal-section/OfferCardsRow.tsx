@@ -7,11 +7,11 @@ const Row = styled('div')`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-top: 4vh;
+  margin-top: 3vh;
   margin-bottom: 3vh;
   gap: 30px;
 `
-const OfferCards = styled('div')`
+const OfferCards = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;
@@ -19,12 +19,14 @@ const OfferCards = styled('div')`
   align-items: center;
   border-radius: 8px;
   padding: 20px 40px;
-  height: 120px;
+  max-height: 150px;
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
   &:hover {
     cursor: pointer;
     box-shadow: 0px 16px 20px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
   }
 `
 
@@ -45,17 +47,27 @@ const OfferCardsRow = () => {
     <Row>
       <OfferCards style={{ background: '#0062D6', marginLeft: '3vw' }}>
         <CardText style={{ color: '#E7F4F9' }}>Gift Offers</CardText>
-        <Image width={80} height={80} src="/giftbox.png" />
+        <Image width={120} height={120} src="/giftbox.png" alt="giftbox" />
       </OfferCards>
 
       <OfferCards style={{ background: '#E7F4F9' }}>
-        <CardText style={{ color: '#0052B3' }}>Get Expert's Help</CardText>
-        <Image width={80} height={80} src="/expert technical support.png" />
+        <CardText style={{ color: '#0052B3' }}>Get Expert&apos;s Help</CardText>
+        <Image
+          width={120}
+          height={120}
+          src="/expert technical support.png"
+          alt="support"
+        />
       </OfferCards>
 
       <OfferCards style={{ background: '#0062D6', marginRight: '3vw' }}>
         <CardText style={{ color: '#E7F4F9' }}>Refer a friend</CardText>
-        <Image width={80} height={80} src="/refer a friend.png" />
+        <Image
+          width={100}
+          height={100}
+          src="/refer a friend.png"
+          alt="refer-friend"
+        />
       </OfferCards>
     </Row>
   )
