@@ -47,8 +47,10 @@ const useStyles = createStyles((theme) => ({
 
   description: {
     color: theme.colors[theme.primaryColor][0],
-    maxWidth: rem(300),
-    fontSize: `0.8rem`,
+    maxWidth: 400,
+    fontSize: `1rem`,
+    fontFamily: `Montserrat, ${theme.fontFamily}`,
+    fontWeight: 300,
     [theme.fn.smallerThan('sm')]: {
       maxWidth: '100%',
     },
@@ -123,7 +125,9 @@ const useStyles = createStyles((theme) => ({
     background: `#006BE5`,
     width: `100%`,
     padding: '50px',
-    paddingTop: `100px`,
+    paddingTop: `8vh`,
+    display: `flex`,
+    flexDirection: `column`,
     height: `96vh`,
     borderRadius: theme.radius.md,
     boxShadow: theme.shadows.lg,
@@ -136,6 +140,32 @@ const useStyles = createStyles((theme) => ({
     width: `100px`,
     backgroundColor: `black`,
     borderRadius: `20px`,
+  },
+  outerimagecontainer: {
+    width: `100%`,
+    position: `relative`,
+    margin: `auto`,
+  },
+  imagecontainer: {
+    width: `100%`,
+    position: `relative`,
+    minWidth: `300px`,
+    minHeight: `160%`,
+    top: `0%`,
+  },
+  dashboardimg1: {
+    width: `56%`,
+    borderRadius: `8px`,
+    maxHeight: `20vw`,
+    zIndex: 1,
+  },
+  dashboardimg2: {
+    position: `absolute`,
+    width: `44%`,
+    borderRadius: `8px`,
+    zIndex: 2,
+    top: `20%`,
+    left: `40%`,
   },
 }))
 
@@ -286,8 +316,20 @@ export function LoginSignupPage() {
               A Comprehensive Analysis of your Transactions
             </Title>
             <Text className={classes.description} mt="sm" mb={30}>
-              Leave your email and we will get back to you within 24 hours
+            Enter your credentials to access your account
             </Text>
+            <div className={classes.outerimagecontainer}>
+              <div className={classes.imagecontainer}>
+                <img
+                  className={classes.dashboardimg1}
+                  src="/images/dashboardimg1.png"
+                />
+                <img
+                  className={classes.dashboardimg2}
+                  src="/images/dashboardimg2.png"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
