@@ -7,7 +7,7 @@ const useStyles = createStyles((theme) => ({
   button1: {
     background: '#0062D6',
     borderRadius: '30px',
-    width: '150px',
+    width: '145px',
     fontFamily: 'Montserrat',
     color: 'white',
     fontSize: '20px',
