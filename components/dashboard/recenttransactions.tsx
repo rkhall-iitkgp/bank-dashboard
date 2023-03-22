@@ -98,7 +98,7 @@ const TransactionCard = (props: { data: { description: string, date: string, cre
 const RecentTransactions = () => {
     return (<div>
         <Text ff={"Montserrat"} c="#0062D6" fw={700} mt={20} fz={22}>Recent Transactions</Text>
-        <div style={{ maxHeight: "23rem", height: "22rem", overflow: "auto" }}>
+        <div style={{ maxHeight: "23rem", overflow: "auto" }}>
             {transactions.map((t) => <TransactionCard data={t} />)}
         </div>
     </div>)
