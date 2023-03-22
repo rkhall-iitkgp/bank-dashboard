@@ -71,7 +71,7 @@ const TransactionCard = (props: { data: { description: string, date: string, cre
     var descriptionShort = data.description.substring(0, 12)
     if (data.description.length > 12) descriptionShort += '...'
 
-    return (<Card radius={"lg"} shadow="xl" my={10} py={20}>
+    return (<Card radius={"lg"} shadow="0px 4px 20px rgba(0, 0, 0, 0.1)" my={10} py={20}>
         <Group px={10} style={{ justifyContent: "space-between" }}>
             <Stack>
                 <HoverCard>
@@ -79,13 +79,13 @@ const TransactionCard = (props: { data: { description: string, date: string, cre
                         <Text fw={600} fz={19} c="#4D4B4B" ff={"Montserrat"} style={{ lineHeight: 0.5 }}>{descriptionShort}</Text>
                     </HoverCard.Target>
                     <HoverCard.Dropdown>
-                        <Text fw={600} fz={19} c="#4D4B4B" ff={"Montserrat"} style={{ lineHeight: 0.5 }}>{data.description}</Text>
+                        <Text fw={600} fz={12} c="#838383" ff={"Montserrat"} style={{ lineHeight: 0.5 }}>{data.description}</Text>
                     </HoverCard.Dropdown>
                 </HoverCard>
                 <Text c="#656565" fw={500} fz={13} ff={"Montserrat"} style={{ lineHeight: 0.5 }}>{data.date}</Text>
             </Stack>
 
-            <Text c={dict.color} fw={500} fz={18} mx={20} ff={"Montserrat"}>{dict.sign}&#8377;{dict.amount}</Text>
+            <Text c={dict.color} fw={500} fz={18} mx={13} ff={"Montserrat"}>{dict.sign}&#8377;{dict.amount}</Text>
 
             <Stack style={{ alignItems: "center", width: "110px" }}>
                 <Text ff={"Montserrat"} c={"#4D4B4B"} fw={600} style={{ lineHeight: 0.5, margin: "auto" }}>{data.mode}</Text>
@@ -98,7 +98,7 @@ const TransactionCard = (props: { data: { description: string, date: string, cre
 const RecentTransactions = () => {
     return (<div>
         <Text ff={"Montserrat"} c="#0062D6" fw={700} mt={20} fz={22}>Recent Transactions</Text>
-        <div style={{ maxHeight: "23rem", height: "23rem", overflow: "auto" }}>
+        <div style={{ maxHeight: "23rem", height: "22rem", overflow: "auto" }}>
             {transactions.map((t) => <TransactionCard data={t} />)}
         </div>
     </div>)
