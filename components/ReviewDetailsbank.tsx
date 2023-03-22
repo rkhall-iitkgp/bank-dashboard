@@ -1,8 +1,4 @@
-import {
-  createStyles,
-  TextInput,
-  getStylesRef,
-} from '@mantine/core'
+import { createStyles, TextInput, getStylesRef } from '@mantine/core'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
@@ -246,7 +242,7 @@ export function Reviewdetailsbank(props: { sbi: any }) {
           </div> */}
           <ButtonGroup
             href1="/BankTransfer/Paybenificiary"
-            href2="/BankTransfer/Success"
+            href2="/BankTransfer/Otpconfirm"
           />
         </div>
       </div>
