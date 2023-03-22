@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from '@emotion/styled'
 import Link from 'next/link'
 import { createStyles, TextInput, Button, Group, rem } from '@mantine/core'
 import { UrlObject } from 'url'
@@ -10,7 +9,7 @@ const useStyles = createStyles((theme) => ({
     width: '150px',
     fontFamily: 'Montserrat',
     color: 'white',
-    fontSize: '20px',
+    fontSize: '1.25rem',
     padding: '5px 15px',
     textAlign: 'center',
     fontWeight: 400,
@@ -36,7 +35,6 @@ export default function ButtonGroup(props: {
       <Link href={props.href1}>
         <div className={classes.button1}>Back</div>
       </Link>
-      {/* <div className={classes.button1}>Back</div> */}
       <Link href={props.href2}>
         <div className={classes.button1}>Continue</div>
       </Link>

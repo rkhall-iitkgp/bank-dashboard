@@ -3,12 +3,8 @@ import {
   Button,
   ButtonProps,
   createPolymorphicComponent,
-  Image,
+  Image
 } from '@mantine/core'
-import { useState } from 'react'
-import { AddAccountFormPopup } from './AddAccountFormPopup'
-import { useDisclosure } from '@mantine/hooks'
-import { Modal } from '@mantine/core'
 
 const Oflex = styled.div`
   display: flex;

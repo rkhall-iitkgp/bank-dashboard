@@ -1,8 +1,4 @@
-import {
-  createStyles,
-  TextInput,
-  getStylesRef,
-} from '@mantine/core'
+import { createStyles, TextInput, getStylesRef } from '@mantine/core'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
 const useStyles = createStyles((theme) => ({
@@ -10,7 +6,6 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: `#EEEEEE`,
     minHeight: `100vh`,
     boxSizing: 'border-box',
-    padding: `calc(${theme.spacing.xl} * 2.5)`,
     [theme.fn.smallerThan('sm')]: {
       padding: `calc(${theme.spacing.xl} * 1.5)`,
     },
@@ -21,11 +16,14 @@ const useStyles = createStyles((theme) => ({
   },
   titlebox: {
     // marginBottom:`20px`,
+    width: '90%',
+    margin: 'auto',
+    fontSize: '28px',
     display: `flex`,
     justifyContent: `space-between`,
   },
   title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: 'Montserrat, sans-serif',
     //   color: theme.black,
     lineHeight: 1,
     fontWeight: 500,
@@ -34,7 +32,7 @@ const useStyles = createStyles((theme) => ({
     //   marginBottom:`10px`
   },
   titlebold: {
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat, sans-serif',
     //   color: theme.black,
     lineHeight: 1,
     fontWeight: 600,
@@ -42,7 +40,6 @@ const useStyles = createStyles((theme) => ({
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
-    paddingBottom: `10px`,
   },
 
   description: {
@@ -57,6 +54,7 @@ const useStyles = createStyles((theme) => ({
     boxShadow: theme.shadows.lg,
     // paddingBottom: '5px',
     width: `40vw`,
+    margin: `auto`,
     color: `#0052B3`,
   },
 
@@ -64,14 +62,18 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     color: theme.black,
+    fontSize: '1rem',
+    height: '1.2rem',
+    fontFamily: 'Montserrat, sans-serif',
 
     ':focus': {
       borderColor: 'blue',
     },
     ':disabled': {
       color: '#000',
-      backgroundColor: '#eee',
+      backgroundColor: '#fff',
       opacity: `0.8`,
+      height: '20px',
     },
     border: '0',
     borderRadius: '0',
@@ -83,22 +85,50 @@ const useStyles = createStyles((theme) => ({
     //     fontSize:`2rem !important`
     //   },
   },
-
+  inputAmount: {
+    backgroundColor: theme.white,
+    borderColor: theme.colors.gray[4],
+    color: theme.colors.gray[6],
+    fontSize: '1rem',
+    height: '1.2rem',
+    fontFamily: 'Montserrat, sans-serif',
+    ':focus': {
+      borderColor: 'blue',
+    },
+    ':disabled': {
+      color: '#000',
+      backgroundColor: '#fff',
+      opacity: `0.8`,
+      height: '20px',
+    },
+    border: '0',
+    borderRadius: '0',
+    background: 'transparent',
+    borderBottom: `2px solid #ccc`,
+  },
   inputLabel: {
     ref: getStylesRef('inputLabel'),
-
-    color: theme.black,
+    paddingLeft: `2px`,
+    color: theme.colors.gray[6],
     // position:`absolute`,
     // top:`1.5rem`,
-    fontSize: `0.7rem`,
+    fontSize: `12px`,
+    fontWeight: 400,
     transition: `0.25s ease`,
+    height: `14px`,
   },
   inputcontainer: {
+    backgroundColor: 'white',
     position: `relative`,
     // paddingTop:`0.75rem`,
     marginTop: `0 !important`,
   },
-
+  enterAmountContainer: {
+    backgroundColor: 'white',
+    position: `relative`,
+    // paddingTop:`0.75rem`,
+    opacity: 0.8,
+  },
   control: {
     backgroundColor: `#006AE4`,
     borderRadius: `20px`,
@@ -134,7 +164,7 @@ const useStyles = createStyles((theme) => ({
     alignItems: `center`,
   },
   payingtext: {
-    paddingTop: `15px`,
+    paddingTop: `0.25rem`,
     fontWeight: 600,
   },
 }))
@@ -171,9 +201,8 @@ export function Upitransfer3() {
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
-                root: classes.inputcontainer,
+                root: classes.enterAmountContainer,
               }}
-              required
               value={`197288882222`}
               disabled
             />
@@ -181,7 +210,6 @@ export function Upitransfer3() {
             <TextInput
               label="UPI ID"
               variant="unstyled"
-              required
               value={`WelcomtoGc@iitkgp`}
               disabled
               classNames={{
@@ -194,14 +222,13 @@ export function Upitransfer3() {
             <TextInput
               label="Name"
               variant="unstyled"
-              required
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
                 root: classes.inputcontainer,
               }}
               disabled
-              value={'Ritik'}
+              value={'John Doe'}
             />
             <TextInput
               label="UPI ID"
@@ -217,14 +244,14 @@ export function Upitransfer3() {
               disabled
             />
             <TextInput
-              label="Enter Amount"
-              type={'number'}
               variant="unstyled"
               mt="md"
+              value={'Enter Amount*'}
+              style={{ color: 'grey' }}
               classNames={{
-                input: classes.input,
+                input: classes.inputAmount,
                 label: classes.inputLabel,
-                root: classes.inputcontainer,
+                root: classes.enterAmountContainer,
               }}
               required
             />
