@@ -320,13 +320,14 @@ export function LoginSignupPage() {
             </Text>
             <div className={classes.outerimagecontainer}>
               <div className={classes.imagecontainer}>
-                <Image
+                <img
                   className={classes.dashboardImage1}
-                  src="/images/dashboardImage1.png"
-                  alt="dashboard-img"                />
-                <Image
+                  src="/images/dashboardimg1.png"
+                  alt="dashboard-img"
+                />
+                <img
                   className={classes.dashboardImage2}
-                  src="/images/dashboardImage2.png"
+                  src="/images/dashboardimg2.png"
                   alt="dashboard-img"
                 />
               </div>
