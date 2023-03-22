@@ -1,5 +1,12 @@
-import { createStyles, TextInput, Button, Group, PinInput } from '@mantine/core'
-import { useState } from 'react'
+import {
+  createStyles,
+  TextInput,
+  Button,
+  Group,
+  PinInput,
+  Text,
+} from '@mantine/core'
+import { SetStateAction, useState } from 'react'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
 
@@ -76,12 +83,16 @@ const useStyles = createStyles((theme) => ({
     top: `1.5rem`,
     transition: `0.25s ease`,
   },
+
   inputcontainer: {
     position: `relative`,
     paddingTop: `0.75rem`,
     marginTop: `0 !important`,
   },
-
+  // : {
+  //   // border: 'none',
+  //   // padding: '40px',
+  // },
   control: {
     backgroundColor: `#006AE4`,
     borderRadius: `20px`,
@@ -107,8 +118,10 @@ const useStyles = createStyles((theme) => ({
 
   buttonVerify: {
     // height:``,
-    width: `100px`,
-    backgroundColor: `#ffffff`,
+    // width: `100px`,
+    // backgroundColor: `#ffffff`,
+    marginRight: '60px',
+    cursor: 'no-drop',
     // borderRadius:,
   },
   topheading: {
@@ -120,6 +133,20 @@ const useStyles = createStyles((theme) => ({
     borderTopRightRadius: theme.radius.md,
     alignItems: `center`,
   },
+  input1: {
+    padding: `25px`,
+    borderRadius: '15px',
+    border: '1px solid white',
+    fontFamily: 'Montserrat',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: '18px',
+    lineHeight: '29px',
+    display: 'flex',
+    alignItems: 'center',
+
+    // color: '#0062D6',
+  },
 }))
 function Demo() {
   return (
@@ -130,21 +157,59 @@ function Demo() {
 }
 export function VerifyUPI() {
   const [buttonText, setButtonText] = useState('Verify')
-  const [style, setStyle] = useState({ border: '1px solid blue' })
-  const [style2, setStyle2] = useState({ color: '#0062D6' })
-
+  const [upiValue, setUpiValue] = useState('')
+  const [style, setStyle] = useState({
+    border: '1px solid white',
+    borderRadius: '15px',
+  })
+  const [style2, setStyle2] = useState({
+    color: '#0062D6',
+    fontFamily: 'Montserrat',
+    fontWeight: 400,
+    fontSize: '18px',
+    cursor: 'pointer',
+  })
+  const handleChange = (e: { target: { value: SetStateAction<string> } }) => {
+    setUpiValue(e.target.value)
+    setStyle({ border: '1px solid white', borderRadius: '15px' })
+    setButtonText('Verify')
+    if (upiValue !== ' ') {
+      setStyle2({
+        color: '#0062D6',
+        fontFamily: 'Montserrat',
+        fontWeight: 400,
+        fontSize: '18px',
+        cursor: 'pointer',
+      })
+    }
+  }
   function handleClick() {
-    setStyle({ border: '1px solid #76FF9C' })
-    setStyle2({ color: '#76FF9C' })
-    setButtonText('Verified')
+    if (upiValue !== '') {
+      setStyle({ border: '1px solid #00AD30', borderRadius: '15px' })
+      setStyle2({
+        color: '#00AD30',
+        fontFamily: 'Montserrat',
+        fontWeight: 600,
+        fontSize: '18px',
+        cursor: 'pointer',
+      })
+      setButtonText('Verified')
+    } else {
+      setButtonText('Verify')
+      setStyle({ border: '1px solid white', borderRadius: '15px' })
+      setStyle2({
+        color: '#0062D6',
+        fontFamily: 'Montserrat',
+        fontWeight: 400,
+        fontSize: '18px',
+        cursor: 'no-drop',
+      })
+    }
   }
   const { classes } = useStyles()
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        {/* <div className={classes.topheading}>
-          <div className={classes.title}>UPI Transfer</div>
-        </div> */}
         <Heading title="UPI Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
@@ -152,55 +217,26 @@ export function VerifyUPI() {
               <span>Verify UPI</span>
             </div>
           </div>
+
           <div className={classes.description}>
             <TextInput
               placeholder="Enter UPI ID*"
-              withAsterisk
               style={style}
+              classNames={{ input: classes.input1 }}
+              value={upiValue}
+              onChange={handleChange}
               rightSection={
-                <Button
+                <Text
                   className={classes.buttonVerify}
                   style={style2}
                   onClick={handleClick}
                 >
                   {buttonText}
-                </Button>
+                </Text>
               }
             />
           </div>
-          <div className={classes.buttoncontainer}>
-            <Button className={classes.button} onClick={() => {}}>
-              Back
-            </Button>
-            <Button
-              variant="gradient"
-              gradient={{ from: 'white', to: 'white' }}
-              className={classes.button}
-              onClick={() => {}}
-            >
-              Continue
-            </Button>
-          </div>
-          <div className={classes.description}>
-            <TextInput
-              placeholder="Enter UPI ID*"
-              withAsterisk
-              style={style}
-              rightSection={
-                <Button
-                  className={classes.buttonVerify}
-                  style={style2}
-                  onClick={handleClick}
-                >
-                  {buttonText}
-                </Button>
-              }
-            />
-          </div>
-          {/* <div className={classes.buttoncontainer}>
-            <Link href='/UPI/'><Button className={classes.button}>Back</Button></Link>
-            <Link href='/UPI/Payment'><Button className={classes.button} >Continue</Button></Link>
-          </div> */}
+
           <ButtonGroup href1="/UPI/" href2="/UPI/Payment" />
         </div>
       </div>
