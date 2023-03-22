@@ -9,6 +9,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useState } from 'react'
+import axios from 'axios'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -151,6 +152,11 @@ export function AddAccountFormPopup({
 
   const [account_no, setAccount_no] = useState<number | ''>('')
   const [ifsc, setIfsc] = useState<string>('')
+  const BASEURL = 'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com'
+  const user_id = sessionStorage.getItem('user_id')
+  const AddAccount = () => {
+    let response = axios.post(`${BASEURL}/user/accounts/${user_id}`)
+  }
 
   return (
     <Modal

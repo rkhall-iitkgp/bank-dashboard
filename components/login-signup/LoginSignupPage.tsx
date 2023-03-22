@@ -175,7 +175,7 @@ export function LoginSignupPage() {
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
   const BASEURL =
-    'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user'
+    'http://127.0.0.1:8000/user'
   const [signinLoading, setSignInLoading] = useState(false)
   const [signUpLoading, setSignUpLoading] = useState(false)
   const [enterOtp, setEnterOtp] = useState(false)
@@ -187,9 +187,12 @@ export function LoginSignupPage() {
         contact_no: contact_no,
         email: email,
         signup: si,
+        isaccount: 0,
       })
       .then((res) => {
         setEnterOtp(true)
+        sessionStorage.setItem('contact_no', res.data.contact_no)
+        // sessionStorage.setItem('user_id', res.data.user_id)
         return res.data
       })
       .catch((err) => console.log(err))
@@ -205,9 +208,14 @@ export function LoginSignupPage() {
         contact_no: contact_no,
         otp: parseInt(otp),
         email: email,
+        isaccount: 0,
       })
       .then((res) => {
         router.replace('/home')
+        // save response i.e access token and refresh token in session storage
+        sessionStorage.setItem('access_token', res.data.access_token)
+        sessionStorage.setItem('refresh_token', res.data.refresh_token)
+        sessionStorage.setItem('user_id', res.data.user_id)
         return res.data
       })
       .catch((err) => console.log(err))
@@ -295,6 +303,7 @@ export function LoginSignupPage() {
                   value={otp}
                   onChange={(e) => setOtp(e)}
                   mx="auto"
+                  length={6}
                 />
                 <Button
                   className={classes.control}
