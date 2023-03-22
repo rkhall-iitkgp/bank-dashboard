@@ -33,6 +33,8 @@ const useStyles = createStyles((theme) => ({
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
+    paddingBottom: `20px`,
+    marginLeft: `1.5rem`,
   },
 
   description: {

@@ -40,6 +40,8 @@ const useStyles = createStyles((theme) => ({
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
+    paddingBottom: `15px`,
+    marginLeft: `1.5rem`,
   },
 
   description: {
