@@ -8,8 +8,8 @@ import {
   NumberInput,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useState } from 'react'
 import axios from 'axios'
+import { useState } from 'react'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -152,11 +152,8 @@ export function AddAccountFormPopup({
 
   const [account_no, setAccount_no] = useState<number | ''>('')
   const [ifsc, setIfsc] = useState<string>('')
-  const BASEURL = 'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com'
-  const user_id = sessionStorage.getItem('user_id')
-  const AddAccount = () => {
-    let response = axios.post(`${BASEURL}/user/accounts/${user_id}`)
-  }
+
+  const [otpNum, setOtpNum] = useState<string>('')
 
   return (
     <Modal
@@ -212,11 +209,11 @@ export function AddAccountFormPopup({
                 }}
               />
               {otp ? (
-                <NumberInput
+                <TextInput
                   placeholder="OTP"
-                  type={'number'}
                   mt="md"
-                  hideControls={true}
+                  value={otpNum}
+                  onChange={(e) => setOtpNum(e.currentTarget.value)}
                   classNames={{
                     input: classes.input,
                     label: classes.inputLabel,
@@ -232,7 +229,16 @@ export function AddAccountFormPopup({
                   size="lg"
                   className={classes.control}
                   onClick={() => {
-                    if (otp == false) setOtp(true)
+                    if (otp == false){
+                        setOtp(true)
+                        console.log(sessionStorage.getItem('contact_no'));
+                        const response = axios.post(
+                            'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user/sendaccountotp/', {
+                                contact_no: sessionStorage.getItem('contact_no')
+                        }).then((response) => {
+                            console.log(response)
+                        })
+                    }
                     else {
                       bankAccountList.push({
                         account_no: account_no,
@@ -240,6 +246,17 @@ export function AddAccountFormPopup({
                       })
                       setBankAccountList(bankAccountList)
                       setIsAddAccountPopupOpen(false)
+                      console.log(otpNum)
+                      const contact_no = sessionStorage.getItem('contact_no')
+                        const response = axios.post(
+                            'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user/addaccount/', {
+                                contact_no: contact_no,
+                                account_no: account_no,
+                                ifsc: ifsc,
+                                otp: otpNum
+                        }).then((response) => {
+                            console.log(response)
+                        })
                     }
                   }}
                 >
