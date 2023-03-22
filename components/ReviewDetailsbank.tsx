@@ -1,8 +1,4 @@
-import {
-  createStyles,
-  TextInput,
-  getStylesRef,
-} from '@mantine/core'
+import { createStyles, TextInput, getStylesRef } from '@mantine/core'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
 const useStyles = createStyles((theme) => ({
@@ -10,8 +6,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: `#EEEEEE`,
     minHeight: `100vh`,
     boxSizing: 'border-box',
-    [theme.fn.smallerThan('sm')]: {
-    },
+    [theme.fn.smallerThan('sm')]: {},
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
@@ -124,7 +119,7 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 400,
     transition: `0.25s ease`,
     height: `14px`,
-    
+    fontFamily: 'Montserrat',
   },
   inputcontainer: {
     backgroundColor: 'white',
@@ -211,7 +206,6 @@ export function Reviewdetailsbank(props: { sbi: any }) {
                 input: classes.input,
                 label: classes.inputLabel,
                 root: classes.enterAmountContainer,
-
               }}
               value={`197288882222`}
               disabled
@@ -251,8 +245,7 @@ export function Reviewdetailsbank(props: { sbi: any }) {
                 input: classes.input,
                 label: classes.inputLabel,
                 root: classes.inputcontainer,
-              }
-            }
+              }}
               required
             />
             <TextInput
@@ -264,8 +257,7 @@ export function Reviewdetailsbank(props: { sbi: any }) {
                 input: classes.input,
                 label: classes.inputLabel,
                 root: classes.inputcontainer,
-              }
-            }
+              }}
               required
             />
           </div>
@@ -280,4 +272,3 @@ export function Reviewdetailsbank(props: { sbi: any }) {
     </div>
   )
 }
-
