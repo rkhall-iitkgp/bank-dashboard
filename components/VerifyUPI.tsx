@@ -65,7 +65,7 @@ const useStyles = createStyles((theme) => ({
       color: theme.colors.gray[5],
     },
     border: '0',
-    borderRadius: '0',
+    borderRadius: '15px',
     background: 'transparent',
     borderBottom: `2px solid #eee`,
   },
@@ -109,8 +109,10 @@ const useStyles = createStyles((theme) => ({
     // height:``,
     width: `100px`,
     backgroundColor: `#ffffff`,
-    // borderRadius:,
+    ":hover": {
+      backgroundColor: `#ffffff`,
   },
+},
   topheading: {
     width: `100%`,
     background: `#DDEDFF`,
@@ -130,11 +132,11 @@ function Demo() {
 }
 export function VerifyUPI() {
   const [buttonText, setButtonText] = useState('Verify')
-  const [style, setStyle] = useState({ border: '1px solid blue' })
+  const [style, setStyle] = useState({ border: '1px solid blue', borderRadius: '15px' })
   const [style2, setStyle2] = useState({ color: '#0062D6' })
 
   function handleClick() {
-    setStyle({ border: '1px solid #76FF9C' })
+    setStyle({ border: '1px solid #76FF9C', borderRadius: '15px' })
     setStyle2({ color: '#76FF9C' })
     setButtonText('Verified')
   }
@@ -168,35 +170,7 @@ export function VerifyUPI() {
               }
             />
           </div>
-          <div className={classes.buttoncontainer}>
-            <Button className={classes.button} onClick={() => {}}>
-              Back
-            </Button>
-            <Button
-              variant="gradient"
-              gradient={{ from: 'white', to: 'white' }}
-              className={classes.button}
-              onClick={() => {}}
-            >
-              Continue
-            </Button>
-          </div>
-          <div className={classes.description}>
-            <TextInput
-              placeholder="Enter UPI ID*"
-              withAsterisk
-              style={style}
-              rightSection={
-                <Button
-                  className={classes.buttonVerify}
-                  style={style2}
-                  onClick={handleClick}
-                >
-                  {buttonText}
-                </Button>
-              }
-            />
-          </div>
+          
           {/* <div className={classes.buttoncontainer}>
             <Link href='/UPI/'><Button className={classes.button}>Back</Button></Link>
             <Link href='/UPI/Payment'><Button className={classes.button} >Continue</Button></Link>

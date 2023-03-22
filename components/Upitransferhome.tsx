@@ -84,6 +84,8 @@ const useStyles = createStyles((theme) => ({
     // padding:`0 1rem`,
     display: `flex`,
     justifyContent: `center`,
+    fontFamily: `Montserrat`,
+    fontWeight: 200,
   },
   account: {
     width: `80px`,
@@ -115,7 +117,7 @@ const useStyles = createStyles((theme) => ({
   bankname: {
     lineHeight: `0.9rem`,
     fontSize: '0.80rem',
-    fontWeight: 600,
+    fontWeight: 500,
     paddingTop: `4px`,
     textAlign: `center`,
   },

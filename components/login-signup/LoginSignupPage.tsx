@@ -43,6 +43,7 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 400,
     fontSize: `3rem`,
     textAlign: `center`,
+    marginBottom: `4rem`
   },
 
   description: {
@@ -66,9 +67,7 @@ const useStyles = createStyles((theme) => ({
   },
   sideContainer: {
     width: `100%`,
-    height: `100%`,
-    minHeight: `100vh`,
-    padding: `2vh`,
+    margin: `auto`,
   },
   social: {
     color: theme.white,
@@ -82,7 +81,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     color: theme.black,
-
+    height: `16px`,
     '&::placeholder': {
       color: theme.colors.gray[5],
     },
@@ -90,7 +89,9 @@ const useStyles = createStyles((theme) => ({
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #eee`,
-    marginTop: `1rem`,
+    fontFamily: `Montserrat`,
+    fontWeight: 400,
+    // marginTop: `1rem`,
   },
 
   inputLabel: {
@@ -100,8 +101,8 @@ const useStyles = createStyles((theme) => ({
     transition: `0.25s ease`,
   },
   inputcontainer: {
+    paddingLeft: 0,
     position: `relative`,
-    paddingTop: `0.75rem`,
     marginTop: `0 !important`,
   },
   control: {
@@ -134,12 +135,13 @@ const useStyles = createStyles((theme) => ({
   },
   buttoncontainer: {
     display: `flex`,
-    justifyContent: `space-around`,
+    justifyContent: `space-between`,
   },
   button: {
-    width: `100px`,
+    width: `125px`,
     backgroundColor: `black`,
     borderRadius: `20px`,
+    fontFamily: `Montserrat`,
   },
   outerimagecontainer: {
     width: `100%`,
@@ -167,6 +169,17 @@ const useStyles = createStyles((theme) => ({
     top: `20%`,
     left: `40%`,
   },
+  otpbutton: {
+    height: `36px`,
+    width: `364px`,
+    background: `#006AE4`,
+    borderRadius: `20px`,
+    marginTop: `20px`,
+    fontFamily: `Montserrat`,
+  },
+  inputStack: {
+    gap: `0rem`,
+  }
 }))
 
 export function LoginSignupPage() {
@@ -174,6 +187,8 @@ export function LoginSignupPage() {
   const [mobile, setMobile] = useState('')
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
+  const [ifOtp, setIfOtp] = useState(false)
+  const [otpValue, setOtpValue] = useState('')
   const BASEURL =
     'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user'
   const [signinLoading, setSignInLoading] = useState(false)
@@ -187,6 +202,7 @@ export function LoginSignupPage() {
         contact_no: contact_no,
         email: email,
         signup: si,
+        isAccount: 0,
       })
       .then((res) => {
         setEnterOtp(true)
@@ -205,6 +221,7 @@ export function LoginSignupPage() {
         contact_no: contact_no,
         otp: parseInt(otp),
         email: email,
+        isAccount: 0,
       })
       .then((res) => {
         router.replace('/home')
@@ -214,7 +231,7 @@ export function LoginSignupPage() {
 
     res.then((v) => console.log(v))
   }
-
+  
   return (
     <div className={classes.wrapper}>
       <div className={classes.grid}>
@@ -224,7 +241,7 @@ export function LoginSignupPage() {
 
             {!enterOtp && (
               <Stack my={10}>
-                <Stack>
+                <Stack className='inputStack'>
                   <TextInput
                     placeholder="Mobile Number"
                     type={'number'}
@@ -250,30 +267,53 @@ export function LoginSignupPage() {
                     value={email}
                     onChange={(e) => setEmail(e.currentTarget.value)}
                   />
-                </Stack>
-
-                <Group className={classes.buttoncontainer} mt={15}>
-                  <Button
-                    className={classes.button}
-                    loading={signUpLoading}
-                    onClick={() => {
-                      SignUp(mobile, email, 1)
-                      setSignUpLoading(true)
+                  {ifOtp ? (
+                    <TextInput
+                    placeholder="OTP"
+                    type={'number'}
+                    mt="md"
+                    classNames={{
+                      input: classes.input,
+                      label: classes.inputLabel,
+                      root: classes.inputcontainer,
                     }}
-                  >
-                    Sign Up
-                  </Button>
-                  <Button
-                    className={classes.button}
-                    loading={signinLoading}
-                    onClick={() => {
-                      SignUp(mobile, email, 0)
-                      setSignInLoading(true)
-                    }}
-                  >
-                    Sign In
+                    required
+                    value={otp}
+                    onChange={(e) => setOtp(e.currentTarget.value)}  
+                    
+                  />
+              ) : (
+                <Group className={classes.buttoncontainer}>
+                  <Button className={classes.otpbutton} onClick={() => setIfOtp(true)}>
+                    Get OTP
                   </Button>
                 </Group>
+              )}
+                </Stack>
+              {ifOtp ? (
+                <Group className={classes.buttoncontainer} mt={15}>
+                <Button
+                  className={classes.button}
+                  loading={signUpLoading}
+                  onClick={() => {
+                    SignUp(mobile, email, 1)
+                    setSignUpLoading(true)
+                  }}
+                >
+                  Sign Up
+                </Button>
+                <Button
+                  className={classes.button}
+                  loading={signinLoading}
+                  onClick={() => {
+                    SignUp(mobile, email, 0)
+                    setSignInLoading(true)
+                  }}
+                >
+                  Log In
+                </Button>
+              </Group>
+              ) : <></>}
               </Stack>
             )}
 
