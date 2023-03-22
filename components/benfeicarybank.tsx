@@ -143,7 +143,7 @@ const useStyles = createStyles((theme) => ({
   },
   active: {
     boxShadow: ` inset 0px 12px 6px rgba(0, 0, 0, 0.05)`,
-    border: `2px solid #0052B3`,
+    border: `3px solid #0052B3`,
   },
   bankname: {
     lineHeight: `1.5rem`,
