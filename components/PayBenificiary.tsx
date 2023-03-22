@@ -2,6 +2,7 @@ import { createStyles, TextInput } from '@mantine/core'
 import { useState } from 'react'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
+import { useRouter } from 'next/router'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -67,7 +68,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     color: theme.black,
-
+    fontFamily: `Montserrat`,
     '&::placeholder': {
       color: theme.colors.gray[5],
     },
@@ -165,7 +166,9 @@ const useStyles = createStyles((theme) => ({
 
 export function PayBenficiary(props: { sbi: any }) {
   const { classes } = useStyles()
-
+  const router = useRouter()
+  const data = router.query
+  console.log(data)
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
   //     <Icon size="1.4rem" stroke={1.5} />
@@ -234,7 +237,7 @@ export function PayBenficiary(props: { sbi: any }) {
               }}
               required
             />
-            {props.sbi ? (
+            {props.sbi == false? (
               <>
                 <TextInput
                   placeholder="IFSC*"
@@ -257,8 +260,6 @@ export function PayBenficiary(props: { sbi: any }) {
             ) : (
               <></>
             )}
-          </div>
-          {otp ? (
             <TextInput
               placeholder="OTP"
               type={'number'}
@@ -270,9 +271,10 @@ export function PayBenficiary(props: { sbi: any }) {
                 root: classes.inputcontainer,
               }}
             />
-          ) : (
-            <></>
-          )}
+          </div>
+           
+            
+          
 
           {/* <div className={classes.buttoncontainer}>
             <Link href='/BankTransfer/benfeiciary'><Button className={classes.button} >Back</Button></Link>

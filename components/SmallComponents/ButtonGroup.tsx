@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from '@emotion/styled'
 import Link from 'next/link'
 import { createStyles, TextInput, Button, Group, rem } from '@mantine/core'
 import { UrlObject } from 'url'
@@ -22,22 +21,25 @@ const useStyles = createStyles((theme) => ({
   buttonContainer: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginTop: `3rem`,
+    marginTop: `2.5rem`,
   },
 }))
 
-export default function ButtonGroup(props: {
+interface Props{
   href1: string | UrlObject
   href2: string | UrlObject
-}) {
+  query1?: string
+  query2?: string
+}
+export default function ButtonGroup({href1, href2, query1, query2}:Props) {
   const { classes } = useStyles()
   return (
     <div className={classes.buttonContainer}>
-      <Link href={props.href1}>
+      <Link href={{ pathname: `${href1}`, query: {iSame : `${query1}`}}}>
         <div className={classes.button1}>Back</div>
       </Link>
       {/* <div className={classes.button1}>Back</div> */}
-      <Link href={props.href2}>
+      <Link href={{ pathname: `${href2}`, query: {iSame : `${query2}`}}}>
         <div className={classes.button1}>Continue</div>
       </Link>
     </div>

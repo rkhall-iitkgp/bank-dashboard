@@ -175,7 +175,7 @@ function AccountType(props: {
       className={classes.account}
       id={props.id}
       onClick={(event) => {
-        props.setAccount(props.id)
+
         const accountlist = Array.from(
           document.getElementsByClassName(classes.account),
         )
@@ -183,6 +183,7 @@ function AccountType(props: {
           e.classList.remove(classes.active)
         })
         document.getElementById(props.id)?.classList.add(classes.active)
+        return 
       }}
     >
       <Image src={props.src} width={35} height={35} alt={''} style={{ marginLeft: '12px'}}></Image>
@@ -205,6 +206,7 @@ export function BeneficiaryBank() {
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
+
         {/* <div className={classes.topheading}>
 
           <div className={classes.title}>Bank Transfer</div>
@@ -230,28 +232,15 @@ export function BeneficiaryBank() {
               setAccount={setAccount}
               bankname="Other Banks"
               bankdesc="(IFSC required)"
+
             />
           </div>
 
-          {/* <div className={classes.buttoncontainer}>
-            <Link href="/BankTransfer/">
-              <Button className={classes.button}>Back</Button>
-            </Link>
-            <Link href="/BankTransfer/Paybenificiary">
-              <Button className={classes.button}>Continue</Button>
-            </Link>
-          </div> */}
-          {/* <div className={classes.buttonContainer}>
-            <Link href="/BankTransfer/">
-              <div className={classes.button1}>Back</div>
-            </Link>
-            <Link href="/BankTransfer/Paybenificiary">
-              <div className={classes.button1}>Continue</div>
-            </Link>
-          </div> */}
           <ButtonGroup
             href1="/BankTransfer/"
+            
             href2="/BankTransfer/Paybenificiary"
+            query2={"Same"}
           />
         </div>
       </div>
