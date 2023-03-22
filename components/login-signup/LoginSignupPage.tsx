@@ -3,7 +3,7 @@ import {
   createStyles,
   Group,
   PinInput,
-  rem,
+  Image,
   Stack,
   Text,
   TextInput,
@@ -153,13 +153,13 @@ const useStyles = createStyles((theme) => ({
     minHeight: `160%`,
     top: `0%`,
   },
-  dashboardimg1: {
+  dashboardImage1: {
     width: `56%`,
     borderRadius: `8px`,
     maxHeight: `20vw`,
     zIndex: 1,
   },
-  dashboardimg2: {
+  dashboardImage2: {
     position: `absolute`,
     width: `44%`,
     borderRadius: `8px`,
@@ -326,17 +326,19 @@ export function LoginSignupPage() {
               A Comprehensive Analysis of your Transactions
             </Title>
             <Text className={classes.description} mt="sm" mb={30}>
-            Enter your credentials to access your account
+              Enter your credentials to access your account
             </Text>
             <div className={classes.outerimagecontainer}>
               <div className={classes.imagecontainer}>
                 <img
-                  className={classes.dashboardimg1}
+                  className={classes.dashboardImage1}
                   src="/images/dashboardimg1.png"
+                  alt="dashboard-img"
                 />
                 <img
-                  className={classes.dashboardimg2}
+                  className={classes.dashboardImage2}
                   src="/images/dashboardimg2.png"
+                  alt="dashboard-img"
                 />
               </div>
             </div>
