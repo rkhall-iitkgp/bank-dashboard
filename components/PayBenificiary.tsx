@@ -69,8 +69,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     color: theme.black,
-    fontFamily: 'Montserrat',
-
+    fontFamily: 'Montserrat, sans-serif',
     '&::placeholder': {
       color: theme.colors.gray[5],
     },
