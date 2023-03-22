@@ -29,8 +29,8 @@ const StyledBot = styled.div`
   margin-top: 5px;
 `
 const StyledBotCont = styled.div`
-  height: 40vh;
-  width: 25vw;
+  height: 36vh;
+  width: 30vw;
   background: rgba(169, 248, 191, 0.38);
   border-radius: 30px;
   display: flex;
@@ -119,7 +119,7 @@ export default function GenOtp2() {
         <StyledBot>
           <StyledBotCont>
             <StyledTexthead>Payment Successful</StyledTexthead>
-            <Image src="images/tick.png" width={75} height={75} alt="" />
+            <Image src="/images/tick.png" width={65} height={65} alt="" />
             <StyledTexthead2>
               You have successfully paid John{' '}
               <span style={{ color: 'black' }}> &nbsp;₹500</span>

@@ -44,6 +44,8 @@ const useStyles = createStyles((theme) => ({
   description: {
     color: `#737373`,
     fontSize: `0.5rem`,
+    fontFamily: `Montserrat`,
+    fontWeight: 400,
     padding: `0.5rem`,
   },
 
@@ -67,6 +69,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     color: theme.black,
+    fontFamily: 'Montserrat',
 
     '&::placeholder': {
       color: theme.colors.gray[5],
@@ -128,6 +131,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.md,
     boxShadow: `0px 6px 20px rgba(0, 0, 0, 0.2)`,
     width: `auto`,
+    fontFamily: `Montserrat`,
     color: `#0052B3`,
     padding: `10px`,
     minHeight: `60px`,
