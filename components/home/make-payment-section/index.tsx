@@ -57,7 +57,7 @@ const Payment = () => {
         >
           <Link href="/BankTransfer" style={{ textDecoration: 'none' }}>
             <MakePaymentCard
-              imageAddress="icons/bank-building.png"
+              imageAddress="icons/bank-building-white.png"
               cardText="Bank Transfer"
               alt="Bank Transfer"
             />
