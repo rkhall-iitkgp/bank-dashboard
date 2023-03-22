@@ -39,6 +39,7 @@ const useStyles = createStyles((theme) => ({
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
+    marginLeft: `1.5rem`,
   },
 
   description: {

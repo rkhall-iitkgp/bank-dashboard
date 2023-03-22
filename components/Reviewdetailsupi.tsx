@@ -45,6 +45,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `center`,
     alignItems: `center`,
     paddingBottom: `15px`,
+    marginLeft: `1.5rem`,
   },
 
   description: {
