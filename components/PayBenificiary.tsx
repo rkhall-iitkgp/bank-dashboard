@@ -22,16 +22,14 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `space-between`,
   },
   title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: 'Montserrat, sans-serif',
     //   color: theme.black,
     lineHeight: 1,
     fontWeight: 500,
     margin: `0.8rem`,
-    //   paddingBottom:`5px`,
-    //   marginBottom:`10px`
   },
   titlebold: {
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat, sans-serif',
     //   color: theme.black,
     lineHeight: 1,
     fontWeight: 600,
