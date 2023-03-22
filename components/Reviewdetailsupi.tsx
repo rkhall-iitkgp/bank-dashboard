@@ -23,7 +23,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `space-between`,
   },
   title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: 'Montserrat, sans-serif',
     //   color: theme.black,
     lineHeight: 1,
     fontWeight: 500,
@@ -32,7 +32,7 @@ const useStyles = createStyles((theme) => ({
     //   marginBottom:`10px`
   },
   titlebold: {
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat, sans-serif',
     //   color: theme.black,
     lineHeight: 1,
     fontWeight: 600,
@@ -64,7 +64,7 @@ const useStyles = createStyles((theme) => ({
     color: theme.black,
     fontSize: '1rem',
     height: '1.2rem',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat, sans-serif',
 
     ':focus': {
       borderColor: 'blue',
@@ -91,7 +91,7 @@ const useStyles = createStyles((theme) => ({
     color: theme.colors.gray[6],
     fontSize: '1rem',
     height: '1.2rem',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat, sans-serif',
     ':focus': {
       borderColor: 'blue',
     },
@@ -121,7 +121,7 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 400,
     transition: `0.25s ease`,
     height: `14px`,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat, sans-serif',
   },
   inputcontainer: {
     backgroundColor: 'white',

@@ -35,7 +35,6 @@ export default function ButtonGroup(props: {
       <Link href={props.href1}>
         <div className={classes.button1}>Back</div>
       </Link>
-      {/* <div className={classes.button1}>Back</div> */}
       <Link href={props.href2}>
         <div className={classes.button1}>Continue</div>
       </Link>

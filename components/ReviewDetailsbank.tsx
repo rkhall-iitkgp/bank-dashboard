@@ -13,7 +13,6 @@ const useStyles = createStyles((theme) => ({
     background: `grey`,
   },
   titlebox: {
-    // marginBottom:`20px`,
     width: '90%',
     margin: 'auto',
     fontSize: '28px',
@@ -21,17 +20,13 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `space-between`,
   },
   title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    //   color: theme.black,
+    fontFamily: 'Montserrat',
     lineHeight: 1,
     fontWeight: 500,
     margin: `0.8rem`,
-    //   paddingBottom:`5px`,
-    //   marginBottom:`10px`
   },
   titlebold: {
     fontFamily: 'Montserrat',
-    //   color: theme.black,
     lineHeight: 1,
     fontWeight: 600,
     fontSize: `20px`,
@@ -50,7 +45,6 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    // paddingBottom: '5px',
     width: `40vw`,
     margin: `auto`,
     color: `#0052B3`,
@@ -77,11 +71,6 @@ const useStyles = createStyles((theme) => ({
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #ccc`,
-
-    //   [`&:hover ~ .${getStylesRef('inputLabel')}`]: {
-    //     color: theme.colors.violet[6],
-    //     fontSize:`2rem !important`
-    //   },
   },
   inputAmount: {
     backgroundColor: theme.white,
@@ -103,28 +92,21 @@ const useStyles = createStyles((theme) => ({
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #ccc`,
-
-    //   [`&:hover ~ .${getStylesRef('inputLabel')}`]: {
-    //     color: theme.colors.violet[6],
-    //     fontSize:`2rem !important`
-    //   },
   },
   inputLabel: {
     ref: getStylesRef('inputLabel'),
     paddingLeft: `2px`,
     color: theme.colors.gray[6],
-    // position:`absolute`,
-    // top:`1.5rem`,
     fontSize: `12px`,
     fontWeight: 400,
     transition: `0.25s ease`,
     height: `14px`,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat, sans-serif',
   },
   inputcontainer: {
     backgroundColor: 'white',
     position: `relative`,
-    // paddingTop:`0.75rem`,
+    fontFamily: 'Montserrat, sans-serif',
     marginTop: `0 !important`,
   },
   enterAmountContainer: {
@@ -177,18 +159,9 @@ const useStyles = createStyles((theme) => ({
 
 export function Reviewdetailsbank(props: { sbi: any }) {
   const { classes } = useStyles()
-
-  // const icons = social.map((Icon, index) => (
-  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-  //     <Icon size="1.4rem" stroke={1.5} />
-  //   </ActionIcon>
-  // ));
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        {/* <div className={classes.topheading}>
-          <div className={classes.title}>UPI Transfer</div>
-        </div> */}
         <Heading title="UPI Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
@@ -261,12 +234,10 @@ export function Reviewdetailsbank(props: { sbi: any }) {
               required
             />
           </div>
-
-          {/* <div className={classes.buttoncontainer}>
-            <Link href='/UPI/Verify'><Button className={classes.button} >Back</Button></Link>
-            <Link href='/UPI/Review'><Button className={classes.button} >Continue</Button></Link>
-          </div> */}
-          <ButtonGroup href1="/UPI/Verify" href2="/UPI/Review" />
+          <ButtonGroup
+            href1="/BankTransfer/Paybenificiary"
+            href2="/BankTransfer/otp"
+          />
         </div>
       </div>
     </div>
