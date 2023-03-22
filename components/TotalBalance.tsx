@@ -48,7 +48,7 @@ const useStyles = createStyles((theme) => ({
         borderRadius: theme.radius.xl,
         boxShadow: theme.shadows.lg,
         // paddingBottom: '5px',
-        width: `40rem`,
+        // width: `40rem`,
         color: `#0052B3`,
     },
 
@@ -61,9 +61,19 @@ const useStyles = createStyles((theme) => ({
     description: {
         color: `#737373`,
         fontSize: `1rem`,
+        // padding: `0.5rem`,
+        textAlign: `center`,
+        marginTop: `30px`,
+        
+    },
+    subdescription: {
+        color: `#737373`,
+        fontSize: `1rem`,
         padding: `0.5rem`,
         textAlign: `center`,
         marginTop: `30px`,
+        display:`flex`,
+        justifyContent: `space-between`,
     },
     buttoncontainer: {
         display: `flex`,
@@ -151,7 +161,7 @@ const RatioCard = ({ ratioName, value }: Props) => {
         </div>
     )
 }
-export function FinancialRatios() {
+export function TotalBalance() {
     const { classes } = useStyles()
     let financialRatios = [
         { id: 1, ratioName: 'Liquidity Ratio', value: `4.74` },
@@ -165,18 +175,64 @@ export function FinancialRatios() {
     return (
         <div className={classes.wrapper}>
             <div className={classes.form}>
-                <Heading font-family="Montserrat" font-size="20px" title="Financial Ratios" />
                 <div className={classes.forminside}>
-                    <div className={classes.titlebox}>
+                    <div className={classes.description}>
+                        <div className={classes.subdescription} >
+                    <Text
+                    c={'#0062D6'}
+                    fz={'lg'}
+                    fw={500}
+                    w={120}
+                    style={{
+                        lineHeight: 1,
+                        textAlign: 'center',
+                        fontFamily: 'Montserrat, sans-serif',
+                        fontWeight: '500',
+                        fontSize: '12px',
+                        color: '#7E7E7E',
+                    }}
+                >
+                   Total Balance
+                </Text>
+              
+                    <Text
+                    c={'#0062D6'}
+                    fz={'lg'}
+                    fw={500}
+                    w={120}
+                    style={{
+                        lineHeight: 1,
+                        textAlign: 'center',
+                        fontFamily: 'Montserrat, sans-serif',
+                        fontWeight: '500',
+                        fontSize: '12px',
+                        color: '#7E7E7E',
+                    }}
+                >
+                   {123456}
+                </Text>
+                </div>
+                <div>
+                <Text
+                    c={'#0062D6'}
+                    fz={'lg'}
+                    fw={500}
+                    w={120}
+                    style={{
+                        lineHeight: 1,
+                        textAlign: 'left',
+                        fontFamily: 'Montserrat, sans-serif',
+                        fontWeight: '700',
+                        fontSize: '36px',
+                        color: '#000000',
+                    }}
+                >
+                   {123456}
+                </Text>
+                </div>
                     </div>
                     <div className={classes.ratioContainer}>
-                        {financialRatios.map((ele) => {
-                            return (
-                                <span key={ele.id}>
-                                    <RatioCard ratioName={ele.ratioName} value={ele.value} />
-                                </span>
-                            )
-                        })}
+                     
                     </div>
                 </div>
             </div>
