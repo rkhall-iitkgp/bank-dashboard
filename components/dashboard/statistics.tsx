@@ -47,11 +47,16 @@ const BalanceChart = (props: { balanceData: { x: string, y: number }[], color: s
     )
 };
 
-const TotalSpendingChart = (props: { values: number[], legends: string[] }) => {
+const SpendingDonut = (props: { values: number[], legends: string[], setSelection: Function }) => {
     return (
         <ReactApexChart series={props.values} type="donut" options={{
             chart: {
-                type: "donut"
+                type: "donut",
+                events: {
+                    dataPointSelection(e, chart, options) {
+                        props.setSelection(parseInt(e.target.getAttribute('rel')));
+                    },
+                }
             },
             labels: props.legends,
             dataLabels: { style: { fontSize: "0.5rem" } },
@@ -123,35 +128,35 @@ const ArticlesData = [
 ]
 
 const FinancialStatistics = () => {
-    const [showCat, setShowCat] = useState(false);
-    const [category, setCategory] = useState("Food")
+    const [categoryIndex, setCategoryIndex] = useState(-1);
+    const [modeIndex, setModeIndex] = useState(-1);
 
     return (<Card radius={"lg"} style={{ boxShadow: "0px 2px 40px rgba(0, 0, 0, 0.1)", maxHeight: "35rem", overflow: "auto" }} ml={20}>
-        {showCat && <Group mx={40}>
-            <Button radius={"xl"} variant="gradient" gradient={{ from: '#0062D6', to: '#0062D6' }} onClick={() => setShowCat(false)} px={35}>Back</Button>
-            <Text mx={20} c={"#4D4B4B"} ff="Montserrat" fz={28} fw={800}>Category: {category} {"(32%)"}</Text>
+        {categoryIndex != -1 && <Group mx={40}>
+            <Button radius={"xl"} variant="gradient" gradient={{ from: '#0062D6', to: '#0062D6' }} onClick={() => setCategoryIndex(-1)} px={35}>Back</Button>
+            <Text mx={20} c={"#4D4B4B"} ff="Montserrat" fz={28} fw={800}>Category: {PieCategoryData[categoryIndex]?.mode} {"(32%)"}</Text>
         </Group>}
         <Group align={"flex-start"}>
 
             <Group px={15} py={15}>
-                {!showCat &&
+                {categoryIndex == -1 &&
                     <Stack>
                         <Text mb={20} c={"#4D4B4B"} ff="Montserrat" fw={800} fz={30}>Financial Statistics</Text>
                         <BalanceChart balanceData={TotalBalanceData} color="#008FFB" width={600} />
                     </Stack>}
 
                 <Stack mt={20}>
-                    <TotalSpendingChart values={PieModeData.map(v => v.value)} legends={PieModeData.map(v => v.mode)} />
-                    {!showCat &&
-                        <TotalSpendingChart values={PieCategoryData.map(v => v.value)} legends={PieCategoryData.map(v => v.mode)} />}
-                    {showCat && <>
+                    <SpendingDonut setSelection={setCategoryIndex} values={PieModeData.map(v => v.value)} legends={PieModeData.map(v => v.mode)} />
+                    {categoryIndex == -1 &&
+                        <SpendingDonut setSelection={setModeIndex} values={PieCategoryData.map(v => v.value)} legends={PieCategoryData.map(v => v.mode)} />}
+                    {categoryIndex != -1 && <>
                         <BalanceChart balanceData={TotalBalanceData} color="#00A76D" width={580} />
                         <MontlySpendingChart data={MontlySpendingData} />
                     </>}
                 </Stack>
             </Group>
 
-            {showCat &&
+            {categoryIndex != -1 &&
                 <Stack mx={40}>
                     <RecentTransactions />
                     <InsightCard insights={InsightList} />
