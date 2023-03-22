@@ -1,7 +1,8 @@
 import React from 'react'
-import { ContactUs } from '../../components/add-bank-account-flow/AddAccount'
+import { AddAccountFormPopup } from '../../components/home/add-bank-account/AddAccountFormPopup'
 const index = () => {
-  return <ContactUs setAddAccount={() => {}} />
+  // return <AddAccountFormPopup setAddAccount={() => {}} />
+  return <></>
 }
 
 export default index
