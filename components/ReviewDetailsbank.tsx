@@ -2,7 +2,9 @@ import {
   createStyles,
   TextInput,
   getStylesRef,
+  Button
 } from '@mantine/core'
+import Link from 'next/link'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
@@ -24,7 +26,7 @@ const useStyles = createStyles((theme) => ({
   titlebox: {
     // marginBottom:`20px`,
     display: `flex`,
-    justifyContent: `space-between`,
+    marginLeft: `1rem`
   },
   title: {
     fontFamily: 'Montserrat',
@@ -240,14 +242,14 @@ export function Reviewdetailsbank(props: { sbi: any }) {
             )}
           </div>
 
-          {/* <div className={classes.buttoncontainer}>
+          <div className={classes.buttoncontainer}>
             <Link href='/BankTransfer/Paybenificiary'><Button className={classes.button}>Back</Button></Link>
             <Link href='/BankTransfer/Success'><Button className={classes.button}>Continue</Button></Link>
-          </div> */}
-          <ButtonGroup
+          </div>
+          {/* <ButtonGroup
             href1="/BankTransfer/Paybenificiary"
             href2="/BankTransfer/Success"
-          />
+          /> */}
         </div>
       </div>
     </div>

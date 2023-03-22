@@ -64,7 +64,7 @@ const useStyles = createStyles((theme) => ({
 
   buttoncontainer: {
     display: `flex`,
-    justifyContent: `space-between   `,
+    justifyContent: `space-between`,
     // margin:`1rem`,
     marginTop: `2rem`,
   },
@@ -200,8 +200,7 @@ export function Banktransfer() {
               )
             })}
           </div>
-          
-          <ButtonGroup href1="/home" href2="/BankTransfer/benfeiciary" />
+          <ButtonGroup href1="/home" href2="/BankTransfer/benfeiciary"/>
         </div>
       </div>
     </div>

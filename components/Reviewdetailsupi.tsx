@@ -2,7 +2,9 @@ import {
   createStyles,
   TextInput,
   getStylesRef,
+  Button
 } from '@mantine/core'
+import Link from 'next/link'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
@@ -24,7 +26,7 @@ const useStyles = createStyles((theme) => ({
   titlebox: {
     // marginBottom:`20px`,
     display: `flex`,
-    justifyContent: `space-between`,
+    marginLeft: `1rem`,
   },
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -139,7 +141,13 @@ const useStyles = createStyles((theme) => ({
     paddingTop: `10px`,
     fontWeight: 600,
   },
-}))
+  buttonreview: {
+    marginBottom: `1rem`,
+    marginLeft: `1rem`,
+    marginRight: `1rem`,
+},
+  }
+))
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
@@ -237,11 +245,13 @@ export function Reviewdetailsupi() {
           {/* <div className={classes.buttoncontainer}>
             <Link href='/UPI/Payment'><Button className={classes.button} >Back</Button></Link>
             <Link href='/UPI/Pin'><Button className={classes.button}>Continue</Button></Link>
-          </div>
-        </div> */}
+          </div> */}
+        </div>
+        <div className='buttonreview'> 
           <ButtonGroup href1="/UPI/Payment" href2="/UPI/Pin" />
         </div>
+        </div>
       </div>
-    </div>
+
   )
 }

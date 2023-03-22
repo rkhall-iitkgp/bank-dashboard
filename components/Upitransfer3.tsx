@@ -2,7 +2,9 @@ import {
   createStyles,
   TextInput,
   getStylesRef,
+  Button
 } from '@mantine/core'
+import Link from 'next/link'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
 const useStyles = createStyles((theme) => ({
@@ -22,7 +24,7 @@ const useStyles = createStyles((theme) => ({
   titlebox: {
     // marginBottom:`20px`,
     display: `flex`,
-    justifyContent: `space-between`,
+    marginLeft: `1rem`
   },
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -115,7 +117,7 @@ const useStyles = createStyles((theme) => ({
   },
   buttoncontainer: {
     display: `flex`,
-    justifyContent: `space-between   `,
+    justifyContent: `space-between `,
     // margin:`1rem`,
     marginTop: `2rem`,
   },
@@ -230,11 +232,11 @@ export function Upitransfer3() {
             />
           </div>
 
-          {/* <div className={classes.buttoncontainer}>
+          <div className={classes.buttoncontainer}>
             <Link href='/UPI/Verify'><Button className={classes.button} >Back</Button></Link>
             <Link href='/UPI/Review'><Button className={classes.button} >Continue</Button></Link>
-          </div> */}
-          <ButtonGroup href1="/UPI/Verify" href2="/UPI/Review" />
+          </div>
+          {/* <ButtonGroup href1="/UPI/Verify" href2="/UPI/Review" /> */}
         </div>
       </div>
     </div>

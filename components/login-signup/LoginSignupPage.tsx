@@ -7,7 +7,7 @@ import {
   Stack,
   Text,
   TextInput,
-  Title,
+  Title,NumberInput
 } from '@mantine/core'
 import axios from 'axios'
 import { useRouter } from 'next/router'
@@ -29,7 +29,7 @@ const useStyles = createStyles((theme) => ({
     marginBottom: `20px`,
   },
   title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: `Montserrat`,
     color: theme.white,
     lineHeight: 1,
     fontWeight: 400,
@@ -43,9 +43,11 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 400,
     fontSize: `3rem`,
     textAlign: `center`,
+    marginBottom:`4rem`
   },
 
   description: {
+    fontFamily: `Montserrat`,
     color: theme.colors[theme.primaryColor][0],
     maxWidth: rem(300),
     fontSize: `0.8rem`,
@@ -83,12 +85,13 @@ const useStyles = createStyles((theme) => ({
 
     '&::placeholder': {
       color: theme.colors.gray[5],
+      fontFamily: `Montserrat`,
+      fontStyle: `normal`,
     },
     border: '0',
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #eee`,
-    marginTop: `1rem`,
   },
 
   inputLabel: {
@@ -99,8 +102,8 @@ const useStyles = createStyles((theme) => ({
   },
   inputcontainer: {
     position: `relative`,
-    paddingTop: `0.75rem`,
     marginTop: `0 !important`,
+    paddingLeft: 0,
   },
   control: {
     backgroundColor: `#006AE4`,
@@ -130,12 +133,47 @@ const useStyles = createStyles((theme) => ({
   },
   buttoncontainer: {
     display: `flex`,
-    justifyContent: `space-around`,
+    justifyContent: `space-between`,
   },
   button: {
-    width: `100px`,
+    width: `125px`,
     backgroundColor: `black`,
     borderRadius: `20px`,
+    fontFamily: `Montserrat`,
+  },
+  otpbutton: {
+    height: `36px`,
+    width: `364px`,
+    background: `#006AE4`,
+    borderRadius: `30px`,
+    marginTop: `20px`,
+    fontFamily: `Montserrat`
+  },
+  outerimagecontainer: {
+    width: `100%`,
+    position: `relative`,
+    margin: `auto`,
+  },
+  imagecontainer: {
+    width: `100%`,
+    position: `relative`,
+    minWidth: `300px`,
+    minHeight: `160%`,
+    top: `0%`,
+  },
+  dashboardimg1: {
+    width: `56%`,
+    borderRadius: `8px`,
+    maxHeight: `20vw`,
+    zIndex: 1,
+  },
+  dashboardimg2: {
+    position: `absolute`,
+    width: `44%`,
+    borderRadius: `8px`,
+    zIndex: 2,
+    top: `20%`,
+    left: `40%`,
   },
 }))
 
@@ -169,6 +207,8 @@ export function LoginSignupPage() {
     setSignUpLoading(false)
   }
 
+  const [otpValue, setOtpValue] = useState<boolean>(false)
+
   const validate = (contact_no: string, otp: string) => {
     let res = axios
       .post(`${BASEURL}/validateotp/`, {
@@ -190,7 +230,7 @@ export function LoginSignupPage() {
       <div className={classes.grid}>
         <div className={classes.form}>
           <div className={classes.forminside}>
-            <div className={classes.titlebold}>Shiftbank</div>
+            <div className={classes.titlebold}>shiftbank</div>
 
             {!enterOtp && (
               <Stack my={10}>
@@ -222,7 +262,33 @@ export function LoginSignupPage() {
                   />
                 </Stack>
 
-                <Group className={classes.buttoncontainer} mt={15}>
+                {otpValue ? (
+                <NumberInput
+                  placeholder="OTP"
+                  type={'number'}
+                  mt="md"
+                  hideControls={true}
+                  classNames={{
+                    input: classes.input,
+                    label: classes.inputLabel,
+                    root: classes.inputcontainer,
+                  }}
+                />
+              ) : (
+                <>
+                <Group className={classes.buttoncontainer}>
+                <Button className={classes.otpbutton}
+                        onClick={() => {
+                          if (otpValue == false) setOtpValue(true)
+                        }}
+                >
+                  Get OTP
+                </Button>
+              </Group>
+              </>
+              )}
+                {otpValue?<Group className={classes.buttoncontainer} mt={15}>
+                
                   <Button
                     className={classes.button}
                     loading={signUpLoading}
@@ -243,7 +309,8 @@ export function LoginSignupPage() {
                   >
                     Sign In
                   </Button>
-                </Group>
+                </Group>:<></>
+                } 
               </Stack>
             )}
 
@@ -286,8 +353,20 @@ export function LoginSignupPage() {
               A Comprehensive Analysis of your Transactions
             </Title>
             <Text className={classes.description} mt="sm" mb={30}>
-              Leave your email and we will get back to you within 24 hours
+              Enter your credentials to access your account
             </Text>
+            <div className={classes.outerimagecontainer}>
+              <div className={classes.imagecontainer}>
+                <img
+                  className={classes.dashboardimg1}
+                  src="/images/dashboardimg1.png"
+                />
+                <img
+                  className={classes.dashboardimg2}
+                  src="/images/dashboardimg2.png"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

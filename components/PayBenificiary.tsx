@@ -2,6 +2,10 @@ import { createStyles, TextInput } from '@mantine/core'
 import { useState } from 'react'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
+import {
+  Button,
+} from '@mantine/core'
+import Link from 'next/link'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -19,7 +23,7 @@ const useStyles = createStyles((theme) => ({
   titlebox: {
     // marginBottom:`20px`,
     display: `flex`,
-    justifyContent: `space-between`,
+    justifyContent: `space-around`,
   },
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -70,6 +74,7 @@ const useStyles = createStyles((theme) => ({
 
     '&::placeholder': {
       color: theme.colors.gray[5],
+      fontFamily: `Montserrat`,
     },
     border: '0',
     borderRadius: '0',
@@ -274,14 +279,14 @@ export function PayBenficiary(props: { sbi: any }) {
             <></>
           )}
 
-          {/* <div className={classes.buttoncontainer}>
+          <div className={classes.buttoncontainer}>
             <Link href='/BankTransfer/benfeiciary'><Button className={classes.button} >Back</Button></Link>
             <Link href='/BankTransfer/Review'><Button className={classes.button}>Continue</Button></Link>
-          </div> */}
-          <ButtonGroup
+          </div>
+          {/* <ButtonGroup className={classes.button}
             href1="/BankTransfer/benfeiciary"
             href2="/BankTransfer/Review"
-          />
+          /> */}
         </div>
       </div>
     </div>

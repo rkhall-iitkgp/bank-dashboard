@@ -13,7 +13,7 @@ const StyledContainer = styled.div`
   font-style: normal;
 `
 const StyledCont = styled.div`
-  height: 66vh;
+  height: 75vh;
   width: 40vw;
   box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
@@ -37,13 +37,13 @@ const StyledBot = styled.div`
   margin-top: 5px;
 `
 const StyledBotCont = styled.div`
-  height: 40vh;
-  width: 25vw;
+  width: 30vw;
   background: rgba(169, 248, 191, 0.38);
   border-radius: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 2rem;
 `
 const StyledText = styled.div`
   font-weight: 400;
@@ -75,7 +75,6 @@ const StyledTexthead = styled.div`
   text-align: center;
   height: 72px;
   color: #0052b3;
-  margin: 5px 0 0 0;
   font-family: 'Montserrat';
   font-style: normal;
 `
@@ -88,7 +87,7 @@ const StyledTexthead2 = styled.div`
   justify-content: center;
   text-align: center;
   color: #636363;
-  margin: 10px 0;
+  margin-top: 10px;
 `
 const StyledTexthead3 = styled.div`
   font-weight: 600;
@@ -114,6 +113,7 @@ const StyledTexthead4 = styled.div`
   align-items: center;
   text-align: center;
   /* margin-top: 20px; */
+  margin-bottom: 1rem;
 
   color: #636363;
 `
@@ -126,7 +126,7 @@ export default function GenOtp() {
         <StyledBot>
           <StyledBotCont>
             <StyledTexthead>Payment Successful</StyledTexthead>
-            <Image src="images/tick.png" width={75} height={75} alt="" />
+            <Image src="public/images/tick.png" width={75} height={75} alt="" />
             <StyledTexthead2>You have successfully paid John</StyledTexthead2>
             <StyledTexthead3>₹500</StyledTexthead3>
             <StyledTexthead4>
