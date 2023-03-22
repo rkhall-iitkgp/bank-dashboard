@@ -1,7 +1,4 @@
-import Navbar from "../navbar";
-import { Group, Stack, Button, Image, Card, Text, TextInput } from "@mantine/core";
-import styled from "@emotion/styled";
-import RecentTransactions from "./recenttransactions";
+import { Card, Stack, Text } from "@mantine/core";
 import { useState } from "react";
 
 const CashCard = (props: { n: number, type: string, limit: number, setLimit: Function }) => {
