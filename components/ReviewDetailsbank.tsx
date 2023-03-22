@@ -236,7 +236,7 @@ export function Reviewdetailsbank(props: { sbi: any }) {
           </div>
           <ButtonGroup
             href1="/BankTransfer/Paybenificiary"
-            href2="/BankTransfer/otp"
+            href2="/BankTransfer/Otpconfirm"
           />
         </div>
       </div>

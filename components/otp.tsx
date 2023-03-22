@@ -1,4 +1,6 @@
-import { createStyles, TextInput, Button } from '@mantine/core'
+import { createStyles, TextInput } from '@mantine/core'
+import ButtonGroup from './SmallComponents/ButtonGroup'
+import Heading from './SmallComponents/Heading'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -28,14 +30,15 @@ const useStyles = createStyles((theme) => ({
     //   marginBottom:`10px`
   },
   titlebold: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: 'Montserrat',
     //   color: theme.black,
     lineHeight: 1,
     fontWeight: 600,
-    fontSize: `1.5rem`,
+    fontSize: `20px`,
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
+    paddingBottom: `20px`,
   },
 
   description: {
@@ -48,9 +51,10 @@ const useStyles = createStyles((theme) => ({
 
   form: {
     backgroundColor: theme.white,
-    borderRadius: theme.radius.md,
+    borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    width: `500px`,
+    // paddingBottom: '5px',
+    width: `40vw`,
     color: `#0052B3`,
   },
 
@@ -86,7 +90,7 @@ const useStyles = createStyles((theme) => ({
   },
   forminside: {
     maxWidth: `90%`,
-    width: `500px`,
+    width: `40vw`,
     padding: theme.spacing.xl,
     margin: `auto`,
   },
@@ -121,13 +125,12 @@ const useStyles = createStyles((theme) => ({
     ':active': {
       color: `#0052B3`,
     },
-    cursor: 'pointer'
   },
 }))
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
-export default function OTP() {
+export function OTP() {
   const { classes } = useStyles()
 
   // const icons = social.map((Icon, index) => (
@@ -138,9 +141,7 @@ export default function OTP() {
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        <div className={classes.topheading}>
-          <div className={classes.title}>Bank Transfer</div>
-        </div>
+        <Heading title="Bank Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
             <div className={classes.titlebold}>
@@ -165,14 +166,10 @@ export default function OTP() {
           />
           <div className={classes.resndotp}>Resend OTP</div>
 
-          <div className={classes.buttoncontainer}>
-            <Button className={classes.button} onClick={() => {}}>
-              Back
-            </Button>
-            <Button className={classes.button} onClick={() => {}}>
-              Continue
-            </Button>
-          </div>
+          <ButtonGroup
+            href1="/BankTransfer/Review"
+            href2="/BankTransfer/Success"
+          />
         </div>
       </div>
     </div>
