@@ -12,7 +12,7 @@ const BalanceChart = (props: {
   width: number
 }) => {
   const { balanceData, color, width } = props
-  return typeof window !== 'undefined' ? (
+  return typeof window === 'undefined' ? (
     <></>
   ) : (
     <ReactApexChart
