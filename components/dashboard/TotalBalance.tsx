@@ -1,5 +1,5 @@
 import { createStyles } from '@mantine/core'
-import Heading from './SmallComponents/Heading'
+import Heading from '../SmallComponents/Heading'
 import styled from '@emotion/styled'
 import { Group, Stack, Text } from '@mantine/core'
 import Image from 'next/image'
@@ -9,12 +9,11 @@ const useStyles = createStyles((theme) => ({
         borderRadius: `30px`,
         boxShadow: `0px 2px 20px rgba(0,0,0,0.1)`,
         color: `#0052B3`,
-        position: 'absolute',
-        height: `185px`,
+        position: 'relative',
+        height: `220px`,
         width: `305px`,
-        left: `429px`,
-        top: `210px`,
-
+        margin: `5px`,
+        display:`flex`,
     },
     subcontainer1: {
         color: `#737373`,
@@ -24,9 +23,10 @@ const useStyles = createStyles((theme) => ({
         width: `144px`,
         height: `18px`,
         textAlign: `center`,
-        marginTop: `30px`,
+        marginTop: `15px`,
         display: `flex`,
         justifyContent: `space`,
+        padding: `2px`,
     },
     subcontainer5: {
         color: `#737373`,
@@ -35,7 +35,7 @@ const useStyles = createStyles((theme) => ({
         right: `3px`,
         width: `102px`,
         height: `15px`,
-        marginTop:`30px`,
+        marginTop:`15px`,
         textAlign: `center`,
         display: `flex`,
         justifyContent: `space`,
@@ -49,6 +49,7 @@ const useStyles = createStyles((theme) => ({
         height: `52px`,
         display: `flex`,
         alignItems: `center`,
+        padding:`2px`,
     },
     subcontainer3: {
         color: `#737373`,
@@ -56,14 +57,15 @@ const useStyles = createStyles((theme) => ({
         position: 'absolute',
         top: `120px`,
         left: `27px`,
-        width: `55px`,
-        height: `18px`,
+        width: `58px`,
+        height: `20px`,
         textAlign: `center`,
         display: `flex`,
+        justifyContent: `center`,
         textalign: `center`,
         background: `#E8F6F0`,
         borderRadius: `5px`,
-        
+        margin:`6px`,
     },
     subcontainer4: {
         color: `#737373`,
@@ -75,6 +77,8 @@ const useStyles = createStyles((theme) => ({
         textAlign: `center`,
         display: `flex`,
         justifyContent: `space`,
+        padding: `2px`,
+        marginTop:`15px`,
     },
    
     

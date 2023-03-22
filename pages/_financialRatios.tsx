@@ -1,5 +1,5 @@
 import React from 'react'
-import { FinancialRatios } from '../components/FinancialRatios'
+import { FinancialRatios } from '../components/dashboard/FinancialRatios'
 function _financialRatios() {
   return (
     <div><FinancialRatios/></div>

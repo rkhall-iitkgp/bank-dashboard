@@ -1,10 +1,40 @@
-import Navbar from "../navbar";
+import Navbar from "../home/navbar/navbar";
 import { Group, Stack, Button, Image, Card, Text } from "@mantine/core";
 import styled from "@emotion/styled";
 import RecentTransactions from "./recenttransactions";
 import CashCard from "./cashcard";
 import EodBalance from "./eodBalance";
-
+import { TotalBalance } from "./TotalBalance";
+import { FinancialRatios } from "./FinancialRatios";
+import { createStyles } from '@mantine/core'
+const useStyles = createStyles((theme) => ({
+    container: {
+        display: 'grid',
+        gridTemplateColumns: `30% 70%`,
+    },
+    leftContainer: {
+        margin:`15px`,
+        display: "flex",
+        flexDirection: "column",
+    },
+    rightContainer: {
+        // margin:`18px`,
+        // marginTop: "70px",
+        display: "flex",
+        flexDirection: "column",
+        position: "relative",
+        justifyContent: "space-around",
+    },
+    rightMainContainer: {
+        // margin:`18px`,
+        // marginTop: "70px",
+        display: "flex",
+        flexDirection: "row",
+        position: "relative",
+        justifyContent: "space-around",
+    },
+   
+}))
 const AccountSelect = styled(Group)`
     border-radius: 30px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
@@ -12,11 +42,11 @@ const AccountSelect = styled(Group)`
 `
 
 const Dashboard = () => {
-    return (<div>
+    const { classes } = useStyles()
+    return (<div >
         <Navbar />
-
-        <Group className="dashboard-group">
-            <Stack className="left-side" mx={20}>
+        <div className={classes.container}>
+            <div className={classes.leftContainer}>
                 <Group my={10} style={{ justifyContent: "space-between" }}>
                     <Card h={50} w={50} bg={"#0062D6"} p={10} radius={50} ml={15}>
                         <Image src={"icons/filter.png"} my="auto" />
@@ -32,16 +62,29 @@ const Dashboard = () => {
                     <CashCard n={10} type={"withdrawl"} />
                 </Group>
 
-                <EodBalance balance="$1,23,456" comparision={4.6} />
+                <EodBalance balance="₹1,23,456" comparision={4.6} />
 
                 <RecentTransactions />
-            </Stack>
-
-            <Stack className="right-side">
-
-            </Stack>
-        </Group>
-    </div>)
+            </div>
+            <div className={classes.rightContainer}>
+                    <div>
+                    <span style={{
+                    fontFamily: 'Montserrat',
+                    fontStyle: `normal`,
+                    fontWeight: `700`,
+                    fontSize: `36px`,
+                    lineHeight: `44px`,
+                }}>Welcome Back,Bill Gates</span>
+                    </div>
+                    <div className={classes.rightMainContainer}>
+                    <TotalBalance />
+                    <FinancialRatios />
+                    </div>
+                   
+            </div>
+        </div>
+    </div>
+    )
 }
 
 export default Dashboard;
