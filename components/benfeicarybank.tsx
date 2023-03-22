@@ -54,6 +54,7 @@ const useStyles = createStyles((theme) => ({
     width: `40vw`,
     height: '56vh',
     color: `#0052B3`,
+    fontFamily: 'Montserrat',
   },
 
   forminside: {
@@ -65,6 +66,7 @@ const useStyles = createStyles((theme) => ({
 
   // buttoncontainer: {
   //   fontFamily: 'Montserrat',
+  // },
 
   //   fontSize: '20px',
   //   display: `flex`,
@@ -101,10 +103,14 @@ const useStyles = createStyles((theme) => ({
   // },
 
   accountContainer: {
-    margin: `1rem 1rem 1rem 6rem`,
+    margin: `1rem 3rem 5rem 3rem`,
     padding: `0 1rem`,
 
     // display:`flex`,
+  },
+
+  buttonContainer: {
+    margin: `1rem 3rem 5rem 3rem`,
   },
   // buttonContainer: {
   //   display: 'flex',
@@ -113,11 +119,11 @@ const useStyles = createStyles((theme) => ({
   //   marginTop: `3.5rem`,
   // },
   account: {
-    width: `70%`,
-    height: `50px`,
+    // width: `70%`,
+    height: `60px`,
     background: `rgba(0, 82, 179, 0.1)`,
-    borderRadius: `30px`,
-    margin: `10px`,
+    borderRadius: `25px`,
+    margin: `30px`,
     padding: `10px`,
     fontSize: `0.8rem`,
     textAlign: `center`,
@@ -133,21 +139,22 @@ const useStyles = createStyles((theme) => ({
       border: `2px dotted #0052B3;`,
       boxShadow: ` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
     },
-    boxShadow: ' 0px 12px 40px rgba(0, 0, 0, 0.2)',
+    boxShadow: ' 0px 12px 20px rgba(0, 0, 0, 0.2)',
   },
   active: {
-    boxShadow: ` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
+    boxShadow: ` inset 0px 12px 6px rgba(0, 0, 0, 0.05)`,
     border: `2px solid #0052B3`,
   },
   bankname: {
-    lineHeight: `0.9rem`,
+    lineHeight: `1.5rem`,
     fontWeight: 600,
     color: 'black',
-    fontSize: `1.1rem`,
+    fontSize: `1rem`,
   },
   bankdesc: {
-    color: 'black',
-    fontSize: '0.8rem',
+    color: '#737373',
+    fontSize: '0.7rem',
+    fontWeight: 600,
   },
   banknamecontainer: {
     width: `100%`,
@@ -178,7 +185,7 @@ function AccountType(props: {
         document.getElementById(props.id)?.classList.add(classes.active)
       }}
     >
-      <Image src={props.src} width={30} height={30} alt={''}></Image>
+      <Image src={props.src} width={35} height={35} alt={''} style={{ marginLeft: '12px'}}></Image>
       <div className={classes.banknamecontainer}>
         <div className={classes.bankname}>{props.bankname}</div>
 
