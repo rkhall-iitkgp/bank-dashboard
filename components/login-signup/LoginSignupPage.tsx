@@ -175,7 +175,7 @@ export function LoginSignupPage() {
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
   const BASEURL =
-    'http://127.0.0.1:8000/user'
+    'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user'
   const [signinLoading, setSignInLoading] = useState(false)
   const [signUpLoading, setSignUpLoading] = useState(false)
   const [enterOtp, setEnterOtp] = useState(false)
@@ -191,7 +191,7 @@ export function LoginSignupPage() {
       })
       .then((res) => {
         setEnterOtp(true)
-        sessionStorage.setItem('contact_no', res.data.contact_no)
+        // sessionStorage.setItem('contact_no', res.data.contact_no)
         // sessionStorage.setItem('user_id', res.data.user_id)
         return res.data
       })
@@ -213,6 +213,7 @@ export function LoginSignupPage() {
       .then((res) => {
         router.replace('/home')
         // save response i.e access token and refresh token in session storage
+        sessionStorage.setItem('contact_no', res.data.contact_no)
         sessionStorage.setItem('access_token', res.data.access_token)
         sessionStorage.setItem('refresh_token', res.data.refresh_token)
         sessionStorage.setItem('user_id', res.data.user_id)
