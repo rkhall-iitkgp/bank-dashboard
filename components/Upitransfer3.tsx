@@ -105,11 +105,6 @@ const useStyles = createStyles((theme) => ({
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #ccc`,
-
-    //   [`&:hover ~ .${getStylesRef('inputLabel')}`]: {
-    //     color: theme.colors.violet[6],
-    //     fontSize:`2rem !important`
-    //   },
   },
   inputLabel: {
     ref: getStylesRef('inputLabel'),
