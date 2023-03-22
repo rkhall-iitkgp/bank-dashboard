@@ -1,6 +1,5 @@
-import { createStyles, TextInput, Button, Group, rem } from '@mantine/core'
+import { createStyles } from '@mantine/core'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useState } from 'react'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
@@ -51,13 +50,14 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
     width: `40vw`,
-    height: '56vh',
+    minWidth: `600px`,
     color: `#0052B3`,
   },
 
   forminside: {
     maxWidth: `90%`,
     width: `40vw`,
+    minWidth: `500px`,
     padding: theme.spacing.xl,
     margin: `auto`,
   },
@@ -83,9 +83,13 @@ const useStyles = createStyles((theme) => ({
     alignItems: `baseline`,
   },
   accountContainer: {
-    margin: `1rem 1rem 1rem 3.5rem`,
+    margin: `1rem 1rem 1rem 1rem`,
     padding: `0 1rem`,
     display: `flex`,
+    flexDirection: `row`,
+    justifyContent: `space-between`,
+    alignItems: `center`,
+    minWidth: `400px`,
   },
   account: {
     width: `100px`,
@@ -101,12 +105,13 @@ const useStyles = createStyles((theme) => ({
     alignItems: `center`,
     justifyContent: `space-between`,
     ':hover': {
-      border: `2px dotted #0052B3;`,
-      boxShadow: ` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
+      //border: `2px dotted #0052B3;`,
+      boxShadow: ` 0px 4px 10px rgba(0, 0, 0, 0.25)`,
+      cursor: `pointer`,
     },
     ':active': {
-      border: `2px dotted #0052B3;`,
-      boxShadow: ` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
+      //border: `2px dotted #0052B3;`,
+      boxShadow: ` 0px 4px 10px rgba(0, 0, 0, 0.25)`,
     },
   },
   active: {
@@ -195,15 +200,7 @@ export function Banktransfer() {
               )
             })}
           </div>
-
-          {/* <div className={classes.buttoncontainer}>
-            <Link href="/home">
-              <Button className={classes.button}>Back</Button>
-            </Link>
-            <Link href="/BankTransfer/benfeiciary">
-              <Button className={classes.button}>Continue</Button>
-            </Link>
-          </div> */}
+          
           <ButtonGroup href1="/home" href2="/BankTransfer/benfeiciary" />
         </div>
       </div>

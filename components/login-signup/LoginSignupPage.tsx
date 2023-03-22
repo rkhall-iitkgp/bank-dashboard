@@ -1,19 +1,17 @@
 import {
-  createStyles,
-  Text,
-  Title,
-  TextInput,
-  Textarea,
   Button,
+  createStyles,
   Group,
-  ActionIcon,
+  PinInput,
   rem,
   Stack,
-  PinInput,
+  Text,
+  TextInput,
+  Title,
 } from '@mantine/core'
-import { useContext, useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -21,15 +19,10 @@ const useStyles = createStyles((theme) => ({
     minHeight: `100vh`,
     boxSizing: 'border-box',
     borderRadius: theme.radius.md,
-    //   padding: `calc(${theme.spacing.xl} * 2.5)`,
-    //   [theme.fn.smallerThan('sm')]: {
-    //     padding: `calc(${theme.spacing.xl} * 1.5)`,
-    //   },
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
     background: `white`,
-    //   padding:`10px`
   },
 
   titlebox: {
@@ -41,8 +34,7 @@ const useStyles = createStyles((theme) => ({
     lineHeight: 1,
     fontWeight: 400,
     paddingBottom: `5px`,
-    fontSize: `45px`,
-    maxWidth: `90%`,
+    fontSize: `2rem`,
   },
   titlebold: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -177,9 +169,7 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-//   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
-
-export function LoginSIgnupPage() {
+export function LoginSignupPage() {
   const { classes } = useStyles()
   const [mobile, setMobile] = useState('')
   const [email, setEmail] = useState('')
@@ -217,7 +207,7 @@ export function LoginSIgnupPage() {
         email: email,
       })
       .then((res) => {
-        router.push('/home')
+        router.replace('/home')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -236,7 +226,7 @@ export function LoginSIgnupPage() {
               <Stack my={10}>
                 <Stack>
                   <TextInput
-                    placeholder="OTP"
+                    placeholder="Mobile Number"
                     type={'number'}
                     required
                     classNames={{
@@ -260,58 +250,61 @@ export function LoginSIgnupPage() {
                     value={email}
                     onChange={(e) => setEmail(e.currentTarget.value)}
                   />
-
-                  <Group className={classes.buttoncontainer} mt={15}>
-                    <Button
-                      className={classes.button}
-                      loading={signUpLoading}
-                      onClick={() => {
-                        SignUp(mobile, email, 1)
-                        setSignUpLoading(true)
-                      }}
-                    >
-                      Sign Up
-                    </Button>
-                    <Button
-                      className={classes.button}
-                      loading={signinLoading}
-                      onClick={() => {
-                        SignUp(mobile, email, 0)
-                        setSignInLoading(true)
-                      }}
-                    >
-                      Sign In
-                    </Button>
-                  </Group>
                 </Stack>
 
-                {enterOtp && (
-                  <Stack my={20}>
-                    <Text
-                      c={'#656565'}
-                      fz={'lg'}
-                      style={{ letterSpacing: '0.1em' }}
-                      ml={15}
-                    >
-                      Enter OTP
-                    </Text>
-                    <PinInput
-                      inputMode="numeric"
-                      value={otp}
-                      onChange={(e) => setOtp(e)}
-                      mx="auto"
-                    />
-                    <Button
-                      className={classes.control}
-                      onClick={() => {
-                        console.log(otp)
-                        validate(mobile, otp)
-                      }}
-                    >
-                      Confirm
-                    </Button>
-                  </Stack>
-                )}
+                <Group className={classes.buttoncontainer} mt={15}>
+                  <Button
+                    className={classes.button}
+                    loading={signUpLoading}
+                    onClick={() => {
+                      SignUp(mobile, email, 1)
+                      setSignUpLoading(true)
+                    }}
+                  >
+                    Sign Up
+                  </Button>
+                  <Button
+                    className={classes.button}
+                    loading={signinLoading}
+                    onClick={() => {
+                      SignUp(mobile, email, 0)
+                      setSignInLoading(true)
+                    }}
+                  >
+                    Sign In
+                  </Button>
+                </Group>
+              </Stack>
+            )}
+
+            {enterOtp && (
+              <Stack my={20}>
+                <Text
+                  c={'#656565'}
+                  fz={'lg'}
+                  style={{
+                    letterSpacing: '0.1em',
+                    fontFamily: 'Montserrat, sans-serif',
+                  }}
+                  ml={15}
+                >
+                  Enter OTP
+                </Text>
+                <PinInput
+                  inputMode="numeric"
+                  value={otp}
+                  onChange={(e) => setOtp(e)}
+                  mx="auto"
+                />
+                <Button
+                  className={classes.control}
+                  onClick={() => {
+                    console.log(otp)
+                    validate(mobile, otp)
+                  }}
+                >
+                  Confirm
+                </Button>
               </Stack>
             )}
           </div>
@@ -323,7 +316,7 @@ export function LoginSIgnupPage() {
               A Comprehensive Analysis of your Transactions
             </Title>
             <Text className={classes.description} mt="sm" mb={30}>
-              Enter your credentials to access your account
+            Enter your credentials to access your account
             </Text>
             <div className={classes.outerimagecontainer}>
               <div className={classes.imagecontainer}>
@@ -337,9 +330,6 @@ export function LoginSIgnupPage() {
                 />
               </div>
             </div>
-            {/* <ContactIconsList variant="white" /> */}
-
-            {/* <Group mt="xl">{icons}</Group> */}
           </div>
         </div>
       </div>

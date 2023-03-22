@@ -1,12 +1,8 @@
 import {
   createStyles,
-  TextInput,
-  Button,
   Group,
-  rem,
   PinInput,
 } from '@mantine/core'
-import Link from 'next/link'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
 const useStyles = createStyles((theme) => ({

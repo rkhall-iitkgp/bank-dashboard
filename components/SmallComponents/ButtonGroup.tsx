@@ -7,23 +7,21 @@ const useStyles = createStyles((theme) => ({
   button1: {
     background: '#0062D6',
     borderRadius: '30px',
+    width: '145px',
     fontFamily: 'Montserrat',
     color: 'white',
     fontSize: '20px',
-    padding: '5px 5px',
-    width: '10vw',
+    padding: '5px 15px',
     textAlign: 'center',
     fontWeight: 400,
     '&:hover': {
       background: '#558ac9',
     },
-    marginRight: '20px',
   },
 
   buttonContainer: {
     display: 'flex',
     justifyContent: 'space-between',
-    width: '35vw',
     marginTop: `3rem`,
   },
 }))

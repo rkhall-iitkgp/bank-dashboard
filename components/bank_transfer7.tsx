@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { Image } from '@mantine/core'
-// import tick from './tick.png'
-import tick from '../public/images/tick.png'
 import Link from 'next/link'
 import Heading from './SmallComponents/Heading'
 const StyledContainer = styled.div`
@@ -21,15 +19,6 @@ const StyledCont = styled.div`
   box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
 `
-// const StyledHead = styled.div`
-//   height: 10vh;
-//   width: 48vw;
-//   background: #ddedff;
-//   display: flex;
-//   justify-content: center;
-//   align-items: end;
-//   border-radius: 30px 30px 0 0;
-// `
 const StyledBot = styled.div`
   height: 56vh;
   width: 40vw;

@@ -1,18 +1,5 @@
-import {
-  Card,
-  Image,
-  Text,
-  Badge,
-  Button,
-  Group,
-  MantineProvider,
-  Container,
-  Title,
-} from '@mantine/core'
-// import MantineProvider  from '@mantine/core';
-// import { ButtonProps, createPolymorphicComponent } from '@mantine/core'
+import { Image, MantineProvider } from '@mantine/core'
 import styled from '@emotion/styled'
-// import { Text } from '@mantine/core';
 
 const StyledContainer = styled.div`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
@@ -100,7 +87,7 @@ const LogoContainer = styled.div`
     text-align: center;
     font-size: 14px;
   }
-  img {
+  Image {
     width: 80px;
     aspect-ratio: 1;
     object-fit: cover;
@@ -123,15 +110,15 @@ function SeeYourAnalysis() {
           <h4>Make Payment</h4>
           <LogoContainer>
             <div>
-              <img src={url} alt="" />
+              <Image src={url} alt="" />
               <p>UPI Payment</p>
             </div>
             <div>
-              <img src={url} alt="" />
+              <Image src={url} alt="" />
               <p>Bank Transfer</p>
             </div>
             <div>
-              <img src={url} alt="" />
+              <Image src={url} alt="" />
               <p>Pay Phone Number</p>
             </div>
           </LogoContainer>

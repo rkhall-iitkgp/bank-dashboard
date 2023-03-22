@@ -1,15 +1,8 @@
-import {
-  createStyles,
-  TextInput,
-  Button,
-  Group,
-  rem,
-  PinInput,
-} from '@mantine/core'
-import Link from 'next/link'
+import { createStyles, TextInput, Button, Group, PinInput } from '@mantine/core'
 import { useState } from 'react'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: `100vh`,
@@ -115,8 +108,7 @@ const useStyles = createStyles((theme) => ({
   buttonVerify: {
     // height:``,
     width: `100px`,
-    backgroundColor: `transparent`,
-    margin: `1rem`,
+    backgroundColor: `#ffffff`,
     // borderRadius:,
   },
   topheading: {
@@ -129,7 +121,6 @@ const useStyles = createStyles((theme) => ({
     alignItems: `center`,
   },
 }))
-
 function Demo() {
   return (
     <Group position="center">
@@ -160,6 +151,35 @@ export function VerifyUPI() {
             <div className={classes.titlebold}>
               <span>Verify UPI</span>
             </div>
+          </div>
+          <div className={classes.description}>
+            <TextInput
+              placeholder="Enter UPI ID*"
+              withAsterisk
+              style={style}
+              rightSection={
+                <Button
+                  className={classes.buttonVerify}
+                  style={style2}
+                  onClick={handleClick}
+                >
+                  {buttonText}
+                </Button>
+              }
+            />
+          </div>
+          <div className={classes.buttoncontainer}>
+            <Button className={classes.button} onClick={() => {}}>
+              Back
+            </Button>
+            <Button
+              variant="gradient"
+              gradient={{ from: 'white', to: 'white' }}
+              className={classes.button}
+              onClick={() => {}}
+            >
+              Continue
+            </Button>
           </div>
           <div className={classes.description}>
             <TextInput

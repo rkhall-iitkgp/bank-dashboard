@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { Image } from '@mantine/core'
-import tick from './tick.png'
 import Link from 'next/link'
 import Heading from './SmallComponents/Heading'
 const StyledContainer = styled.div`
