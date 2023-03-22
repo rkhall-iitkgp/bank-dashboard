@@ -54,7 +54,7 @@ const StyledUserImage = styled.img`
   width: 40px;
   height: 40px;
   top: 20px;
-  background: url(dp.png);
+  background: url('/images/dp.png');
   border-radius: 100%;
   margin-left: 2%;
 `

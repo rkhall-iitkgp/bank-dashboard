@@ -5,6 +5,10 @@ import {
   createPolymorphicComponent,
   Image,
 } from '@mantine/core'
+import { useState } from 'react'
+import { AddAccountFormPopup } from './AddAccountFormPopup'
+import { useDisclosure } from '@mantine/hooks'
+import { Modal } from '@mantine/core'
 
 const Oflex = styled.div`
   display: flex;
@@ -31,6 +35,7 @@ const _StyledButton = styled(Button)`
   font-family: Montserrat, sans-serif;
   padding: 4px 48px;
   height: 42px;
+  background: #0062d6;
   :hover {
     cursor: pointer;
     transform: scale(1.02);
@@ -121,42 +126,37 @@ const StyledText1 = styled.div`
   text-align: center;
   color: #0052b3;
 `
-
 interface Props {
-  setAddAccount: Function
+  setIsAddAccountPopupOpen: Function
+  bankAccountList: any[]
 }
-export default function BankAccount({ setAddAccount }: Props) {
+export default function BankAccount({
+  bankAccountList,
+  setIsAddAccountPopupOpen,
+}: Props) {
   return (
     <Container>
       <Iflex>
         <AddBankAccountText>Add Bank Account</AddBankAccountText>
-        <AddAccountButton
-          onClick={() => {
-            setAddAccount(true)
-            const body = document.body
-            body.style.position = 'fixed'
-          }}
-          variant="gradient"
-          gradient={{ from: '#0062D6', to: '#0062D6' }}
-        >
+        <AddAccountButton onClick={() => setIsAddAccountPopupOpen(true)}>
           Add Account
         </AddAccountButton>
       </Iflex>
       <Oflex>
-        <StyledCard>
-          <BankImage>
-            <Image src="images/sbi1.png" alt="sbi" />
-          </BankImage>
-          <AccountNumber>****9878</AccountNumber>
-        </StyledCard>
+        {bankAccountList.map((bankAccount) => {
+          return (
+            <div key={bankAccount.account_no}>
+              <StyledCard>
+                <BankImage>
+                  <Image src="images/sbi1.png" alt="sbi" />
+                </BankImage>
+                <AccountNumber>****{bankAccount.account_no}</AccountNumber>
+              </StyledCard>
+            </div>
+          )
+        })}
         <AddAnotherBox>
-          <PlusImageContainer
-            onClick={() => {
-              setAddAccount(true)
-              const body = document.body
-              body.style.position = 'fixed'
-            }}
-          >
+          <PlusImageContainer onClick={() => setIsAddAccountPopupOpen(true)}>
             <Image src="images/frame.png" alt="add" />
           </PlusImageContainer>
         </AddAnotherBox>
