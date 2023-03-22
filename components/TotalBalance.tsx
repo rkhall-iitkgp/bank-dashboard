@@ -2,240 +2,163 @@ import { createStyles } from '@mantine/core'
 import Heading from './SmallComponents/Heading'
 import styled from '@emotion/styled'
 import { Group, Stack, Text } from '@mantine/core'
+import Image from 'next/image'
 const useStyles = createStyles((theme) => ({
-    wrapper: {
-        backgroundColor: `#EEEEEE`,
-        minHeight: `100vh`,
-        boxSizing: 'border-box',
-        padding: `calc(${theme.spacing.xl} * 1)`,
-        [theme.fn.smallerThan('sm')]: {
-            padding: `calc(${theme.spacing.xl} * 1)`,
-        },
-        display: `flex`,
-        justifyContent: `center`,
-        alignItems: `center`,
-        background: `grey`,
-
-    },
-    titlebox: {
-        // marginBottom:`20px`,
-        display: `flex`,
-        justifyContent: `center`,
-    },
-    title: {
-        fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-        //   color: theme.black,
-        lineHeight: 1,
-        fontWeight: 500,
-        margin: `0.8rem`,
-        //   paddingBottom:`5px`,
-        //   marginBottom:`10px`
-    },
-    titlebold: {
-        fontFamily: 'Montserrat',
-        //   color: theme.black,
-        lineHeight: 1,
-        fontWeight: 600,
-        fontSize: `20px`,
-        display: `flex`,
-        justifyContent: `center`,
-        alignItems: `center`,
-        // paddingBottom: `10px`,
-    },
-
-    form: {
-        backgroundColor: theme.white,
-        borderRadius: theme.radius.xl,
-        boxShadow: theme.shadows.lg,
-        // paddingBottom: '5px',
-        // width: `40rem`,
+    container: {
+        backgroundColor: `#ffffff`,
+        borderRadius: `30px`,
+        boxShadow: `0px 2px 20px rgba(0,0,0,0.1)`,
         color: `#0052B3`,
-    },
+        position: 'absolute',
+        height: `185px`,
+        width: `305px`,
+        left: `429px`,
+        top: `210px`,
 
-    forminside: {
-        maxWidth: `90%`,
-        width: `40vw`,
-        padding: theme.spacing.xl,
-        margin: `auto`,
     },
-    description: {
+    subcontainer1: {
         color: `#737373`,
-        fontSize: `1rem`,
-        // padding: `0.5rem`,
+        position: 'absolute',
+        top: `10px`,
+        left: `27px`,
+        width: `144px`,
+        height: `18px`,
         textAlign: `center`,
         marginTop: `30px`,
+        display: `flex`,
+        justifyContent: `space`,
+    },
+    subcontainer5: {
+        color: `#737373`,
+        position: 'absolute',
+        top: `10px`,
+        right: `3px`,
+        width: `102px`,
+        height: `15px`,
+        marginTop:`30px`,
+        textAlign: `center`,
+        display: `flex`,
+        justifyContent: `space`,
+    },
+    subcontainer2: {
+        color: `#000000`,
+        position: 'absolute',
+        top: `62px`,
+        left: `27px`,
+        width: `240px`,
+        height: `52px`,
+        display: `flex`,
+        alignItems: `center`,
+    },
+    subcontainer3: {
+        color: `#737373`,
+        fontSize: `1rem`,
+        position: 'absolute',
+        top: `120px`,
+        left: `27px`,
+        width: `55px`,
+        height: `18px`,
+        textAlign: `center`,
+        display: `flex`,
+        textalign: `center`,
+        background: `#E8F6F0`,
+        borderRadius: `5px`,
         
     },
-    subdescription: {
+    subcontainer4: {
         color: `#737373`,
-        fontSize: `1rem`,
-        padding: `0.5rem`,
+        position: 'absolute',
+        top: `149px`,
+        left: `27px`,
+        width: `178px`,
+        height: `18px`,
         textAlign: `center`,
-        marginTop: `30px`,
-        display:`flex`,
-        justifyContent: `space-between`,
-    },
-    buttoncontainer: {
         display: `flex`,
-        justifyContent: `space-between   `,
-        marginTop: `2rem`,
+        justifyContent: `space`,
     },
-    button: {
-        width: `150px`,
-        backgroundColor: `#0062D6`,
-        borderRadius: `15px`,
-    },
-    topheading: {
-        width: `100%`,
-        background: `#DDEDFF`,
-        display: `flex`,
-        justifyContent: `center`,
-        borderTopLeftRadius: theme.radius.md,
-        borderTopRightRadius: theme.radius.md,
-        alignItems: `center`,
-    },
-    ratioContainer: {
-        margin: `20px `,
-        display: `flex`,
-        flexWrap: `wrap`,
-        alignItems: `flex-end`,
-        justifyContent: `space-around`,
-    },
+   
+    
+   
 }))
-const StyledStack = styled(Stack)`
-  cursor: pointer;
-  padding: 30px;
-  border-radius: 15px;
-  width:150px;
-  justify-content: center;
-  align-items: center;
-
-  &:hover {
-    transform: scale(1.05);
-    transition-duration: 0.3s;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
-  }
-`
-interface Props {
-    ratioName?: string
-    value?: string
-}
-
-const RatioCard = ({ ratioName, value }: Props) => {
-    return (
-        <div>
-            <StyledStack>
-                <Text
-                    c={'#0062D6'}
-                    fz={'lg'}
-                    fw={500}
-                    w={120}
-                    style={{
-                        lineHeight: 1,
-                        textAlign: 'center',
-                        fontFamily: 'Montserrat, sans-serif',
-                        fontWeight: '500',
-                        fontSize: '12px',
-                        color: '#7E7E7E',
-                    }}
-                >
-                    {ratioName}
-                </Text>
-                <Text
-                    c={'#0062D6'}
-                    fz={'lg'}
-                    fw={500}
-                    w={120}
-                    style={{
-                        lineHeight: 1,
-                        textAlign: 'center',
-                        fontFamily: 'Montserrat, sans-serif',
-                        fontWeight: '700',
-                        fontSize: '26px',
-                        color: '#000000',
-                    }}
-                >
-                    {value}
-                </Text>
-            </StyledStack>
-        </div>
-    )
-}
 export function TotalBalance() {
     const { classes } = useStyles()
-    let financialRatios = [
-        { id: 1, ratioName: 'Liquidity Ratio', value: `4.74` },
-        { id: 2, ratioName: 'Debt to Asset Ratio', value: `0.1` },
-        { id: 3, ratioName: 'Data Service Ratio', value: `0.3` },
-        { id: 4, ratioName: 'Savings Ratio', value: `4.0` },
-        { id: 5, ratioName: 'Solvency Ratio', value: `-0.42` },
-        { id: 6, ratioName: 'Life Insurance Coverage Ratio', value: `1.2` },
-    ]
-
+    let data = {
+       totalBalance: '₹1,23,456', 
+       increment: '4.74%',
+       timePeriod:'1', 
+       number:'****3241',  
+    }
     return (
-        <div className={classes.wrapper}>
-            <div className={classes.form}>
-                <div className={classes.forminside}>
-                    <div className={classes.description}>
-                        <div className={classes.subdescription} >
-                    <Text
-                    c={'#0062D6'}
-                    fz={'lg'}
-                    fw={500}
-                    w={120}
-                    style={{
-                        lineHeight: 1,
-                        textAlign: 'center',
-                        fontFamily: 'Montserrat, sans-serif',
-                        fontWeight: '500',
-                        fontSize: '12px',
-                        color: '#7E7E7E',
-                    }}
-                >
-                   Total Balance
-                </Text>
-              
-                    <Text
-                    c={'#0062D6'}
-                    fz={'lg'}
-                    fw={500}
-                    w={120}
-                    style={{
-                        lineHeight: 1,
-                        textAlign: 'center',
-                        fontFamily: 'Montserrat, sans-serif',
-                        fontWeight: '500',
-                        fontSize: '12px',
-                        color: '#7E7E7E',
-                    }}
-                >
-                   {123456}
-                </Text>
-                </div>
-                <div>
-                <Text
-                    c={'#0062D6'}
-                    fz={'lg'}
-                    fw={500}
-                    w={120}
-                    style={{
-                        lineHeight: 1,
-                        textAlign: 'left',
-                        fontFamily: 'Montserrat, sans-serif',
-                        fontWeight: '700',
-                        fontSize: '36px',
-                        color: '#000000',
-                    }}
-                >
-                   {123456}
-                </Text>
-                </div>
-                    </div>
-                    <div className={classes.ratioContainer}>
-                     
-                    </div>
-                </div>
+        <div className={classes.container}>
+            <div className={classes.subcontainer1}>
+                <span style={{
+                    fontFamily: 'Montserrat',
+                    fontStyle: `normal`,
+                    fontWeight: `500`,
+                    fontSize: `16px`,
+                    lineHeight: `20px`,
+                }}>Total Balance</span>
+             
             </div>
+            
+            <div className={classes.subcontainer5}>
+                <span style={{
+                    fontFamily: 'Montserrat',
+                    fontStyle: `normal`,
+                    fontWeight: `500`,
+                    fontSize: `12px`,
+                    lineHeight: `15px`,
+                }}><Image
+                src={'/../public/icons/sbi.png'}
+                width={15}
+                height={15}
+                alt={''}
+              ></Image>{data.number}<Image
+              src={'/../public/icons/polygon.png'}
+              width={10}
+              height={10}
+              alt={''}
+            ></Image></span>
+             
+            </div>
+
+            <div className={classes.subcontainer2}>
+            <span style={{
+                    fontFamily: 'Montserrat',
+                    fontStyle: `normal`,
+                    fontWeight: `700`,
+                    fontSize: `36px`,
+                    lineHeight: `44px`,
+                }}>{data.totalBalance} </span>
+
+            </div>
+            <div className={classes.subcontainer3}>
+            <span style={{
+                    fontFamily: 'Montserrat',
+                    fontStyle: `normal`,
+                    fontWeight: `600`,
+                    fontSize: `12px`,
+                    color:`#2CC578`,
+                    lineHeight: `15px`,
+                }}> <Image
+                src={'/../public/icons/increment.png'}
+                width={14}
+                height={14}
+                alt={''}
+              ></Image>{data.increment}</span>
+
+            </div>
+            <div className={classes.subcontainer4}>
+            <span style={{
+                    fontFamily: 'Montserrat',
+                    fontStyle: `normal`,
+                    fontWeight: `500`,
+                    fontSize: `12px`,
+                    lineHeight: `15px`,
+                }}>Compared to last {data.timePeriod} week</span>
+
+            </div>
+           
         </div>
     )
 }
