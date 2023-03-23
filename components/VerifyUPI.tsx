@@ -94,21 +94,25 @@ const useStyles = createStyles((theme) => ({
   },
 
   buttoncontainer: {
+    backgroundColor: `transparent`,
     display: `flex`,
     justifyContent: `space-between   `,
+    width:'200px',
     // margin:`1rem`,
     // marginTop: `2rem`,
   },
   button: {
     width: `150px`,
-    backgroundColor: `#0062D6`,
+    backgroundColor: `transparent`,
     borderRadius: `20px`,
+    marginRight: '20px',
+    marginLeft: '-20px'
   },
 
   buttonVerify: {
     // height:``,
     width: `100px`,
-    backgroundColor: `#ffffff`,
+    backgroundColor: `transparent`,
     // borderRadius:,
   },
   topheading: {
@@ -135,7 +139,7 @@ export function VerifyUPI() {
 
   function handleClick() {
     setStyle({ border: '1px solid #76FF9C' })
-    setStyle2({ color: '#76FF9C' })
+    setStyle2({ color: '#00AD30'})
     setButtonText('Verified')
   }
   const { classes } = useStyles()
@@ -169,9 +173,9 @@ export function VerifyUPI() {
             />
           </div>
           <div className={classes.buttoncontainer}>
-            <Button className={classes.button} onClick={() => {}}>
+            {/* <Button className={classes.button} onClick={() => {}}>
               Back
-            </Button>
+            </Button> */}
             <Button
               variant="gradient"
               gradient={{ from: 'white', to: 'white' }}
@@ -181,7 +185,7 @@ export function VerifyUPI() {
               Continue
             </Button>
           </div>
-          <div className={classes.description}>
+          {/* <div className={classes.description}>
             <TextInput
               placeholder="Enter UPI ID*"
               withAsterisk
@@ -196,7 +200,7 @@ export function VerifyUPI() {
                 </Button>
               }
             />
-          </div>
+          </div> */}
           {/* <div className={classes.buttoncontainer}>
             <Link href='/UPI/'><Button className={classes.button}>Back</Button></Link>
             <Link href='/UPI/Payment'><Button className={classes.button} >Continue</Button></Link>

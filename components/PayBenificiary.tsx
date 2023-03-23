@@ -43,7 +43,7 @@ const useStyles = createStyles((theme) => ({
 
   description: {
     color: `#737373`,
-    fontSize: `0.5rem`,
+    fontSize: `12px`,
     padding: `0.5rem`,
   },
 
@@ -64,6 +64,8 @@ const useStyles = createStyles((theme) => ({
   },
 
   input: {
+    fontFamily: 'Montserrat',
+    padding: '0',
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     color: theme.black,
@@ -134,6 +136,7 @@ const useStyles = createStyles((theme) => ({
     minWidth: `150px`,
   },
   amountinside: {
+    fontFamily: 'Montserrat',
     maxWidth: `90%`,
     width: `auto`,
     padding: `0 5px`,
@@ -147,12 +150,14 @@ const useStyles = createStyles((theme) => ({
     alignItems: `center`,
   },
   balance: {
+    fontFamily: 'Montserrat',
     color: '#0052B3',
     fontSize: `1.2rem`,
     fontWeight: 600,
     paddingLeft: `3px`,
   },
   accountnumber: {
+    fontFamily: 'Montserrat',
     color: 'black',
     fontSize: `0.6rem`,
     fontWeight: 600,

@@ -113,7 +113,7 @@ const useStyles = createStyles((theme) => ({
   //   marginTop: `3.5rem`,
   // },
   account: {
-    width: `70%`,
+    width: `80%`,
     height: `50px`,
     background: `rgba(0, 82, 179, 0.1)`,
     borderRadius: `30px`,
@@ -133,7 +133,7 @@ const useStyles = createStyles((theme) => ({
       border: `2px dotted #0052B3;`,
       boxShadow: ` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
     },
-    boxShadow: ' 0px 12px 40px rgba(0, 0, 0, 0.2)',
+    // boxShadow: ' 0px 12px 40px rgba(0, 0, 0, 0.2)',
   },
   active: {
     boxShadow: ` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,

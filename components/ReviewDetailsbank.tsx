@@ -63,6 +63,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   input: {
+    fontFamily: 'Montserrat',
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     color: theme.black,
