@@ -290,7 +290,21 @@ const Form = (props: { id: any, accountselected: any }) => {
 }
 const Profile = () => {
     const { classes } = useStyles()
-    const accounts = [8989, 4235, 7382]
+    interface Account {
+        id: number;
+        account_no: string;
+        ifsc: string;
+        analysisconsent: any;
+        trxnconsent: any;
+        user_id: number;
+      }
+      
+    const accountlist = sessionStorage.getItem('accounts')
+    const accountsp: Account[] = JSON.parse(accountlist);
+
+    // const accounts: string[] = accountsp.map(account => account.account_no);
+    const accounts: string[] = accountsp.map(account => "****" + account.account_no.substr(-4));
+    // const accounts = [8989, 4235, 7382]
     const [accountselected, setAccountselected] = useState<number>()
     const [activeTab, setActiveTab] = useState<string | null>(accounts[0].toString());
     return (
