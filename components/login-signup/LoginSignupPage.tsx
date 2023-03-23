@@ -183,7 +183,7 @@ export function LoginSignupPage() {
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
   const BASEURL =
-    'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user'
+    'http://localhost:8000/user'
   const [signinLoading, setSignInLoading] = useState(false)
   const [signUpLoading, setSignUpLoading] = useState(false)
   const [enterOtp, setEnterOtp] = useState(false)
