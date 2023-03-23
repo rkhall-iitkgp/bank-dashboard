@@ -18,6 +18,7 @@ import { notifications } from '@mantine/notifications';
 import Image from 'next/image'
 import 'react-phone-input-2/lib/style.css'
 import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
+import api from '../api'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -205,16 +206,16 @@ export function LoginSignupPage() {
   const [mobile, setMobile] = useState('')
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
-  const BASEURL =
-    'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user'
+  // const BASEURL =
+  //   'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user'
   const [signinLoading, setSignInLoading] = useState(false)
   const [signUpLoading, setSignUpLoading] = useState(false)
   const [enterOtp, setEnterOtp] = useState(false)
   const router = useRouter()
 
   const SignUp = (contact_no: string, email: string, si: number) => {
-    let res = axios
-      .post(`${BASEURL}/sendotp/`, {
+    let res = api
+      .post('/user/sendotp/', {
         contact_no: "+" + contact_no,
         email: email,
         signup: si,
@@ -252,12 +253,12 @@ export function LoginSignupPage() {
   // const [otpValue, setOtpValue] = useState<boolean>(false)
 
   const validate = (contact_no: string, otp: string, email: string) => {
-    let res = axios
-      .post(`${BASEURL}/validateotp/`, {
-        "contact_no": "+" + contact_no,
-        "otp": otp,
-        "email": email,
-        "isaccount": 0,
+    let res = api
+      .post('user/validateotp/', {
+        contact_no: contact_no,
+        otp: otp,
+        email: email,
+        isaccount: 0,
       })
       .then((res) => {
         router.replace('/home')

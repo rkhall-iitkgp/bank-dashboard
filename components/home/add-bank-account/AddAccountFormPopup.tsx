@@ -9,9 +9,11 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+// import { useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import api from '../../api'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -157,6 +159,8 @@ export function AddAccountFormPopup({
 
   const [otpNum, setOtpNum] = useState<string>('')
 
+
+
   return (
     <Modal
       withCloseButton={false}
@@ -250,29 +254,31 @@ export function AddAccountFormPopup({
                     if (otp == false){
                         setOtp(true)
                         console.log(sessionStorage.getItem('contact_no'));
-                        const response = axios.post(
-                            'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user/sendaccountotp/', {
+                        const response = api.post(
+                            '/user/sendaccountotp/', {
                                 contact_no: sessionStorage.getItem('contact_no')
                         }).then((response) => {
                             console.log(response)
                         })
                     }
                     else {
-                      bankAccountList.push({
-                        account_no: account_no,
-                        ifsc: ifsc,
-                      })
+
                       setBankAccountList(bankAccountList)
                       setIsAddAccountPopupOpen(false)
                       console.log(otpNum)
                       const contact_no = sessionStorage.getItem('contact_no')
-                        const response = axios.post(
-                            'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user/addaccount/', {
+                        const response = api.post(
+                            '/user/addaccount/', {
                                 contact_no: contact_no,
                                 account_no: account_no,
                                 ifsc: ifsc,
                                 otp: otpNum
                         }).then((response) => {
+                            bankAccountList.push({
+                                account_no: account_no,
+                                ifsc: ifsc,
+                              })
+                              // sessionStorage.setItem('bankAccountList', JSON.stringify(bankAccountList))
                             console.log(response)
                         })
                     }
