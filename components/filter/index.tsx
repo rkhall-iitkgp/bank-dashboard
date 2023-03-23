@@ -70,7 +70,7 @@ const AccountSelect = (prop: {
       fz={'lg'}
       size="xl"
     >
-      <Image src={'icons/sbi.png'} mr={25} alt="sbi" />
+      <Image src={'icons/sbi.png'} height={25} mr={25} alt="sbi" />
       {account}
     </Button>
   )
@@ -82,7 +82,7 @@ const Filter = () => {
   const [account, setAccount] = useState(0)
 
   return (
-    <div style={{ width: '585px' }}>
+    <div style={{ width: '585px', paddingLeft: 50 }}>
       <Group mb={20}>
         <Stack mr={40}>
           <Text c={'#656565'} fz={'lg'} style={{ letterSpacing: '0.1em' }}>

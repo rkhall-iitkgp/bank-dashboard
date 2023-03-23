@@ -70,7 +70,8 @@ const BalanceChart = (props: {
 const SpendingDonut = (props: {
   values: number[]
   legends: string[]
-  setSelection: Function
+  setSelection: Function,
+  setValue: Function
 }) => {
   return (
     <ReactApexChart
@@ -81,7 +82,8 @@ const SpendingDonut = (props: {
           type: 'donut',
           events: {
             dataPointSelection(e, chart, options) {
-              props.setSelection(parseInt(e?.target?.getAttribute('rel')))
+              props.setSelection(parseInt(e?.target?.getAttribute('j')));
+              props.setValue(parseInt(e?.target?.getAttribute('data:value')));
             },
           },
         },
@@ -166,7 +168,8 @@ const ArticlesData = [
 
 const FinancialStatistics = () => {
   const [categoryIndex, setCategoryIndex] = useState(-1)
-  const [modeIndex, setModeIndex] = useState(-1)
+  const [modeIndex, setModeIndex] = useState(-1);
+  const [catValue, setCatValue] = useState(-1);
 
   return (
     <Card
@@ -176,21 +179,23 @@ const FinancialStatistics = () => {
         maxHeight: '35rem',
         overflow: 'auto',
       }}
-      ml={20}
+      ml={10}
     >
       {categoryIndex != -1 && (
-        <Group mx={40}>
+        <Group mx={30}>
           <Button
             radius={'xl'}
             variant="gradient"
             gradient={{ from: '#0062D6', to: '#0062D6' }}
             onClick={() => setCategoryIndex(-1)}
             px={35}
+            ff="Montserrat"
+            fw={500}
           >
             Back
           </Button>
           <Text mx={20} c={'#4D4B4B'} ff="Montserrat" fz={28} fw={800}>
-            Category: {PieCategoryData[categoryIndex]?.mode + ' (32%)'}{' '}
+            Category: {`${PieCategoryData[categoryIndex].mode}` + ` (${catValue}%) `}
           </Text>
         </Group>
       )}
@@ -214,12 +219,14 @@ const FinancialStatistics = () => {
               setSelection={setCategoryIndex}
               values={PieCategoryData.map((v) => v.value)}
               legends={PieCategoryData.map((v) => v.mode)}
+              setValue={setCatValue}
             />
             {categoryIndex == -1 && (
               <SpendingDonut
                 setSelection={setModeIndex}
                 values={PieModeData.map((v) => v.value)}
                 legends={PieModeData.map((v) => v.mode)}
+                setValue={(v: number) => { }}
               />
             )}
             {categoryIndex != -1 && (
@@ -237,14 +244,13 @@ const FinancialStatistics = () => {
 
         {categoryIndex != -1 && (
           <Stack mx={40}>
-            <RecentTransactions />
+            <div style={{ border: "1px solid rgb(131 131 131 / 30%)" }}>
+              <RecentTransactions /></div>
             <InsightCard insights={InsightList} />
             <ArticlesCard articles={ArticlesData} />
           </Stack>
         )}
       </Group>
-      {/* {!showCat && */}
-      {/* <Button onClick={() => setShowCat(!showCat)}>Click ME</Button>} */}
     </Card>
   )
 }
