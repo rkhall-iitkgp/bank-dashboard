@@ -12,6 +12,8 @@ import {
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useForm, isEmail, hasLength } from '@mantine/form';
+
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -225,6 +227,18 @@ export function LoginSignupPage() {
     res.then((v) => console.log(v))
   }
 
+  const form = useForm({
+    initialValues: {
+      phone: '',
+      email: '',
+    },
+
+    validate: {
+      phone: hasLength({min: 10, max: 10}, 'Phone Number must be 10 characters long'),
+      email: isEmail('Invalid Email')
+    },
+  });
+
   return (
     <div className={classes.wrapper}>
       <div className={classes.grid}>
@@ -248,10 +262,11 @@ export function LoginSignupPage() {
                     onChange={(e) => setMobile(e.currentTarget.value)}
                   />
                   <TextInput
-                    placeholder="Email*"
+                    placeholder="Email"
+                    withAsterisk
+                    {...form.getInputProps('email')}
                     type={'email'}
                     mt="md"
-                    withAsterisk
                     classNames={{
                       input: classes.input,
                       label: classes.inputLabel,
