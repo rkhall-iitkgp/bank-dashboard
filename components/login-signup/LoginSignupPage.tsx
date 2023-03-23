@@ -2,8 +2,8 @@ import {
   Button,
   createStyles,
   Group,
+  NumberInput,
   PinInput,
-  Image,
   Stack,
   Text,
   TextInput,
@@ -29,7 +29,7 @@ const useStyles = createStyles((theme) => ({
     marginBottom: `20px`,
   },
   title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: `Montserrat`,
     color: theme.white,
     lineHeight: 1,
     fontWeight: 400,
@@ -43,14 +43,14 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 400,
     fontSize: `3rem`,
     textAlign: `center`,
+    marginBottom: `4rem`,
   },
 
   description: {
+    fontFamily: `Montserrat`,
     color: theme.colors[theme.primaryColor][0],
-    maxWidth: 400,
-    fontSize: `1rem`,
-    fontFamily: `Montserrat, ${theme.fontFamily}`,
-    fontWeight: 300,
+    maxWidth: `rem(300)`,
+    fontSize: `0.8rem`,
     [theme.fn.smallerThan('sm')]: {
       maxWidth: '100%',
     },
@@ -85,12 +85,13 @@ const useStyles = createStyles((theme) => ({
 
     '&::placeholder': {
       color: theme.colors.gray[5],
+      fontFamily: `Montserrat`,
+      fontStyle: `normal`,
     },
     border: '0',
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #eee`,
-    marginTop: `1rem`,
   },
 
   inputLabel: {
@@ -101,8 +102,8 @@ const useStyles = createStyles((theme) => ({
   },
   inputcontainer: {
     position: `relative`,
-    paddingTop: `0.75rem`,
     marginTop: `0 !important`,
+    paddingLeft: 0,
   },
   control: {
     backgroundColor: `#006AE4`,
@@ -125,21 +126,28 @@ const useStyles = createStyles((theme) => ({
     background: `#006BE5`,
     width: `100%`,
     padding: '50px',
-    paddingTop: `8vh`,
-    display: `flex`,
-    flexDirection: `column`,
+    paddingTop: `100px`,
     height: `96vh`,
     borderRadius: theme.radius.md,
     boxShadow: theme.shadows.lg,
   },
   buttoncontainer: {
     display: `flex`,
-    justifyContent: `space-around`,
+    justifyContent: `space-between`,
   },
   button: {
-    width: `100px`,
+    width: `125px`,
     backgroundColor: `black`,
     borderRadius: `20px`,
+    fontFamily: `Montserrat`,
+  },
+  otpbutton: {
+    height: `36px`,
+    width: `364px`,
+    background: `#006AE4`,
+    borderRadius: `30px`,
+    marginTop: `20px`,
+    fontFamily: `Montserrat`,
   },
   outerimagecontainer: {
     width: `100%`,
@@ -202,6 +210,8 @@ export function LoginSignupPage() {
     setSignUpLoading(false)
   }
 
+  const [otpValue, setOtpValue] = useState<boolean>(false)
+
   const validate = (contact_no: string, otp: string) => {
     let res = axios
       .post(`${BASEURL}/validateotp/`, {
@@ -229,7 +239,7 @@ export function LoginSignupPage() {
       <div className={classes.grid}>
         <div className={classes.form}>
           <div className={classes.forminside}>
-            <div className={classes.titlebold}>Shiftbank</div>
+            <div className={classes.titlebold}>shiftbank</div>
 
             {!enterOtp && (
               <Stack my={10}>
@@ -261,28 +271,58 @@ export function LoginSignupPage() {
                   />
                 </Stack>
 
-                <Group className={classes.buttoncontainer} mt={15}>
-                  <Button
-                    className={classes.button}
-                    loading={signUpLoading}
-                    onClick={() => {
-                      SignUp(mobile, email, 1)
-                      setSignUpLoading(true)
+                {otpValue ? (
+                  <NumberInput
+                    placeholder="OTP"
+                    type={'number'}
+                    mt="md"
+                    hideControls={true}
+                    classNames={{
+                      input: classes.input,
+                      label: classes.inputLabel,
+                      root: classes.inputcontainer,
                     }}
-                  >
-                    Sign Up
-                  </Button>
-                  <Button
-                    className={classes.button}
-                    loading={signinLoading}
-                    onClick={() => {
-                      SignUp(mobile, email, 0)
-                      setSignInLoading(true)
-                    }}
-                  >
-                    Sign In
-                  </Button>
-                </Group>
+                  />
+                ) : (
+                  <>
+                    <Group className={classes.buttoncontainer}>
+                      <Button
+                        className={classes.otpbutton}
+                        onClick={() => {
+                          if (otpValue == false) setOtpValue(true)
+                        }}
+                      >
+                        Get OTP
+                      </Button>
+                    </Group>
+                  </>
+                )}
+                {otpValue ? (
+                  <Group className={classes.buttoncontainer} mt={15}>
+                    <Button
+                      className={classes.button}
+                      loading={signUpLoading}
+                      onClick={() => {
+                        SignUp(mobile, email, 1)
+                        setSignUpLoading(true)
+                      }}
+                    >
+                      Sign Up
+                    </Button>
+                    <Button
+                      className={classes.button}
+                      loading={signinLoading}
+                      onClick={() => {
+                        SignUp(mobile, email, 0)
+                        setSignInLoading(true)
+                      }}
+                    >
+                      Sign In
+                    </Button>
+                  </Group>
+                ) : (
+                  <></>
+                )}
               </Stack>
             )}
 
