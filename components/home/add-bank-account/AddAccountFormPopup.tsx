@@ -9,6 +9,8 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useState } from 'react'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -95,7 +97,6 @@ const useStyles = createStyles((theme) => ({
     borderBottom: `2px solid #eee`,
     margin: '4px 0px',
   },
-
   inputLabel: {
     color: theme.black,
     position: `absolute`,
@@ -150,6 +151,7 @@ export function AddAccountFormPopup({
   const [opened, { open, close }] = useDisclosure(false)
 
   const [account_no, setAccount_no] = useState<number | ''>('')
+  const [mobile_no, setMobile_no] = useState<string>('')
   const [ifsc, setIfsc] = useState<string>('')
 
   return (
@@ -183,15 +185,31 @@ export function AddAccountFormPopup({
                   root: classes.inputcontainer,
                 }}
               />
-              <NumberInput
+              <PhoneInput
                 placeholder="Mobile Number"
-                type="number"
-                mt="md"
-                hideControls={true}
-                classNames={{
-                  input: classes.input,
-                  label: classes.inputLabel,
-                  root: classes.inputcontainer,
+                value={mobile_no}
+                onChange={setMobile_no}
+                country={'in'}
+                containerStyle={{
+                  border: 'none',
+                  borderBottom: `2px solid #eee`,
+                  top: `0.5rem`,
+                  color: '#0052B3',
+                }}
+                inputStyle={{
+                  background: 'transparent',
+                  border: 'none',
+                  margin: '4px 0px',
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  fontSize: '18px',
+                  lineHeight: '24px',
+                  color: '#0052B3',
+                }}
+                buttonStyle={{
+                  background: 'transparent',
+                  border: 'none',
                 }}
               />
               <TextInput
