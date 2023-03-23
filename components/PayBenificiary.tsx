@@ -22,16 +22,14 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `space-between`,
   },
   title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: 'Montserrat, sans-serif',
     //   color: theme.black,
     lineHeight: 1,
     fontWeight: 500,
     margin: `0.8rem`,
-    //   paddingBottom:`5px`,
-    //   marginBottom:`10px`
   },
   titlebold: {
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat, sans-serif',
     //   color: theme.black,
     lineHeight: 1,
     fontWeight: 600,
@@ -39,11 +37,14 @@ const useStyles = createStyles((theme) => ({
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
+    marginLeft: `1.5rem`,
   },
 
   description: {
     color: `#737373`,
-    fontSize: `12px`,
+    fontSize: `0.5rem`,
+    fontFamily: `Montserrat`,
+    fontWeight: 400,
     padding: `0.5rem`,
   },
 
@@ -69,7 +70,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     color: theme.black,
-
+    fontFamily: 'Montserrat, sans-serif',
     '&::placeholder': {
       color: theme.colors.gray[5],
     },
@@ -130,6 +131,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.md,
     boxShadow: `0px 6px 20px rgba(0, 0, 0, 0.2)`,
     width: `auto`,
+    fontFamily: `Montserrat`,
     color: `#0052B3`,
     padding: `10px`,
     minHeight: `60px`,
