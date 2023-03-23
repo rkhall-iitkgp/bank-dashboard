@@ -1,8 +1,8 @@
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
 import { useState } from 'react'
-import ButtonGroup from './SmallComponents/ButtonGroup'
-import Heading from './SmallComponents/Heading'
+import ButtonGroup from '../reusable-components/ButtonGroup'
+import Heading from '../reusable-components/Heading'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,

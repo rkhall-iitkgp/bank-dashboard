@@ -1,10 +1,3 @@
-import React from 'react'
-import { TransactionForm } from '../components/TransactionForm'
+import { TransactionForm } from '../components/profile/TransactionForm'
 
-const transactions = () => {
-    return (
-        <TransactionForm/>
-    )
-}
-
-export default transactions
+export default <TransactionForm />

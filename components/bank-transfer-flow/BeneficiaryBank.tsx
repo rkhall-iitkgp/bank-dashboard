@@ -1,8 +1,8 @@
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
 import { useState } from 'react'
-import ButtonGroup from './SmallComponents/ButtonGroup'
-import Heading from './SmallComponents/Heading'
+import ButtonGroup from '../reusable-components/ButtonGroup'
+import Heading from '../reusable-components/Heading'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -173,7 +173,13 @@ function AccountType(props: {
         document.getElementById(props.id)?.classList.add(classes.active)
       }}
     >
-      <Image src={props.src} width={35} height={35} alt={''} style={{ marginLeft: '12px'}}></Image>
+      <Image
+        src={props.src}
+        width={35}
+        height={35}
+        alt={''}
+        style={{ marginLeft: '12px' }}
+      ></Image>
       <div className={classes.banknamecontainer}>
         <div className={classes.bankname}>{props.bankname}</div>
 

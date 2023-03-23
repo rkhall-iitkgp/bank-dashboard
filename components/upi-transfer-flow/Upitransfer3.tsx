@@ -1,18 +1,21 @@
 import { createStyles, TextInput, getStylesRef } from '@mantine/core'
-import ButtonGroup from './SmallComponents/ButtonGroup'
-import Heading from './SmallComponents/Heading'
+import ButtonGroup from '../reusable-components/ButtonGroup'
+import Heading from '../reusable-components/Heading'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
     minHeight: `100vh`,
     boxSizing: 'border-box',
-    [theme.fn.smallerThan('sm')]: {},
+    [theme.fn.smallerThan('sm')]: {
+      padding: `calc(${theme.spacing.xl} * 1.5)`,
+    },
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
     background: `grey`,
   },
   titlebox: {
+    // marginBottom:`20px`,
     width: '90%',
     margin: 'auto',
     fontSize: '28px',
@@ -20,21 +23,24 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `space-between`,
   },
   title: {
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat, sans-serif',
+    //   color: theme.black,
     lineHeight: 1,
     fontWeight: 500,
     margin: `0.8rem`,
+    //   paddingBottom:`5px`,
+    //   marginBottom:`10px`
   },
   titlebold: {
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat, sans-serif',
+    //   color: theme.black,
     lineHeight: 1,
     fontWeight: 600,
     fontSize: `20px`,
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
-    paddingBottom: `20px`,
-    marginLeft: `1.5rem`,
+    paddingBottom: `10px`,
   },
 
   description: {
@@ -47,6 +53,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
+    // paddingBottom: '5px',
     width: `40vw`,
     margin: `auto`,
     color: `#0052B3`,
@@ -56,9 +63,9 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     color: theme.black,
-    fontSize: '0.8rem',
-    height: '1rem',
-    fontFamily: 'Montserrat',
+    fontSize: '1rem',
+    height: '1.2rem',
+    fontFamily: 'Montserrat, sans-serif',
 
     ':focus': {
       borderColor: 'blue',
@@ -73,14 +80,18 @@ const useStyles = createStyles((theme) => ({
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #ccc`,
+
+    //   [`&:hover ~ .${getStylesRef('inputLabel')}`]: {
+    //     color: theme.colors.violet[6],
+    //     fontSize:`2rem !important`
+    //   },
   },
   inputAmount: {
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
-    color: theme.colors.gray[6],
     fontSize: '1rem',
     height: '1.2rem',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat, sans-serif',
     ':focus': {
       borderColor: 'blue',
     },
@@ -99,16 +110,17 @@ const useStyles = createStyles((theme) => ({
     ref: getStylesRef('inputLabel'),
     paddingLeft: `2px`,
     color: theme.colors.gray[6],
+    // position:`absolute`,
+    // top:`1.5rem`,
     fontSize: `12px`,
     fontWeight: 400,
     transition: `0.25s ease`,
     height: `14px`,
-    fontFamily: 'Montserrat, sans-serif',
   },
   inputcontainer: {
     backgroundColor: 'white',
     position: `relative`,
-    fontFamily: 'Montserrat, sans-serif',
+    // paddingTop:`0.75rem`,
     marginTop: `0 !important`,
   },
   enterAmountContainer: {
@@ -154,21 +166,32 @@ const useStyles = createStyles((theme) => ({
   payingtext: {
     paddingTop: `0.25rem`,
     fontWeight: 600,
+    marginBottom: `0.75rem`,
+    marginTop: `0.5rem`,
   },
 }))
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
-export function Reviewdetailsbank(props: { sbi: any }) {
+export function Upitransfer3() {
   const { classes } = useStyles()
+
+  // const icons = social.map((Icon, index) => (
+  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
+  //     <Icon size="1.4rem" stroke={1.5} />
+  //   </ActionIcon>
+  // ));
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
+        {/* <div className={classes.topheading}>
+          <div className={classes.title}>UPI Transfer</div>
+        </div> */}
         <Heading title="UPI Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
             <div className={classes.titlebold}>
-              <span>Review Details</span>
+              <span>Payment Amount</span>
             </div>
           </div>
           <div className={classes.beficiaryformcontainer}>
@@ -186,62 +209,58 @@ export function Reviewdetailsbank(props: { sbi: any }) {
               disabled
             />
 
+            <TextInput
+              label="UPI ID"
+              variant="unstyled"
+              disabled
+              value="myself@oksbi"
+              classNames={{
+                input: classes.input,
+                label: classes.inputLabel,
+                root: classes.inputcontainer,
+              }}
+            />
             <div className={classes.payingtext}>Paying</div>
             <TextInput
-              label="Name"
+              placeholder="Name*"
               variant="unstyled"
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
-                root: classes.inputcontainer,
-              }}
-              disabled
-              value={'John Doe'}
-            />
-            <TextInput
-              label="Account Number"
-              variant="unstyled"
-              mt="md"
-              value={'XXXXXXXX7394'}
-              classNames={{
-                input: classes.input,
-                label: classes.inputLabel,
-                root: classes.inputcontainer,
+                root: classes.enterAmountContainer,
               }}
               required
-              disabled
             />
             <TextInput
-              label="Amount"
+              placeholder="UPI ID*"
               variant="unstyled"
               mt="md"
-              value={'Rs. 500'}
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
-                root: classes.inputcontainer,
+                root: classes.enterAmountContainer,
               }}
               required
-              disabled
             />
             <TextInput
-              label="IFSC"
               variant="unstyled"
               mt="md"
-              value={'9876'}
+              placeholder={'Enter Amount*'}
+              style={{ color: 'grey' }}
               classNames={{
-                input: classes.input,
+                input: classes.inputAmount,
                 label: classes.inputLabel,
-                root: classes.inputcontainer,
+                root: classes.enterAmountContainer,
               }}
               required
-              disabled
             />
           </div>
-          <ButtonGroup
-            href1="/BankTransfer/Paybenificiary"
-            href2="/BankTransfer/Otpconfirm"
-          />
+
+          {/* <div className={classes.buttoncontainer}>
+            <Link href='/UPI/Verify'><Button className={classes.button} >Back</Button></Link>
+            <Link href='/UPI/Review'><Button className={classes.button} >Continue</Button></Link>
+          </div> */}
+          <ButtonGroup href1="/UPI/Verify" href2="/UPI/Review" />
         </div>
       </div>
     </div>

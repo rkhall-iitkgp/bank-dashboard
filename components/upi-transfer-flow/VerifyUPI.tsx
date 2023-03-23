@@ -7,8 +7,8 @@ import {
   Text,
 } from '@mantine/core'
 import { SetStateAction, useState } from 'react'
-import ButtonGroup from './SmallComponents/ButtonGroup'
-import Heading from './SmallComponents/Heading'
+import ButtonGroup from '../reusable-components/ButtonGroup'
+import Heading from '../reusable-components/Heading'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {

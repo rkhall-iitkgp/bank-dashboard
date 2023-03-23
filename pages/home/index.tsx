@@ -6,7 +6,7 @@ import OfferCardsRow from '../../components/home/offers-referal-section/OfferCar
 import SeeYourAnalysis from '../../components/home/see-your-analysis-section/SeeYourAnalysis'
 import { useState } from 'react'
 import { AddAccountFormPopup } from '../../components/home/add-bank-account/AddAccountFormPopup'
-import { PermissionFormPopup } from '../../components/Permissionprompt'
+import { PermissionFormPopup } from '../../components/reusable-components/Permissionprompt'
 
 const Home: NextPage = () => {
   const [bankAccountList, setBankAccountList] = useState<any[]>([

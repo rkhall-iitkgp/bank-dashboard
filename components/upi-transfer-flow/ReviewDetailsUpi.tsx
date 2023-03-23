@@ -1,6 +1,6 @@
 import { createStyles, TextInput, getStylesRef } from '@mantine/core'
-import ButtonGroup from './SmallComponents/ButtonGroup'
-import Heading from './SmallComponents/Heading'
+import ButtonGroup from '../reusable-components/ButtonGroup'
+import Heading from '../reusable-components/Heading'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -179,7 +179,7 @@ const useStyles = createStyles((theme) => ({
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
-export function Reviewdetailsupi() {
+export function ReviewDetailsUpi() {
   const { classes } = useStyles()
 
   // const icons = social.map((Icon, index) => (
