@@ -9,7 +9,11 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+// import { useState } from 'react'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+import api from '../../api'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -87,7 +91,7 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 500,
     fontSize: '18px',
     lineHeight: '24px',
-    color: '#0052B3',
+    color: '#434343',
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     border: '0',
@@ -96,7 +100,6 @@ const useStyles = createStyles((theme) => ({
     borderBottom: `2px solid #eee`,
     margin: '4px 0px',
   },
-
   inputLabel: {
     color: theme.black,
     position: `absolute`,
@@ -151,9 +154,12 @@ export function AddAccountFormPopup({
   const [opened, { open, close }] = useDisclosure(false)
 
   const [account_no, setAccount_no] = useState<number | ''>('')
+  const [mobile_no, setMobile_no] = useState<string>('')
   const [ifsc, setIfsc] = useState<string>('')
 
   const [otpNum, setOtpNum] = useState<string>('')
+
+
 
   return (
     <Modal
@@ -186,15 +192,31 @@ export function AddAccountFormPopup({
                   root: classes.inputcontainer,
                 }}
               />
-              <NumberInput
+              <PhoneInput
                 placeholder="Mobile Number"
-                type="number"
-                mt="md"
-                hideControls={true}
-                classNames={{
-                  input: classes.input,
-                  label: classes.inputLabel,
-                  root: classes.inputcontainer,
+                value={mobile_no.replaceAll('\\D+', '')}
+                onChange={setMobile_no}
+                country={'in'}
+                containerStyle={{
+                  border: 'none',
+                  borderBottom: `2px solid #eee`,
+                  top: `0.5rem`,
+                  color: '#0052B3',
+                }}
+                inputStyle={{
+                  background: 'transparent',
+                  border: 'none',
+                  margin: '4px 0px',
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  fontSize: '18px',
+                  lineHeight: '24px',
+                  color: '#434343',
+                }}
+                buttonStyle={{
+                  background: 'transparent',
+                  border: 'none',
                 }}
               />
               <TextInput
@@ -232,29 +254,31 @@ export function AddAccountFormPopup({
                     if (otp == false){
                         setOtp(true)
                         console.log(sessionStorage.getItem('contact_no'));
-                        const response = axios.post(
-                            'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user/sendaccountotp/', {
+                        const response = api.post(
+                            '/user/sendaccountotp/', {
                                 contact_no: sessionStorage.getItem('contact_no')
                         }).then((response) => {
                             console.log(response)
                         })
                     }
                     else {
-                      bankAccountList.push({
-                        account_no: account_no,
-                        ifsc: ifsc,
-                      })
+
                       setBankAccountList(bankAccountList)
                       setIsAddAccountPopupOpen(false)
                       console.log(otpNum)
                       const contact_no = sessionStorage.getItem('contact_no')
-                        const response = axios.post(
-                            'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user/addaccount/', {
+                        const response = api.post(
+                            '/user/addaccount/', {
                                 contact_no: contact_no,
                                 account_no: account_no,
                                 ifsc: ifsc,
                                 otp: otpNum
                         }).then((response) => {
+                            bankAccountList.push({
+                                account_no: account_no,
+                                ifsc: ifsc,
+                              })
+                              // sessionStorage.setItem('bankAccountList', JSON.stringify(bankAccountList))
                             console.log(response)
                         })
                     }
