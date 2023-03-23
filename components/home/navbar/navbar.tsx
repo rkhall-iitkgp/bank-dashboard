@@ -1,5 +1,6 @@
 import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core'
 import styled from '@emotion/styled'
+import Link from 'next/link'
 
 const StyledNavbar = styled.nav`
   display: flex;
@@ -70,7 +71,7 @@ const NavbarIcons = styled.img`
 function Navbar() {
   return (
     <StyledNavbar>
-      <BankName>shiftbank</BankName>
+      <BankName><Link href="/home">shiftbank</Link></BankName>
       <StyledButtonBar>
         <StyledButton
           variant="gradient"
