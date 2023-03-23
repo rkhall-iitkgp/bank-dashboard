@@ -47,7 +47,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    width: `40vw`,
+    width: `600px`,
     margin: `auto`,
     color: `#0052B3`,
   },
@@ -59,7 +59,6 @@ const useStyles = createStyles((theme) => ({
     color: theme.black,
     fontSize: '0.8rem',
     height: '1rem',
-    fontFamily: 'Montserrat',
 
     ':focus': {
       borderColor: 'blue',
@@ -124,7 +123,7 @@ const useStyles = createStyles((theme) => ({
   },
   forminside: {
     maxWidth: `90%`,
-    width: `40vw`,
+    width: `500px`,
     padding: theme.spacing.xl,
     margin: `auto`,
   },

@@ -14,28 +14,29 @@ const StyledContainer = styled.div`
   font-style: normal;
 `
 const StyledCont = styled.div`
-  height: 66vh;
-  width: 40vw;
+  
+  width: 600px;
   box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
 `
 const StyledBot = styled.div`
-  height: 56vh;
-  width: 40vw;
+  
+  width: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 5px;
+  margin: 50px 0 24px 0;
 `
 const StyledBotCont = styled.div`
-  height: 36vh;
-  width: 30vw;
+  
+  width: 400px;
   background: rgba(169, 248, 191, 0.38);
   border-radius: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 20px
 `
 const StyledText = styled.div`
   font-weight: 500;
@@ -44,15 +45,16 @@ const StyledText = styled.div`
   font-family: 'Montserrat';
   font-style: normal;
 `
+
 const StyledBut = styled.div`
-  padding: 15px;
+  padding: 20px 25px;
   height: 5vh;
   font-weight: 400;
-  font-size: 1rem;
+  font-size: 1.25rem;
   line-height: 29px;
   background: #0062d6;
   border-radius: 30px;
-  margin-top: 25px;
+  margin-top: 50px;
 
   color: #ffffff;
   display: flex;

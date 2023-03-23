@@ -84,7 +84,6 @@ const useStyles = createStyles((theme) => ({
   },
   accountContainer: {
     margin: `1rem 1rem 1rem 1rem`,
-    padding: `0 1rem`,
     display: `flex`,
     flexDirection: `row`,
     justifyContent: `space-between`,
@@ -106,7 +105,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `space-between`,
     ':hover': {
       //border: `2px dotted #0052B3;`,
-      boxShadow: ` 0px 4px 10px rgba(0, 0, 0, 0.25)`,
+      // boxShadow: ` 0px 4px 10px rgba(0, 0, 0, 0.25)`,
       cursor: `pointer`,
     },
     ':active': {

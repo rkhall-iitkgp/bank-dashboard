@@ -42,17 +42,18 @@ const useStyles = createStyles((theme) => ({
 
   description: {
     color: `#737373`,
-    fontSize: `0.5rem`,
+    fontSize: `0.6rem`,
     fontFamily: `Montserrat`,
     fontWeight: 400,
-    padding: `0.5rem`,
+    textAlign: 'justify',
+    padding: `0.5rem 0`,
   },
 
   form: {
     backgroundColor: theme.white,
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    width: `40vw`,
+    width: `600px`,
     color: `#0052B3`,
   },
 
@@ -70,7 +71,6 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     color: theme.black,
-    fontFamily: 'Montserrat, sans-serif',
     '&::placeholder': {
       color: theme.colors.gray[5],
     },
@@ -97,8 +97,8 @@ const useStyles = createStyles((theme) => ({
     borderRadius: `20px`,
   },
   forminside: {
-    maxWidth: `90%`,
-    width: `40vw`,
+    // maxWidth: `90%`,
+    width: `500px`,
     padding: theme.spacing.xl,
     margin: `auto`,
   },
@@ -127,9 +127,6 @@ const useStyles = createStyles((theme) => ({
     alignItems: `center`,
   },
   amountbox: {
-    backgroundColor: theme.white,
-    borderRadius: theme.radius.md,
-    boxShadow: `0px 6px 20px rgba(0, 0, 0, 0.2)`,
     width: `auto`,
     fontFamily: `Montserrat`,
     color: `#0052B3`,
@@ -161,7 +158,7 @@ const useStyles = createStyles((theme) => ({
   accountnumber: {
     fontFamily: 'Montserrat',
     color: 'black',
-    fontSize: `0.6rem`,
+    fontSize: `0.8rem`,
     fontWeight: 600,
     textAlign: `end`,
     padding: `0 5px`,
