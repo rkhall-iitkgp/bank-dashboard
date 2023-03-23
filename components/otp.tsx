@@ -145,7 +145,7 @@ export function OTP() {
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
             <div className={classes.titlebold}>
-              <span>Pay Beneficiary</span>
+              <span>Enter OTP</span>
             </div>
           </div>
           <div className={classes.description}>
