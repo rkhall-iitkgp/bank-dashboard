@@ -2,12 +2,12 @@ import {
   Button,
   createStyles,
   Group,
+  NumberInput,
   PinInput,
-  rem,
   Stack,
   Text,
   TextInput,
-  Title,NumberInput
+  Title,
 } from '@mantine/core'
 import axios from 'axios'
 import { useRouter } from 'next/router'
@@ -43,13 +43,13 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 400,
     fontSize: `3rem`,
     textAlign: `center`,
-    marginBottom:`4rem`
+    marginBottom: `4rem`,
   },
 
   description: {
     fontFamily: `Montserrat`,
     color: theme.colors[theme.primaryColor][0],
-    maxWidth: rem(300),
+    maxWidth: `rem(300)`,
     fontSize: `0.8rem`,
     [theme.fn.smallerThan('sm')]: {
       maxWidth: '100%',
@@ -147,7 +147,7 @@ const useStyles = createStyles((theme) => ({
     background: `#006AE4`,
     borderRadius: `30px`,
     marginTop: `20px`,
-    fontFamily: `Montserrat`
+    fontFamily: `Montserrat`,
   },
   outerimagecontainer: {
     width: `100%`,
@@ -161,13 +161,13 @@ const useStyles = createStyles((theme) => ({
     minHeight: `160%`,
     top: `0%`,
   },
-  dashboardimg1: {
+  dashboardImage1: {
     width: `56%`,
     borderRadius: `8px`,
     maxHeight: `20vw`,
     zIndex: 1,
   },
-  dashboardimg2: {
+  dashboardImage2: {
     position: `absolute`,
     width: `44%`,
     borderRadius: `8px`,
@@ -195,9 +195,12 @@ export function LoginSignupPage() {
         contact_no: contact_no,
         email: email,
         signup: si,
+        isaccount: 0,
       })
       .then((res) => {
         setEnterOtp(true)
+        // sessionStorage.setItem('contact_no', res.data.contact_no)
+        // sessionStorage.setItem('user_id', res.data.user_id)
         return res.data
       })
       .catch((err) => console.log(err))
@@ -207,7 +210,7 @@ export function LoginSignupPage() {
     setSignUpLoading(false)
   }
 
-  const [otpValue, setOtpValue] = useState<boolean>(false)
+  // const [otpValue, setOtpValue] = useState<boolean>(false)
 
   const validate = (contact_no: string, otp: string) => {
     let res = axios
@@ -215,9 +218,15 @@ export function LoginSignupPage() {
         contact_no: contact_no,
         otp: parseInt(otp),
         email: email,
+        isaccount: 0,
       })
       .then((res) => {
         router.replace('/home')
+        // save response i.e access token and refresh token in session storage
+        sessionStorage.setItem('contact_no', res.data.contact_no)
+        sessionStorage.setItem('access_token', res.data.access_token)
+        sessionStorage.setItem('refresh_token', res.data.refresh_token)
+        sessionStorage.setItem('user_id', res.data.user_id)
         return res.data
       })
       .catch((err) => console.log(err))
@@ -262,55 +271,45 @@ export function LoginSignupPage() {
                   />
                 </Stack>
 
-                {otpValue ? (
-                <NumberInput
-                  placeholder="OTP"
-                  type={'number'}
-                  mt="md"
-                  hideControls={true}
-                  classNames={{
-                    input: classes.input,
-                    label: classes.inputLabel,
-                    root: classes.inputcontainer,
-                  }}
-                />
-              ) : (
-                <>
-                <Group className={classes.buttoncontainer}>
-                <Button className={classes.otpbutton}
+               
+                  {/* <>
+                    <Group className={classes.buttoncontainer}>
+                      <Button
+                        className={classes.otpbutton}
                         onClick={() => {
-                          if (otpValue == false) setOtpValue(true)
+                          // if (otpValue == false) setOtpValue(true)
+
                         }}
-                >
-                  Get OTP
-                </Button>
-              </Group>
-              </>
-              )}
-                {otpValue?<Group className={classes.buttoncontainer} mt={15}>
+                      >
+                        Get OTP
+                      </Button>
+                    </Group>
+                  </> */}
                 
-                  <Button
-                    className={classes.button}
-                    loading={signUpLoading}
-                    onClick={() => {
-                      SignUp(mobile, email, 1)
-                      setSignUpLoading(true)
-                    }}
-                  >
-                    Sign Up
-                  </Button>
-                  <Button
-                    className={classes.button}
-                    loading={signinLoading}
-                    onClick={() => {
-                      SignUp(mobile, email, 0)
-                      setSignInLoading(true)
-                    }}
-                  >
-                    Sign In
-                  </Button>
-                </Group>:<></>
-                } 
+                
+                  <Group className={classes.buttoncontainer} mt={15}>
+                    <Button
+                      className={classes.button}
+                      loading={signUpLoading}
+                      onClick={() => {
+                        SignUp(mobile, email, 1)
+                        setSignUpLoading(true)
+                      }}
+                    >
+                      Sign Up
+                    </Button>
+                    <Button
+                      className={classes.button}
+                      loading={signinLoading}
+                      onClick={() => {
+                        SignUp(mobile, email, 0)
+                        setSignInLoading(true)
+                      }}
+                    >
+                      Sign In
+                    </Button>
+                  </Group>
+                
               </Stack>
             )}
 
@@ -332,6 +331,7 @@ export function LoginSignupPage() {
                   value={otp}
                   onChange={(e) => setOtp(e)}
                   mx="auto"
+                  length={6}
                 />
                 <Button
                   className={classes.control}
@@ -358,12 +358,14 @@ export function LoginSignupPage() {
             <div className={classes.outerimagecontainer}>
               <div className={classes.imagecontainer}>
                 <img
-                  className={classes.dashboardimg1}
+                  className={classes.dashboardImage1}
                   src="/images/dashboardimg1.png"
+                  alt="dashboard-img"
                 />
                 <img
-                  className={classes.dashboardimg2}
+                  className={classes.dashboardImage2}
                   src="/images/dashboardimg2.png"
+                  alt="dashboard-img"
                 />
               </div>
             </div>
