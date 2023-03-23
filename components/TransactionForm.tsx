@@ -10,8 +10,7 @@ import {
   import { useState } from 'react'
   import 'react-phone-input-2/lib/style.css'
   import PhoneInput from 'react-phone-input-2'
-  
-  
+
   const useStyles = createStyles((theme) => ({
     wrapper: {
         backgroundColor: `#EEEEEE`,
@@ -64,7 +63,7 @@ import {
   
     form: {
       backgroundColor: theme.white,
-      borderRadius: theme.radius.md,
+      borderRadius: theme.radius.xl,
       color: `#0052B3`,
     },
   

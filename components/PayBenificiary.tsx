@@ -1,7 +1,12 @@
-import { createStyles, TextInput } from '@mantine/core'
+import { createStyles, TextInput, Box, Button } from '@mantine/core'
 import { useState } from 'react'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
+import { useForm, isNotEmpty, hasLength } from '@mantine/form'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -161,6 +166,27 @@ const useStyles = createStyles((theme) => ({
     textAlign: `end`,
     padding: `0 5px`,
   },
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    cursor:"pointer",
+    fontWeight: 400,
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: `3rem`,
+  },
 }))
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
@@ -174,7 +200,30 @@ export function PayBenficiary(props: { sbi: any }) {
   //   </ActionIcon>
   // ));
   const [otp, setOtp] = useState(false)
+  const router = useRouter()
+    
+  const form = useForm({
+    initialValues: {
+      name: '',
+      accountno: '',
+      reaccountno: '',
+      amount: '',
+      ifsc: '',
+    },
+
+    validate: {
+      name: hasLength({ min: 2, max: 10 }, 'Name must be 2-10 characters long'),
+      accountno: isNotEmpty('Enter your account no'),
+      reaccountno: isNotEmpty('Re-Enter your account no'),
+      amount: isNotEmpty("Enter amount"),
+      ifsc: isNotEmpty("Enter IFSC")
+    },
+  });
+
+
   return (
+    <Box component="form"  mx="auto" onSubmit={form.onSubmit(() => {})}>
+    <form onSubmit={form.onSubmit(console.log)}>
     <div className={classes.wrapper}>
       <div className={classes.form}>
         {/* <div className={classes.topheading}>
@@ -198,55 +247,63 @@ export function PayBenficiary(props: { sbi: any }) {
             <TextInput
               placeholder="Name*"
               mt="md"
+              required
+              withAsterisk
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
                 root: classes.inputcontainer,
               }}
-              required
+              {...form.getInputProps('name')}
             />
             <TextInput
               placeholder="Account Number*"
               type={'number'}
               required
+              withAsterisk
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
                 root: classes.inputcontainer,
               }}
+              {...form.getInputProps('accountno')}
             />
             <TextInput
               placeholder="Re-enter Account Number*"
               type={'number'}
               required
+              withAsterisk
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
                 root: classes.inputcontainer,
               }}
+              {...form.getInputProps('reaccountno')}
             />
             <TextInput
               placeholder="Enter Amount*"
               type={'number'}
               mt="md"
+              required
+              withAsterisk
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
                 root: classes.inputcontainer,
               }}
-              required
+              {...form.getInputProps('amount')}
             />
             {props.sbi ? (
               <>
                 <TextInput
                   placeholder="IFSC*"
-                  type={'number'}
                   mt="md"
                   classNames={{
                     input: classes.input,
                     label: classes.inputLabel,
                     root: classes.inputcontainer,
                   }}
+                  {...form.getInputProps('ifsc')}
                   required
                 />
                 <div className={classes.description}>
@@ -276,16 +333,23 @@ export function PayBenficiary(props: { sbi: any }) {
             <></>
           )}
 
-          {/* <div className={classes.buttoncontainer}>
-            <Link href='/BankTransfer/benfeiciary'><Button className={classes.button} >Back</Button></Link>
-            <Link href='/BankTransfer/Review'><Button className={classes.button}>Continue</Button></Link>
-          </div> */}
-          <ButtonGroup
+          <div className={classes.buttoncontainer}>
+            <Link href='/BankTransfer/benfeiciary'><div className={classes.button1} >Back</div></Link>
+            <div className={classes.button1} onClick={()=>{
+              form.validate()
+              if (form.isValid()){
+                router.push('/BankTransfer/Review')
+              }
+}}>Continue</div>
+          </div>
+          {/* <ButtonGroup
             href1="/BankTransfer/benfeiciary"
             href2="/BankTransfer/Review"
-          />
+          /> */}
         </div>
       </div>
     </div>
+    </form>
+    </Box>
   )
 }

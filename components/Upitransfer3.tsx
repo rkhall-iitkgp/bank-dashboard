@@ -1,6 +1,12 @@
-import { createStyles, TextInput, getStylesRef } from '@mantine/core'
+import { createStyles, TextInput, getStylesRef, Button } from '@mantine/core'
+import { useRouter } from 'next/router'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
+import { useForm } from '@mantine/form'
+import { isNotEmpty, hasLength } from '@mantine/form'
+import Link from 'next/link'
+
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -163,6 +169,21 @@ const useStyles = createStyles((theme) => ({
     borderTopRightRadius: theme.radius.md,
     alignItems: `center`,
   },
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    cursor:"pointer",
+    fontWeight: 400,
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
   payingtext: {
     paddingTop: `0.25rem`,
     fontWeight: 600,
@@ -175,6 +196,22 @@ const useStyles = createStyles((theme) => ({
 
 export function Upitransfer3() {
   const { classes } = useStyles()
+
+  const router = useRouter()
+
+  const form = useForm({
+    initialValues: {
+      name: '',
+      upi_id: '',
+      amount: '',
+    },
+
+    validate: {
+      name: hasLength({ min: 2, max: 10 }, 'Name must be 2-10 characters long'),
+      upi_id: isNotEmpty('Enter your upi id'),
+      amount: isNotEmpty("Enter amount"),
+    },
+  });
 
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
@@ -230,6 +267,7 @@ export function Upitransfer3() {
                 root: classes.enterAmountContainer,
               }}
               required
+              {...form.getInputProps('name')}
             />
             <TextInput
               placeholder="UPI ID*"
@@ -241,6 +279,7 @@ export function Upitransfer3() {
                 root: classes.enterAmountContainer,
               }}
               required
+              {...form.getInputProps('upi_id')}
             />
             <TextInput
               variant="unstyled"
@@ -253,14 +292,20 @@ export function Upitransfer3() {
                 root: classes.enterAmountContainer,
               }}
               required
+              {...form.getInputProps('amount')}
             />
           </div>
 
-          {/* <div className={classes.buttoncontainer}>
-            <Link href='/UPI/Verify'><Button className={classes.button} >Back</Button></Link>
-            <Link href='/UPI/Review'><Button className={classes.button} >Continue</Button></Link>
-          </div> */}
-          <ButtonGroup href1="/UPI/Verify" href2="/UPI/Review" />
+          <div className={classes.buttoncontainer}>
+            <Link href='/UPI/Verify'><div className={classes.button1} >Back</div></Link>
+            <div className={classes.button1} onClick={()=>{
+              form.validate()
+              if (form.isValid()){
+                router.push('/UPI/Review')
+              }
+}}>Continue</div>
+          </div>
+          {/* <ButtonGroup href1="/UPI/Verify" href2="/UPI/Review" /> */}
         </div>
       </div>
     </div>
