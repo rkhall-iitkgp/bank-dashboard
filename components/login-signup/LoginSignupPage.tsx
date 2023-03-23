@@ -195,9 +195,12 @@ export function LoginSignupPage() {
         contact_no: contact_no,
         email: email,
         signup: si,
+        isaccount: 0,
       })
       .then((res) => {
         setEnterOtp(true)
+        // sessionStorage.setItem('contact_no', res.data.contact_no)
+        // sessionStorage.setItem('user_id', res.data.user_id)
         return res.data
       })
       .catch((err) => console.log(err))
@@ -207,7 +210,7 @@ export function LoginSignupPage() {
     setSignUpLoading(false)
   }
 
-  const [otpValue, setOtpValue] = useState<boolean>(false)
+  // const [otpValue, setOtpValue] = useState<boolean>(false)
 
   const validate = (contact_no: string, otp: string) => {
     let res = axios
@@ -215,9 +218,15 @@ export function LoginSignupPage() {
         contact_no: contact_no,
         otp: parseInt(otp),
         email: email,
+        isaccount: 0,
       })
       .then((res) => {
         router.replace('/home')
+        // save response i.e access token and refresh token in session storage
+        sessionStorage.setItem('contact_no', res.data.contact_no)
+        sessionStorage.setItem('access_token', res.data.access_token)
+        sessionStorage.setItem('refresh_token', res.data.refresh_token)
+        sessionStorage.setItem('user_id', res.data.user_id)
         return res.data
       })
       .catch((err) => console.log(err))
@@ -262,33 +271,22 @@ export function LoginSignupPage() {
                   />
                 </Stack>
 
-                {otpValue ? (
-                  <NumberInput
-                    placeholder="OTP"
-                    type={'number'}
-                    mt="md"
-                    hideControls={true}
-                    classNames={{
-                      input: classes.input,
-                      label: classes.inputLabel,
-                      root: classes.inputcontainer,
-                    }}
-                  />
-                ) : (
-                  <>
+               
+                  {/* <>
                     <Group className={classes.buttoncontainer}>
                       <Button
                         className={classes.otpbutton}
                         onClick={() => {
-                          if (otpValue == false) setOtpValue(true)
+                          // if (otpValue == false) setOtpValue(true)
+
                         }}
                       >
                         Get OTP
                       </Button>
                     </Group>
-                  </>
-                )}
-                {otpValue ? (
+                  </> */}
+                
+                
                   <Group className={classes.buttoncontainer} mt={15}>
                     <Button
                       className={classes.button}
@@ -311,9 +309,7 @@ export function LoginSignupPage() {
                       Sign In
                     </Button>
                   </Group>
-                ) : (
-                  <></>
-                )}
+                
               </Stack>
             )}
 
@@ -335,6 +331,7 @@ export function LoginSignupPage() {
                   value={otp}
                   onChange={(e) => setOtp(e)}
                   mx="auto"
+                  length={6}
                 />
                 <Button
                   className={classes.control}
