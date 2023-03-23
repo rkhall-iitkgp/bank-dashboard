@@ -14,6 +14,8 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
+import { notifications } from '@mantine/notifications';
+import Image from 'next/image'
 import 'react-phone-input-2/lib/style.css'
 import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
 
@@ -182,7 +184,19 @@ const useStyles = createStyles((theme) => ({
   },
   error: {
     color: 'red',
-    fontSize: `2rem`
+    fontSize: `calc(0.875rem - 0.125rem)`,
+    lineHeight: `1.2`,
+    marginTop: `12px`
+  },
+  PhoneInput: {
+    border: 'none',
+    borderBottom: `2px solid #eee`,
+    top: `0.5rem`,
+    color: '#0052B3',
+    margin: '6px 0',
+    ':active': {
+      borderBottom: `2px solid red`
+    }
   }
 }))
 
@@ -201,18 +215,34 @@ export function LoginSignupPage() {
   const SignUp = (contact_no: string, email: string, si: number) => {
     let res = axios
       .post(`${BASEURL}/sendotp/`, {
-        contact_no: contact_no,
+        contact_no: "+" + contact_no,
         email: email,
         signup: si,
         isaccount: 0,
       })
       .then((res) => {
         setEnterOtp(true)
+        notifications.show({
+          id: 'hello-there',
+          withCloseButton: true,
+          onClose: () => console.log('unmounted'),
+          onOpen: () => console.log('mounted'),
+          autoClose: 5000,
+          title: "Success",
+          message: 'Otp Sent To Your Mobile Number',
+          color: 'green',
+          icon: <><Image alt='' width={50} height={50} src='/images/tick.png'></Image></>,
+          loading: false,
+        });
         // sessionStorage.setItem('contact_no', res.data.contact_no)
         // sessionStorage.setItem('user_id', res.data.user_id)
         return res.data
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err)
+        setSignUpLoading(false)
+        setSignUpLoading(false)
+      })
 
     res.then((v) => console.log(v))
     setSignUpLoading(false)
@@ -221,13 +251,13 @@ export function LoginSignupPage() {
 
   // const [otpValue, setOtpValue] = useState<boolean>(false)
 
-  const validate = (contact_no: string, otp: string) => {
+  const validate = (contact_no: string, otp: string, email: string) => {
     let res = axios
       .post(`${BASEURL}/validateotp/`, {
-        contact_no: contact_no,
-        otp: parseInt(otp),
-        email: email,
-        isaccount: 0,
+        "contact_no": "+" + contact_no,
+        "otp": otp,
+        "email": email,
+        "isaccount": 0,
       })
       .then((res) => {
         router.replace('/home')
@@ -250,9 +280,14 @@ export function LoginSignupPage() {
 
     validate: {
       email: isEmail('Invalid email'),
-      phone: hasLength(10, 'Enter a Valid Phone Number')
+      phone: hasLength(12, 'Enter a Valid Phone Number')
     },
   });
+  const style = `
+  .react-tel-input:active{
+    border: 2px solid red
+  }
+`
   return (
     <div className={classes.wrapper}>
       <div className={classes.grid}>
@@ -262,8 +297,12 @@ export function LoginSignupPage() {
 
             {!enterOtp && (
               <Stack my={10}>
+                <style>
+                  {style}
+                </style>
                 <Box component="form">
                   <PhoneInput
+
                     placeholder="Mobile Number"
                     country={'in'}
                     containerStyle={{
@@ -271,11 +310,13 @@ export function LoginSignupPage() {
                       borderBottom: `2px solid #eee`,
                       top: `0.5rem`,
                       color: '#0052B3',
+                      margin: '6px 0',
+
                     }}
                     inputStyle={{
                       background: 'transparent',
                       border: 'none',
-                      margin: '4px 0px',
+                      margin: '4px 0',
                       fontFamily: 'Montserrat, sans-serif',
                       fontStyle: 'normal',
                       fontWeight: 500,
@@ -291,6 +332,7 @@ export function LoginSignupPage() {
                     {...form.getInputProps('phone')}
 
                   />
+                  <div className={classes.error}>{form.errors?.phone}</div>
                   <TextInput
                     placeholder="Email"
                     type={'email'}
@@ -311,12 +353,14 @@ export function LoginSignupPage() {
                     className={classes.button}
                     loading={signUpLoading}
                     onClick={() => {
-                      form.validate()
+                      if (!signinLoading) {
+                        form.validate()
 
-                      if (form.isValid()) {
-                        setSignUpLoading(true)
-                        console.log('mobile , email', form.values.phone, form.values.email)
-                        SignUp(form.values.phone, form.values.email, 1)
+                        if (form.isValid()) {
+                          setSignUpLoading(true)
+                          console.log('mobile , email', form.values.phone, form.values.email)
+                          SignUp(form.values.phone, form.values.email, 1)
+                        }
                       }
                     }}
                   >
@@ -326,11 +370,14 @@ export function LoginSignupPage() {
                     className={classes.button}
                     loading={signinLoading}
                     onClick={() => {
-                      form.validate()
-                      if (form.isValid()) {
-                        console.log('mobile , email', form.values.phone, form.values.email)
-                        SignUp(form.values.phone, form.values.email, 0)
-                        setSignInLoading(true)
+                      console.log('form.values.phone', form.values.phone)
+                      if (!signUpLoading) {
+                        form.validate()
+                        if (form.isValid()) {
+                          console.log('mobile , email', form.values.phone, form.values.email)
+                          SignUp(form.values.phone, form.values.email, 0)
+                          setSignInLoading(true)
+                        }
                       }
                     }}
                   >
@@ -354,7 +401,6 @@ export function LoginSignupPage() {
                   Enter OTP
                 </Text>
                 <PinInput
-                  inputMode="numeric"
                   value={otp}
                   onChange={(e) => setOtp(e)}
                   mx="auto"
@@ -363,7 +409,7 @@ export function LoginSignupPage() {
                 <Button
                   className={classes.control}
                   onClick={() => {
-                    validate(mobile, otp)
+                    validate(form.values.phone, otp, form.values.email)
                   }}
                 >
                   Confirm
