@@ -171,7 +171,7 @@ import {
                 />
                 <PhoneInput
                 placeholder="Mobile Number"
-                value={mobile_no}
+                value={mobile_no.replaceAll('\\D+', '')}
                 onChange={setMobile_no}
                 country={'in'}
                 containerStyle={{

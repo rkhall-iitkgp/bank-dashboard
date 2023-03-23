@@ -271,6 +271,8 @@ export function LoginSignupPage() {
                       background: 'transparent',
                       border: 'none',
                     }}
+                    value={mobile.replaceAll('\\D+', '')}
+                    onChange={(e) => setMobile(e)}
                   />
                   <TextInput
                     placeholder="Email"
