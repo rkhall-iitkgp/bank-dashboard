@@ -18,8 +18,7 @@ const useStyles = createStyles((theme) => ({
         flexDirection: "column",
     },
     rightContainer: {
-        // margin:`18px`,
-        // marginTop: "70px",
+     
         display: "flex",
         flexDirection: "column",
         position: "relative",
@@ -66,15 +65,28 @@ const Dashboard = () => {
 
                 <RecentTransactions />
             </div>
-            <div className={classes.rightContainer}>
-                    <div>
-                    <span style={{
+            <span style={{
                     fontFamily: 'Montserrat',
                     fontStyle: `normal`,
                     fontWeight: `700`,
                     fontSize: `36px`,
+                    top:`5px`,
                     lineHeight: `44px`,
-                }}>Welcome Back,Bill Gates</span>
+                    margin:`15px`,
+                }}>Welcome Back,</span> <span style={{
+                    fontFamily: 'Montserrat',
+                    fontStyle: `normal`,
+                    fontWeight: `700`,
+                    fontSize: `36px`,
+                    top:`5px`,
+                    lineHeight: `44px`,
+                    // margin:`15px`,
+                    color:`#0062D6`
+
+                }}>Bill Gates!</span>
+            <div className={classes.rightContainer}>
+                    <div>
+                  
                     </div>
                     <div className={classes.rightMainContainer}>
                     <TotalBalance />

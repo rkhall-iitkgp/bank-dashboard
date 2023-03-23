@@ -1,6 +1,6 @@
 import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core'
 import styled from '@emotion/styled'
-
+import { ProfileCard } from './ProfileCard'
 const StyledNavbar = styled.nav`
   display: flex;
   justify-content: space-between;
@@ -69,6 +69,7 @@ const NavbarIcons = styled.img`
 `
 function Navbar() {
   return (
+    <>
     <StyledNavbar>
       <BankName>shiftbank</BankName>
       <StyledButtonBar>
@@ -99,6 +100,8 @@ function Navbar() {
         <StyledUserImage src="/images/dp.png"></StyledUserImage>
       </StyledButtonBar>
     </StyledNavbar>
+    <ProfileCard/>
+    </>
   )
 }
 export default Navbar
