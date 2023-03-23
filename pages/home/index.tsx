@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { AddAccountFormPopup } from '../../components/home/add-bank-account/AddAccountFormPopup'
 import axios from 'axios'
 import { PermissionFormPopup } from '../../components/Permissionprompt'
+import api from '../../components/api'
 
 const Home: NextPage = () => {
   const [bankAccountList, setBankAccountList] = useState<any[]>([
@@ -19,15 +20,16 @@ const Home: NextPage = () => {
   const getAccounts = ()=>{
     const accessToken = sessionStorage.getItem('access_token')
     console.log(accessToken);
+    const user_id = sessionStorage.getItem('user_id')
     
-    const response = axios.get('http://localhost:8000/user/getaccounts/', {
+    const response = api.get(`/user/accounts/${user_id}`, {
         headers: {
           "Authorization": `Bearer ${accessToken}`,
           'Content-Type':'application/json'
         }
       }).then((response)=>{
         console.log(response.data.accounts);
-        const responseArray = response.data.accounts
+        const responseArray = response.data
         responseArray.map((acc:any)=>{
             let temp = bankAccountList
             temp.push(acc)
@@ -35,7 +37,7 @@ const Home: NextPage = () => {
         })
         console.log(bankAccountList);
         
-        // sessionStorage.setItem('accounts',response.request.responseText)
+        sessionStorage.setItem('accounts',response.request.responseText)
         return response
       })
 
@@ -44,8 +46,9 @@ const Home: NextPage = () => {
   const getServerSideProps = () =>{
     const accessToken = sessionStorage.getItem('access_token')
     console.log(accessToken);
+    const user_id = sessionStorage.getItem('user_id')
     
-    const response = axios.get('http://localhost:8000/user/getaccounts/', {
+    const response = api.get(`/user/accounts/${user_id}`, {
         headers: {
           "Authorization": `Bearer ${accessToken}`,
           'Content-Type':'application/json'
@@ -60,7 +63,7 @@ const Home: NextPage = () => {
         })
         console.log(bankAccountList);
         
-        // sessionStorage.setItem('accounts',response.request.responseText)
+        sessionStorage.setItem('accounts',response.request.responseText)
         return response
       })
   }
@@ -95,6 +98,7 @@ const Home: NextPage = () => {
       ) : (
         <></>
       )}
+      
     </>
   )
 }

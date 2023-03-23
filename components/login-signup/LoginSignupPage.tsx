@@ -12,6 +12,9 @@ import {
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+import api from '../api'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -81,7 +84,7 @@ const useStyles = createStyles((theme) => ({
   input: {
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
-    color: theme.black,
+    color: '#434343',
 
     '&::placeholder': {
       color: theme.colors.gray[5],
@@ -92,6 +95,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #eee`,
+    fontFamily: `Montserrat`,
   },
 
   inputLabel: {
@@ -182,16 +186,16 @@ export function LoginSignupPage() {
   const [mobile, setMobile] = useState('')
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
-  const BASEURL =
-    'http://localhost:8000/user'
+  // const BASEURL =
+  //   'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user'
   const [signinLoading, setSignInLoading] = useState(false)
   const [signUpLoading, setSignUpLoading] = useState(false)
   const [enterOtp, setEnterOtp] = useState(false)
   const router = useRouter()
 
   const SignUp = (contact_no: string, email: string, si: number) => {
-    let res = axios
-      .post(`${BASEURL}/sendotp/`, {
+    let res = api
+      .post('/user/sendotp/', {
         contact_no: contact_no,
         email: email,
         signup: si,
@@ -213,10 +217,10 @@ export function LoginSignupPage() {
   // const [otpValue, setOtpValue] = useState<boolean>(false)
 
   const validate = (contact_no: string, otp: string) => {
-    let res = axios
-      .post(`${BASEURL}/validateotp/`, {
+    let res = api
+      .post('user/validateotp/', {
         contact_no: contact_no,
-        otp: parseInt(otp),
+        otp: otp,
         email: email,
         isaccount: 0,
       })
@@ -244,17 +248,32 @@ export function LoginSignupPage() {
             {!enterOtp && (
               <Stack my={10}>
                 <Stack>
-                  <TextInput
+                  <PhoneInput
                     placeholder="Mobile Number"
-                    type={'number'}
-                    required
-                    classNames={{
-                      input: classes.input,
-                      label: classes.inputLabel,
-                      root: classes.inputcontainer,
+                    country={'in'}
+                    containerStyle={{
+                      border: 'none',
+                      borderBottom: `2px solid #eee`,
+                      top: `0.5rem`,
+                      color: '#0052B3',
                     }}
-                    value={mobile}
-                    onChange={(e) => setMobile(e.currentTarget.value)}
+                    inputStyle={{
+                      background: 'transparent',
+                      border: 'none',
+                      margin: '4px 0px',
+                      fontFamily: 'Montserrat, sans-serif',
+                      fontStyle: 'normal',
+                      fontWeight: 500,
+                      // fontSize: '18px',
+                      lineHeight: '24px',
+                      color: '#434343',
+                    }}
+                    buttonStyle={{
+                      background: 'transparent',
+                      border: 'none',
+                    }}
+                    value={mobile.replaceAll('\\D+', '')}
+                    onChange={(e) => setMobile(e)}
                   />
                   <TextInput
                     placeholder="Email"
@@ -309,7 +328,7 @@ export function LoginSignupPage() {
                   Enter OTP
                 </Text>
                 <PinInput
-                  inputMode="numeric"
+                  
                   value={otp}
                   onChange={(e) => setOtp(e)}
                   mx="auto"
