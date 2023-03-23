@@ -210,7 +210,7 @@ export function LoginSignupPage() {
     setSignUpLoading(false)
   }
 
-  const [otpValue, setOtpValue] = useState<boolean>(false)
+  // const [otpValue, setOtpValue] = useState<boolean>(false)
 
   const validate = (contact_no: string, otp: string) => {
     let res = axios
@@ -271,33 +271,22 @@ export function LoginSignupPage() {
                   />
                 </Stack>
 
-                {otpValue ? (
-                  <NumberInput
-                    placeholder="OTP"
-                    type={'number'}
-                    mt="md"
-                    hideControls={true}
-                    classNames={{
-                      input: classes.input,
-                      label: classes.inputLabel,
-                      root: classes.inputcontainer,
-                    }}
-                  />
-                ) : (
-                  <>
+               
+                  {/* <>
                     <Group className={classes.buttoncontainer}>
                       <Button
                         className={classes.otpbutton}
                         onClick={() => {
-                          if (otpValue == false) setOtpValue(true)
+                          // if (otpValue == false) setOtpValue(true)
+
                         }}
                       >
                         Get OTP
                       </Button>
                     </Group>
-                  </>
-                )}
-                {otpValue ? (
+                  </> */}
+                
+                
                   <Group className={classes.buttoncontainer} mt={15}>
                     <Button
                       className={classes.button}
@@ -320,9 +309,7 @@ export function LoginSignupPage() {
                       Sign In
                     </Button>
                   </Group>
-                ) : (
-                  <></>
-                )}
+                
               </Stack>
             )}
 
