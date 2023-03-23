@@ -7,8 +7,10 @@ import Filter from '../filter'
 import Navbar from '../home/navbar/navbar'
 import CashCard from './cashcard'
 import EodBalance from './eodBalance'
+import { FinancialRatios } from './FinancialRatios'
 import RecentTransactions from './recenttransactions'
 import FinancialStatistics from './statistics'
+import { TotalBalance } from './TotalBalance'
 
 const Dashboard = () => {
   const [depositLimit, setDepositLimit] = useState(1000)
@@ -42,7 +44,7 @@ const Dashboard = () => {
       <Modal radius={"lg"} withCloseButton={false} size="lg" opened={opened} onClose={close} centered><Filter /></Modal>
 
       <Group className="dashboard-group" align={'flex-start'} pt={20}>
-        <Stack className="left-side" mx={20}>
+        <Stack className="left-side" mx={20} style={{ flex: 1 }}>
           <Group my={10} style={{ justifyContent: 'space-between' }}>
             <Card h={50} w={50} bg={'#0062D6'} p={10} radius={50} ml={15} onClick={open} style={{ cursor: "pointer" }}>
               <Image src={'icons/filter.png'} my="auto" alt="filter-icon" />
@@ -80,7 +82,7 @@ const Dashboard = () => {
           <RecentTransactions />
         </Stack>
 
-        <Stack className="right-side">
+        <Stack className="right-side" style={{ flex: 2.5 }}>
           <Group mx={10}>
             <Text fz={35} fw={700} ff="Montserrat">
               Welcome Back,
@@ -88,6 +90,10 @@ const Dashboard = () => {
             <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
               Bill Gates!
             </Text>
+          </Group>
+          <Group>
+            <TotalBalance />
+            <FinancialRatios />
           </Group>
 
           <FinancialStatistics />

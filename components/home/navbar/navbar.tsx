@@ -1,5 +1,6 @@
 import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core'
 import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
 
 const StyledNavbar = styled.nav`
   display: flex;
@@ -68,6 +69,8 @@ const NavbarIcons = styled.img`
   padding: 6px 8px 10px 8px;
 `
 function Navbar() {
+  const router = useRouter();
+
   return (
     <StyledNavbar>
       <BankName>shiftbank</BankName>
@@ -75,6 +78,7 @@ function Navbar() {
         <StyledButton
           variant="gradient"
           gradient={{ from: 'white', to: 'white' }}
+          onClick={() => router.replace("/dashboard")}
         >
           <NavbarIcons src="/images/dashboard.png"></NavbarIcons>Dashboard
         </StyledButton>

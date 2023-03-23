@@ -1,4 +1,4 @@
-import { Card, Stack, Text } from "@mantine/core";
+import { Card, Stack, Text, TextInput } from "@mantine/core";
 import { useState } from "react";
 
 const CashCard = (props: { n: number, type: string, limit: number, setLimit: Function }) => {
@@ -10,14 +10,15 @@ const CashCard = (props: { n: number, type: string, limit: number, setLimit: Fun
     const text = type === "withdrawl" ? "Large Cash Withdrawls" : "Large Cash Deposits";
 
     return (
-        <Card radius={"lg"} w={180} h={220} style={{ boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)" }}>
+        <Card radius={"lg"} w={200} h={170} style={{ boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)" }}>
             <Card.Section h={60} bg={bgc} py={10}>
                 <Text c={ffc} fw={500} ff="Montserrat" mx={40} align="center" style={{ lineHeight: "1.3" }}>{text}</Text>
             </Card.Section>
             <Stack align="center" my={15}>
                 <Text fz={25} c={ffc} fw={700} style={{ lineHeight: 0.8 }}>{n}</Text>
                 <Text c={"#4D4B4B"} ff="Montserrat" fw={700} fz={14}
-                    style={{ lineHeight: 0.5, cursor: "pointer" }} onClick={() => setShowLimit(!showLimit)}>Set Limit</Text>
+                    style={{ lineHeight: 0, cursor: "pointer" }} onClick={() => setShowLimit(!showLimit)}>Set Limit</Text>
+                <TextInput style={{ visibility: showLimit ? "visible" : "hidden" }} />
             </Stack>
         </Card>
     );
