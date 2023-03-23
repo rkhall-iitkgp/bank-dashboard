@@ -8,7 +8,6 @@ import {
   NumberInput,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import axios from 'axios'
 import { useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
@@ -89,7 +88,7 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 500,
     fontSize: '18px',
     lineHeight: '24px',
-    color: '#0052B3',
+    color: '#434343',
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     border: '0',
@@ -155,8 +154,6 @@ export function AddAccountFormPopup({
   const [mobile_no, setMobile_no] = useState<string>('')
   const [ifsc, setIfsc] = useState<string>('')
 
-  const [otpNum, setOtpNum] = useState<string>('')
-
   return (
     <Modal
       withCloseButton={false}
@@ -193,11 +190,13 @@ export function AddAccountFormPopup({
                 value={mobile_no}
                 onChange={setMobile_no}
                 country={'in'}
+                searchStyle={{
+                  color: '#737373 !important',
+                }}
                 containerStyle={{
                   border: 'none',
                   borderBottom: `2px solid #eee`,
                   top: `0.5rem`,
-                  color: '#0052B3',
                 }}
                 inputStyle={{
                   background: 'transparent',
@@ -208,7 +207,7 @@ export function AddAccountFormPopup({
                   fontWeight: 500,
                   fontSize: '18px',
                   lineHeight: '24px',
-                  color: '#0052B3',
+                  color: '#434343',
                 }}
                 buttonStyle={{
                   background: 'transparent',
@@ -227,11 +226,11 @@ export function AddAccountFormPopup({
                 }}
               />
               {otp ? (
-                <TextInput
+                <NumberInput
                   placeholder="OTP"
+                  type={'number'}
                   mt="md"
-                  value={otpNum}
-                  onChange={(e) => setOtpNum(e.currentTarget.value)}
+                  hideControls={true}
                   classNames={{
                     input: classes.input,
                     label: classes.inputLabel,
@@ -247,16 +246,7 @@ export function AddAccountFormPopup({
                   size="lg"
                   className={classes.control}
                   onClick={() => {
-                    if (otp == false){
-                        setOtp(true)
-                        console.log(sessionStorage.getItem('contact_no'));
-                        const response = axios.post(
-                            'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user/sendaccountotp/', {
-                                contact_no: sessionStorage.getItem('contact_no')
-                        }).then((response) => {
-                            console.log(response)
-                        })
-                    }
+                    if (otp == false) setOtp(true)
                     else {
                       bankAccountList.push({
                         account_no: account_no,
@@ -264,17 +254,6 @@ export function AddAccountFormPopup({
                       })
                       setBankAccountList(bankAccountList)
                       setIsAddAccountPopupOpen(false)
-                      console.log(otpNum)
-                      const contact_no = sessionStorage.getItem('contact_no')
-                        const response = axios.post(
-                            'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user/addaccount/', {
-                                contact_no: contact_no,
-                                account_no: account_no,
-                                ifsc: ifsc,
-                                otp: otpNum
-                        }).then((response) => {
-                            console.log(response)
-                        })
                     }
                   }}
                 >

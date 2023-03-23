@@ -88,6 +88,7 @@ const useStyles = createStyles((theme) => ({
   account: {
     width: `80px`,
     height: `80px`,
+    objectFit: `contain`,
     background: `#1665C1`,
     borderRadius: `50%`,
     margin: ` 0 20px`,
