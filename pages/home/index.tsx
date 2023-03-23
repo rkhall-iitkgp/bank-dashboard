@@ -15,7 +15,9 @@ const Home: NextPage = () => {
     useState<boolean>(false)
   return (
     <>
+    
       <Navbar />
+      
       <SeeYourAnalysis />
       <Payment />
       <BankAccount
@@ -33,6 +35,7 @@ const Home: NextPage = () => {
       ) : (
         <></>
       )}
+      
     </>
   )
 }

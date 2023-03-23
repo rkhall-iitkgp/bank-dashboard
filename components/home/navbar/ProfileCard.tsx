@@ -11,24 +11,25 @@ const useStyles = createStyles((theme) => ({
         borderRadius: `30px`,
         boxShadow: `0px 2px 20px rgba(0,0,0,0.1)`,
         color: `#0052B3`,
-        position: 'relative',
-        height: `719px`,
-        width: `487px`,
+        // position: 'absolute',
+        height: `500px`,
+        width: `300px`,
         display:`flex`,
         flexDirection:`column`,
         justifyContent:`space-around`,
         alignItems:`center`,
-        top:`138px`,
-        left:`1009px`,
+        // top:`138px`,
+        textAlign:'center',
+        left:`500px`,
     },
     button1: {
-        width: `150px`,
+        width: `160px`,
         backgroundColor: `#0062D6`,
         borderRadius: `30px`,
         marginTop:'5px',
       },
     button2: {
-        width: `150px`,
+        width: `160px`,
         backgroundColor: `#DD0000`,
         borderRadius: `30px`,
         marginBottom:'5px',
@@ -42,13 +43,13 @@ const useStyles = createStyles((theme) => ({
     },
     accountContainer:{
         cursor:'pointer',
-        padding: '20px',
+        padding: '11px',
         borderRadius: '30px',
         display: 'flex',
         flexdirection: 'row',
-        width:'178px',
-        height:'57px',
-        justifyContent: 'center',
+        width:'120px',
+        height:'40px',
+        justifyContent: 'space-around',
         alignitems: 'center',
         margin: '15px',
        backgroundColor: '#E6EFF9',
@@ -77,8 +78,8 @@ const AccountCard = ({ bankName, value }: Props) => {
             <div className={classes.accountContainer}>
                <Image
                 src={'/../public/icons/sbi.png'}
-                width={15}
-                height={15}
+                width={12}
+                height={12}
                 alt={''}
               ></Image>
              
@@ -93,7 +94,7 @@ const AccountCard = ({ bankName, value }: Props) => {
                         fontFamily: 'Montserrat',
                         fontStyle:`normal`,
                         fontWeight: '600',
-                        fontSize: '20px',
+                        fontSize: '14px',
                         color: '#000000',
                     }}
                 >
@@ -111,13 +112,18 @@ export function ProfileCard() {
         { id: 3, bankName: 'sbi', value: '****8090' },
        
     ]
+    let data = {
+       PersonName: 'Bill Gates', 
+        Email: 'bgiamrich@gmail.com',
+       PhoneNumber:'8675645300', 
+     }
     return (
         <div className={classes.container}>
             <div style={{display:'flex',alignItems:'center',justifyContent:'space-around' ,flexDirection:'column'}}>
             <Image
                 src={'/../public/icons/profilePhoto.png'}
-                width={120}
-                height={120}
+                width={80}
+                height={80}
                 alt={''}
               ></Image>
              <span style={{
@@ -128,18 +134,18 @@ export function ProfileCard() {
                     lineHeight: `34px`,
                     color:'#000000',
                 }}>
-                    Bill Gates
+                    {data.PersonName}
                 </span>
              <span style={{
                     fontFamily: 'Montserrat',
                     fontStyle: `normal`,
                     fontWeight: `500`,
-                    fontSize: `18px`,
+                    fontSize: `15px`,
                     lineHeight: `22px`,
                     color: '#4D4B4B',
                     
                 }}>
-                   bgiamrich@gmail.com
+                  {data.Email}
                 </span>
                 </div>   
                 <div style={{display:'flex',alignItems:'center',justifyContent:'space-around' ,flexDirection:'column'}}>
@@ -147,7 +153,7 @@ export function ProfileCard() {
                     fontFamily: 'Montserrat',
                     fontStyle: `normal`,
                     fontWeight: `600`,
-                    fontSize: `14px`,
+                    fontSize: `12px`,
                     lineHeight: `17px`,
                     color:' #4D4B4B',
                 }}>
@@ -157,11 +163,12 @@ export function ProfileCard() {
                     fontFamily: 'Montserrat',
                     fontStyle: `normal`,
                     fontWeight: `600`,
-                    fontSize: `22px`,
+                    fontSize: `16px`,
                     lineHeight: `27px`,
                     color:'#000000',
                 }}>
-                    8675645300
+                    {data.PhoneNumber}                  
+
                 </span>
                 </div>
               <div style={{display:'flex',alignItems:'center',justifyContent:'space-around' ,flexDirection:'column'}}>  
@@ -169,7 +176,7 @@ export function ProfileCard() {
                     fontFamily: 'Montserrat',
                     fontStyle: `normal`,
                     fontWeight: `600`,
-                    fontSize: `14px`,
+                    fontSize: `12px`,
                     lineHeight: `17px`,
                                                                                                                                                                                                                                                                                                                                  color:' #4D4B4B',
                 }}>
@@ -186,11 +193,11 @@ export function ProfileCard() {
           </div>
           </div> 
          
-         <Button className={classes.button1}><span style={{
+         <Button size="xs" className={classes.button1}><span style={{
                     fontFamily: 'Montserrat',
                     fontStyle: `normal`,
                     fontWeight: `500`,
-                    fontSize: `22px`,
+                    fontSize: `16px`,
                     lineHeight: `27px`,
                 }}>Settings</span> &nbsp; <Image
                 src={'/../public/icons/settings.png'}
@@ -198,11 +205,11 @@ export function ProfileCard() {
                 height={18}
                 alt={''}
               ></Image></Button> 
-         <Button className={classes.button2}><span style={{
+         <Button size="xs" className={classes.button2}><span style={{
                     fontFamily: 'Montserrat',
                     fontStyle: `normal`,
                     fontWeight: `500`,
-                    fontSize: `22px`,
+                    fontSize: `16px`,
                     lineHeight: `27px`,
                 }}>Logout</span> &nbsp; <Image
                 src={'/../public/icons/logout.png'}
