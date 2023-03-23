@@ -87,6 +87,7 @@ const TransactionCard = (props: {
       shadow="0px 4px 20px rgba(0, 0, 0, 0.1)"
       my={10}
       py={20}
+      mx={15}
     >
       <Group px={10} style={{ justifyContent: 'space-between' }}>
         <Stack>
@@ -154,7 +155,7 @@ const TransactionCard = (props: {
 const RecentTransactions = () => {
   return (
     <div>
-      <Text ff={'Montserrat'} c="#0062D6" fw={700} mt={20} fz={22}>
+      <Text ff={'Montserrat'} c="#0062D6" fw={700} fz={22}>
         Recent Transactions
       </Text>
       <div style={{ maxHeight: '23rem', overflow: 'auto' }}>

@@ -70,7 +70,8 @@ const BalanceChart = (props: {
 const SpendingDonut = (props: {
   values: number[]
   legends: string[]
-  setSelection: Function
+  setSelection: Function,
+  setValue: Function
 }) => {
   return (
     <ReactApexChart
@@ -81,7 +82,8 @@ const SpendingDonut = (props: {
           type: 'donut',
           events: {
             dataPointSelection(e, chart, options) {
-              props.setSelection(parseInt(e?.target?.getAttribute('rel')))
+              props.setSelection(parseInt(e?.target?.getAttribute('j')));
+              props.setValue(parseInt(e?.target?.getAttribute('data:value')));
             },
           },
         },
@@ -166,85 +168,95 @@ const ArticlesData = [
 
 const FinancialStatistics = () => {
   const [categoryIndex, setCategoryIndex] = useState(-1)
-  const [modeIndex, setModeIndex] = useState(-1)
+  const [modeIndex, setModeIndex] = useState(-1);
+  const [catValue, setCatValue] = useState(-1);
 
   return (
     <Card
       radius={'lg'}
       style={{
         boxShadow: '0px 2px 40px rgba(0, 0, 0, 0.1)',
-        maxHeight: '35rem',
-        overflow: 'auto',
       }}
-      ml={20}
+      mr={15}
     >
-      {categoryIndex != -1 && (
-        <Group mx={40}>
-          <Button
-            radius={'xl'}
-            variant="gradient"
-            gradient={{ from: '#0062D6', to: '#0062D6' }}
-            onClick={() => setCategoryIndex(-1)}
-            px={35}
-          >
-            Back
-          </Button>
-          <Text mx={20} c={'#4D4B4B'} ff="Montserrat" fz={28} fw={800}>
-            Category: {PieCategoryData[categoryIndex]?.mode + ' (32%)'}{' '}
+      <Card.Section>
+        {categoryIndex != -1 && (
+          <Group mx={30} mt={25}>
+            <Button
+              radius={'xl'}
+              variant="gradient"
+              gradient={{ from: '#0062D6', to: '#0062D6' }}
+              onClick={() => setCategoryIndex(-1)}
+              px={35}
+              ff="Montserrat"
+              fw={500}
+            >
+              Back
+            </Button>
+            <Text mx={20} c={'#4D4B4B'} ff="Montserrat" fz={28} fw={800}>
+              Category: {`${PieCategoryData[categoryIndex].mode}` + ` (${catValue}%) `}
+            </Text>
+          </Group>
+        )}
+
+        {categoryIndex == -1 && (
+          <Text mx={30} mt={25} c={'#4D4B4B'} ff="Montserrat" fw={800} fz={30}>
+            Financial Statistics
           </Text>
-        </Group>
-      )}
-      <Group align={'flex-start'}>
-        <Group px={15} py={15}>
+        )}
+
+      </Card.Section>
+
+      <Group align={'flex-end'} style={{
+        flex: 1, maxHeight: "28rem", overflow: 'auto',
+      }}>
+        {categoryIndex == -1 &&
+          <BalanceChart
+            balanceData={TotalBalanceData}
+            color="#008FFB"
+            width={600}
+          />}
+        <Stack style={{ flex: 1 }} align="center">
+          <SpendingDonut
+            setSelection={setCategoryIndex}
+            values={PieCategoryData.map((v) => v.value)}
+            legends={PieCategoryData.map((v) => v.mode)}
+            setValue={setCatValue}
+          />
           {categoryIndex == -1 && (
-            <Stack>
-              <Text mb={20} c={'#4D4B4B'} ff="Montserrat" fw={800} fz={30}>
-                Financial Statistics
-              </Text>
+            <SpendingDonut
+              setSelection={setModeIndex}
+              values={PieModeData.map((v) => v.value)}
+              legends={PieModeData.map((v) => v.mode)}
+              setValue={(v: number) => { }}
+            />
+          )}
+          {categoryIndex != -1 && (
+            <>
               <BalanceChart
                 balanceData={TotalBalanceData}
-                color="#008FFB"
-                width={600}
+                color="#00A76D"
+                width={500}
               />
-            </Stack>
+              <MontlySpendingChart data={MontlySpendingData} />
+            </>
           )}
-
-          <Stack mt={20}>
-            <SpendingDonut
-              setSelection={setCategoryIndex}
-              values={PieCategoryData.map((v) => v.value)}
-              legends={PieCategoryData.map((v) => v.mode)}
-            />
-            {categoryIndex == -1 && (
-              <SpendingDonut
-                setSelection={setModeIndex}
-                values={PieModeData.map((v) => v.value)}
-                legends={PieModeData.map((v) => v.mode)}
-              />
-            )}
-            {categoryIndex != -1 && (
-              <>
-                <BalanceChart
-                  balanceData={TotalBalanceData}
-                  color="#00A76D"
-                  width={580}
-                />
-                <MontlySpendingChart data={MontlySpendingData} />
-              </>
-            )}
-          </Stack>
-        </Group>
+        </Stack>
 
         {categoryIndex != -1 && (
-          <Stack mx={40}>
-            <RecentTransactions />
+          <Stack mx={40} style={{ flex: 3 }}>
+            <div style={{
+              // border: "1px solid rgb(131 131 131 / 30%)", 
+              borderRadius: "1rem",
+              padding: "1px",
+              boxShadow: "0px 1px 10px rgba(0, 0, 0, 0.1)"
+            }}>
+              <RecentTransactions /></div>
             <InsightCard insights={InsightList} />
             <ArticlesCard articles={ArticlesData} />
           </Stack>
         )}
       </Group>
-      {/* {!showCat && */}
-      {/* <Button onClick={() => setShowCat(!showCat)}>Click ME</Button>} */}
     </Card>
   )
 }
