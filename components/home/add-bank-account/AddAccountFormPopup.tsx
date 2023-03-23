@@ -89,7 +89,7 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 500,
     fontSize: '18px',
     lineHeight: '24px',
-    color: '#0052B3',
+    color: '#434343',
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     border: '0',
@@ -208,7 +208,7 @@ export function AddAccountFormPopup({
                   fontWeight: 500,
                   fontSize: '18px',
                   lineHeight: '24px',
-                  color: '#0052B3',
+                  color: '#434343',
                 }}
                 buttonStyle={{
                   background: 'transparent',
