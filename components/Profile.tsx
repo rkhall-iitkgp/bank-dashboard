@@ -291,7 +291,7 @@ const Form = (props: { id: any, accountselected: any }) => {
 const Profile = () => {
     const { classes } = useStyles()
     const accounts = [8989, 4235, 7382]
-    const [accountselected, setAccountselected] = useState()
+    const [accountselected, setAccountselected] = useState<number>()
     const [activeTab, setActiveTab] = useState<string | null>(accounts[0].toString());
     return (
         <div className={classes.wrapper}>
