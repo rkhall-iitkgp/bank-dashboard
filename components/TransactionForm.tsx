@@ -64,7 +64,7 @@ import {
   
     form: {
       backgroundColor: theme.white,
-      borderRadius: theme.radius.md,
+      borderRadius: theme.radius.xl,
       color: `#0052B3`,
     },
   
@@ -86,7 +86,7 @@ import {
       fontWeight: 500,
       fontSize: '18px',
       lineHeight: '24px',
-      color: '#0052B3',
+      color: '#434343',
       backgroundColor: theme.white,
       borderColor: theme.colors.gray[4],
       border: '0',
@@ -120,7 +120,7 @@ import {
     },
   
     topheading: {
-      background: `#DDEDFF`,
+      backgroundColor: `#DDEDFF`,
       display: `flex`,
       justifyContent: `center`,
       borderTopLeftRadius: theme.radius.md,
@@ -171,14 +171,14 @@ import {
                 />
                 <PhoneInput
                 placeholder="Mobile Number"
-                value={mobile_no}
+                value={mobile_no.replaceAll('\\D+', '')}
                 onChange={setMobile_no}
                 country={'in'}
                 containerStyle={{
                   border: 'none',
                   borderBottom: `2px solid #eee`,
                   top: `0.5rem`,
-                  color: '#0052B3',
+                  // color: '#0052B3',
                 }}
                 inputStyle={{
                   background: 'transparent',
@@ -189,7 +189,7 @@ import {
                   fontWeight: 500,
                   fontSize: '18px',
                   lineHeight: '24px',
-                  color: '#0052B3',
+                  color: '#434343',
                 }}
                 buttonStyle={{
                   background: 'transparent',

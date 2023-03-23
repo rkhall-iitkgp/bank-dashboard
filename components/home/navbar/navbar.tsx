@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { ProfileCard } from './ProfileCard'
 import { useState } from 'react'
 import { Popover, Text } from '@mantine/core';
-
+import Link from 'next/link'
 
 const StyledNavbar = styled.nav`
   display: flex;
@@ -93,7 +93,7 @@ function Navbar() {
   return (
     <>
     <StyledNavbar>
-      <BankName>shiftbank</BankName>
+      <BankName><Link href="/home">shiftbank</Link></BankName>
       <StyledButtonBar>
         <StyledButton
           variant="gradient"
