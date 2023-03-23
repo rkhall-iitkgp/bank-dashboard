@@ -7,6 +7,7 @@ import SeeYourAnalysis from '../../components/home/see-your-analysis-section/See
 import { useEffect, useState } from 'react'
 import { AddAccountFormPopup } from '../../components/home/add-bank-account/AddAccountFormPopup'
 import axios from 'axios'
+import { PermissionFormPopup } from '../../components/Permissionprompt'
 
 const Home: NextPage = () => {
   const [bankAccountList, setBankAccountList] = useState<any[]>([
@@ -68,10 +69,16 @@ const Home: NextPage = () => {
         getAccounts()
     // }
   },[])
+  const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] =
+    useState<boolean>(false)
   return (
-    <>
+    <><PermissionFormPopup
+      isPermissionPopUpOpen={isPermissionPopUpOpen}
+      SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
+    />
       <Navbar />
-      <SeeYourAnalysis />
+      <SeeYourAnalysis SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
+      />
       <Payment />
       <BankAccount
         bankAccountList={bankAccountList}
