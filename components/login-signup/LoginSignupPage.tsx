@@ -2,8 +2,8 @@ import {
   Button,
   createStyles,
   Group,
+  NumberInput,
   PinInput,
-  rem,
   Stack,
   Text,
   TextInput,
@@ -12,6 +12,8 @@ import {
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -29,7 +31,7 @@ const useStyles = createStyles((theme) => ({
     marginBottom: `20px`,
   },
   title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: `Montserrat`,
     color: theme.white,
     lineHeight: 1,
     fontWeight: 400,
@@ -43,14 +45,14 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 400,
     fontSize: `3rem`,
     textAlign: `center`,
+    marginBottom: `4rem`,
   },
 
   description: {
+    fontFamily: `Montserrat`,
     color: theme.colors[theme.primaryColor][0],
-    maxWidth: 400,
-    fontSize: `1rem`,
-    fontFamily: `Montserrat, ${theme.fontFamily}`,
-    fontWeight: 300,
+    maxWidth: `rem(300)`,
+    fontSize: `0.8rem`,
     [theme.fn.smallerThan('sm')]: {
       maxWidth: '100%',
     },
@@ -81,16 +83,18 @@ const useStyles = createStyles((theme) => ({
   input: {
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
-    color: theme.black,
+    color: '#434343',
 
     '&::placeholder': {
       color: theme.colors.gray[5],
+      fontFamily: `Montserrat`,
+      fontStyle: `normal`,
     },
     border: '0',
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #eee`,
-    marginTop: `1rem`,
+    fontFamily: `Montserrat`,
   },
 
   inputLabel: {
@@ -101,8 +105,8 @@ const useStyles = createStyles((theme) => ({
   },
   inputcontainer: {
     position: `relative`,
-    paddingTop: `0.75rem`,
     marginTop: `0 !important`,
+    paddingLeft: 0,
   },
   control: {
     backgroundColor: `#006AE4`,
@@ -125,21 +129,28 @@ const useStyles = createStyles((theme) => ({
     background: `#006BE5`,
     width: `100%`,
     padding: '50px',
-    paddingTop: `8vh`,
-    display: `flex`,
-    flexDirection: `column`,
+    paddingTop: `100px`,
     height: `96vh`,
     borderRadius: theme.radius.md,
     boxShadow: theme.shadows.lg,
   },
   buttoncontainer: {
     display: `flex`,
-    justifyContent: `space-around`,
+    justifyContent: `space-between`,
   },
   button: {
-    width: `100px`,
+    width: `125px`,
     backgroundColor: `black`,
     borderRadius: `20px`,
+    fontFamily: `Montserrat`,
+  },
+  otpbutton: {
+    height: `36px`,
+    width: `364px`,
+    background: `#006AE4`,
+    borderRadius: `30px`,
+    marginTop: `20px`,
+    fontFamily: `Montserrat`,
   },
   outerimagecontainer: {
     width: `100%`,
@@ -153,13 +164,13 @@ const useStyles = createStyles((theme) => ({
     minHeight: `160%`,
     top: `0%`,
   },
-  dashboardimg1: {
+  dashboardImage1: {
     width: `56%`,
     borderRadius: `8px`,
     maxHeight: `20vw`,
     zIndex: 1,
   },
-  dashboardimg2: {
+  dashboardImage2: {
     position: `absolute`,
     width: `44%`,
     borderRadius: `8px`,
@@ -187,9 +198,12 @@ export function LoginSignupPage() {
         contact_no: contact_no,
         email: email,
         signup: si,
+        isaccount: 0,
       })
       .then((res) => {
         setEnterOtp(true)
+        // sessionStorage.setItem('contact_no', res.data.contact_no)
+        // sessionStorage.setItem('user_id', res.data.user_id)
         return res.data
       })
       .catch((err) => console.log(err))
@@ -199,15 +213,23 @@ export function LoginSignupPage() {
     setSignUpLoading(false)
   }
 
+  // const [otpValue, setOtpValue] = useState<boolean>(false)
+
   const validate = (contact_no: string, otp: string) => {
     let res = axios
       .post(`${BASEURL}/validateotp/`, {
         contact_no: contact_no,
         otp: parseInt(otp),
         email: email,
+        isaccount: 0,
       })
       .then((res) => {
         router.replace('/home')
+        // save response i.e access token and refresh token in session storage
+        sessionStorage.setItem('contact_no', res.data.contact_no)
+        sessionStorage.setItem('access_token', res.data.access_token)
+        sessionStorage.setItem('refresh_token', res.data.refresh_token)
+        sessionStorage.setItem('user_id', res.data.user_id)
         return res.data
       })
       .catch((err) => console.log(err))
@@ -220,22 +242,37 @@ export function LoginSignupPage() {
       <div className={classes.grid}>
         <div className={classes.form}>
           <div className={classes.forminside}>
-            <div className={classes.titlebold}>Shiftbank</div>
+            <div className={classes.titlebold}>shiftbank</div>
 
             {!enterOtp && (
               <Stack my={10}>
                 <Stack>
-                  <TextInput
+                  <PhoneInput
                     placeholder="Mobile Number"
-                    type={'number'}
-                    required
-                    classNames={{
-                      input: classes.input,
-                      label: classes.inputLabel,
-                      root: classes.inputcontainer,
+                    country={'in'}
+                    containerStyle={{
+                      border: 'none',
+                      borderBottom: `2px solid #eee`,
+                      top: `0.5rem`,
+                      color: '#0052B3',
                     }}
-                    value={mobile}
-                    onChange={(e) => setMobile(e.currentTarget.value)}
+                    inputStyle={{
+                      background: 'transparent',
+                      border: 'none',
+                      margin: '4px 0px',
+                      fontFamily: 'Montserrat, sans-serif',
+                      fontStyle: 'normal',
+                      fontWeight: 500,
+                      // fontSize: '18px',
+                      lineHeight: '24px',
+                      color: '#434343',
+                    }}
+                    buttonStyle={{
+                      background: 'transparent',
+                      border: 'none',
+                    }}
+                    value={mobile.replaceAll('\\D+', '')}
+                    onChange={(e) => setMobile(e)}
                   />
                   <TextInput
                     placeholder="Email"
@@ -251,7 +288,6 @@ export function LoginSignupPage() {
                     onChange={(e) => setEmail(e.currentTarget.value)}
                   />
                 </Stack>
-
                 <Group className={classes.buttoncontainer} mt={15}>
                   <Button
                     className={classes.button}
@@ -295,6 +331,7 @@ export function LoginSignupPage() {
                   value={otp}
                   onChange={(e) => setOtp(e)}
                   mx="auto"
+                  length={6}
                 />
                 <Button
                   className={classes.control}
@@ -316,17 +353,19 @@ export function LoginSignupPage() {
               A Comprehensive Analysis of your Transactions
             </Title>
             <Text className={classes.description} mt="sm" mb={30}>
-            Enter your credentials to access your account
+              Enter your credentials to access your account
             </Text>
             <div className={classes.outerimagecontainer}>
               <div className={classes.imagecontainer}>
                 <img
-                  className={classes.dashboardimg1}
+                  className={classes.dashboardImage1}
                   src="/images/dashboardimg1.png"
+                  alt="dashboard-img"
                 />
                 <img
-                  className={classes.dashboardimg2}
+                  className={classes.dashboardImage2}
                   src="/images/dashboardimg2.png"
+                  alt="dashboard-img"
                 />
               </div>
             </div>

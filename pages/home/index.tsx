@@ -6,6 +6,7 @@ import OfferCardsRow from '../../components/home/offers-referal-section/OfferCar
 import SeeYourAnalysis from '../../components/home/see-your-analysis-section/SeeYourAnalysis'
 import { useState } from 'react'
 import { AddAccountFormPopup } from '../../components/home/add-bank-account/AddAccountFormPopup'
+import { PermissionFormPopup } from '../../components/Permissionprompt'
 
 const Home: NextPage = () => {
   const [bankAccountList, setBankAccountList] = useState<any[]>([
@@ -13,10 +14,16 @@ const Home: NextPage = () => {
   ])
   const [isAddAccountPopupOpen, setIsAddAccountPopupOpen] =
     useState<boolean>(false)
+  const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] =
+    useState<boolean>(false)
   return (
-    <>
+    <><PermissionFormPopup
+      isPermissionPopUpOpen={isPermissionPopUpOpen}
+      SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
+    />
       <Navbar />
-      <SeeYourAnalysis />
+      <SeeYourAnalysis SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
+      />
       <Payment />
       <BankAccount
         bankAccountList={bankAccountList}
@@ -33,6 +40,7 @@ const Home: NextPage = () => {
       ) : (
         <></>
       )}
+      
     </>
   )
 }

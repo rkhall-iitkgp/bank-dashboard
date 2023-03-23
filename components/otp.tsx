@@ -1,8 +1,6 @@
-import {
-  createStyles,
-  TextInput,
-  Button,
-} from '@mantine/core';
+import { createStyles, TextInput } from '@mantine/core'
+import ButtonGroup from './SmallComponents/ButtonGroup'
+import Heading from './SmallComponents/Heading'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -15,14 +13,12 @@ const useStyles = createStyles((theme) => ({
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
-    background: `grey`
+    background: `grey`,
   },
   titlebox: {
     // marginBottom:`20px`,
     display: `flex`,
     justifyContent: `center`,
-
-
   },
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -34,16 +30,15 @@ const useStyles = createStyles((theme) => ({
     //   marginBottom:`10px`
   },
   titlebold: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontFamily: 'Montserrat',
     //   color: theme.black,
     lineHeight: 1,
     fontWeight: 600,
-    fontSize: `1.5rem`,
+    fontSize: `20px`,
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
-
-
+    paddingBottom: `20px`,
   },
 
   description: {
@@ -51,17 +46,17 @@ const useStyles = createStyles((theme) => ({
     fontSize: `1rem`,
     padding: `0.5rem`,
     textAlign: `center`,
-    marginTop: `10px`
+    marginTop: `10px`,
   },
 
   form: {
     backgroundColor: theme.white,
-    borderRadius: theme.radius.md,
+    borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    width: `500px`,
-    color: `#0052B3`
+    // paddingBottom: '5px',
+    width: `40vw`,
+    color: `#0052B3`,
   },
-
 
   input: {
     backgroundColor: theme.white,
@@ -72,16 +67,16 @@ const useStyles = createStyles((theme) => ({
       color: theme.colors.gray[5],
     },
     border: '0',
-    borderRadius: "0",
+    borderRadius: '0',
     background: 'transparent',
-    borderBottom: `2px solid #eee`
+    borderBottom: `2px solid #eee`,
   },
 
   inputLabel: {
     color: theme.black,
     position: `absolute`,
     top: `1.5rem`,
-    transition: `0.25s ease`
+    transition: `0.25s ease`,
   },
   inputcontainer: {
     position: `relative`,
@@ -91,20 +86,20 @@ const useStyles = createStyles((theme) => ({
 
   control: {
     backgroundColor: `#006AE4`,
-    borderRadius: `20px`
+    borderRadius: `20px`,
   },
   forminside: {
     maxWidth: `90%`,
-    width: `500px`,
+    width: `40vw`,
     padding: theme.spacing.xl,
-    margin: `auto`
+    margin: `auto`,
   },
 
   buttoncontainer: {
     display: `flex`,
     justifyContent: `space-between   `,
     // margin:`1rem`,
-    marginTop: `2rem`
+    marginTop: `2rem`,
   },
   button: {
     width: `150px`,
@@ -125,19 +120,18 @@ const useStyles = createStyles((theme) => ({
     textAlign: `end`,
     color: `#0052B3`,
     ':hover': {
-      color: `#68a7f3`
+      color: `#68a7f3`,
     },
     ':active': {
-      color: `#0052B3`
-    }
-  }
-
-}));
+      color: `#0052B3`,
+    },
+  },
+}))
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
 export function OTP() {
-  const { classes } = useStyles();
+  const { classes } = useStyles()
 
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
@@ -146,36 +140,38 @@ export function OTP() {
   // ));
   return (
     <div className={classes.wrapper}>
-
       <div className={classes.form}>
-        <div className={classes.topheading}>
-
-          <div className={classes.title}>Bank Transfer</div>
-        </div>
+        <Heading title="Bank Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
-            <div className={classes.titlebold}><span >Pay Beneficiary</span></div>
-
+            <div className={classes.titlebold}>
+              <span>Enter OTP</span>
+            </div>
           </div>
-          <div className={classes.description}>We have sent an OTP to your mobile number XXXXXX5728 registered with your bank account. Please enter OTP and proceed</div>
+          <div className={classes.description}>
+            We have sent an OTP to your mobile number XXXXXX5728 registered with
+            your bank account. Please enter OTP and proceed
+          </div>
 
           <TextInput
             placeholder="OTP"
-            type={"number"}
+            type={'number'}
             required
             mt="md"
-            classNames={{ input: classes.input, label: classes.inputLabel, root: classes.inputcontainer }}
+            classNames={{
+              input: classes.input,
+              label: classes.inputLabel,
+              root: classes.inputcontainer,
+            }}
           />
           <div className={classes.resndotp}>Resend OTP</div>
 
-          <div className={classes.buttoncontainer}>
-            <Button className={classes.button} onClick={() => {
-            }}>Back</Button>
-            <Button className={classes.button} onClick={() => {
-            }}>Continue</Button>
-          </div>
+          <ButtonGroup
+            href1="/BankTransfer/Review"
+            href2="/BankTransfer/Success"
+          />
         </div>
       </div>
     </div>
-  );
+  )
 }
