@@ -222,6 +222,7 @@ export function Reviewdetailsbank(props: { sbi: any }) {
                 root: classes.inputcontainer,
               }}
               required
+              disabled
             />
             <TextInput
               label="IFSC"
@@ -234,6 +235,7 @@ export function Reviewdetailsbank(props: { sbi: any }) {
                 root: classes.inputcontainer,
               }}
               required
+              disabled
             />
           </div>
           <ButtonGroup

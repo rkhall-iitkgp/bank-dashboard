@@ -41,7 +41,6 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `center`,
     alignItems: `center`,
     paddingBottom: `15px`,
-    marginLeft: `1.5rem`,
   },
 
   description: {
@@ -198,7 +197,7 @@ export function Reviewdetailsupi() {
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
             <div className={classes.titlebold}>
-              <span>Payment Amount</span>
+              <span>Review Details</span>
             </div>
           </div>
           <div className={classes.beficiaryformcontainer}>
@@ -213,6 +212,7 @@ export function Reviewdetailsupi() {
               }}
               value={`197288882222`}
               disabled
+              required
             />
 
             <TextInput
@@ -225,6 +225,7 @@ export function Reviewdetailsupi() {
                 label: classes.inputLabel,
                 root: classes.inputcontainer,
               }}
+              required
             />
             <div className={classes.payingtext}>Paying</div>
             <TextInput
@@ -235,6 +236,7 @@ export function Reviewdetailsupi() {
                 label: classes.inputLabel,
                 root: classes.inputcontainer,
               }}
+              required
               disabled
               value={'John Doe'}
             />
@@ -255,7 +257,7 @@ export function Reviewdetailsupi() {
               variant="unstyled"
               label="Amount"
               mt="md"
-              value={'Rs. 500'}
+              value={''}
               style={{ color: 'grey' }}
               classNames={{
                 input: classes.input,
@@ -263,6 +265,7 @@ export function Reviewdetailsupi() {
                 root: classes.inputcontainer,
               }}
               required
+              disabled
             />
           </div>
 
@@ -270,7 +273,7 @@ export function Reviewdetailsupi() {
             <Link href='/UPI/Verify'><Button className={classes.button} >Back</Button></Link>
             <Link href='/UPI/Review'><Button className={classes.button} >Continue</Button></Link>
           </div> */}
-          <ButtonGroup href1="/UPI/Verify" href2="/UPI/Review" />
+          <ButtonGroup href1="/UPI/Payment" href2="/UPI/Pin" />
         </div>
       </div>
     </div>

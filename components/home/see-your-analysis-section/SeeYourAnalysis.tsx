@@ -22,7 +22,7 @@ const TextDiv = styled.div`
   color: white;
   padding-left: 60px;
   `
-  const _StyledButton = styled(Button)`
+const _StyledButton = styled(Button)`
     background-color: white;
     border-radius: 30px;
     color: #0062d6;
@@ -41,8 +41,10 @@ const TextDiv = styled.div`
 const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
   _StyledButton,
 )
-
-function SeeYourAnalysis() {
+interface Props {
+  SetIsPermissionPopUpOpen: Function
+}
+function SeeYourAnalysis({ SetIsPermissionPopUpOpen }: Props) {
   return (
     <Container>
       <TextDiv>
@@ -51,7 +53,9 @@ function SeeYourAnalysis() {
         transactions and offer insights to help you <br /> make informed
         financial decisions.
       </TextDiv>
-      <StyledButton variant="default">See your analysis</StyledButton>
+      <StyledButton variant="default" onClick={() => {
+        SetIsPermissionPopUpOpen(true)
+      }}>See your analysis</StyledButton>
     </Container>
   )
 }
