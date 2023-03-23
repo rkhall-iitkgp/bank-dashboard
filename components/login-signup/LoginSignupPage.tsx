@@ -12,6 +12,8 @@ import {
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -81,7 +83,7 @@ const useStyles = createStyles((theme) => ({
   input: {
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
-    color: theme.black,
+    color: '#434343',
 
     '&::placeholder': {
       color: theme.colors.gray[5],
@@ -92,6 +94,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #eee`,
+    fontFamily: `Montserrat`,
   },
 
   inputLabel: {
@@ -244,17 +247,30 @@ export function LoginSignupPage() {
             {!enterOtp && (
               <Stack my={10}>
                 <Stack>
-                  <TextInput
+                  <PhoneInput
                     placeholder="Mobile Number"
-                    type={'number'}
-                    required
-                    classNames={{
-                      input: classes.input,
-                      label: classes.inputLabel,
-                      root: classes.inputcontainer,
+                    country={'in'}
+                    containerStyle={{
+                      border: 'none',
+                      borderBottom: `2px solid #eee`,
+                      top: `0.5rem`,
+                      color: '#0052B3',
                     }}
-                    value={mobile}
-                    onChange={(e) => setMobile(e.currentTarget.value)}
+                    inputStyle={{
+                      background: 'transparent',
+                      border: 'none',
+                      margin: '4px 0px',
+                      fontFamily: 'Montserrat, sans-serif',
+                      fontStyle: 'normal',
+                      fontWeight: 500,
+                      // fontSize: '18px',
+                      lineHeight: '24px',
+                      color: '#434343',
+                    }}
+                    buttonStyle={{
+                      background: 'transparent',
+                      border: 'none',
+                    }}
                   />
                   <TextInput
                     placeholder="Email"
