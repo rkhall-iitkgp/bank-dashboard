@@ -1,8 +1,5 @@
-import { createStyles } from '@mantine/core'
-import Heading from '../SmallComponents/Heading'
 import styled from '@emotion/styled'
 import { Group, Stack, Text, Card } from '@mantine/core'
-import Image from 'next/image'
 
 const StyledStack = styled(Stack)`
   cursor: pointer;
