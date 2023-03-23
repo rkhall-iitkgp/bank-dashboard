@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+<<<<<<< HEAD
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Dashboard from './dashboard'
@@ -20,6 +21,12 @@ const Home: NextPage = () => {
       {/* <Reviewdetailsbank sbi={false} /> */}
     </div>
   )
+=======
+import { LoginSignupPage } from '../components/login-signup/LoginSignupPage'
+
+const Home: NextPage = () => {
+  return <LoginSignupPage />
+>>>>>>> main
 }
 
 export default Home

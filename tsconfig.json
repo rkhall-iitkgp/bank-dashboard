@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,6 +15,7 @@
     "jsx": "preserve",
     "incremental": true
   },
+<<<<<<< HEAD
   "include": [
     "next-env.d.ts",
     "**/*.ts",
@@ -29,3 +26,8 @@
     "node_modules", "plugins", "public"
   ]
 }
+=======
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src", "global.d.ts"],
+  "exclude": ["node_modules", "plugins", "public"]
+}
+>>>>>>> main
