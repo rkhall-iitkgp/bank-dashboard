@@ -8,10 +8,12 @@ import {
   Text,
   TextInput,
   Title,
+  Box
 } from '@mantine/core'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -175,6 +177,10 @@ const useStyles = createStyles((theme) => ({
     top: `20%`,
     left: `40%`,
   },
+  error: {
+    color: 'red',
+    fontSize: `2rem`
+  }
 }))
 
 export function LoginSignupPage() {
@@ -233,7 +239,17 @@ export function LoginSignupPage() {
 
     res.then((v) => console.log(v))
   }
+  const form = useForm({
+    initialValues: {
+      phone: '',
+      email: '',
+    },
 
+    validate: {
+      email: isEmail('Invalid email'),
+      phone: hasLength(10, 'Enter a Valid Phone Number')
+    },
+  });
   return (
     <div className={classes.wrapper}>
       <div className={classes.grid}>
@@ -243,40 +259,47 @@ export function LoginSignupPage() {
 
             {!enterOtp && (
               <Stack my={10}>
-                <Stack>
+                <Box component="form">
                   <TextInput
-                    placeholder="Mobile Number"
                     type={'number'}
+                    error={'heel'}
+                    placeholder="Mobile Number"
                     required
                     classNames={{
                       input: classes.input,
                       label: classes.inputLabel,
                       root: classes.inputcontainer,
                     }}
-                    value={mobile}
-                    onChange={(e) => setMobile(e.currentTarget.value)}
+
+                    {...form.getInputProps('phone')}
                   />
                   <TextInput
                     placeholder="Email"
                     type={'email'}
+                    error={form.getInputProps('email').error}
                     mt="md"
                     classNames={{
                       input: classes.input,
                       label: classes.inputLabel,
-                      root: classes.inputcontainer,
+                      root: classes.inputcontainer
                     }}
                     required
-                    value={email}
-                    onChange={(e) => setEmail(e.currentTarget.value)}
-                  />
-                </Stack>
+                    {...form.getInputProps('email')}
+                  />{
+                  }
+                </Box>
                 <Group className={classes.buttoncontainer} mt={15}>
                   <Button
                     className={classes.button}
                     loading={signUpLoading}
                     onClick={() => {
-                      SignUp(mobile, email, 1)
-                      setSignUpLoading(true)
+                      form.validate()
+
+                      if (form.isValid()) {
+                        setSignUpLoading(true)
+                        console.log('mobile , email', form.values.phone, form.values.email)
+                        SignUp(form.values.phone, form.values.email, 1)
+                      }
                     }}
                   >
                     Sign Up
@@ -285,8 +308,12 @@ export function LoginSignupPage() {
                     className={classes.button}
                     loading={signinLoading}
                     onClick={() => {
-                      SignUp(mobile, email, 0)
-                      setSignInLoading(true)
+                      form.validate()
+                      if (form.isValid()) {
+                        console.log('mobile , email', form.values.phone, form.values.email)
+                        SignUp(form.values.phone, form.values.email, 0)
+                        setSignInLoading(true)
+                      }
                     }}
                   >
                     Sign In
@@ -318,7 +345,6 @@ export function LoginSignupPage() {
                 <Button
                   className={classes.control}
                   onClick={() => {
-                    console.log(otp)
                     validate(mobile, otp)
                   }}
                 >
