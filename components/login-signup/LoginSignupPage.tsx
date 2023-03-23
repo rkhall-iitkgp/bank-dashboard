@@ -270,46 +270,28 @@ export function LoginSignupPage() {
                     onChange={(e) => setEmail(e.currentTarget.value)}
                   />
                 </Stack>
-
-               
-                  {/* <>
-                    <Group className={classes.buttoncontainer}>
-                      <Button
-                        className={classes.otpbutton}
-                        onClick={() => {
-                          // if (otpValue == false) setOtpValue(true)
-
-                        }}
-                      >
-                        Get OTP
-                      </Button>
-                    </Group>
-                  </> */}
-                
-                
-                  <Group className={classes.buttoncontainer} mt={15}>
-                    <Button
-                      className={classes.button}
-                      loading={signUpLoading}
-                      onClick={() => {
-                        SignUp(mobile, email, 1)
-                        setSignUpLoading(true)
-                      }}
-                    >
-                      Sign Up
-                    </Button>
-                    <Button
-                      className={classes.button}
-                      loading={signinLoading}
-                      onClick={() => {
-                        SignUp(mobile, email, 0)
-                        setSignInLoading(true)
-                      }}
-                    >
-                      Sign In
-                    </Button>
-                  </Group>
-                
+                <Group className={classes.buttoncontainer} mt={15}>
+                  <Button
+                    className={classes.button}
+                    loading={signUpLoading}
+                    onClick={() => {
+                      SignUp(mobile, email, 1)
+                      setSignUpLoading(true)
+                    }}
+                  >
+                    Sign Up
+                  </Button>
+                  <Button
+                    className={classes.button}
+                    loading={signinLoading}
+                    onClick={() => {
+                      SignUp(mobile, email, 0)
+                      setSignInLoading(true)
+                    }}
+                  >
+                    Sign In
+                  </Button>
+                </Group>
               </Stack>
             )}
 

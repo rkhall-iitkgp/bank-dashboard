@@ -41,7 +41,6 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `center`,
     alignItems: `center`,
     paddingBottom: `10px`,
-    marginLeft: `1.5rem`,
   },
 
   description: {
@@ -90,7 +89,6 @@ const useStyles = createStyles((theme) => ({
   inputAmount: {
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
-    color: theme.colors.gray[6],
     fontSize: '1rem',
     height: '1.2rem',
     fontFamily: 'Montserrat, sans-serif',
@@ -168,6 +166,8 @@ const useStyles = createStyles((theme) => ({
   payingtext: {
     paddingTop: `0.25rem`,
     fontWeight: 600,
+    marginBottom: `0.75rem`,
+    marginTop: `0.5rem`,
   },
 }))
 
@@ -212,8 +212,8 @@ export function Upitransfer3() {
             <TextInput
               label="UPI ID"
               variant="unstyled"
-              value={`WelcomtoGc@iitkgp`}
               disabled
+              value="myself@oksbi"
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
@@ -222,33 +222,30 @@ export function Upitransfer3() {
             />
             <div className={classes.payingtext}>Paying</div>
             <TextInput
-              label="Name"
+              placeholder="Name*"
               variant="unstyled"
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
-                root: classes.inputcontainer,
-              }}
-              disabled
-              value={'John Doe'}
-            />
-            <TextInput
-              label="UPI ID"
-              variant="unstyled"
-              mt="md"
-              value={'mytself@upi'}
-              classNames={{
-                input: classes.input,
-                label: classes.inputLabel,
-                root: classes.inputcontainer,
+                root: classes.enterAmountContainer,
               }}
               required
-              disabled
+            />
+            <TextInput
+              placeholder="UPI ID*"
+              variant="unstyled"
+              mt="md"
+              classNames={{
+                input: classes.input,
+                label: classes.inputLabel,
+                root: classes.enterAmountContainer,
+              }}
+              required
             />
             <TextInput
               variant="unstyled"
               mt="md"
-              value={'Enter Amount*'}
+              placeholder={'Enter Amount*'}
               style={{ color: 'grey' }}
               classNames={{
                 input: classes.inputAmount,
