@@ -5,6 +5,7 @@ import { ProfileCard } from './ProfileCard'
 import { useState } from 'react'
 import { Popover, Text } from '@mantine/core'
 import Link from 'next/link'
+import React from 'react'
 
 const StyledNavbar = styled.nav`
   display: flex;
@@ -64,7 +65,15 @@ interface Props {
     bankAccountList: any[]
 }
 
-function Demo({bankAccountList}:Props) {
+function Demo() {
+
+    const [bankAccountList, setBankAccountList] = React.useState<any[]>([])
+    React.useEffect(() => {
+        const accounts = sessionStorage.getItem('accounts')        
+        if (accounts) {
+            setBankAccountList(JSON.parse(accounts))
+        }
+    }, [])
   return (
     <Popover width="auto" radius={25} position="bottom" withArrow shadow="md">
       <Popover.Target>
@@ -97,13 +106,21 @@ const NavbarIcons = styled.img`
 `
 
 
-function Navbar({bankAccountList}:Props) {
+function Navbar() {
   const router = useRouter()
 
   const [show, setShow] = useState(false)
   function setting() {
     setShow(!show)
   }
+
+  const [bankAccountList, setBankAccountList] = React.useState<any[]>([])
+  React.useEffect(() => {
+      const accounts = sessionStorage.getItem('accounts')        
+      if (accounts) {
+          setBankAccountList(JSON.parse(accounts))
+      }
+  }, [])
   return (
     <>
       <StyledNavbar>

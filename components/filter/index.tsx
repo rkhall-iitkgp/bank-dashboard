@@ -12,6 +12,7 @@ import {
 import { DateInput } from '@mantine/dates'
 import styled from '@emotion/styled'
 import { useState } from 'react'
+import React from 'react'
 const _PeriodButton = styled(Button)`
   width: 213px;
   height: 48px;
@@ -79,9 +80,21 @@ const AccountSelect = (prop: {
 
 const Filter = () => {
   const [id, setId] = useState(1)
-  const accounts = [8989, 4235]
   const [account, setAccount] = useState(0)
   const [haveConsent, setHaveConsent] = useState(false)
+  const [bankAccountList, setBankAccountList] = React.useState([])
+  React.useEffect(() => {
+      const accounts = sessionStorage.getItem('accounts')        
+      if (accounts) {
+          const accs = (JSON.parse(accounts))
+          let accounts_=[];
+          let ele;
+          accs.map((ele:any)=>{
+            accounts_.push(ele.account_no)
+          })
+          setBankAccountList(accounts_)
+      }
+  }, [])
 
   return (
     <div style={{ width: '585px', paddingLeft: 50 }}>
@@ -121,10 +134,10 @@ const Filter = () => {
         </Text>
 
         <Group>
-          {accounts.map((it, v) => (
+          {bankAccountList.map((it, v) => (
             <AccountSelect
               key={it}
-              account={v}
+              account={it}
               setAccount={setAccount}
               curSelection={account}
             />

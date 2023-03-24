@@ -11,6 +11,7 @@ import { FinancialRatios } from './FinancialRatios'
 import RecentTransactions from './recenttransactions'
 import FinancialStatistics from './statistics'
 import { TotalBalance } from './TotalBalance'
+import React from 'react'
 
 const Dashboard = () => {
   const [depositLimit, setDepositLimit] = useState(1000)
@@ -38,7 +39,20 @@ const Dashboard = () => {
     )
   }
 
-  const ACCOUNTFAKEDATA = ['**** 1234', '**** 1324', '**** 4231', '**** 3214']
+
+  const [bankAccountList, setBankAccountList] = React.useState<any[]>([])
+  React.useEffect(() => {
+      const accounts = sessionStorage.getItem('accounts')        
+      if (accounts) {
+          const accs = (JSON.parse(accounts))
+          let accounts_=[];
+          let ele;
+          accs.map((ele:any)=>{
+            accounts_.push(ele.account_no)
+          })
+          setBankAccountList(accounts_)
+      }
+  }, [])
 
   return (
     <div style={{ backgroundColor: '#F4F4F4' }}>
@@ -88,7 +102,7 @@ const Dashboard = () => {
                   />
                 }
                 placeholder="bank account"
-                data={ACCOUNTFAKEDATA}
+                data={bankAccountList}
               />
             </Group>
           </Group>

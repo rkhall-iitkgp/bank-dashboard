@@ -54,7 +54,7 @@ const Home: NextPage = () => {
                 isPermissionPopUpOpen={isPermissionPopUpOpen}
                 SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
             />
-            <Navbar bankAccountList={bankAccountList}/>
+            <Navbar/>
             <SeeYourAnalysis SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen} />
             <Payment />
             {bankAccountList.length!==0 && <BankAccount

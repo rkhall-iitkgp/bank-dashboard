@@ -16,7 +16,7 @@ const index = () => {
       {
         bankAccountList.length!==0 && (
             <>
-                <Navbar bankAccountList={bankAccountList}/>
+                <Navbar/>
                 <Profile bankAccountList={bankAccountList}/>
             </>
         )
