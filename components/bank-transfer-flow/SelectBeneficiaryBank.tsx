@@ -140,6 +140,7 @@ const useStyles = createStyles((theme) => ({
     fontSize: `0.8rem`,
     textAlign: `center`,
     display: `flex`,
+    border: '2px solid #ddedff',
     // flexDirection:`column`,
     alignItems: `center`,
     justifyContent: `space-between`,
@@ -151,8 +152,7 @@ const useStyles = createStyles((theme) => ({
     ':active': {
       boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.25)`,
     },
-    boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.25)`,
-    border: `2px solid #DDEDFF`,
+    boxShadow: ' 0px 4px 10px rgba(0, 0, 0, 0.2)',
   },
 
   active: {

@@ -8,9 +8,10 @@ import {
   TextInput,
   Title,
 } from '@mantine/core'
-import { useForm, hasLength, isEmail } from '@mantine/form'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useForm, isEmail, hasLength } from '@mantine/form';
+
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import useStorage from '../../hooks/useStorage'
@@ -298,8 +299,7 @@ export function LoginSignupPage() {
                   />
                 </Stack>
 
-               
-                  {/* <>
+                {/* <>
                     <Group className={classes.buttoncontainer}>
                       <Button
                         className={classes.otpbutton}
@@ -312,31 +312,63 @@ export function LoginSignupPage() {
                       </Button>
                     </Group>
                   </> */}
-                
-                
-                  <Group className={classes.buttoncontainer} mt={15}>
+
+                <Group className={classes.buttoncontainer} mt={15}>
+                  {buttonClicked && (
+                    <Button
+                      disabled
+                      className={classes.button}
+                      loading={signUpLoading}
+                      onClick={() => {
+                        SignUp(mobile, email, 1)
+                        setSignUpLoading(true)
+                        setButtonClicked(true)
+                      }}
+                    >
+                      Sign Up
+                    </Button>
+                  )}
+                  {!buttonClicked && (
                     <Button
                       className={classes.button}
                       loading={signUpLoading}
                       onClick={() => {
                         SignUp(mobile, email, 1)
                         setSignUpLoading(true)
+                        setButtonClicked(true)
                       }}
                     >
                       Sign Up
                     </Button>
+                  )}
+                  {buttonClicked && (
+                    <Button
+                      disabled
+                      className={classes.button}
+                      loading={signinLoading}
+                      onClick={() => {
+                        SignUp(mobile, email, 0)
+                        setSignInLoading(true)
+                        setButtonClicked(true)
+                      }}
+                    >
+                      Sign In
+                    </Button>
+                  )}
+                  {!buttonClicked && (
                     <Button
                       className={classes.button}
                       loading={signinLoading}
                       onClick={() => {
                         SignUp(mobile, email, 0)
                         setSignInLoading(true)
+                        setButtonClicked(true)
                       }}
                     >
                       Sign In
                     </Button>
-                  </Group>
-                
+                  )}
+                </Group>
               </Stack>
             )}
 
