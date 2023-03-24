@@ -1,15 +1,14 @@
 import {
-  createStyles,
-  TextInput,
   Button,
+  createStyles,
   Group,
-  rem,
   Modal,
   NumberInput,
+  rem,
+  TextInput,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 // import { useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
@@ -260,6 +259,7 @@ export function AddAccountFormPopup({
                         .then((response) => {
                           console.log(response)
                         })
+                        .catch((err) => console.log(err))
                     } else {
                       setBankAccountList(bankAccountList)
                       setIsAddAccountPopupOpen(false)
@@ -280,6 +280,7 @@ export function AddAccountFormPopup({
                           // sessionStorage.setItem('bankAccountList', JSON.stringify(bankAccountList))
                           console.log(response)
                         })
+                        .catch((err) => console.log(err))
                     }
                   }}
                 >

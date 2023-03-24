@@ -1,15 +1,12 @@
 import {
   Button,
   createStyles,
-  Group,
-  NumberInput,
-  PinInput,
+  Group, PinInput,
   Stack,
   Text,
   TextInput,
-  Title,
+  Title
 } from '@mantine/core'
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import PhoneInput from 'react-phone-input-2'

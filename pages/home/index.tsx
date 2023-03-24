@@ -1,13 +1,12 @@
-import type { NextPage, GetServerSideProps } from 'next'
+import type { NextPage } from 'next'
+import { useEffect, useState } from 'react'
+import api from '../../components/api'
+import { AddAccountFormPopup } from '../../components/home/add-bank-account/AddAccountFormPopup'
 import BankAccount from '../../components/home/add-bank-account/AddBankAccountSection'
 import Payment from '../../components/home/make-payment-section'
 import Navbar from '../../components/home/navbar/navbar'
 import OfferCardsRow from '../../components/home/offers-referal-section/OfferCardsRow'
 import SeeYourAnalysis from '../../components/home/see-your-analysis-section/SeeYourAnalysis'
-import { useEffect, useState } from 'react'
-import { AddAccountFormPopup } from '../../components/home/add-bank-account/AddAccountFormPopup'
-import axios from 'axios'
-import api from '../../components/api'
 import { PermissionFormPopup } from '../../components/reusable-components/Permissionprompt'
 import useStorage from '../../hooks/useStorage'
 
@@ -44,6 +43,7 @@ const Home: NextPage = () => {
         setItem('accounts', response.request.responseText)
         return response
       })
+      .catch((err) => console.log(err))
   }
 
   // const getServerSideProps = () => {
@@ -70,7 +70,7 @@ const Home: NextPage = () => {
 
   //       sessionStorage.setItem('accounts', response.request.responseText)
   //       return response
-  //     })
+  //     }).catch((err) => console.log(err))
   // }
 
   useEffect(() => {
