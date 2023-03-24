@@ -237,13 +237,7 @@ const useStyles = createStyles((theme) => ({
 export function ReviewDetailsUpi() {
   const router = useRouter()
   const data = router.query
-  const [benD, setBenD] = useState({
-    name: '',
-    accountNumber: '',
-    amount: '',
-    ifsc: '',
-    ifscReq: data.ifsc,
-  })
+
   const { classes } = useStyles()
 
   // const icons = social.map((Icon, index) => (
@@ -278,7 +272,7 @@ export function ReviewDetailsUpi() {
               disabled
               required
             />
-            {data.ifsc === 'true' ? (
+            {/* {data.ifsc === 'true' ? (
               <>
                 <TextInput
                   placeholder="IFSC*"
@@ -303,7 +297,7 @@ export function ReviewDetailsUpi() {
               </>
             ) : (
               <></>
-            )}
+            )} */}
           </div>
           <TextInput
             label="UPI ID"
@@ -328,13 +322,13 @@ export function ReviewDetailsUpi() {
             }}
             required
             disabled
-            value={'John Doe'}
+            value={data.name}
           />
           <TextInput
             label="UPI ID"
             variant="unstyled"
             mt="md"
-            value={'mytself@upi'}
+            value={data.upi}
             classNames={{
               input: classes.input,
               label: classes.inputLabel,
@@ -347,7 +341,7 @@ export function ReviewDetailsUpi() {
             variant="unstyled"
             label="Amount"
             mt="md"
-            value={''}
+            value={data.amount}
             style={{ color: 'grey' }}
             classNames={{
               input: classes.input,
@@ -358,7 +352,17 @@ export function ReviewDetailsUpi() {
             disabled
           />
         </div>
-        <ButtonGroup href1="/UPI/payment-details" href2="/UPI/enter-pin" />
+        {/* <ButtonGroup href1="/UPI/payment-details" href2=`/UPI/enter-pin?name=${data.name}&amount=${form.values.amount}&upi=${form.values.upi_id}` /> */}
+        <div className={classes.buttoncontainer}>
+          <Link href="/UPI/payment-details">
+            <div className={classes.button1}>Back</div>
+          </Link>
+          <Link
+            href={`/UPI/enter-pin?name=${data.name}&amount=${data.amount}&upi=${data.upi}`}
+          >
+            <div className={classes.button1}>Continue</div>
+          </Link>
+        </div>
       </div>
     </div>
     // </div>

@@ -1,4 +1,6 @@
 import { createStyles, Group, PinInput } from '@mantine/core'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
 const useStyles = createStyles((theme) => ({
@@ -75,7 +77,21 @@ const useStyles = createStyles((theme) => ({
     paddingTop: `0.75rem`,
     marginTop: `0 !important`,
   },
-
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    fontWeight: 400,
+    // cursor: 'no-drop',
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
   control: {
     backgroundColor: `#006AE4`,
     borderRadius: `20px`,
@@ -119,6 +135,8 @@ function Demo() {
 }
 export function EnterUPIpin() {
   const { classes } = useStyles()
+  const router = useRouter()
+  const data = router.query
 
   return (
     <div className={classes.wrapper}>
@@ -133,7 +151,17 @@ export function EnterUPIpin() {
           <div className={classes.description}>
             <Demo />
           </div>
-          <ButtonGroup href1="/UPI/payment-details-review" href2="/UPI/payment-success" />
+          {/* <ButtonGroup href1="/UPI/payment-details-review" href2="/UPI/payment-success" /> */}
+          <div className={classes.buttoncontainer}>
+            <Link href="/UPI/payment-details-review">
+              <div className={classes.button1}>Back</div>
+            </Link>
+            <Link
+              href={`/UPI/payment-success?name=${data.name}&amount=${data.amount}&upi=${data.upi}`}
+            >
+              <div className={classes.button1}>Continue</div>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

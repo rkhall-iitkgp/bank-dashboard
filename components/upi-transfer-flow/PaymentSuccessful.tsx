@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { Image } from '@mantine/core'
 import Link from 'next/link'
 import Heading from '../reusable-components/Heading'
+import { useRouter } from 'next/router'
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -120,6 +121,8 @@ const StyledTexthead4 = styled.div`
 `
 
 export default function PaymentSuccessPage() {
+  const router = useRouter()
+  const data = router.query
   return (
     <StyledContainer>
       <StyledCont>
@@ -128,11 +131,12 @@ export default function PaymentSuccessPage() {
           <StyledBotCont>
             <StyledTexthead>Payment Successful</StyledTexthead>
             <Image src="/images/tick.png" width={65} height={65} alt="" />
-            <StyledTexthead2>You have successfully paid John</StyledTexthead2>
-            <StyledTexthead3>₹500</StyledTexthead3>
+            <StyledTexthead2>
+              You have successfully paid {data.name}
+            </StyledTexthead2>
+            <StyledTexthead3>₹{data.amount}</StyledTexthead3>
             <StyledTexthead4>
-              UPI ID :{' '}
-              <span style={{ color: 'black' }}> &nbsp;johndoe@oksbi</span>
+              UPI ID : <span style={{ color: 'black' }}> &nbsp;{data.upi}</span>
             </StyledTexthead4>
           </StyledBotCont>
           <Link href="/home">

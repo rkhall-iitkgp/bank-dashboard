@@ -334,7 +334,9 @@ export function PaymentForm() {
               onClick={() => {
                 form.validate()
                 if (form.isValid()) {
-                  router.push('/UPI/payment-details-review')
+                  router.push(
+                    `/UPI/payment-details-review?name=${form.values.name}&amount=${form.values.amount}&upi=${form.values.upi_id}`,
+                  )
                 }
               }}
             >

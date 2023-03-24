@@ -331,7 +331,9 @@ export function PaymentForm(props: { sbi: any }) {
                 onClick={() => {
                   form.validate()
                   if (form.isValid()) {
-                    router.push('/bank-transfer/review-payment-details')
+                    router.push(
+                      `/bank-transfer/review-payment-details?name=${form.values.name}&amount=${form.values.amount}&ifsc=${form.values.ifsc}&accountNo=${form.values.accountno}`,
+                    )
                   }
                 }}
               >
