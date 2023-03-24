@@ -8,7 +8,7 @@ import {
 } from '@mantine/core'
 import Link from 'next/link'
 import { SetStateAction, useState } from 'react'
-import ButtonGroup from '../reusable-components/ButtonGroup'
+// import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
 
 const useStyles = createStyles((theme) => ({
@@ -261,24 +261,21 @@ export function VerifyUPI() {
             />
           </div>
 
-<<<<<<< HEAD:components/VerifyUPI.tsx
-          {/* <ButtonGroup href1="/UPI/" href2="/UPI/Payment" /> */}
           <div className={classes.buttonContainer}>
             <Link href="/UPI/">
               <div className={classes.button1}>Back</div>
             </Link>
 
-            <Link href="/UPI/Payment">
-              <div className={classes.button1}>Continue</div>
-            </Link>
-
-            {/* <Link href={props.href2}>
-        <div className={classes.button1}>Continue</div>
-      </Link> */}
+            {buttonText === 'Verified' ? (
+              <Link href="/UPI/payment-details">
+                <div className={classes.button1}>Continue</div>
+              </Link>
+            ) : (
+              <div className={classes.button1} style={{ cursor: 'no-drop' }}>
+                Continue
+              </div>
+            )}
           </div>
-=======
-          <ButtonGroup href1="/UPI/" href2="/UPI/payment-details" />
->>>>>>> b57f4294b3a1d4cb750a251221c020bb138d58ff:components/upi-transfer-flow/VerifyUPI.tsx
         </div>
       </div>
     </div>
