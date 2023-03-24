@@ -1,11 +1,11 @@
 import {
-  Button,
-  createStyles,
-  Group,
-  Modal,
-  NumberInput,
-  rem,
-  TextInput,
+    Button,
+    createStyles,
+    Group,
+    Modal,
+    NumberInput,
+    rem,
+    TextInput,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useState } from 'react'
@@ -16,288 +16,296 @@ import useStorage from '../../../hooks/useStorage'
 import api from '../../api'
 
 const useStyles = createStyles((theme) => ({
-  wrapper: {
-    // backgroundColor: `#000000de`,
-    // position: `fixed`,
-    // inset: 0,
-    width: `100%`,
-    // minHeight: `100vh`,
-    boxSizing: 'border-box',
-    // padding: `calc(${theme.spacing.xl} * 2.5)`,
-    // [theme.fn.smallerThan('sm')]: {
-    //   padding: `calc(${theme.spacing.xl} * 1.5)`,
-    // },
-    display: `flex`,
-    justifyContent: `center`,
-    alignItems: `center`,
-  },
-  title: {
-    fontFamily: 'Montserrat, sans-serif',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    fontSize: '20px',
-    lineHeight: '28px',
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'center',
-    color: '#0052B3',
-    padding: '20px 0px 8px 0px',
-  },
-  titlebold: {
-    fontFamily: 'Montserrat, sans-serif',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    fontSize: '24px',
-    lineHeight: '29px',
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'center',
-    color: '#0052B3',
-    padding: '20px 0px 8px 0px',
-    justifyContent: `center`,
-    paddingBottom: `28px`,
-  },
-
-  description: {
-    color: theme.colors[theme.primaryColor][0],
-    maxWidth: rem(300),
-
-    [theme.fn.smallerThan('sm')]: {
-      maxWidth: '100%',
+    wrapper: {
+        // backgroundColor: `#000000de`,
+        // position: `fixed`,
+        // inset: 0,
+        width: `100%`,
+        // minHeight: `100vh`,
+        boxSizing: 'border-box',
+        // padding: `calc(${theme.spacing.xl} * 2.5)`,
+        // [theme.fn.smallerThan('sm')]: {
+        //   padding: `calc(${theme.spacing.xl} * 1.5)`,
+        // },
+        display: `flex`,
+        justifyContent: `center`,
+        alignItems: `center`,
     },
-  },
-
-  form: {
-    backgroundColor: theme.white,
-    borderRadius: theme.radius.md,
-    color: `#0052B3`,
-  },
-
-  social: {
-    color: theme.white,
-    '&:hover': {
-      color: theme.colors[theme.primaryColor][1],
+    title: {
+        fontFamily: 'Montserrat, sans-serif',
+        fontStyle: 'normal',
+        fontWeight: 500,
+        fontSize: '20px',
+        lineHeight: '28px',
+        display: 'flex',
+        alignItems: 'center',
+        textAlign: 'center',
+        color: '#0052B3',
+        padding: '20px 0px 8px 0px',
     },
-  },
-  forminside: {
-    maxWidth: `90%`,
-    width: `500px`,
-    padding: theme.spacing.xl,
-    margin: `auto`,
-  },
-  input: {
-    fontFamily: 'Montserrat, sans-serif',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    fontSize: '18px',
-    lineHeight: '24px',
-    color: '#434343',
-    backgroundColor: theme.white,
-    borderColor: theme.colors.gray[4],
-    border: '0',
-    borderRadius: '0',
-    background: 'transparent',
-    borderBottom: `2px solid #eee`,
-    margin: '4px 0px',
-  },
-  inputLabel: {
-    color: theme.black,
-    position: `absolute`,
-    top: `1.5rem`,
-    transition: `0.25s ease`,
-  },
-  inputcontainer: {
-    position: `relative`,
-    paddingTop: `0.75rem`,
-    marginTop: `0 !important`,
-  },
+    titlebold: {
+        fontFamily: 'Montserrat, sans-serif',
+        fontStyle: 'normal',
+        fontWeight: 500,
+        fontSize: '24px',
+        lineHeight: '29px',
+        display: 'flex',
+        alignItems: 'center',
+        textAlign: 'center',
+        color: '#0052B3',
+        padding: '20px 0px 8px 0px',
+        justifyContent: `center`,
+        paddingBottom: `28px`,
+    },
 
-  control: {
-    fontFamily: 'Montserrat, sans-serif',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    fontSize: '20px',
-    lineHeight: '26px',
-    backgroundColor: `#006AE4`,
-    borderRadius: `20px`,
-    width: `100%`,
-  },
+    description: {
+        color: theme.colors[theme.primaryColor][0],
+        maxWidth: rem(300),
 
-  topheading: {
-    background: `#DDEDFF`,
-    display: `flex`,
-    justifyContent: `center`,
-    borderTopLeftRadius: theme.radius.md,
-    borderTopRightRadius: theme.radius.md,
-    alignItems: `center`,
-  },
-  beficiaryformcontainer: {
-    width: `90%`,
-    margin: `auto`,
-  },
+        [theme.fn.smallerThan('sm')]: {
+            maxWidth: '100%',
+        },
+    },
+
+    form: {
+        backgroundColor: theme.white,
+        borderRadius: theme.radius.md,
+        color: `#0052B3`,
+    },
+
+    social: {
+        color: theme.white,
+        '&:hover': {
+            color: theme.colors[theme.primaryColor][1],
+        },
+    },
+    forminside: {
+        maxWidth: `90%`,
+        width: `500px`,
+        padding: theme.spacing.xl,
+        margin: `auto`,
+    },
+    input: {
+        fontFamily: 'Montserrat, sans-serif',
+        fontStyle: 'normal',
+        fontWeight: 500,
+        fontSize: '18px',
+        lineHeight: '24px',
+        color: '#434343',
+        backgroundColor: theme.white,
+        borderColor: theme.colors.gray[4],
+        border: '0',
+        borderRadius: '0',
+        background: 'transparent',
+        borderBottom: `2px solid #eee`,
+        margin: '4px 0px',
+    },
+    inputLabel: {
+        color: theme.black,
+        position: `absolute`,
+        top: `1.5rem`,
+        transition: `0.25s ease`,
+    },
+    inputcontainer: {
+        position: `relative`,
+        paddingTop: `0.75rem`,
+        marginTop: `0 !important`,
+    },
+
+    control: {
+        fontFamily: 'Montserrat, sans-serif',
+        fontStyle: 'normal',
+        fontWeight: 500,
+        fontSize: '20px',
+        lineHeight: '26px',
+        backgroundColor: `#006AE4`,
+        borderRadius: `20px`,
+        width: `100%`,
+    },
+
+    topheading: {
+        background: `#DDEDFF`,
+        display: `flex`,
+        justifyContent: `center`,
+        borderTopLeftRadius: theme.radius.md,
+        borderTopRightRadius: theme.radius.md,
+        alignItems: `center`,
+    },
+    beficiaryformcontainer: {
+        width: `90%`,
+        margin: `auto`,
+    },
 }))
 
 interface Props {
-  setBankAccountList: Function
-  setIsAddAccountPopupOpen: Function
-  isAddAccountPopupOpen: boolean
-  bankAccountList: any[]
+    setBankAccountList: Function
+    setIsAddAccountPopupOpen: Function
+    isAddAccountPopupOpen: boolean
+    bankAccountList: any[]
 }
 export function AddAccountFormPopup({
-  setBankAccountList,
-  bankAccountList,
-  setIsAddAccountPopupOpen,
-  isAddAccountPopupOpen,
+    setBankAccountList,
+    bankAccountList,
+    setIsAddAccountPopupOpen,
+    isAddAccountPopupOpen,
 }: Props) {
-  const { classes } = useStyles()
-  const [otp, setOtp] = useState<boolean>(false)
-  const [opened, { open, close }] = useDisclosure(false)
-  const { setItem, getItem } = useStorage()
-  const [account_no, setAccount_no] = useState<number | ''>('')
-  const [mobile_no, setMobile_no] = useState<string>('')
-  const [ifsc, setIfsc] = useState<string>('')
+    const { classes } = useStyles()
+    const [otp, setOtp] = useState<boolean>(false)
+    const [opened, { open, close }] = useDisclosure(false)
+    const { setItem, getItem } = useStorage()
+    const [account_no, setAccount_no] = useState<number | ''>('')
+    const [mobile_no, setMobile_no] = useState<string>('')
+    const [ifsc, setIfsc] = useState<string>('')
 
-  const [otpNum, setOtpNum] = useState<string>('')
+    const [otpNum, setOtpNum] = useState<string>('')
 
-  return (
-    <Modal
-      withCloseButton={false}
-      opened={isAddAccountPopupOpen}
-      onClose={close}
-      centered
-      radius="lg"
-      size="auto"
-      padding={0}
-    >
-      <div className={classes.topheading}>
-        <div className={classes.title}>Add Account</div>
-      </div>
-      <div className={classes.wrapper}>
-        <div className={classes.form}>
-          <div className={classes.forminside}>
-            <div className={classes.titlebold}>Enter Your Details</div>
-            <div className={classes.beficiaryformcontainer}>
-              <NumberInput
-                placeholder="Account Number"
-                type={'number'}
-                required={true}
-                hideControls={true}
-                value={account_no}
-                onChange={setAccount_no}
-                classNames={{
-                  input: classes.input,
-                  label: classes.inputLabel,
-                  root: classes.inputcontainer,
-                }}
-              />
-              <PhoneInput
-                placeholder="Mobile Number"
-                value={mobile_no.replaceAll('\\D+', '')}
-                onChange={setMobile_no}
-                country={'in'}
-                containerStyle={{
-                  border: 'none',
-                  borderBottom: `2px solid #eee`,
-                  top: `0.5rem`,
-                  color: '#0052B3',
-                }}
-                inputStyle={{
-                  background: 'transparent',
-                  border: 'none',
-                  margin: '4px 0px',
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontStyle: 'normal',
-                  fontWeight: 500,
-                  fontSize: '18px',
-                  lineHeight: '24px',
-                  color: '#434343',
-                }}
-                buttonStyle={{
-                  background: 'transparent',
-                  border: 'none',
-                }}
-              />
-              <TextInput
-                placeholder="IFSC"
-                mt="md"
-                value={ifsc}
-                onChange={(e) => setIfsc(e.currentTarget.value)}
-                classNames={{
-                  input: classes.input,
-                  label: classes.inputLabel,
-                  root: classes.inputcontainer,
-                }}
-              />
-              {otp ? (
-                <TextInput
-                  placeholder="OTP"
-                  mt="md"
-                  value={otpNum}
-                  onChange={(e) => setOtpNum(e.currentTarget.value)}
-                  classNames={{
-                    input: classes.input,
-                    label: classes.inputLabel,
-                    root: classes.inputcontainer,
-                  }}
-                />
-              ) : (
-                <></>
-              )}
-
-              <Group mt="lg">
-                <Button
-                  size="lg"
-                  className={classes.control}
-                  onClick={() => {
-                    if (otp == false) {
-                      setOtp(true)
-                      console.log(getItem('contact_no', 'session'))
-                      const response = api
-                        .post('/user/sendaccountotp/', {
-                          contact_no: getItem('contact_no', 'session'),
-                        })
-                        .then((response) => {
-                          console.log(response)
-                        })
-                        .catch((err) => console.log(err))
-                    } else {
-                      setBankAccountList(bankAccountList)
-                      setIsAddAccountPopupOpen(false)
-                      console.log(otpNum)
-                      const contact_no = getItem('contact_no')
-                      const response = api
-                        .post('/user/addaccount/', {
-                          contact_no: contact_no,
-                          account_no: account_no,
-                          ifsc: ifsc,
-                          otp: otpNum,
-                        })
-                        .then((response) => {
-                          bankAccountList.push({
-                            account_no: account_no,
-                            ifsc: ifsc,
-                          })
-                          // sessionStorage.setItem('bankAccountList', JSON.stringify(bankAccountList))
-                          console.log(response)
-                        })
-                        .catch((err) => console.log(err))
-                    }
-                  }}
-                >
-                  {otp ? 'Add Account' : 'Get OTP'}
-                </Button>
-                <Button
-                  size="lg"
-                  className={classes.control}
-                  onClick={() => setIsAddAccountPopupOpen(false)}
-                >
-                  Back
-                </Button>
-              </Group>
+    return (
+        <Modal
+            withCloseButton={false}
+            opened={isAddAccountPopupOpen}
+            onClose={close}
+            centered
+            radius="lg"
+            size="auto"
+            padding={0}
+        >
+            <div className={classes.topheading}>
+                <div className={classes.title}>Add Account</div>
             </div>
-          </div>
-        </div>
-      </div>
-    </Modal>
-  )
+            <div className={classes.wrapper}>
+                <div className={classes.form}>
+                    <div className={classes.forminside}>
+                        <div className={classes.titlebold}>Enter Your Details</div>
+                        <div className={classes.beficiaryformcontainer}>
+                            <NumberInput
+                                placeholder="Account Number"
+                                type={'number'}
+                                required={true}
+                                hideControls={true}
+                                value={account_no}
+                                onChange={setAccount_no}
+                                classNames={{
+                                    input: classes.input,
+                                    label: classes.inputLabel,
+                                    root: classes.inputcontainer,
+                                }}
+                            />
+                            <PhoneInput
+                                placeholder="Mobile Number"
+                                value={mobile_no.replaceAll('\\D+', '')}
+                                onChange={setMobile_no}
+                                country={'in'}
+                                containerStyle={{
+                                    border: 'none',
+                                    borderBottom: `2px solid #eee`,
+                                    top: `0.5rem`,
+                                    color: '#0052B3',
+                                }}
+                                inputStyle={{
+                                    background: 'transparent',
+                                    border: 'none',
+                                    margin: '4px 0px',
+                                    fontFamily: 'Montserrat, sans-serif',
+                                    fontStyle: 'normal',
+                                    fontWeight: 500,
+                                    fontSize: '18px',
+                                    lineHeight: '24px',
+                                    color: '#434343',
+                                }}
+                                buttonStyle={{
+                                    background: 'transparent',
+                                    border: 'none',
+                                }}
+                            />
+                            <TextInput
+                                placeholder="IFSC"
+                                mt="md"
+                                value={ifsc}
+                                onChange={(e) => setIfsc(e.currentTarget.value)}
+                                classNames={{
+                                    input: classes.input,
+                                    label: classes.inputLabel,
+                                    root: classes.inputcontainer,
+                                }}
+                            />
+                            {otp ? (
+                                <TextInput
+                                    placeholder="OTP"
+                                    mt="md"
+                                    value={otpNum}
+                                    onChange={(e) => setOtpNum(e.currentTarget.value)}
+                                    classNames={{
+                                        input: classes.input,
+                                        label: classes.inputLabel,
+                                        root: classes.inputcontainer,
+                                    }}
+                                />
+                            ) : (
+                                <></>
+                            )}
+
+                            <Group mt="lg">
+                                <Button
+                                    size="lg"
+                                    className={classes.control}
+                                    onClick={() => {
+                                        if (otp == false) {
+                                            setOtp(true)
+                                            console.log(getItem('contact_no', 'session'))
+                                            const response = api
+                                                .post('/user/sendaccountotp/', {
+                                                    contact_no: getItem('contact_no', 'session'),
+                                                })
+                                                .then((response) => {
+                                                    console.log(response)
+                                                })
+                                                .catch((err) => console.log(err))
+                                        } else {
+                                            setBankAccountList(bankAccountList)
+                                            setIsAddAccountPopupOpen(false)
+                                            console.log(otpNum)
+                                            const contact_no = getItem('contact_no')
+                                            const response = api
+                                                .post('/user/addaccount/', {
+                                                    contact_no: contact_no,
+                                                    account_no: account_no,
+                                                    ifsc: ifsc,
+                                                    otp: otpNum,
+                                                })
+                                                .then((response) => {
+                                                    bankAccountList.push({
+                                                        account_no: account_no,
+                                                        ifsc: ifsc,
+                                                    })
+                                                    let prevAccounts = getItem('accounts', 'session')
+                                                    let prevAcc = JSON.parse(prevAccounts)
+                                                    prevAcc.push({
+                                                        account_no: account_no,
+                                                        ifsc: ifsc,
+                                                    })
+                                                    setBankAccountList(prevAcc)
+                                                    prevAcc = JSON.stringify(prevAcc)
+                                                    setItem('accounts', prevAcc, 'session')
+
+                                                })
+                                                .catch((err) => console.log(err))
+                                        }
+                                    }}
+                                >
+                                    {otp ? 'Add Account' : 'Get OTP'}
+                                </Button>
+                                <Button
+                                    size="lg"
+                                    className={classes.control}
+                                    onClick={() => setIsAddAccountPopupOpen(false)}
+                                >
+                                    Back
+                                </Button>
+                            </Group>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Modal>
+    )
 }

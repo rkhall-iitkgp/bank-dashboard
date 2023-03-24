@@ -11,101 +11,69 @@ import { PermissionFormPopup } from '../../components/reusable-components/Permis
 import useStorage from '../../hooks/useStorage'
 
 const Home: NextPage = () => {
-  const { getItem, setItem } = useStorage()
-  const [bankAccountList, setBankAccountList] = useState<any[]>([
-    { account_no: 1297 },
-  ])
-  const [isAddAccountPopupOpen, setIsAddAccountPopupOpen] =
-    useState<boolean>(false)
+    const { getItem, setItem } = useStorage()
+    const [bankAccountList, setBankAccountList] = useState<any[]>([])
+    const [isAddAccountPopupOpen, setIsAddAccountPopupOpen] =
+        useState<boolean>(false)
 
-  const GetAccounts = () => {
-    const accessToken = getItem('access_token')
-    console.log(accessToken)
-    const user_id = getItem('user_id')
+    // get Accounts and populate bankAccountList once adding the 
+    // details to sessionStorage and render BankAccount component
 
-    const response = api
-      .get(`/user/accounts/${user_id}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        console.log(response.data.accounts)
-        const responseArray = response.data
-        responseArray.map((acc: any) => {
-          let temp = bankAccountList
-          temp.push(acc)
-          setBankAccountList(temp)
+    const GetAccounts = async()=>{
+
+        const accessToken = getItem('access_token')
+        const user_id = getItem('user_id')
+
+        const response = await api.get(`/user/accounts/${user_id}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
         })
-        console.log(bankAccountList)
 
+        const responseArray = response.data
+
+        setBankAccountList(responseArray)
         setItem('accounts', response.request.responseText)
-        return response
-      })
-      .catch((err) => console.log(err))
-  }
-
-  // const getServerSideProps = () => {
-  //   const accessToken = sessionStorage.getItem('access_token')
-  //   console.log(accessToken)
-  //   const user_id = sessionStorage.getItem('user_id')
-
-  //   const response = api
-  //     .get(`/user/accounts/${user_id}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //         'Content-Type': 'application/json',
-  //       },
-  //     })
-  //     .then((response) => {
-  //       console.log(response.data.accounts)
-  //       const responseArray = response.data.accounts
-  //       responseArray.map((acc: any) => {
-  //         let temp = bankAccountList
-  //         temp.push(acc)
-  //         setBankAccountList(temp)
-  //       })
-  //       console.log(bankAccountList)
-
-  //       sessionStorage.setItem('accounts', response.request.responseText)
-  //       return response
-  //     }).catch((err) => console.log(err))
-  // }
-
-  useEffect(() => {
-    if (!getItem('accounts')) {
-      GetAccounts()
     }
-  }, [])
-  const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] =
-    useState<boolean>(false)
-  return (
-    <>
-      <PermissionFormPopup
-        isPermissionPopUpOpen={isPermissionPopUpOpen}
-        SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
-      />
-      <Navbar />
-      <SeeYourAnalysis SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen} />
-      <Payment />
-      <BankAccount
-        bankAccountList={bankAccountList}
-        setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
-      />
-      <OfferCardsRow />
-      {isAddAccountPopupOpen ? (
-        <AddAccountFormPopup
-          bankAccountList={bankAccountList}
-          isAddAccountPopupOpen={isAddAccountPopupOpen}
-          setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
-          setBankAccountList={setBankAccountList}
-        />
-      ) : (
-        <></>
-      )}
-    </>
-  )
+
+    useEffect(() => {
+        if (!getItem('accounts')) {
+            GetAccounts()
+        }
+        else{
+            setBankAccountList(JSON.parse(getItem('accounts')))
+        }        
+    }, [])
+
+    const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] =
+        useState<boolean>(false)
+    return (
+        <>
+            <PermissionFormPopup
+                isPermissionPopUpOpen={isPermissionPopUpOpen}
+                SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
+            />
+            <Navbar />
+            <SeeYourAnalysis SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen} />
+            <Payment />
+            {bankAccountList.length!==0 && <BankAccount
+                bankAccountList={bankAccountList}
+                setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
+            />}
+            <OfferCardsRow />
+            {isAddAccountPopupOpen ? (
+                <AddAccountFormPopup
+                    bankAccountList={bankAccountList}
+                    isAddAccountPopupOpen={isAddAccountPopupOpen}
+                    setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
+                    setBankAccountList={setBankAccountList}
+                />
+            ) : (
+                <></>
+            )}
+        </>
+    )
 }
 
 export default Home
