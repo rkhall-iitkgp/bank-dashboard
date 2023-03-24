@@ -30,13 +30,18 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const Profile = () => {
+interface Props {
+    bankAccountList: any[]
+}
+
+const Profile = ({bankAccountList}:Props) => {
   const { classes } = useStyles()
   const { getItem } = useStorage()
   const accountList = getItem('accounts', 'session')
   const accountsp: AccountType[] = accountList
     ? JSON.parse(accountList)
     : ([] as AccountType[])
+    console.log(bankAccountList)
 
   // const accounts: string[] = accountsp.map(account => account.account_no);
   // const accounts: string[] = accountsp?.map(
@@ -47,11 +52,11 @@ const Profile = () => {
   return (
     <div className={classes.wrapper}>
       <div className={classes.container1}>
-        <LeftPane accounts={accounts} />
+        <LeftPane bankAccountList={bankAccountList} />
       </div>
       <div className={classes.container2}>
-        {accounts.length ? (
-          <RightPane accounts={accounts} />
+        {bankAccountList.length ? (
+          <RightPane bankAccountList={bankAccountList} />
         ) : (
           <>
             No Accounts Connected Yet. Add an account to access all the cool

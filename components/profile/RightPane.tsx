@@ -64,15 +64,15 @@ const useStyles = createStyles((theme) => ({
 }))
 
 interface Props {
-  accounts: any[]
+  bankAccountList: any[]
 }
-const RightPane = ({ accounts }: Props) => {
+const RightPane = ({ bankAccountList }: Props) => {
   const { classes } = useStyles()
   const [activeTab, setActiveTab] = useState<string | null>(
-    accounts[0]?.toString(),
+    bankAccountList[0].account_no?.toString(),
   )
   const [accountselected, setAccountselected] = useState<any>(
-    String(accounts[0]) ?? '',
+    String(bankAccountList[0].account_no) ?? '',
   )
 
   return (
@@ -86,18 +86,18 @@ const RightPane = ({ accounts }: Props) => {
         className={classes.container2}
       >
         <Tabs.List className={classes.tablist}>
-          {accounts.map((account_no, index) => {
+          {bankAccountList.map((acc, index) => {
             return (
-              <span key={account_no}>
+              <span key={acc.account_no}>
                 <Tabs.Tab
-                  key={account_no}
-                  value={`${account_no}`}
-                  id={`${account_no}`}
+                  key={acc.account_no}
+                  value={`${acc.account_no}`}
+                  id={`${acc.account_no}`}
                   onClick={() => {
-                    setAccountselected(account_no)
+                    setAccountselected(acc.account_no)
                   }}
                   className={
-                    activeTab === account_no?.toString()
+                    activeTab === acc.account_no?.toString()
                       ? classes.active
                       : classes.tabs
                   }
@@ -110,7 +110,7 @@ const RightPane = ({ accounts }: Props) => {
                       src="/icons/sbi.png"
                     ></Image>
                     <div className={classes.content}>
-                      {'**** ' + account_no}
+                      {'**** ' + acc.account_no}
                     </div>
                   </div>
                 </Tabs.Tab>
@@ -118,16 +118,16 @@ const RightPane = ({ accounts }: Props) => {
             )
           })}
         </Tabs.List>
-        {accounts.map((account_no) => {
+        {bankAccountList.map((acc) => {
           return (
             <Tabs.Panel
               className={classes.tabcontainer}
-              value={`${account_no}`}
-              key={account_no}
+              value={`${acc.account_no}`}
+              key={acc.account_no}
             >
               <ConsentFormComponent
-                key={account_no}
-                id={account_no}
+                key={acc.account_no}
+                id={acc.account_no}
                 accountselected={accountselected}
               />
             </Tabs.Panel>

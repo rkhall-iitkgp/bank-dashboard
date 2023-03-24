@@ -131,9 +131,9 @@ const AccountSelect = ({ account_no }: Props) => {
 }
 
 interface Props2 {
-  accounts: any[]
+    bankAccountList: any[]
 }
-const LeftPane = ({ accounts }: Props2) => {
+const LeftPane = ({ bankAccountList }: Props2) => {
   const { classes } = useStyles()
 
   return (
@@ -159,10 +159,10 @@ const LeftPane = ({ accounts }: Props2) => {
       <div>
         <div className={classes.title}>Bank Accounts</div>
         <div>
-          {accounts.map((account_no, index) => {
+          {bankAccountList.map((account, index) => {
             return (
               <div key={index}>
-                <AccountSelect account_no={account_no} />
+                <AccountSelect account_no={account.account_no} />
               </div>
             )
           })}
