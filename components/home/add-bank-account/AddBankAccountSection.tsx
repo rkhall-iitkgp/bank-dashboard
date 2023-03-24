@@ -66,8 +66,8 @@ const StyledCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  padding: 24px;
+  justify-content: space-between;
+  padding: 36px 24px 24px 24px;
 `
 
 const AddAnotherBox = styled.div`

@@ -85,7 +85,6 @@ const useStyles = createStyles((theme) => ({
   },
   accountContainer: {
     margin: `1rem 1rem 1rem 1rem`,
-    padding: `0 1rem`,
     display: `flex`,
     flexDirection: `row`,
     justifyContent: `space-between`,

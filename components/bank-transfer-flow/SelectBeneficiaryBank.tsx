@@ -140,6 +140,7 @@ const useStyles = createStyles((theme) => ({
     fontSize: `0.8rem`,
     textAlign: `center`,
     display: `flex`,
+    border: '2px solid #ddedff',
     // flexDirection:`column`,
     alignItems: `center`,
     justifyContent: `space-between`,
@@ -151,8 +152,7 @@ const useStyles = createStyles((theme) => ({
     ':active': {
       boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.25)`,
     },
-    boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.25)`,
-    border: `2px solid #DDEDFF`,
+    boxShadow: ' 0px 4px 10px rgba(0, 0, 0, 0.2)',
   },
 
   active: {
@@ -284,6 +284,33 @@ export function SelectBeneficiaryBank() {
               </div>
             )}
           </div>
+
+          {/* <ButtonGroup
+            clickValue={click}
+            href1="/BankTransfer/"
+            href2="/BankTransfer/Paybenificiary"
+          /> */}
+
+          {/* <div className={classes.buttoncontainer}>
+            <Link href="/BankTransfer/">
+              <Button className={classes.button}>Back</Button>
+            </Link>
+            <Link href="/bank-transfer/payment-form">
+              <Button className={classes.button}>Continue</Button>
+            </Link>
+          </div> */}
+          {/* <div className={classes.buttonContainer}>
+            <Link href="/BankTransfer/">
+              <div className={classes.button1}>Back</div>
+            </Link>
+            <Link href="/bank-transfer/payment-form">
+              <div className={classes.button1}>Continue</div>
+            </Link>
+          </div> */}
+          <ButtonGroup
+            href1="/bank-transfer/"
+            href2="/bank-transfer/payment-form"
+          />
         </div>
       </div>
     </div>
