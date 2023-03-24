@@ -60,7 +60,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
     // paddingBottom: '5px',
-    width: `40vw`,
+    width: `600px`,
     color: `#0052B3`,
   },
 
@@ -118,7 +118,7 @@ const useStyles = createStyles((theme) => ({
   },
   forminside: {
     maxWidth: `90%`,
-    width: `40vw`,
+    width: `500px`,
     padding: theme.spacing.xl,
     margin: `auto`,
   },

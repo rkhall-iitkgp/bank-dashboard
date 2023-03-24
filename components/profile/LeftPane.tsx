@@ -41,7 +41,7 @@ const useStyles = createStyles((theme) => ({
           `,
   },
   content: {
-    fontWeight: 500,
+    fontWeight: 600,
     fontSize: `1.1rem`,
     textAlign: `center`,
     fontFamily: `Montserrat`,
@@ -55,7 +55,6 @@ const useStyles = createStyles((theme) => ({
   },
   account: {
     width: `150px`,
-    height: `30px`,
     background: `white`,
     borderRadius: `50px`,
     margin: `10px`,
@@ -63,6 +62,7 @@ const useStyles = createStyles((theme) => ({
     alignItems: `center`,
     justifyContent: `space-around`,
     backgroundColor: `#E6EFF9`,
+    padding: '5px 15px',
   },
   Logout: {
     width: `170px`,
@@ -141,8 +141,8 @@ const LeftPane = ({ accounts }: Props2) => {
       <div>
         <Image
           src="/images/dp.png"
-          width={180}
-          height={180}
+          width={150}
+          height={150}
           alt="about-us"
           radius={1000}
         ></Image>

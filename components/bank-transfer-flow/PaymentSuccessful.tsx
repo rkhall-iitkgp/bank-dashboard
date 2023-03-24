@@ -15,14 +15,14 @@ const StyledContainer = styled.div`
   font-style: normal;
 `
 const StyledCont = styled.div`
-  width: 40vw;
+  width: 600px;
   box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
 `
 const StyledBot = styled.div`
   padding-top: 2vh;
   padding-bottom: 2vh;
-  width: 40vw;
+  width: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,7 +32,7 @@ const StyledBot = styled.div`
 const StyledBotCont = styled.div`
   margin: auto;
   padding-bottom: 2vh;
-  width: 30vw;
+  width: 500px;
   background: rgba(169, 248, 191, 0.38);
   border-radius: 30px;
   display: flex;

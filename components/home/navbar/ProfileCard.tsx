@@ -12,8 +12,8 @@ const useStyles = createStyles((theme) => ({
     boxShadow: `0px 2px 20px rgba(0,0,0,0.1)`,
     color: `#0052B3`,
     // position: 'absolute',
-    height: `500px`,
-    width: `300px`,
+    height: `540px`,
+    width: `350px`,
     display: `flex`,
     flexDirection: `column`,
     justifyContent: `space-around`,
@@ -21,15 +21,18 @@ const useStyles = createStyles((theme) => ({
     // top:`138px`,
     textAlign: 'center',
     left: `500px`,
+    padding: '20px',
   },
   button1: {
     width: `160px`,
+    height: '40px',
     backgroundColor: `#0062D6`,
     borderRadius: `30px`,
     marginTop: '5px',
   },
   button2: {
     width: `160px`,
+    height: '40px',
     backgroundColor: `#DD0000`,
     borderRadius: `30px`,
     marginBottom: '5px',
@@ -40,18 +43,20 @@ const useStyles = createStyles((theme) => ({
     alignItems: `center`,
     flexDirection: 'row',
     flexWrap: 'wrap',
+    marginBottom: '10px'
   },
   accountContainer: {
     cursor: 'pointer',
-    padding: '11px',
+    padding: '10px 15px',
     borderRadius: '30px',
     display: 'flex',
     flexdirection: 'row',
+    alignItems: 'center',
     width: '120px',
-    height: '40px',
+    height: '45px',
     justifyContent: 'space-around',
     alignitems: 'center',
-    margin: '15px',
+    margin: '5px',
     backgroundColor: '#E6EFF9',
     '&:hover': {
       transform: 'scale(1.05)',
@@ -78,8 +83,8 @@ const AccountCard = ({ bankName, value }: Props) => {
       <div className={classes.accountContainer}>
         <Image
           src={'/../public/icons/sbi.png'}
-          width={12}
-          height={12}
+          width={20}
+          height={20}
           alt={''}
         ></Image>
 
@@ -131,6 +136,7 @@ export function ProfileCard() {
           width={80}
           height={80}
           alt={''}
+          style={{margin: '20px 0'}}
         ></Image>
         <span
           style={{
@@ -159,6 +165,7 @@ export function ProfileCard() {
       </div>
       <div
         style={{
+          margin: '10px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-around',

@@ -93,12 +93,12 @@ const useStyles = createStyles((theme) => ({
     minWidth: `400px`,
   },
   account: {
-    width: `100px`,
-    height: `100px`,
-    background: `rgba(255, 255, 255, 0.996)`,
+    width: `120px`,
+    height: `120px`,
+    background: `rgba(0, 82, 179, 0.1)`,
     borderRadius: `30px`,
     margin: `10px`,
-    padding: `10px`,
+    padding: `15px 10px 10px 10px`,
     fontSize: `0.8rem`,
     textAlign: `center`,
     display: `flex`,
@@ -107,7 +107,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `space-between`,
     ':hover': {
       //border: `2px dotted #0052B3;`,
-      boxShadow: ` 0px 4px 10px rgba(0, 0, 0, 0.25)`,
+      // boxShadow: ` 0px 4px 10px rgba(0, 0, 0, 0.25)`,
       cursor: `pointer`,
     },
     ':active': {

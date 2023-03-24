@@ -39,7 +39,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    width: `40vw`,
+    width: `600px`,
     minWidth: `440px`,
     color: `#0052B3`,
     fontFamily: 'Montserrat',
@@ -132,11 +132,11 @@ const useStyles = createStyles((theme) => ({
     width: `82%`,
     minWidth: `270px`,
     maxWidth: `300px`,
-    height: `50px`,
+    height: `60px`,
     background: `rgba(0, 82, 179, 0.1)`,
     borderRadius: `30px`,
     margin: `15px auto`,
-    padding: `10px`,
+    padding: `20px`,
     fontSize: `0.8rem`,
     textAlign: `center`,
     display: `flex`,
@@ -151,12 +151,13 @@ const useStyles = createStyles((theme) => ({
     ':active': {
       boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.25)`,
     },
-    boxShadow: ' 0px 12px 20px rgba(0, 0, 0, 0.2)',
+    boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.25)`,
+    border: `2px solid #DDEDFF`,
   },
 
   active: {
     boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.25)`,
-    border: `1.5px solid #0052B3`,
+    border: `2px solid #0052B3`,
   },
   bankname: {
     lineHeight: `1.5rem`,
