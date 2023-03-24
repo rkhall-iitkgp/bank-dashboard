@@ -1,6 +1,8 @@
 import { createStyles, TextInput, getStylesRef } from '@mantine/core'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -73,6 +75,29 @@ const useStyles = createStyles((theme) => ({
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #ccc`,
+  },
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    fontWeight: 400,
+    // cursor: 'no-drop',
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    // pointerEvents: 'none',
+
+    marginTop: `3rem`,
   },
   inputAmount: {
     backgroundColor: theme.white,
@@ -161,10 +186,12 @@ const useStyles = createStyles((theme) => ({
 
 export function Reviewdetailsbank(props: { sbi: any }) {
   const { classes } = useStyles()
+  const router = useRouter()
+  const data = router.query
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        <Heading title="UPI Transfer" />
+        <Heading title="Bank Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
             <div className={classes.titlebold}>
@@ -196,13 +223,13 @@ export function Reviewdetailsbank(props: { sbi: any }) {
                 root: classes.inputcontainer,
               }}
               disabled
-              value={'John Doe'}
+              value={data.name}
             />
             <TextInput
               label="Account Number"
               variant="unstyled"
               mt="md"
-              value={'XXXXXXXX7394'}
+              value={data.accountNumber}
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
@@ -215,7 +242,7 @@ export function Reviewdetailsbank(props: { sbi: any }) {
               label="Amount"
               variant="unstyled"
               mt="md"
-              value={'Rs. 500'}
+              value={data.amount}
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
@@ -224,11 +251,28 @@ export function Reviewdetailsbank(props: { sbi: any }) {
               required
               disabled
             />
-            <TextInput
+            {data.ifscReq === 'true' ? (
+              <TextInput
+                label="IFSC"
+                variant="unstyled"
+                mt="md"
+                value={data.ifsc}
+                classNames={{
+                  input: classes.input,
+                  label: classes.inputLabel,
+                  root: classes.inputcontainer,
+                }}
+                required
+                disabled
+              />
+            ) : (
+              <></>
+            )}
+            {/* <TextInput
               label="IFSC"
               variant="unstyled"
               mt="md"
-              value={'9876'}
+              value={data.ifsc}
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
@@ -236,12 +280,26 @@ export function Reviewdetailsbank(props: { sbi: any }) {
               }}
               required
               disabled
-            />
+            /> */}
           </div>
-          <ButtonGroup
+          {/* <ButtonGroup
             href1="/BankTransfer/Paybenificiary"
             href2="/BankTransfer/Otpconfirm"
-          />
+          /> */}
+          <div className={classes.buttonContainer}>
+            <Link href="/BankTransfer/Paybenificiary">
+              <div className={classes.button1}>Back</div>
+            </Link>
+
+            <Link
+              href={{
+                pathname: '/BankTransfer/Otpconfirm',
+                query: data,
+              }}
+            >
+              <div className={classes.button1}>Continue</div>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

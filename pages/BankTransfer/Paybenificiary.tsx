@@ -2,9 +2,7 @@ import React from 'react'
 import { PayBenficiary } from '../../components/PayBenificiary'
 
 const Paybenificiary = () => {
-    return (
-        <PayBenficiary sbi={true} />
-    )
+  return <PayBenficiary />
 }
 
 export default Paybenificiary

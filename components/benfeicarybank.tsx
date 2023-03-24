@@ -1,6 +1,7 @@
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
 import { useState } from 'react'
+import Link from 'next/link'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
 
@@ -49,6 +50,29 @@ const useStyles = createStyles((theme) => ({
     padding: theme.spacing.xl,
     margin: `auto`,
   },
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    fontWeight: 400,
+    // cursor: 'no-drop',
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    // pointerEvents: 'none',
+
+    marginTop: `3rem`,
+  },
 
   // buttoncontainer: {
   //   fontFamily: 'Montserrat',
@@ -95,9 +119,9 @@ const useStyles = createStyles((theme) => ({
     // display:`flex`,
   },
 
-  buttonContainer: {
-    margin: `1rem 3rem 5rem 3rem`,
-  },
+  // buttonContainer: {
+  //   margin: `1rem 3rem 5rem 3rem`,
+  // },
   // buttonContainer: {
   //   display: 'flex',
   //   justifyContent: 'space-between',
@@ -129,6 +153,7 @@ const useStyles = createStyles((theme) => ({
     },
     boxShadow: ' 0px 12px 20px rgba(0, 0, 0, 0.2)',
   },
+
   active: {
     boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.25)`,
     border: `1.5px solid #0052B3`,
@@ -155,6 +180,7 @@ function AccountType(props: {
   setAccount: (arg0: any) => void
   src: any
   bankname: any
+  handleClick: any
   bankdesc: any
 }) {
   const { classes } = useStyles()
@@ -163,6 +189,7 @@ function AccountType(props: {
       className={classes.account}
       id={props.id}
       onClick={(event) => {
+        props.handleClick(props.id)
         props.setAccount(props.id)
         const accountlist = Array.from(
           document.getElementsByClassName(classes.account),
@@ -173,7 +200,13 @@ function AccountType(props: {
         document.getElementById(props.id)?.classList.add(classes.active)
       }}
     >
-      <Image src={props.src} width={35} height={35} alt={''} style={{ marginLeft: '12px'}}></Image>
+      <Image
+        src={props.src}
+        width={35}
+        height={35}
+        alt={''}
+        style={{ marginLeft: '12px' }}
+      ></Image>
       <div className={classes.banknamecontainer}>
         <div className={classes.bankname}>{props.bankname}</div>
 
@@ -184,12 +217,23 @@ function AccountType(props: {
 }
 export function BeneficiaryBank() {
   const { classes } = useStyles()
+  const [click, setClick] = useState(false)
   const [account, setAccount] = useState(2)
+  const [ifscReq, setIfscReq] = useState(false)
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
   //     <Icon size="1.4rem" stroke={1.5} />
   //   </ActionIcon>
   // ));
+  const handleClick = (id: any) => {
+    if (id === 1) {
+      setClick(true)
+      setIfscReq(false)
+    } else {
+      setClick(true)
+      setIfscReq(true)
+    }
+  }
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
@@ -209,38 +253,46 @@ export function BeneficiaryBank() {
               src="/../public/icons/sbi.png"
               id={1}
               setAccount={setAccount}
+              handleClick={handleClick}
               bankname="State Bank Of India"
               bankdesc="(Beneficiary is a SBI account holder)"
             />
             <AccountType
               src="/../public/icons/bank-building.png"
               id={2}
+              handleClick={handleClick}
               setAccount={setAccount}
               bankname="Other Banks"
               bankdesc="(IFSC required)"
             />
           </div>
-
-          {/* <div className={classes.buttoncontainer}>
-            <Link href="/BankTransfer/">
-              <Button className={classes.button}>Back</Button>
-            </Link>
-            <Link href="/BankTransfer/Paybenificiary">
-              <Button className={classes.button}>Continue</Button>
-            </Link>
-          </div> */}
-          {/* <div className={classes.buttonContainer}>
+          <div className={classes.buttonContainer}>
             <Link href="/BankTransfer/">
               <div className={classes.button1}>Back</div>
             </Link>
-            <Link href="/BankTransfer/Paybenificiary">
-              <div className={classes.button1}>Continue</div>
-            </Link>
-          </div> */}
-          <ButtonGroup
+            {click ? (
+              <Link
+                href={{
+                  pathname: '/BankTransfer/Paybenificiary',
+                  query: {
+                    ifsc: ifscReq,
+                  },
+                }}
+              >
+                <div className={classes.button1}>Continue</div>
+              </Link>
+            ) : (
+              <div className={classes.button1} style={{ cursor: 'no-drop' }}>
+                Continue
+              </div>
+            )}
+          </div>
+
+          {/* <ButtonGroup
+            clickValue={click}
             href1="/BankTransfer/"
             href2="/BankTransfer/Paybenificiary"
-          />
+          /> */}
         </div>
       </div>
     </div>

@@ -2,6 +2,9 @@ import { createStyles, TextInput } from '@mantine/core'
 import { useState } from 'react'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -148,6 +151,29 @@ const useStyles = createStyles((theme) => ({
     textAlign: `end`,
     alignItems: `center`,
   },
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    fontWeight: 400,
+    // cursor: 'no-drop',
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    // pointerEvents: 'none',
+
+    marginTop: `3rem`,
+  },
   balance: {
     color: '#0052B3',
     fontSize: `1.2rem`,
@@ -165,7 +191,16 @@ const useStyles = createStyles((theme) => ({
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
-export function PayBenficiary(props: { sbi: any }) {
+export function PayBenficiary() {
+  const router = useRouter()
+  const data = router.query
+  const [benD, setBenD] = useState({
+    name: '',
+    accountNumber: '',
+    amount: '',
+    ifsc: '',
+    ifscReq: data.ifsc,
+  })
   const { classes } = useStyles()
 
   // const icons = social.map((Icon, index) => (
@@ -174,6 +209,15 @@ export function PayBenficiary(props: { sbi: any }) {
   //   </ActionIcon>
   // ));
   const [otp, setOtp] = useState(false)
+  const handleChange = (event: any) => {
+    const { name, value } = event.target
+    setBenD((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: value,
+      }
+    })
+  }
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
@@ -197,7 +241,10 @@ export function PayBenficiary(props: { sbi: any }) {
           <div className={classes.beficiaryformcontainer}>
             <TextInput
               placeholder="Name*"
+              name="name"
               mt="md"
+              value={benD.name}
+              onChange={handleChange}
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
@@ -207,7 +254,10 @@ export function PayBenficiary(props: { sbi: any }) {
             />
             <TextInput
               placeholder="Account Number*"
+              name="accountNumber"
               type={'number'}
+              value={benD.accountNumber}
+              onChange={handleChange}
               required
               classNames={{
                 input: classes.input,
@@ -228,6 +278,9 @@ export function PayBenficiary(props: { sbi: any }) {
             <TextInput
               placeholder="Enter Amount*"
               type={'number'}
+              name="amount"
+              onChange={handleChange}
+              value={benD.amount}
               mt="md"
               classNames={{
                 input: classes.input,
@@ -236,11 +289,14 @@ export function PayBenficiary(props: { sbi: any }) {
               }}
               required
             />
-            {props.sbi ? (
+            {data.ifsc === 'true' ? (
               <>
                 <TextInput
                   placeholder="IFSC*"
                   type={'number'}
+                  name="ifsc"
+                  onChange={handleChange}
+                  value={benD.ifsc}
                   mt="md"
                   classNames={{
                     input: classes.input,
@@ -275,15 +331,28 @@ export function PayBenficiary(props: { sbi: any }) {
           ) : (
             <></>
           )}
-
           {/* <div className={classes.buttoncontainer}>
             <Link href='/BankTransfer/benfeiciary'><Button className={classes.button} >Back</Button></Link>
             <Link href='/BankTransfer/Review'><Button className={classes.button}>Continue</Button></Link>
           </div> */}
-          <ButtonGroup
+          {/* <ButtonGroup
             href1="/BankTransfer/benfeiciary"
             href2="/BankTransfer/Review"
-          />
+          /> */}
+          <div className={classes.buttonContainer}>
+            <Link href="/BankTransfer/benfeiciary">
+              <div className={classes.button1}>Back</div>
+            </Link>
+
+            <Link
+              href={{
+                pathname: '/BankTransfer/Review',
+                query: benD,
+              }}
+            >
+              <div className={classes.button1}>Continue</div>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

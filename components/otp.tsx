@@ -1,6 +1,9 @@
 import { createStyles, TextInput } from '@mantine/core'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { SetStateAction, useState } from 'react'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -71,7 +74,29 @@ const useStyles = createStyles((theme) => ({
     background: 'transparent',
     borderBottom: `2px solid #eee`,
   },
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    fontWeight: 400,
+    // cursor: 'no-drop',
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
 
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    // pointerEvents: 'none',
+
+    marginTop: `3rem`,
+  },
   inputLabel: {
     color: theme.black,
     position: `absolute`,
@@ -132,7 +157,14 @@ const useStyles = createStyles((theme) => ({
 
 export function OTP() {
   const { classes } = useStyles()
-
+  const [otp, setOtp] = useState('')
+  const router = useRouter()
+  const data = router.query
+  const handleChange = (event: {
+    target: { value: SetStateAction<string> }
+  }) => {
+    setOtp(event.target.value)
+  }
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
   //     <Icon size="1.4rem" stroke={1.5} />
@@ -156,6 +188,8 @@ export function OTP() {
           <TextInput
             placeholder="OTP"
             type={'number'}
+            value={otp}
+            onChange={handleChange}
             required
             mt="md"
             classNames={{
@@ -166,10 +200,30 @@ export function OTP() {
           />
           <div className={classes.resndotp}>Resend OTP</div>
 
-          <ButtonGroup
+          {/* <ButtonGroup
             href1="/BankTransfer/Review"
             href2="/BankTransfer/Success"
-          />
+          /> */}
+          <div className={classes.buttonContainer}>
+            <Link href="/BankTransfer/Review">
+              <div className={classes.button1}>Back</div>
+            </Link>
+
+            {otp !== '' ? (
+              <Link
+                href={{
+                  pathname: '/BankTransfer/Success',
+                  query: data,
+                }}
+              >
+                <div className={classes.button1}>Continue</div>
+              </Link>
+            ) : (
+              <div className={classes.button1} style={{ cursor: 'no-drop' }}>
+                Continue
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

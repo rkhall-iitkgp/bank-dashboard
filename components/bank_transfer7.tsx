@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { Image } from '@mantine/core'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import Heading from './SmallComponents/Heading'
 const StyledContainer = styled.div`
   display: flex;
@@ -111,6 +112,8 @@ const StyledTexthead4 = styled.div`
 `
 
 export default function GenOtp2() {
+  const router = useRouter()
+  const data = router.query
   return (
     <StyledContainer>
       <StyledCont>
@@ -123,8 +126,8 @@ export default function GenOtp2() {
             <StyledTexthead>Payment Successful</StyledTexthead>
             <Image src="/images/tick.png" width={65} height={65} alt="" />
             <StyledTexthead2>
-              You have successfully paid John{' '}
-              <span style={{ color: 'black' }}> &nbsp;₹500</span>
+              You have successfully paid {data.name}{' '}
+              <span style={{ color: 'black' }}> &nbsp;₹{data.amount}</span>
             </StyledTexthead2>
             <StyledTexthead3>
               Remaining balance:{' '}
@@ -132,7 +135,10 @@ export default function GenOtp2() {
             </StyledTexthead3>
             <StyledTexthead3>
               A/c No. :{' '}
-              <span style={{ color: 'black' }}> &nbsp;XXXXXXX8989</span>
+              <span style={{ color: 'black' }}>
+                {' '}
+                &nbsp;{data.accountNumber}
+              </span>
             </StyledTexthead3>
             {/* <StyledTexthead3>₹500</StyledTexthead3> */}
             <StyledTexthead4>

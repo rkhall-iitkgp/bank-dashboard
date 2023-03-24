@@ -1,5 +1,6 @@
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
@@ -129,6 +130,29 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 600,
     fontSize: `0.9rem`,
   },
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    fontWeight: 400,
+    // cursor: 'no-drop',
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    // pointerEvents: 'none',
+
+    marginTop: `3rem`,
+  },
 }))
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
@@ -167,7 +191,9 @@ function Account(props: {
     </div>
   )
 }
+
 export function Banktransfer() {
+  const [click, setClick] = useState(false)
   const { classes } = useStyles()
   const [account, setAccount] = useState({
     id: 1,
@@ -178,12 +204,12 @@ export function Banktransfer() {
   //     <Icon size="1.4rem" stroke={1.5} />
   //   </ActionIcon>
   // ));
+  const handleClick = () => {
+    setClick(true)
+  }
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        {/* <div className={classes.topheading}>
-          <div className={classes.title}>Bank Transfer</div>
-        </div> */}
         <Heading title="Bank Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
@@ -194,14 +220,26 @@ export function Banktransfer() {
           <div className={classes.accountContainer}>
             {fetchedAccount.map((ele) => {
               return (
-                <span key={ele.id}>
+                <span key={ele.id} onClick={handleClick}>
                   <Account setAccount={setAccount} accountdata={ele} />
                 </span>
               )
             })}
           </div>
-          
-          <ButtonGroup href1="/home" href2="/BankTransfer/benfeiciary" />
+          <div className={classes.buttonContainer}>
+            <Link href="/home">
+              <div className={classes.button1}>Back</div>
+            </Link>
+            {click ? (
+              <Link href="/BankTransfer/benfeiciary">
+                <div className={classes.button1}>Continue</div>
+              </Link>
+            ) : (
+              <div className={classes.button1} style={{ cursor: 'no-drop' }}>
+                Continue
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

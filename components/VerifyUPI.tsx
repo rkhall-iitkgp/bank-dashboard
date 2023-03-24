@@ -6,6 +6,7 @@ import {
   PinInput,
   Text,
 } from '@mantine/core'
+import Link from 'next/link'
 import { SetStateAction, useState } from 'react'
 import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
@@ -147,6 +148,29 @@ const useStyles = createStyles((theme) => ({
 
     // color: '#0062D6',
   },
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    fontWeight: 400,
+    // cursor: 'no-drop',
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    // pointerEvents: 'none',
+
+    marginTop: `3rem`,
+  },
 }))
 function Demo() {
   return (
@@ -237,7 +261,20 @@ export function VerifyUPI() {
             />
           </div>
 
-          <ButtonGroup href1="/UPI/" href2="/UPI/Payment" />
+          {/* <ButtonGroup href1="/UPI/" href2="/UPI/Payment" /> */}
+          <div className={classes.buttonContainer}>
+            <Link href="/UPI/">
+              <div className={classes.button1}>Back</div>
+            </Link>
+
+            <Link href="/UPI/Payment">
+              <div className={classes.button1}>Continue</div>
+            </Link>
+
+            {/* <Link href={props.href2}>
+        <div className={classes.button1}>Continue</div>
+      </Link> */}
+          </div>
         </div>
       </div>
     </div>
