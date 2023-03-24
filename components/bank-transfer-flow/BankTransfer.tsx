@@ -1,8 +1,8 @@
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
 import { useState } from 'react'
-import ButtonGroup from './SmallComponents/ButtonGroup'
-import Heading from './SmallComponents/Heading'
+import ButtonGroup from '../reusable-components/ButtonGroup'
+import Heading from '../reusable-components/Heading'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 //   import { ContactIconsList } from '../ContactIcons/ContactIcons';
 const useStyles = createStyles((theme) => ({
@@ -106,7 +106,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `space-between`,
     ':hover': {
       //border: `2px dotted #0052B3;`,
-      boxShadow: ` 0px 4px 10px rgba(0, 0, 0, 0.25)`,
+      // boxShadow: ` 0px 4px 10px rgba(0, 0, 0, 0.25)`,
       cursor: `pointer`,
     },
     ':active': {
@@ -167,7 +167,7 @@ function Account(props: {
     </div>
   )
 }
-export function Banktransfer() {
+export function BankTransfer() {
   const { classes } = useStyles()
   const [account, setAccount] = useState({
     id: 1,
@@ -200,8 +200,8 @@ export function Banktransfer() {
               )
             })}
           </div>
-          
-          <ButtonGroup href1="/home" href2="/BankTransfer/benfeiciary" />
+
+          <ButtonGroup href1="/home" href2="/bank-transfer/select-beneficiary" />
         </div>
       </div>
     </div>

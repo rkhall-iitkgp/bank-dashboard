@@ -55,7 +55,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    width: `40vw`,
+    width: `600px`,
     color: `#0052B3`,
   },
 
@@ -99,7 +99,7 @@ const useStyles = createStyles((theme) => ({
   },
   forminside: {
     maxWidth: `90%`,
-    width: `40vw`,
+    width: `500px`,
     padding: theme.spacing.xl,
     margin: `auto`,
   },
@@ -130,7 +130,7 @@ const useStyles = createStyles((theme) => ({
   amountbox: {
     backgroundColor: theme.white,
     borderRadius: theme.radius.md,
-    boxShadow: `0px 6px 20px rgba(0, 0, 0, 0.2)`,
+    // boxShadow: `0px 6px 20px rgba(0, 0, 0, 0.2)`,
     width: `auto`,
     fontFamily: `Montserrat`,
     color: `#0052B3`,

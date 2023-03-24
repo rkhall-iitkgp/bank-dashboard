@@ -71,7 +71,9 @@ function Demo() {
           <StyledUserImage src="/images/dp.png"></StyledUserImage>
         </StyledButton>
       </Popover.Target>
-      <Popover.Dropdown>
+      <Popover.Dropdown
+        style={{padding: '0', marginTop: '10px', }}
+      >
         <ProfileCard />
       </Popover.Dropdown>
     </Popover>

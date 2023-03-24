@@ -9,7 +9,7 @@ const useStyles = createStyles((theme) => ({
     padding: `10px`,
     paddingTop: `20px`,
     background: `#DDEDFF`,
-    fontSize: `1.7rem`,
+    fontSize: `1.3rem`,
     textAlign: `center`,
     borderRadius: ' 0px 30px 0px 0px',
     color: ` #0052B3`,
@@ -22,7 +22,7 @@ const useStyles = createStyles((theme) => ({
     height: `90%`,
   },
   formtitle: {
-    fontSize: `1.3rem`,
+    fontSize: `1rem`,
     fontWeight: 600,
   },
   questioncontainer: {
@@ -30,7 +30,7 @@ const useStyles = createStyles((theme) => ({
     marginTop: '1.8rem',
   },
   question: {
-    fontSize: '1rem',
+    fontSize: '0.9rem',
     color: `#4D4B4B`,
     fontWeight: 500,
     marginBottom: '8px',
@@ -63,7 +63,7 @@ const useStyles = createStyles((theme) => ({
   },
   answercontainer: {
     lineHeight: `1.2rem`,
-    fontSize: `1rem`,
+    fontSize: `0.9rem`,
   },
   control: {
     backgroundColor: `#006AE4`,

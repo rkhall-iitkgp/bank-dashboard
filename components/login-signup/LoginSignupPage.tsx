@@ -8,6 +8,7 @@ import {
   TextInput,
   Title,
 } from '@mantine/core'
+import { useForm, hasLength, isEmail } from '@mantine/form'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
