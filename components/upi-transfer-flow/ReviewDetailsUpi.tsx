@@ -268,7 +268,7 @@ export function ReviewDetailsUpi() {
               disabled
             />
           </div>
-          <ButtonGroup href1="/UPI/Payment" href2="/UPI/Pin" />
+          <ButtonGroup href1="/UPI/payment-details" href2="/UPI/enter-pin" />
         </div>
       </div>
     </div>
