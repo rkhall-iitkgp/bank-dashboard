@@ -235,7 +235,7 @@ export function SelectBeneficiaryBank() {
             </Link>
           </div> */}
           <ButtonGroup
-            href1="/BankTransfer/"
+            href1="/bank-transfer/"
             href2="/bank-transfer/payment-form"
           />
         </div>
