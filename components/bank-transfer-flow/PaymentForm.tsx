@@ -205,7 +205,7 @@ export function PaymentForm(props: { sbi: any }) {
     },
 
     validate: {
-      name: hasLength({ min: 2, max: 10 }, 'Name must be 2-10 characters long'),
+      name: hasLength({ min: 2, max: 16 }, 'Name must be 2-16 characters long'),
       accountno: isNotEmpty('Enter your account no'),
       reaccountno: isNotEmpty('Re-Enter your account no'),
       amount: isNotEmpty('Enter amount'),

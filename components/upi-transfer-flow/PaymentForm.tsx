@@ -199,7 +199,7 @@ export function PaymentForm() {
     },
 
     validate: {
-      name: hasLength({ min: 2, max: 10 }, 'Name must be 2-10 characters long'),
+      name: hasLength({ min: 2, max: 16 }, 'Name must be 2-16 characters long'),
       upi_id: isNotEmpty('Enter your upi id'),
       amount: isNotEmpty('Enter amount'),
     },
