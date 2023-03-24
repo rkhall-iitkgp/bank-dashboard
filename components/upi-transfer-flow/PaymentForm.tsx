@@ -1,7 +1,8 @@
-import { createStyles, getStylesRef, TextInput } from '@mantine/core'
+import { createStyles, getStylesRef, Text, TextInput } from '@mantine/core'
 import { hasLength, isNotEmpty, useForm } from '@mantine/form'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { SetStateAction, useState } from 'react'
 import Heading from '../reusable-components/Heading'
 
 const useStyles = createStyles((theme) => ({
@@ -169,6 +170,14 @@ const useStyles = createStyles((theme) => ({
       background: '#558ac9',
     },
   },
+  buttonVerify: {
+    // height:``,
+    // width: `100px`,
+    // backgroundColor: `#ffffff`,
+    marginRight: '60px',
+    cursor: 'no-drop',
+    // borderRadius:,
+  },
   payingtext: {
     paddingTop: `0.25rem`,
     fontWeight: 600,
@@ -201,6 +210,37 @@ export function PaymentForm() {
   //     <Icon size="1.4rem" stroke={1.5} />
   //   </ActionIcon>
   // ));
+  const [style2, setStyle2] = useState({
+    color: '#0062D6',
+    fontFamily: 'Montserrat',
+    fontWeight: 400,
+    fontSize: '18px',
+    cursor: 'pointer',
+  })
+  const [upiValue, setupiValue] = useState('fg')
+  const [buttonText, setButtonText] = useState('Verify')
+
+  function handleClick() {
+    if (upiValue !== '') {
+      setStyle2({
+        color: '#00AD30',
+        fontFamily: 'Montserrat',
+        fontWeight: 600,
+        fontSize: '18px',
+        cursor: 'pointer',
+      })
+      setButtonText('Verified')
+    } else {
+      setButtonText('Verify')
+      setStyle2({
+        color: '#0062D6',
+        fontFamily: 'Montserrat',
+        fontWeight: 400,
+        fontSize: '18px',
+        cursor: 'no-drop',
+      })
+    }
+  }
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
@@ -258,6 +298,15 @@ export function PaymentForm() {
                 label: classes.inputLabel,
                 root: classes.enterAmountContainer,
               }}
+              rightSection={
+                <Text
+                  className={classes.buttonVerify}
+                  style={style2}
+                  onClick={handleClick}
+                >
+                  {buttonText}
+                </Text>
+              }
               required
               {...form.getInputProps('upi_id')}
             />

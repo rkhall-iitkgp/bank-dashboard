@@ -1,14 +1,9 @@
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
 import { useState } from 'react'
-<<<<<<< HEAD:components/benfeicarybank.tsx
 import Link from 'next/link'
-import ButtonGroup from './SmallComponents/ButtonGroup'
-import Heading from './SmallComponents/Heading'
-=======
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
->>>>>>> b57f4294b3a1d4cb750a251221c020bb138d58ff:components/bank-transfer-flow/SelectBeneficiaryBank.tsx
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -224,7 +219,6 @@ export function SelectBeneficiaryBank() {
   const { classes } = useStyles()
   const [click, setClick] = useState(false)
   const [account, setAccount] = useState(2)
-<<<<<<< HEAD:components/benfeicarybank.tsx
   const [ifscReq, setIfscReq] = useState(false)
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
@@ -240,8 +234,6 @@ export function SelectBeneficiaryBank() {
       setIfscReq(true)
     }
   }
-=======
->>>>>>> b57f4294b3a1d4cb750a251221c020bb138d58ff:components/bank-transfer-flow/SelectBeneficiaryBank.tsx
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
@@ -270,7 +262,6 @@ export function SelectBeneficiaryBank() {
               bankdesc="(IFSC required)"
             />
           </div>
-<<<<<<< HEAD:components/benfeicarybank.tsx
           <div className={classes.buttonContainer}>
             <Link href="/BankTransfer/">
               <div className={classes.button1}>Back</div>
@@ -278,7 +269,7 @@ export function SelectBeneficiaryBank() {
             {click ? (
               <Link
                 href={{
-                  pathname: '/BankTransfer/Paybenificiary',
+                  pathname: '/bank-transfer/payment-form',
                   query: {
                     ifsc: ifscReq,
                   },
@@ -298,7 +289,6 @@ export function SelectBeneficiaryBank() {
             href1="/BankTransfer/"
             href2="/BankTransfer/Paybenificiary"
           /> */}
-=======
 
           {/* <div className={classes.buttoncontainer}>
             <Link href="/BankTransfer/">
@@ -320,7 +310,6 @@ export function SelectBeneficiaryBank() {
             href1="/BankTransfer/"
             href2="/bank-transfer/payment-form"
           />
->>>>>>> b57f4294b3a1d4cb750a251221c020bb138d58ff:components/bank-transfer-flow/SelectBeneficiaryBank.tsx
         </div>
       </div>
     </div>

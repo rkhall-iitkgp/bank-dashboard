@@ -1,5 +1,6 @@
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
@@ -16,6 +17,29 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `center`,
     alignItems: `center`,
     background: `grey`,
+  },
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    fontWeight: 400,
+    // cursor: 'no-drop',
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    // pointerEvents: 'none',
+
+    marginTop: `3rem`,
   },
   titlebox: {
     // marginBottom:`20px`,
@@ -163,6 +187,7 @@ function Account(props: {
 
 export function UpiTransferHome() {
   const { classes } = useStyles()
+  const [click, setClick] = useState(false)
   const [account, setAccount] = useState({
     id: 1,
   })
@@ -171,6 +196,9 @@ export function UpiTransferHome() {
     { id: 2, name: 'Bank Transfer', src: `bank-building-white` },
     { id: 3, name: 'Pay Phone Number', src: `payphone1` },
   ]
+  const handleClick = () => {
+    setClick(true)
+  }
 
   return (
     <div className={classes.wrapper}>
@@ -185,13 +213,27 @@ export function UpiTransferHome() {
           <div className={classes.accountContainer}>
             {fetchedAccount.map((ele) => {
               return (
-                <span key={ele.id}>
+                <span key={ele.id} onClick={handleClick}>
                   <Account setAccount={setAccount} accountdata={ele} />
                 </span>
               )
             })}
           </div>
-          <ButtonGroup href1="/home" href2="/UPI/verify-upi-id" />
+          {/* <ButtonGroup href1="/home" href2="/UPI/verify-upi-id" /> */}
+          <div className={classes.buttonContainer}>
+            <Link href="/home">
+              <div className={classes.button1}>Back</div>
+            </Link>
+            {click ? (
+              <Link href="/UPI/verify-upi-id">
+                <div className={classes.button1}>Continue</div>
+              </Link>
+            ) : (
+              <div className={classes.button1} style={{ cursor: 'no-drop' }}>
+                Continue
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

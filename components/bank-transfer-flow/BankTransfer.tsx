@@ -191,14 +191,9 @@ function Account(props: {
     </div>
   )
 }
-<<<<<<< HEAD:components/BankTransfer.tsx
-
-export function Banktransfer() {
-  const [click, setClick] = useState(false)
-=======
 export function BankTransfer() {
->>>>>>> b57f4294b3a1d4cb750a251221c020bb138d58ff:components/bank-transfer-flow/BankTransfer.tsx
   const { classes } = useStyles()
+  const [click, setClick] = useState(false)
   const [account, setAccount] = useState({
     id: 1,
   })
@@ -230,13 +225,12 @@ export function BankTransfer() {
               )
             })}
           </div>
-<<<<<<< HEAD:components/BankTransfer.tsx
           <div className={classes.buttonContainer}>
             <Link href="/home">
               <div className={classes.button1}>Back</div>
             </Link>
             {click ? (
-              <Link href="/BankTransfer/benfeiciary">
+              <Link href="/bank-transfer/select-beneficiary">
                 <div className={classes.button1}>Continue</div>
               </Link>
             ) : (
@@ -245,10 +239,8 @@ export function BankTransfer() {
               </div>
             )}
           </div>
-=======
 
-          <ButtonGroup href1="/home" href2="/bank-transfer/select-beneficiary" />
->>>>>>> b57f4294b3a1d4cb750a251221c020bb138d58ff:components/bank-transfer-flow/BankTransfer.tsx
+          {/* <ButtonGroup href1="/home" href2="/bank-transfer/select-beneficiary" /> */}
         </div>
       </div>
     </div>

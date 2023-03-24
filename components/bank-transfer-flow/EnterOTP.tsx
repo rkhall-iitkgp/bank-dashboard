@@ -1,17 +1,12 @@
 import { createStyles, TextInput } from '@mantine/core'
-<<<<<<< HEAD:components/otp.tsx
-import ButtonGroup from './SmallComponents/ButtonGroup'
-import Heading from './SmallComponents/Heading'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
+// import ButtonGroup from './SmallComponents/ButtonGroup'
+
 import { SetStateAction, useState } from 'react'
-=======
-import { isNotEmpty, useForm } from '@mantine/form'
+// import { isNotEmpty, useForm } from '@mantine/form'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Heading from '../reusable-components/Heading'
 
->>>>>>> b57f4294b3a1d4cb750a251221c020bb138d58ff:components/bank-transfer-flow/EnterOTP.tsx
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -149,21 +144,21 @@ const useStyles = createStyles((theme) => ({
     alignItems: `center`,
   },
 
-  button1: {
-    background: '#0062D6',
-    borderRadius: '30px',
-    width: '150px',
-    fontFamily: 'Montserrat',
-    color: 'white',
-    fontSize: '1.25rem',
-    padding: '5px 15px',
-    textAlign: 'center',
-    cursor: 'pointer',
-    fontWeight: 400,
-    '&:hover': {
-      background: '#558ac9',
-    },
-  },
+  // button1: {
+  //   background: '#0062D6',
+  //   borderRadius: '30px',
+  //   width: '150px',
+  //   fontFamily: 'Montserrat',
+  //   color: 'white',
+  //   fontSize: '1.25rem',
+  //   padding: '5px 15px',
+  //   textAlign: 'center',
+  //   cursor: 'pointer',
+  //   fontWeight: 400,
+  //   '&:hover': {
+  //     background: '#558ac9',
+  //   },
+  // },
 
   resndotp: {
     textAlign: `end`,
@@ -195,17 +190,17 @@ export function EnterOTP() {
   //   </ActionIcon>
   // ));
 
-  const router = useRouter()
+  // const router = useRouter()
 
-  const form = useForm({
-    initialValues: {
-      otp: '',
-    },
+  // const form = useForm({
+  //   initialValues: {
+  //     otp: '',
+  //   },
 
-    validate: {
-      otp: isNotEmpty('Enter OTP'),
-    },
-  })
+  //   validate: {
+  //     otp: isNotEmpty('Enter OTP'),
+  //   },
+  // })
 
   return (
     <div className={classes.wrapper}>
@@ -234,24 +229,22 @@ export function EnterOTP() {
               label: classes.inputLabel,
               root: classes.inputcontainer,
             }}
-            {...form.getInputProps('otp')}
           />
           <div className={classes.resndotp}>Resend OTP</div>
 
-<<<<<<< HEAD:components/otp.tsx
           {/* <ButtonGroup
             href1="/BankTransfer/Review"
             href2="/BankTransfer/Success"
           /> */}
           <div className={classes.buttonContainer}>
-            <Link href="/BankTransfer/Review">
+            <Link href="/bank-transfer/review-payment-details">
               <div className={classes.button1}>Back</div>
             </Link>
 
             {otp !== '' ? (
               <Link
                 href={{
-                  pathname: '/BankTransfer/Success',
+                  pathname: '/bank-transfer/payment-success',
                   query: data,
                 }}
               >
@@ -263,29 +256,11 @@ export function EnterOTP() {
               </div>
             )}
           </div>
-=======
-          <div className={classes.buttoncontainer}>
-            <Link href="/bank-transfer/review-payment-details">
-              <div className={classes.button1}>Back</div>
-            </Link>
-            <div
-              className={classes.button1}
-              onClick={() => {
-                form.validate()
-                if (form.isValid()) {
-                  router.push('/bank-transfer/payment-success')
-                }
-              }}
-            >
-              Continue
-            </div>
-          </div>
 
           {/* <ButtonGroup
             href1="/bank-transfer/review-payment-details"
             href2="/bank-transfer/payment-success"
           /> */}
->>>>>>> b57f4294b3a1d4cb750a251221c020bb138d58ff:components/bank-transfer-flow/EnterOTP.tsx
         </div>
       </div>
     </div>

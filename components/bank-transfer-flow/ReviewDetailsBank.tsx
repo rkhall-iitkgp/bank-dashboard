@@ -1,14 +1,8 @@
-<<<<<<< HEAD:components/ReviewDetailsbank.tsx
 import { createStyles, TextInput, getStylesRef } from '@mantine/core'
-import ButtonGroup from './SmallComponents/ButtonGroup'
-import Heading from './SmallComponents/Heading'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-=======
-import { createStyles, getStylesRef, TextInput } from '@mantine/core'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
->>>>>>> b57f4294b3a1d4cb750a251221c020bb138d58ff:components/bank-transfer-flow/ReviewDetailsBank.tsx
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -288,31 +282,24 @@ export function ReviewDetailsBank(props: { sbi: any }) {
               disabled
             /> */}
           </div>
-<<<<<<< HEAD:components/ReviewDetailsbank.tsx
           {/* <ButtonGroup
             href1="/BankTransfer/Paybenificiary"
             href2="/BankTransfer/Otpconfirm"
           /> */}
           <div className={classes.buttonContainer}>
-            <Link href="/BankTransfer/Paybenificiary">
+            <Link href="/bank-transfer/payment-form">
               <div className={classes.button1}>Back</div>
             </Link>
 
             <Link
               href={{
-                pathname: '/BankTransfer/Otpconfirm',
+                pathname: '/bank-transfer/confirm-otp',
                 query: data,
               }}
             >
               <div className={classes.button1}>Continue</div>
             </Link>
           </div>
-=======
-          <ButtonGroup
-            href1="/bank-transfer/payment-form"
-            href2="/bank-transfer/confirm-otp"
-          />
->>>>>>> b57f4294b3a1d4cb750a251221c020bb138d58ff:components/bank-transfer-flow/ReviewDetailsBank.tsx
         </div>
       </div>
     </div>

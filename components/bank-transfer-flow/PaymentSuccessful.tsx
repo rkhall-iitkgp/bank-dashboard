@@ -2,12 +2,8 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { Image } from '@mantine/core'
 import Link from 'next/link'
-<<<<<<< HEAD:components/bank_transfer7.tsx
 import { useRouter } from 'next/router'
-import Heading from './SmallComponents/Heading'
-=======
 import Heading from '../reusable-components/Heading'
->>>>>>> b57f4294b3a1d4cb750a251221c020bb138d58ff:components/bank-transfer-flow/PaymentSuccessful.tsx
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -115,13 +111,9 @@ const StyledTexthead4 = styled.div`
   color: #636363;
 `
 
-<<<<<<< HEAD:components/bank_transfer7.tsx
-export default function GenOtp2() {
+export default function PaymentSuccessful() {
   const router = useRouter()
   const data = router.query
-=======
-export default function PaymentSuccessful() {
->>>>>>> b57f4294b3a1d4cb750a251221c020bb138d58ff:components/bank-transfer-flow/PaymentSuccessful.tsx
   return (
     <StyledContainer>
       <StyledCont>
