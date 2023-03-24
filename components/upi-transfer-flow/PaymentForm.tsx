@@ -277,7 +277,7 @@ export function PaymentForm() {
           </div>
 
           <div className={classes.buttoncontainer}>
-            <Link href="/UPI/Verify">
+            <Link href="/UPI/verify-upi-id">
               <div className={classes.button1}>Back</div>
             </Link>
             <div

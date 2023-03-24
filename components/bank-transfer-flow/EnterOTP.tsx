@@ -200,7 +200,7 @@ export function EnterOTP() {
           <div className={classes.resndotp}>Resend OTP</div>
 
           <div className={classes.buttoncontainer}>
-            <Link href="/BankTransfer/Review">
+            <Link href="/bank-transfer/review-payment-details">
               <div className={classes.button1}>Back</div>
             </Link>
             <div
@@ -208,7 +208,7 @@ export function EnterOTP() {
               onClick={() => {
                 form.validate()
                 if (form.isValid()) {
-                  router.push('/BankTransfer/Success')
+                  router.push('/bank-transfer/payment-success')
                 }
               }}
             >
@@ -217,8 +217,8 @@ export function EnterOTP() {
           </div>
 
           {/* <ButtonGroup
-            href1="/BankTransfer/Review"
-            href2="/BankTransfer/Success"
+            href1="/bank-transfer/review-payment-details"
+            href2="/bank-transfer/payment-success"
           /> */}
         </div>
       </div>
