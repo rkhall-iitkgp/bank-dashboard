@@ -12,6 +12,8 @@ import {
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useForm, isEmail, hasLength } from '@mantine/form';
+
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -34,7 +36,7 @@ const useStyles = createStyles((theme) => ({
     lineHeight: 1,
     fontWeight: 400,
     paddingBottom: `5px`,
-    fontSize: `2rem`,
+    fontSize: `3vw`,
   },
   titlebold: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -50,7 +52,7 @@ const useStyles = createStyles((theme) => ({
     fontFamily: `Montserrat`,
     color: theme.colors[theme.primaryColor][0],
     maxWidth: `rem(300)`,
-    fontSize: `0.8rem`,
+    fontSize: `1rem`,
     [theme.fn.smallerThan('sm')]: {
       maxWidth: '100%',
     },
@@ -66,8 +68,8 @@ const useStyles = createStyles((theme) => ({
   },
   sideContainer: {
     width: `100%`,
-    height: `100%`,
-    minHeight: `100vh`,
+    height: `100vh`,
+    // minHeight: `100vh`,
     padding: `2vh`,
   },
   social: {
@@ -130,6 +132,8 @@ const useStyles = createStyles((theme) => ({
     height: `96vh`,
     borderRadius: theme.radius.md,
     boxShadow: theme.shadows.lg,
+    display: 'flex',
+    flexDirection: 'column',
   },
   buttoncontainer: {
     display: `flex`,
@@ -149,32 +153,20 @@ const useStyles = createStyles((theme) => ({
     marginTop: `20px`,
     fontFamily: `Montserrat`,
   },
-  outerimagecontainer: {
-    width: `100%`,
-    position: `relative`,
-    margin: `auto`,
-  },
   imagecontainer: {
-    width: `100%`,
-    position: `relative`,
-    minWidth: `300px`,
-    minHeight: `160%`,
-    top: `0%`,
+    width: '100%',
+    height: '75%'
   },
-  dashboardImage1: {
-    width: `56%`,
-    borderRadius: `8px`,
-    maxHeight: `20vw`,
-    zIndex: 1,
-  },
-  dashboardImage2: {
-    position: `absolute`,
-    width: `44%`,
-    borderRadius: `8px`,
-    zIndex: 2,
-    top: `20%`,
-    left: `40%`,
-  },
+  dashboardImage: {
+    maxWidth: '100%',
+    maxHeight: '100%',
+    verticalAlign: 'center',
+    objectFit: 'cover',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center'
+  }
 }))
 
 export function LoginSignupPage() {
@@ -186,6 +178,7 @@ export function LoginSignupPage() {
     'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user'
   const [signinLoading, setSignInLoading] = useState(false)
   const [signUpLoading, setSignUpLoading] = useState(false)
+  const [buttonClicked, setButtonClicked] = useState(false)
   const [enterOtp, setEnterOtp] = useState(false)
   const router = useRouter()
 
@@ -234,6 +227,18 @@ export function LoginSignupPage() {
     res.then((v) => console.log(v))
   }
 
+  const form = useForm({
+    initialValues: {
+      phone: '',
+      email: '',
+    },
+
+    validate: {
+      phone: hasLength({min: 10, max: 10}, 'Phone Number must be 10 characters long'),
+      email: isEmail('Invalid Email')
+    },
+  });
+
   return (
     <div className={classes.wrapper}>
       <div className={classes.grid}>
@@ -245,7 +250,7 @@ export function LoginSignupPage() {
               <Stack my={10}>
                 <Stack>
                   <TextInput
-                    placeholder="Mobile Number"
+                    placeholder="Mobile Number*"
                     type={'number'}
                     required
                     classNames={{
@@ -258,6 +263,8 @@ export function LoginSignupPage() {
                   />
                   <TextInput
                     placeholder="Email"
+                    withAsterisk
+                    {...form.getInputProps('email')}
                     type={'email'}
                     mt="md"
                     classNames={{
@@ -271,8 +278,7 @@ export function LoginSignupPage() {
                   />
                 </Stack>
 
-               
-                  {/* <>
+                {/* <>
                     <Group className={classes.buttoncontainer}>
                       <Button
                         className={classes.otpbutton}
@@ -285,31 +291,63 @@ export function LoginSignupPage() {
                       </Button>
                     </Group>
                   </> */}
-                
-                
-                  <Group className={classes.buttoncontainer} mt={15}>
+
+                <Group className={classes.buttoncontainer} mt={15}>
+                  {buttonClicked && (
+                    <Button
+                      disabled
+                      className={classes.button}
+                      loading={signUpLoading}
+                      onClick={() => {
+                        SignUp(mobile, email, 1)
+                        setSignUpLoading(true)
+                        setButtonClicked(true)
+                      }}
+                    >
+                      Sign Up
+                    </Button>
+                  )}
+                  {!buttonClicked && (
                     <Button
                       className={classes.button}
                       loading={signUpLoading}
                       onClick={() => {
                         SignUp(mobile, email, 1)
                         setSignUpLoading(true)
+                        setButtonClicked(true)
                       }}
                     >
                       Sign Up
                     </Button>
+                  )}
+                  {buttonClicked && (
+                    <Button
+                      disabled
+                      className={classes.button}
+                      loading={signinLoading}
+                      onClick={() => {
+                        SignUp(mobile, email, 0)
+                        setSignInLoading(true)
+                        setButtonClicked(true)
+                      }}
+                    >
+                      Sign In
+                    </Button>
+                  )}
+                  {!buttonClicked && (
                     <Button
                       className={classes.button}
                       loading={signinLoading}
                       onClick={() => {
                         SignUp(mobile, email, 0)
                         setSignInLoading(true)
+                        setButtonClicked(true)
                       }}
                     >
                       Sign In
                     </Button>
-                  </Group>
-                
+                  )}
+                </Group>
               </Stack>
             )}
 
@@ -349,25 +387,21 @@ export function LoginSignupPage() {
 
         <div className={classes.sideContainer}>
           <div className={classes.sidecontainerinside}>
-            <Title className={classes.title}>
-              A Comprehensive Analysis of your Transactions
-            </Title>
-            <Text className={classes.description} mt="sm" mb={30}>
-              Enter your credentials to access your account
-            </Text>
-            <div className={classes.outerimagecontainer}>
-              <div className={classes.imagecontainer}>
-                <img
-                  className={classes.dashboardImage1}
-                  src="/images/dashboardimg1.png"
-                  alt="dashboard-img"
-                />
-                <img
-                  className={classes.dashboardImage2}
-                  src="/images/dashboardimg2.png"
-                  alt="dashboard-img"
-                />
-              </div>
+            <>
+              <Title className={classes.title}>
+                A Comprehensive Analysis of your Transactions
+              </Title>
+              <Text className={classes.description} mt="sm" mb={30}>
+                Enter your credentials to access your account
+              </Text>
+            </>
+
+            <div className={classes.imagecontainer}>
+                  <img 
+                    className={classes.dashboardImage}
+                    src='/images/dashboardimg.png'
+                    alt="dashboard-img"
+                  />
             </div>
           </div>
         </div>
