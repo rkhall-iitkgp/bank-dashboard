@@ -1,11 +1,12 @@
 import {
   Button,
   createStyles,
-  Group, PinInput,
+  Group,
+  PinInput,
   Stack,
   Text,
   TextInput,
-  Title
+  Title,
 } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useState } from 'react'

@@ -163,7 +163,7 @@ const useStyles = createStyles((theme) => ({
     fontSize: '1.25rem',
     padding: '5px 15px',
     textAlign: 'center',
-    cursor:"pointer",
+    cursor: 'pointer',
     fontWeight: 400,
     '&:hover': {
       background: '#558ac9',
@@ -192,9 +192,9 @@ export function PaymentForm() {
     validate: {
       name: hasLength({ min: 2, max: 10 }, 'Name must be 2-10 characters long'),
       upi_id: isNotEmpty('Enter your upi id'),
-      amount: isNotEmpty("Enter amount"),
+      amount: isNotEmpty('Enter amount'),
     },
-  });
+  })
 
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
@@ -277,13 +277,20 @@ export function PaymentForm() {
           </div>
 
           <div className={classes.buttoncontainer}>
-            <Link href='/UPI/Verify'><div className={classes.button1} >Back</div></Link>
-            <div className={classes.button1} onClick={()=>{
-              form.validate()
-              if (form.isValid()){
-                router.push('/UPI/Review')
-              }
-}}>Continue</div>
+            <Link href="/UPI/Verify">
+              <div className={classes.button1}>Back</div>
+            </Link>
+            <div
+              className={classes.button1}
+              onClick={() => {
+                form.validate()
+                if (form.isValid()) {
+                  router.push('/UPI/Review')
+                }
+              }}
+            >
+              Continue
+            </div>
           </div>
           {/* <ButtonGroup href1="/UPI/Verify" href2="/UPI/Review" /> */}
         </div>
