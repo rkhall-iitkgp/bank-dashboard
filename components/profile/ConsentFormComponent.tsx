@@ -171,6 +171,7 @@ const ConsentFormComponent = ({ id, accountselected }: Props) => {
         </div>
         <div className={classes.button}>
           <Button
+            size="lg"
             className={classes.control}
             onClick={() => {
               if (data || transaction) {
