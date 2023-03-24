@@ -92,7 +92,7 @@ const ConsentFormComponent = ({ id, accountselected }: Props) => {
   const { classes } = useStyles()
   const [data, setData] = useState<string>('1')
   const [transaction, setTransaction] = useState<string>('1')
-  console.log('accountselected :', accountselected)
+  // console.log('accountselected :', accountselected)
 
   return (
     <div key={`${accountselected}`} style={{ height: '100%' }}>
