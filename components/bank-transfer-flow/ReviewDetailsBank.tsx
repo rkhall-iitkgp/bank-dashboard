@@ -229,7 +229,7 @@ export function ReviewDetailsBank(props: { sbi: any }) {
               label="Account Number"
               variant="unstyled"
               mt="md"
-              value={data.accountNumber}
+              value={data.accountNo}
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
