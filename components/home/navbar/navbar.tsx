@@ -59,7 +59,12 @@ const _StyledButton = styled(Button)`
 const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
   _StyledButton,
 )
-function Demo() {
+
+interface Props {
+    bankAccountList: any[]
+}
+
+function Demo({bankAccountList}:Props) {
   return (
     <Popover width="auto" radius={25} position="bottom" withArrow shadow="md">
       <Popover.Target>
@@ -72,7 +77,7 @@ function Demo() {
         </StyledButton>
       </Popover.Target>
       <Popover.Dropdown>
-        <ProfileCard />
+        <ProfileCard bankAccountList={bankAccountList}/>
       </Popover.Dropdown>
     </Popover>
   )
@@ -90,7 +95,9 @@ const NavbarIcons = styled.img`
   height: 36px;
   padding: 6px 8px 10px 8px;
 `
-function Navbar() {
+
+
+function Navbar({bankAccountList}:Props) {
   const router = useRouter()
 
   const [show, setShow] = useState(false)
@@ -130,7 +137,7 @@ function Navbar() {
             <NavbarIcons src="/images/FAQs.png"></NavbarIcons>FAQs
           </StyledButton>
           {/* <StyledUserImage src="/images/dp.png"></StyledUserImage> */}
-          <Demo />
+          <Demo bankAccountList={bankAccountList}/>
         </StyledButtonBar>
       </StyledNavbar>
       {/* <ProfileCard/> */}

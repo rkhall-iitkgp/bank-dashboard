@@ -69,6 +69,7 @@ const useStyles = createStyles((theme) => ({
 interface Props {
   bankName?: string
   value?: string
+  bankAccountList: any[]
 }
 
 const AccountCard = ({ bankName, value }: Props) => {
@@ -104,13 +105,9 @@ const AccountCard = ({ bankName, value }: Props) => {
     </div>
   )
 }
-export function ProfileCard() {
+
+export function ProfileCard({bankAccountList}:Props) {
   const { classes } = useStyles()
-  let BankAccount = [
-    { id: 1, bankName: 'sbi', value: '****1234' },
-    { id: 2, bankName: 'sbi', value: '****4235' },
-    { id: 3, bankName: 'sbi', value: '****8090' },
-  ]
   let data = {
     PersonName: 'Bill Gates',
     Email: 'bgiamrich@gmail.com',
@@ -211,12 +208,12 @@ export function ProfileCard() {
           Bank Accounts
         </span>
         <div className={classes.accountCollection}>
-          {BankAccount.map((ele, key) => {
+          {bankAccountList.map((ele, key) => {
             return (
               <span key={ele.id}>
                 <AccountCard
-                  bankName={ele.bankName}
-                  value={ele.value}
+                  bankName={ele.account_no}
+                  value={ele.ifsc}
                 ></AccountCard>
               </span>
             )
