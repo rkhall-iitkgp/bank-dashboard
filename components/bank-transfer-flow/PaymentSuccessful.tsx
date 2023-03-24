@@ -110,13 +110,10 @@ const StyledTexthead4 = styled.div`
   color: #636363;
 `
 
-export default function GenOtp2() {
+export default function PaymentSuccessful() {
   return (
     <StyledContainer>
       <StyledCont>
-        {/* <StyledHead>
-          <StyledText>Bank Transfer</StyledText>
-        </StyledHead> */}
         <Heading title="Bank Transfer" />
         <StyledBot>
           <StyledBotCont>
@@ -134,10 +131,7 @@ export default function GenOtp2() {
               A/c No. :{' '}
               <span style={{ color: 'black' }}> &nbsp;XXXXXXX8989</span>
             </StyledTexthead3>
-            {/* <StyledTexthead3>₹500</StyledTexthead3> */}
-            <StyledTexthead4>
-              {/* UPI ID : <span style={{"color":"black"}}> &nbsp;johndoe@oksbi</span> */}
-            </StyledTexthead4>
+            <StyledTexthead4></StyledTexthead4>
           </StyledBotCont>
           <Link href="/home">
             <StyledBut>Make Another Payment</StyledBut>
@@ -147,5 +141,3 @@ export default function GenOtp2() {
     </StyledContainer>
   )
 }
-// Remaining balance : ₹11,845.67
-// A/c No. : XXXXXXX8989

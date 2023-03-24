@@ -1,3 +1,3 @@
 import { TransactionForm } from '../components/profile/TransactionForm'
 
-export default <TransactionForm />
+export default TransactionForm

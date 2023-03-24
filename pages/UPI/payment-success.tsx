@@ -1,3 +1,2 @@
-import PaymentSuccessPage from '../../components/upi-transfer-flow/UpiTansfer6'
-
+import PaymentSuccessPage from '../../components/upi-transfer-flow/PaymentSuccessful'
 export default PaymentSuccessPage

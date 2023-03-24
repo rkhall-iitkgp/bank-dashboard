@@ -99,7 +99,7 @@ const LogoContainer = styled.div`
 const url =
   'https://thedigitalfifth.com/wp-content/uploads/2019/10/Banner15-1170x480.png'
 
-function SeeYourAnalysis() {
+function SelectPaymentMode() {
   return (
     <StyledContainer className="UpiTransferHome">
       <InnerDiv style={{ borderRadius: '50px' }}>
@@ -131,11 +131,5 @@ function SeeYourAnalysis() {
     </StyledContainer>
   )
 }
-function Demo() {
-  return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
-      <SeeYourAnalysis />
-    </MantineProvider>
-  )
-}
-export default Demo
+
+export default SelectPaymentMode

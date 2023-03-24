@@ -1,8 +1,9 @@
-import { createStyles, Group, PinInput } from '@mantine/core'
+import { createStyles, TextInput } from '@mantine/core'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
 const useStyles = createStyles((theme) => ({
   wrapper: {
+    backgroundColor: `#EEEEEE`,
     minHeight: `100vh`,
     boxSizing: 'border-box',
     padding: `calc(${theme.spacing.xl} * 2.5)`,
@@ -15,23 +16,29 @@ const useStyles = createStyles((theme) => ({
     background: `grey`,
   },
   titlebox: {
+    // marginBottom:`20px`,
     display: `flex`,
     justifyContent: `center`,
   },
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    //   color: theme.black,
     lineHeight: 1,
     fontWeight: 500,
     margin: `0.8rem`,
+    //   paddingBottom:`5px`,
+    //   marginBottom:`10px`
   },
   titlebold: {
     fontFamily: 'Montserrat',
+    //   color: theme.black,
     lineHeight: 1,
     fontWeight: 600,
     fontSize: `20px`,
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
+    paddingBottom: `20px`,
   },
 
   description: {
@@ -39,13 +46,14 @@ const useStyles = createStyles((theme) => ({
     fontSize: `1rem`,
     padding: `0.5rem`,
     textAlign: `center`,
-    marginTop: `30px`,
+    marginTop: `10px`,
   },
 
   form: {
     backgroundColor: theme.white,
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
+    // paddingBottom: '5px',
     width: `40vw`,
     color: `#0052B3`,
   },
@@ -83,9 +91,8 @@ const useStyles = createStyles((theme) => ({
   forminside: {
     maxWidth: `90%`,
     width: `40vw`,
-    // padding: theme.spacing.xl,
+    padding: theme.spacing.xl,
     margin: `auto`,
-    padding: '30px',
   },
 
   buttoncontainer: {
@@ -108,43 +115,61 @@ const useStyles = createStyles((theme) => ({
     borderTopRightRadius: theme.radius.md,
     alignItems: `center`,
   },
+
+  resndotp: {
+    textAlign: `end`,
+    color: `#0052B3`,
+    ':hover': {
+      color: `#68a7f3`,
+    },
+    ':active': {
+      color: `#0052B3`,
+    },
+  },
 }))
 
-function Demo() {
-  return (
-    <Group position="center">
-      <PinInput placeholder="" />
-    </Group>
-  )
-}
-export function UpiTransfer5() {
+//   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
+
+export function EnterOTP() {
   const { classes } = useStyles()
+
+  // const icons = social.map((Icon, index) => (
+  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
+  //     <Icon size="1.4rem" stroke={1.5} />
+  //   </ActionIcon>
+  // ));
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        <Heading title="UPI Transfer" />
+        <Heading title="Bank Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
             <div className={classes.titlebold}>
-              <span>Enter PIN</span>
+              <span>Enter OTP</span>
             </div>
           </div>
           <div className={classes.description}>
-            <Demo />
+            We have sent an OTP to your mobile number XXXXXX5728 registered with
+            your bank account. Please enter OTP and proceed
           </div>
-          {/* <div className={classes.buttoncontainer}>
-            <Link href="/UPI/Review">
-              <Button className={classes.button} onClick={() => {}}>
-                Back
-              </Button>
-            </Link>
-            <Link href="/UPI/Success">
-              <Button className={classes.button} onClick={() => {}}>
-                Continue
-              </Button>
-            </Link>
-          </div> */}
-          <ButtonGroup href1="/UPI/Review" href2="/UPI/Success" />
+
+          <TextInput
+            placeholder="OTP"
+            type={'number'}
+            required
+            mt="md"
+            classNames={{
+              input: classes.input,
+              label: classes.inputLabel,
+              root: classes.inputcontainer,
+            }}
+          />
+          <div className={classes.resndotp}>Resend OTP</div>
+
+          <ButtonGroup
+            href1="/BankTransfer/Review"
+            href2="/BankTransfer/Success"
+          />
         </div>
       </div>
     </div>

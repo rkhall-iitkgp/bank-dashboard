@@ -9,18 +9,20 @@ import { AddAccountFormPopup } from '../../components/home/add-bank-account/AddA
 import axios from 'axios'
 import api from '../../components/api'
 import { PermissionFormPopup } from '../../components/reusable-components/Permissionprompt'
+import useStorage from '../../hooks/useStorage'
 
 const Home: NextPage = () => {
+  const { getItem, setItem } = useStorage()
   const [bankAccountList, setBankAccountList] = useState<any[]>([
     { account_no: 1297 },
   ])
   const [isAddAccountPopupOpen, setIsAddAccountPopupOpen] =
     useState<boolean>(false)
 
-  const getAccounts = () => {
-    const accessToken = sessionStorage.getItem('access_token')
+  const GetAccounts = () => {
+    const accessToken = getItem('access_token')
     console.log(accessToken)
-    const user_id = sessionStorage.getItem('user_id')
+    const user_id = getItem('user_id')
 
     const response = api
       .get(`/user/accounts/${user_id}`, {
@@ -39,41 +41,42 @@ const Home: NextPage = () => {
         })
         console.log(bankAccountList)
 
-        sessionStorage.setItem('accounts', response.request.responseText)
+        setItem('accounts', response.request.responseText)
         return response
       })
   }
 
-  const getServerSideProps = () => {
-    const accessToken = sessionStorage.getItem('access_token')
-    console.log(accessToken)
-    const user_id = sessionStorage.getItem('user_id')
+  // const getServerSideProps = () => {
+  //   const accessToken = sessionStorage.getItem('access_token')
+  //   console.log(accessToken)
+  //   const user_id = sessionStorage.getItem('user_id')
 
-    const response = api
-      .get(`/user/accounts/${user_id}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        console.log(response.data.accounts)
-        const responseArray = response.data.accounts
-        responseArray.map((acc: any) => {
-          let temp = bankAccountList
-          temp.push(acc)
-          setBankAccountList(temp)
-        })
-        console.log(bankAccountList)
+  //   const response = api
+  //     .get(`/user/accounts/${user_id}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //         'Content-Type': 'application/json',
+  //       },
+  //     })
+  //     .then((response) => {
+  //       console.log(response.data.accounts)
+  //       const responseArray = response.data.accounts
+  //       responseArray.map((acc: any) => {
+  //         let temp = bankAccountList
+  //         temp.push(acc)
+  //         setBankAccountList(temp)
+  //       })
+  //       console.log(bankAccountList)
 
-        sessionStorage.setItem('accounts', response.request.responseText)
-        return response
-      })
-  }
+  //       sessionStorage.setItem('accounts', response.request.responseText)
+  //       return response
+  //     })
+  // }
+
   useEffect(() => {
-    // if(!sessionStorage.getItem('accounts')){
-    getAccounts()
-    // }
+    if (!getItem('accounts')) {
+      GetAccounts()
+    }
   }, [])
   const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] =
     useState<boolean>(false)

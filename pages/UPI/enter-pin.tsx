@@ -1,3 +1,3 @@
-import { UpiTransfer5 } from '../../components/upi-transfer-flow/UpiTransfer5'
+import { EnterUPIpin } from "../../components/upi-transfer-flow/EnterUpiPin";
 
-export default UpiTransfer5
+export default EnterUPIpin

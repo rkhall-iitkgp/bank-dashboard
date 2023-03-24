@@ -188,21 +188,12 @@ function AccountType(props: {
     </div>
   )
 }
-export function BeneficiaryBank() {
+export function SelectBeneficiaryBank() {
   const { classes } = useStyles()
   const [account, setAccount] = useState(2)
-  // const icons = social.map((Icon, index) => (
-  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-  //     <Icon size="1.4rem" stroke={1.5} />
-  //   </ActionIcon>
-  // ));
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        {/* <div className={classes.topheading}>
-
-          <div className={classes.title}>Bank Transfer</div>
-        </div> */}
         <Heading title="Bank Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>

@@ -1,4 +1,4 @@
-import { createStyles, TextInput, getStylesRef } from '@mantine/core'
+import { createStyles, getStylesRef, TextInput } from '@mantine/core'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
 const useStyles = createStyles((theme) => ({
@@ -15,7 +15,6 @@ const useStyles = createStyles((theme) => ({
     background: `grey`,
   },
   titlebox: {
-    // marginBottom:`20px`,
     width: '90%',
     margin: 'auto',
     fontSize: '28px',
@@ -24,7 +23,6 @@ const useStyles = createStyles((theme) => ({
   },
   title: {
     fontFamily: 'Montserrat, sans-serif',
-    //   color: theme.black,
     lineHeight: 1,
     fontWeight: 500,
     margin: `0.8rem`,
@@ -53,7 +51,6 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    // paddingBottom: '5px',
     width: `40vw`,
     margin: `auto`,
     color: `#0052B3`,
@@ -80,11 +77,6 @@ const useStyles = createStyles((theme) => ({
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #ccc`,
-
-    //   [`&:hover ~ .${getStylesRef('inputLabel')}`]: {
-    //     color: theme.colors.violet[6],
-    //     fontSize:`2rem !important`
-    //   },
   },
   inputAmount: {
     backgroundColor: theme.white,
@@ -110,8 +102,6 @@ const useStyles = createStyles((theme) => ({
     ref: getStylesRef('inputLabel'),
     paddingLeft: `2px`,
     color: theme.colors.gray[6],
-    // position:`absolute`,
-    // top:`1.5rem`,
     fontSize: `12px`,
     fontWeight: 400,
     transition: `0.25s ease`,
@@ -120,13 +110,11 @@ const useStyles = createStyles((theme) => ({
   inputcontainer: {
     backgroundColor: 'white',
     position: `relative`,
-    // paddingTop:`0.75rem`,
     marginTop: `0 !important`,
   },
   enterAmountContainer: {
     backgroundColor: 'white',
     position: `relative`,
-    // paddingTop:`0.75rem`,
     opacity: 0.8,
   },
   control: {
@@ -171,22 +159,11 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-//   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
-
-export function Upitransfer3() {
+export function PaymentForm() {
   const { classes } = useStyles()
-
-  // const icons = social.map((Icon, index) => (
-  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-  //     <Icon size="1.4rem" stroke={1.5} />
-  //   </ActionIcon>
-  // ));
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        {/* <div className={classes.topheading}>
-          <div className={classes.title}>UPI Transfer</div>
-        </div> */}
         <Heading title="UPI Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
@@ -255,11 +232,6 @@ export function Upitransfer3() {
               required
             />
           </div>
-
-          {/* <div className={classes.buttoncontainer}>
-            <Link href='/UPI/Verify'><Button className={classes.button} >Back</Button></Link>
-            <Link href='/UPI/Review'><Button className={classes.button} >Continue</Button></Link>
-          </div> */}
           <ButtonGroup href1="/UPI/Verify" href2="/UPI/Review" />
         </div>
       </div>

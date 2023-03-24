@@ -14,6 +14,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import useStorage from '../../hooks/useStorage'
 import api from '../api'
 
 const useStyles = createStyles((theme) => ({
@@ -194,6 +195,7 @@ export function LoginSignupPage() {
   const router = useRouter()
 
   const SignUp = (contact_no: string, email: string, si: number) => {
+    const { getItem, setItem } = useStorage()
     let res = api
       .post('/user/sendotp/', {
         contact_no: contact_no,
@@ -203,8 +205,8 @@ export function LoginSignupPage() {
       })
       .then((res) => {
         setEnterOtp(true)
-        // sessionStorage.setItem('contact_no', res.data.contact_no)
-        // sessionStorage.setItem('user_id', res.data.user_id)
+        setItem('contact_no', res.data.contact_no, 'session')
+        setItem('user_id', res.data.user_id, 'session')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -216,7 +218,9 @@ export function LoginSignupPage() {
 
   // const [otpValue, setOtpValue] = useState<boolean>(false)
 
-  const validate = (contact_no: string, otp: string) => {
+  const Validate = (contact_no: string, otp: string) => {
+    const { setItem } = useStorage()
+
     let res = api
       .post('user/validateotp/', {
         contact_no: contact_no,
@@ -227,10 +231,10 @@ export function LoginSignupPage() {
       .then((res) => {
         router.replace('/home')
         // save response i.e access token and refresh token in session storage
-        sessionStorage.setItem('contact_no', res.data.contact_no)
-        sessionStorage.setItem('access_token', res.data.access_token)
-        sessionStorage.setItem('refresh_token', res.data.refresh_token)
-        sessionStorage.setItem('user_id', res.data.user_id)
+        setItem('contact_no', res.data.contact_no)
+        setItem('access_token', res.data.access_token)
+        setItem('refresh_token', res.data.refresh_token)
+        setItem('user_id', res.data.user_id)
         return res.data
       })
       .catch((err) => console.log(err))
@@ -328,7 +332,6 @@ export function LoginSignupPage() {
                   Enter OTP
                 </Text>
                 <PinInput
-                  
                   value={otp}
                   onChange={(e) => setOtp(e)}
                   mx="auto"
@@ -338,7 +341,7 @@ export function LoginSignupPage() {
                   className={classes.control}
                   onClick={() => {
                     console.log(otp)
-                    validate(mobile, otp)
+                    Validate(mobile, otp)
                   }}
                 >
                   Confirm

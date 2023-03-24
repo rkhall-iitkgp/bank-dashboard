@@ -268,11 +268,6 @@ export function ReviewDetailsUpi() {
               disabled
             />
           </div>
-
-          {/* <div className={classes.buttoncontainer}>
-            <Link href='/UPI/Verify'><Button className={classes.button} >Back</Button></Link>
-            <Link href='/UPI/Review'><Button className={classes.button} >Continue</Button></Link>
-          </div> */}
           <ButtonGroup href1="/UPI/Payment" href2="/UPI/Pin" />
         </div>
       </div>
