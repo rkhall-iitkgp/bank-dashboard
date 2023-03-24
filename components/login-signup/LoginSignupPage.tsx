@@ -2,18 +2,18 @@ import {
   Button,
   createStyles,
   Group,
-  NumberInput,
   PinInput,
   Stack,
   Text,
   TextInput,
   Title,
 } from '@mantine/core'
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useForm, isEmail, hasLength } from '@mantine/form';
-
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+import useStorage from '../../hooks/useStorage'
+import api from '../api'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -83,7 +83,7 @@ const useStyles = createStyles((theme) => ({
   input: {
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
-    color: theme.black,
+    color: '#434343',
 
     '&::placeholder': {
       color: theme.colors.gray[5],
@@ -94,6 +94,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #eee`,
+    fontFamily: `Montserrat`,
   },
 
   inputLabel: {
@@ -174,8 +175,8 @@ export function LoginSignupPage() {
   const [mobile, setMobile] = useState('')
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
-  const BASEURL =
-    'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user'
+  // const BASEURL =
+  //   'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user'
   const [signinLoading, setSignInLoading] = useState(false)
   const [signUpLoading, setSignUpLoading] = useState(false)
   const [buttonClicked, setButtonClicked] = useState(false)
@@ -183,8 +184,9 @@ export function LoginSignupPage() {
   const router = useRouter()
 
   const SignUp = (contact_no: string, email: string, si: number) => {
-    let res = axios
-      .post(`${BASEURL}/sendotp/`, {
+    const { getItem, setItem } = useStorage()
+    let res = api
+      .post('/user/sendotp/', {
         contact_no: contact_no,
         email: email,
         signup: si,
@@ -192,8 +194,8 @@ export function LoginSignupPage() {
       })
       .then((res) => {
         setEnterOtp(true)
-        // sessionStorage.setItem('contact_no', res.data.contact_no)
-        // sessionStorage.setItem('user_id', res.data.user_id)
+        setItem('contact_no', res.data.contact_no, 'session')
+        setItem('user_id', res.data.user_id, 'session')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -205,21 +207,23 @@ export function LoginSignupPage() {
 
   // const [otpValue, setOtpValue] = useState<boolean>(false)
 
-  const validate = (contact_no: string, otp: string) => {
-    let res = axios
-      .post(`${BASEURL}/validateotp/`, {
+  const Validate = (contact_no: string, otp: string) => {
+    const { setItem } = useStorage()
+
+    let res = api
+      .post('user/validateotp/', {
         contact_no: contact_no,
-        otp: parseInt(otp),
+        otp: otp,
         email: email,
         isaccount: 0,
       })
       .then((res) => {
         router.replace('/home')
         // save response i.e access token and refresh token in session storage
-        sessionStorage.setItem('contact_no', res.data.contact_no)
-        sessionStorage.setItem('access_token', res.data.access_token)
-        sessionStorage.setItem('refresh_token', res.data.refresh_token)
-        sessionStorage.setItem('user_id', res.data.user_id)
+        setItem('contact_no', res.data.contact_no)
+        setItem('access_token', res.data.access_token)
+        setItem('refresh_token', res.data.refresh_token)
+        setItem('user_id', res.data.user_id)
         return res.data
       })
       .catch((err) => console.log(err))
@@ -249,17 +253,32 @@ export function LoginSignupPage() {
             {!enterOtp && (
               <Stack my={10}>
                 <Stack>
-                  <TextInput
-                    placeholder="Mobile Number*"
-                    type={'number'}
-                    required
-                    classNames={{
-                      input: classes.input,
-                      label: classes.inputLabel,
-                      root: classes.inputcontainer,
+                  <PhoneInput
+                    placeholder="Mobile Number"
+                    country={'in'}
+                    containerStyle={{
+                      border: 'none',
+                      borderBottom: `2px solid #eee`,
+                      top: `0.5rem`,
+                      color: '#0052B3',
                     }}
-                    value={mobile}
-                    onChange={(e) => setMobile(e.currentTarget.value)}
+                    inputStyle={{
+                      background: 'transparent',
+                      border: 'none',
+                      margin: '4px 0px',
+                      fontFamily: 'Montserrat, sans-serif',
+                      fontStyle: 'normal',
+                      fontWeight: 500,
+                      // fontSize: '18px',
+                      lineHeight: '24px',
+                      color: '#434343',
+                    }}
+                    buttonStyle={{
+                      background: 'transparent',
+                      border: 'none',
+                    }}
+                    value={mobile.replaceAll('\\D+', '')}
+                    onChange={(e) => setMobile(e)}
                   />
                   <TextInput
                     placeholder="Email"
@@ -278,7 +297,8 @@ export function LoginSignupPage() {
                   />
                 </Stack>
 
-                {/* <>
+               
+                  {/* <>
                     <Group className={classes.buttoncontainer}>
                       <Button
                         className={classes.otpbutton}
@@ -291,63 +311,31 @@ export function LoginSignupPage() {
                       </Button>
                     </Group>
                   </> */}
-
-                <Group className={classes.buttoncontainer} mt={15}>
-                  {buttonClicked && (
-                    <Button
-                      disabled
-                      className={classes.button}
-                      loading={signUpLoading}
-                      onClick={() => {
-                        SignUp(mobile, email, 1)
-                        setSignUpLoading(true)
-                        setButtonClicked(true)
-                      }}
-                    >
-                      Sign Up
-                    </Button>
-                  )}
-                  {!buttonClicked && (
+                
+                
+                  <Group className={classes.buttoncontainer} mt={15}>
                     <Button
                       className={classes.button}
                       loading={signUpLoading}
                       onClick={() => {
                         SignUp(mobile, email, 1)
                         setSignUpLoading(true)
-                        setButtonClicked(true)
                       }}
                     >
                       Sign Up
                     </Button>
-                  )}
-                  {buttonClicked && (
-                    <Button
-                      disabled
-                      className={classes.button}
-                      loading={signinLoading}
-                      onClick={() => {
-                        SignUp(mobile, email, 0)
-                        setSignInLoading(true)
-                        setButtonClicked(true)
-                      }}
-                    >
-                      Sign In
-                    </Button>
-                  )}
-                  {!buttonClicked && (
                     <Button
                       className={classes.button}
                       loading={signinLoading}
                       onClick={() => {
                         SignUp(mobile, email, 0)
                         setSignInLoading(true)
-                        setButtonClicked(true)
                       }}
                     >
                       Sign In
                     </Button>
-                  )}
-                </Group>
+                  </Group>
+                
               </Stack>
             )}
 
@@ -365,7 +353,6 @@ export function LoginSignupPage() {
                   Enter OTP
                 </Text>
                 <PinInput
-                  inputMode="numeric"
                   value={otp}
                   onChange={(e) => setOtp(e)}
                   mx="auto"
@@ -375,7 +362,7 @@ export function LoginSignupPage() {
                   className={classes.control}
                   onClick={() => {
                     console.log(otp)
-                    validate(mobile, otp)
+                    Validate(mobile, otp)
                   }}
                 >
                   Confirm
