@@ -237,7 +237,7 @@ export function VerifyUPI() {
             />
           </div>
 
-          <ButtonGroup href1="/UPI/" href2="/UPI/Payment" />
+          <ButtonGroup href1="/UPI/" href2="/UPI/payment-details" />
         </div>
       </div>
     </div>

@@ -191,7 +191,7 @@ export function UpiTransferHome() {
               )
             })}
           </div>
-          <ButtonGroup href1="/home" href2="/UPI/Verify" />
+          <ButtonGroup href1="/home" href2="/UPI/verify-upi-id" />
         </div>
       </div>
     </div>

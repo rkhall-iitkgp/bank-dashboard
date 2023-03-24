@@ -133,7 +133,7 @@ export function EnterUPIpin() {
           <div className={classes.description}>
             <Demo />
           </div>
-          <ButtonGroup href1="/UPI/Review" href2="/UPI/Success" />
+          <ButtonGroup href1="/UPI/payment-details-review" href2="/UPI/payment-success" />
         </div>
       </div>
     </div>

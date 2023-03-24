@@ -321,7 +321,7 @@ export function PaymentForm(props: { sbi: any }) {
               )}
 
               <div className={classes.buttoncontainer}>
-                <Link href="/BankTransfer/benfeiciary">
+                <Link href="/bank-transfer/select-beneficiary">
                   <div className={classes.button1}>Back</div>
                 </Link>
                 <div
@@ -329,7 +329,7 @@ export function PaymentForm(props: { sbi: any }) {
                   onClick={() => {
                     form.validate()
                     if (form.isValid()) {
-                      router.push('/BankTransfer/Review')
+                      router.push('/bank-transfer/review-payment-details')
                     }
                   }}
                 >

@@ -201,7 +201,7 @@ export function BankTransfer() {
             })}
           </div>
 
-          <ButtonGroup href1="/home" href2="/BankTransfer/benfeiciary" />
+          <ButtonGroup href1="/home" href2="/bank-transfer/select-beneficiary" />
         </div>
       </div>
     </div>

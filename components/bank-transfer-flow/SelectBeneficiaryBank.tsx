@@ -222,7 +222,7 @@ export function SelectBeneficiaryBank() {
             <Link href="/BankTransfer/">
               <Button className={classes.button}>Back</Button>
             </Link>
-            <Link href="/BankTransfer/Paybenificiary">
+            <Link href="/bank-transfer/payment-form">
               <Button className={classes.button}>Continue</Button>
             </Link>
           </div> */}
@@ -230,13 +230,13 @@ export function SelectBeneficiaryBank() {
             <Link href="/BankTransfer/">
               <div className={classes.button1}>Back</div>
             </Link>
-            <Link href="/BankTransfer/Paybenificiary">
+            <Link href="/bank-transfer/payment-form">
               <div className={classes.button1}>Continue</div>
             </Link>
           </div> */}
           <ButtonGroup
             href1="/BankTransfer/"
-            href2="/BankTransfer/Paybenificiary"
+            href2="/bank-transfer/payment-form"
           />
         </div>
       </div>
