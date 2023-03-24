@@ -1,4 +1,6 @@
-import { createStyles, getStylesRef, TextInput } from '@mantine/core'
+import { createStyles, TextInput, getStylesRef } from '@mantine/core'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
 const useStyles = createStyles((theme) => ({
@@ -47,18 +49,18 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    width: `40vw`,
+    width: `600px`,
     margin: `auto`,
     color: `#0052B3`,
   },
 
   input: {
+    fontFamily: 'Montserrat',
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     color: theme.black,
     fontSize: '0.8rem',
     height: '1rem',
-    fontFamily: 'Montserrat',
 
     ':focus': {
       borderColor: 'blue',
@@ -73,6 +75,29 @@ const useStyles = createStyles((theme) => ({
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #ccc`,
+  },
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    fontWeight: 400,
+    // cursor: 'no-drop',
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    // pointerEvents: 'none',
+
+    marginTop: `3rem`,
   },
   inputAmount: {
     backgroundColor: theme.white,
@@ -123,7 +148,7 @@ const useStyles = createStyles((theme) => ({
   },
   forminside: {
     maxWidth: `90%`,
-    width: `40vw`,
+    width: `500px`,
     padding: theme.spacing.xl,
     margin: `auto`,
   },
@@ -161,10 +186,12 @@ const useStyles = createStyles((theme) => ({
 
 export function ReviewDetailsBank(props: { sbi: any }) {
   const { classes } = useStyles()
+  const router = useRouter()
+  const data = router.query
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        <Heading title="UPI Transfer" />
+        <Heading title="Bank Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
             <div className={classes.titlebold}>
@@ -196,13 +223,13 @@ export function ReviewDetailsBank(props: { sbi: any }) {
                 root: classes.inputcontainer,
               }}
               disabled
-              value={'John Doe'}
+              value={data.name}
             />
             <TextInput
               label="Account Number"
               variant="unstyled"
               mt="md"
-              value={'XXXXXXXX7394'}
+              value={data.accountNo}
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
@@ -215,7 +242,7 @@ export function ReviewDetailsBank(props: { sbi: any }) {
               label="Amount"
               variant="unstyled"
               mt="md"
-              value={'Rs. 500'}
+              value={data.amount}
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
@@ -224,11 +251,28 @@ export function ReviewDetailsBank(props: { sbi: any }) {
               required
               disabled
             />
-            <TextInput
+            {data.ifscReq === 'true' ? (
+              <TextInput
+                label="IFSC"
+                variant="unstyled"
+                mt="md"
+                value={data.ifsc}
+                classNames={{
+                  input: classes.input,
+                  label: classes.inputLabel,
+                  root: classes.inputcontainer,
+                }}
+                required
+                disabled
+              />
+            ) : (
+              <></>
+            )}
+            {/* <TextInput
               label="IFSC"
               variant="unstyled"
               mt="md"
-              value={'9876'}
+              value={data.ifsc}
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
@@ -236,12 +280,26 @@ export function ReviewDetailsBank(props: { sbi: any }) {
               }}
               required
               disabled
-            />
+            /> */}
           </div>
-          <ButtonGroup
-            href1="/bank-transfer/payment-form"
-            href2="/bank-transfer/confirm-otp"
-          />
+          {/* <ButtonGroup
+            href1="/BankTransfer/Paybenificiary"
+            href2="/BankTransfer/Otpconfirm"
+          /> */}
+          <div className={classes.buttonContainer}>
+            <Link href="/bank-transfer/payment-form">
+              <div className={classes.button1}>Back</div>
+            </Link>
+
+            <Link
+              href={{
+                pathname: '/bank-transfer/confirm-otp',
+                query: data,
+              }}
+            >
+              <div className={classes.button1}>Continue</div>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

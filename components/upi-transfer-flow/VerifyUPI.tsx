@@ -6,8 +6,9 @@ import {
   PinInput,
   Text,
 } from '@mantine/core'
+import Link from 'next/link'
 import { SetStateAction, useState } from 'react'
-import ButtonGroup from '../reusable-components/ButtonGroup'
+// import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
 
 const useStyles = createStyles((theme) => ({
@@ -147,6 +148,29 @@ const useStyles = createStyles((theme) => ({
 
     // color: '#0062D6',
   },
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    fontWeight: 400,
+    // cursor: 'no-drop',
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    // pointerEvents: 'none',
+
+    marginTop: `3rem`,
+  },
 }))
 function Demo() {
   return (
@@ -237,7 +261,21 @@ export function VerifyUPI() {
             />
           </div>
 
-          <ButtonGroup href1="/UPI/" href2="/UPI/payment-details" />
+          <div className={classes.buttonContainer}>
+            <Link href="/UPI/">
+              <div className={classes.button1}>Back</div>
+            </Link>
+
+            {buttonText === 'Verified' ? (
+              <Link href="/UPI/payment-details">
+                <div className={classes.button1}>Continue</div>
+              </Link>
+            ) : (
+              <div className={classes.button1} style={{ cursor: 'no-drop' }}>
+                Continue
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
 import { useState } from 'react'
+import Link from 'next/link'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
 
@@ -38,7 +39,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    width: `40vw`,
+    width: `600px`,
     minWidth: `440px`,
     color: `#0052B3`,
     fontFamily: 'Montserrat',
@@ -48,6 +49,29 @@ const useStyles = createStyles((theme) => ({
     maxWidth: `90%`,
     padding: theme.spacing.xl,
     margin: `auto`,
+  },
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    fontWeight: 400,
+    // cursor: 'no-drop',
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    // pointerEvents: 'none',
+
+    marginTop: `3rem`,
   },
 
   // buttoncontainer: {
@@ -95,9 +119,9 @@ const useStyles = createStyles((theme) => ({
     // display:`flex`,
   },
 
-  buttonContainer: {
-    margin: `1rem 3rem 5rem 3rem`,
-  },
+  // buttonContainer: {
+  //   margin: `1rem 3rem 5rem 3rem`,
+  // },
   // buttonContainer: {
   //   display: 'flex',
   //   justifyContent: 'space-between',
@@ -108,11 +132,11 @@ const useStyles = createStyles((theme) => ({
     width: `82%`,
     minWidth: `270px`,
     maxWidth: `300px`,
-    height: `50px`,
+    height: `60px`,
     background: `rgba(0, 82, 179, 0.1)`,
     borderRadius: `30px`,
     margin: `15px auto`,
-    padding: `10px`,
+    padding: `20px`,
     fontSize: `0.8rem`,
     textAlign: `center`,
     display: `flex`,
@@ -127,11 +151,13 @@ const useStyles = createStyles((theme) => ({
     ':active': {
       boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.25)`,
     },
-    boxShadow: ' 0px 12px 20px rgba(0, 0, 0, 0.2)',
+    boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.25)`,
+    border: `2px solid #DDEDFF`,
   },
+
   active: {
     boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.25)`,
-    border: `1.5px solid #0052B3`,
+    border: `2px solid #0052B3`,
   },
   bankname: {
     lineHeight: `1.5rem`,
@@ -155,6 +181,7 @@ function AccountType(props: {
   setAccount: (arg0: any) => void
   src: any
   bankname: any
+  handleClick: any
   bankdesc: any
 }) {
   const { classes } = useStyles()
@@ -163,6 +190,7 @@ function AccountType(props: {
       className={classes.account}
       id={props.id}
       onClick={(event) => {
+        props.handleClick(props.id)
         props.setAccount(props.id)
         const accountlist = Array.from(
           document.getElementsByClassName(classes.account),
@@ -190,7 +218,23 @@ function AccountType(props: {
 }
 export function SelectBeneficiaryBank() {
   const { classes } = useStyles()
+  const [click, setClick] = useState(false)
   const [account, setAccount] = useState(2)
+  const [ifscReq, setIfscReq] = useState(false)
+  // const icons = social.map((Icon, index) => (
+  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
+  //     <Icon size="1.4rem" stroke={1.5} />
+  //   </ActionIcon>
+  // ));
+  const handleClick = (id: any) => {
+    if (id === 1) {
+      setClick(true)
+      setIfscReq(false)
+    } else {
+      setClick(true)
+      setIfscReq(true)
+    }
+  }
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
@@ -206,17 +250,46 @@ export function SelectBeneficiaryBank() {
               src="/../public/icons/sbi.png"
               id={1}
               setAccount={setAccount}
+              handleClick={handleClick}
               bankname="State Bank Of India"
               bankdesc="(Beneficiary is a SBI account holder)"
             />
             <AccountType
               src="/../public/icons/bank-building.png"
               id={2}
+              handleClick={handleClick}
               setAccount={setAccount}
               bankname="Other Banks"
               bankdesc="(IFSC required)"
             />
           </div>
+          <div className={classes.buttonContainer}>
+            <Link href="/bank-transfer/">
+              <div className={classes.button1}>Back</div>
+            </Link>
+            {click ? (
+              <Link
+                href={{
+                  pathname: '/bank-transfer/payment-form',
+                  query: {
+                    ifsc: ifscReq,
+                  },
+                }}
+              >
+                <div className={classes.button1}>Continue</div>
+              </Link>
+            ) : (
+              <div className={classes.button1} style={{ cursor: 'no-drop' }}>
+                Continue
+              </div>
+            )}
+          </div>
+
+          {/* <ButtonGroup
+            clickValue={click}
+            href1="/BankTransfer/"
+            href2="/BankTransfer/Paybenificiary"
+          /> */}
 
           {/* <div className={classes.buttoncontainer}>
             <Link href="/BankTransfer/">
@@ -237,7 +310,7 @@ export function SelectBeneficiaryBank() {
           <ButtonGroup
             href1="/bank-transfer/"
             href2="/bank-transfer/payment-form"
-          />
+          /> */}
         </div>
       </div>
     </div>

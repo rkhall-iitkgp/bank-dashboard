@@ -1,3 +1,7 @@
+import { useState } from 'react'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+
 import { createStyles, TextInput, getStylesRef } from '@mantine/core'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
@@ -127,7 +131,7 @@ const useStyles = createStyles((theme) => ({
   inputcontainer: {
     backgroundColor: 'white',
     position: `relative`,
-    // paddingTop:`0.75rem`,
+    paddingTop: `0.75rem`,
     marginTop: `0 !important`,
   },
   enterAmountContainer: {
@@ -148,14 +152,31 @@ const useStyles = createStyles((theme) => ({
   },
   beficiaryformcontainer: {
     width: `90%`,
-    paddingTop: `2%`,
+    // paddingTop: `2%`,
     margin: `auto`,
   },
-  buttoncontainer: {
-    display: `flex`,
-    justifyContent: `space-between   `,
-    // margin:`1rem`,
-    marginTop: `2rem`,
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    fontWeight: 400,
+    // cursor: 'no-drop',
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    // pointerEvents: 'none',
+
+    margin: `2rem 0`,
   },
   button: {
     width: `150px`,
@@ -171,6 +192,35 @@ const useStyles = createStyles((theme) => ({
     borderTopRightRadius: theme.radius.md,
     alignItems: `center`,
   },
+  amountbox: {
+    backgroundColor: theme.white,
+    borderRadius: theme.radius.md,
+    boxShadow: `0px 6px 20px rgba(0, 0, 0, 0.2)`,
+    width: `auto`,
+    fontFamily: `Montserrat`,
+    color: `#0052B3`,
+    padding: `10px`,
+    minHeight: `60px`,
+    minWidth: `150px`,
+  },
+  amountinside: {
+    maxWidth: `90%`,
+    width: `auto`,
+    padding: `0 5px`,
+    margin: `auto`,
+    fontSize: `0.7rem`,
+    color: 'black',
+    whiteSpace: `nowrap`,
+    display: `flex`,
+    justifyContent: `center`,
+    textAlign: `end`,
+    alignItems: `center`,
+  },
+
+  balance: {
+    color: '#0052B3',
+    fontSize: `1.2rem`,
+  },
   payingtext: {
     paddingTop: `0.25rem`,
     fontWeight: 600,
@@ -180,6 +230,9 @@ const useStyles = createStyles((theme) => ({
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
 export function ReviewDetailsUpi() {
+  const router = useRouter()
+  const data = router.query
+
   const { classes } = useStyles()
 
   // const icons = social.map((Icon, index) => (
@@ -190,9 +243,6 @@ export function ReviewDetailsUpi() {
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        {/* <div className={classes.topheading}>
-          <div className={classes.title}>UPI Transfer</div>
-        </div> */}
         <Heading title="UPI Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
@@ -214,63 +264,73 @@ export function ReviewDetailsUpi() {
               disabled
               required
             />
-
-            <TextInput
-              label="UPI ID"
-              variant="unstyled"
-              value={`WelcomtoGc@iitkgp`}
-              disabled
-              classNames={{
-                input: classes.input,
-                label: classes.inputLabel,
-                root: classes.inputcontainer,
-              }}
-              required
-            />
-            <div className={classes.payingtext}>Paying</div>
-            <TextInput
-              label="Name"
-              variant="unstyled"
-              classNames={{
-                input: classes.input,
-                label: classes.inputLabel,
-                root: classes.inputcontainer,
-              }}
-              required
-              disabled
-              value={'John Doe'}
-            />
-            <TextInput
-              label="UPI ID"
-              variant="unstyled"
-              mt="md"
-              value={'mytself@upi'}
-              classNames={{
-                input: classes.input,
-                label: classes.inputLabel,
-                root: classes.inputcontainer,
-              }}
-              required
-              disabled
-            />
-            <TextInput
-              variant="unstyled"
-              label="Amount"
-              mt="md"
-              value={''}
-              style={{ color: 'grey' }}
-              classNames={{
-                input: classes.input,
-                label: classes.inputLabel,
-                root: classes.inputcontainer,
-              }}
-              required
-              disabled
-            />
           </div>
-          <ButtonGroup href1="/UPI/payment-details" href2="/UPI/enter-pin" />
+          <TextInput
+            label="UPI ID"
+            variant="unstyled"
+            value={`WelcomtoGc@iitkgp`}
+            disabled
+            classNames={{
+              input: classes.input,
+              label: classes.inputLabel,
+              root: classes.inputcontainer,
+            }}
+          />
+          <div />
+          <div className={classes.payingtext}>Paying</div>
+          <TextInput
+            label="Name"
+            variant="unstyled"
+            classNames={{
+              input: classes.input,
+              label: classes.inputLabel,
+              root: classes.inputcontainer,
+            }}
+            required
+            disabled
+            value={data.name}
+          />
+          <TextInput
+            label="UPI ID"
+            variant="unstyled"
+            mt="md"
+            value={data.upi}
+            classNames={{
+              input: classes.input,
+              label: classes.inputLabel,
+              root: classes.inputcontainer,
+            }}
+            required
+            disabled
+          />
+          <TextInput
+            variant="unstyled"
+            label="Amount"
+            mt="md"
+            value={data.amount}
+            style={{ color: 'grey' }}
+            classNames={{
+              input: classes.input,
+              label: classes.inputLabel,
+              root: classes.inputcontainer,
+            }}
+            required
+            disabled
+          />
+        </div>
+        {/* <ButtonGroup href1="/UPI/payment-details" href2=`/UPI/enter-pin?name=${data.name}&amount=${form.values.amount}&upi=${form.values.upi_id}` /> */}
+        <div className={classes.buttonContainer}>
+          <Link href="/UPI/payment-details">
+            <div className={classes.button1}>Back</div>
+          </Link>
+          <Link
+            href={`/UPI/enter-pin?name=${data.name}&amount=${data.amount}&upi=${data.upi}`}
+          >
+            <div className={classes.button1}>Continue</div>
+          </Link>
         </div>
       </div>
     </div>
+    // </div>
   )
 }

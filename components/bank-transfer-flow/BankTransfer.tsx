@@ -1,5 +1,6 @@
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
@@ -92,12 +93,12 @@ const useStyles = createStyles((theme) => ({
     minWidth: `400px`,
   },
   account: {
-    width: `100px`,
-    height: `100px`,
+    width: `120px`,
+    height: `120px`,
     background: `rgba(0, 82, 179, 0.1)`,
     borderRadius: `30px`,
     margin: `10px`,
-    padding: `10px`,
+    padding: `15px 10px 10px 10px`,
     fontSize: `0.8rem`,
     textAlign: `center`,
     display: `flex`,
@@ -106,7 +107,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `space-between`,
     ':hover': {
       //border: `2px dotted #0052B3;`,
-      boxShadow: ` 0px 4px 10px rgba(0, 0, 0, 0.25)`,
+      // boxShadow: ` 0px 4px 10px rgba(0, 0, 0, 0.25)`,
       cursor: `pointer`,
     },
     ':active': {
@@ -128,6 +129,29 @@ const useStyles = createStyles((theme) => ({
     color: `black`,
     fontWeight: 600,
     fontSize: `0.9rem`,
+  },
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    fontWeight: 400,
+    // cursor: 'no-drop',
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    // pointerEvents: 'none',
+
+    marginTop: `3rem`,
   },
 }))
 
@@ -169,6 +193,7 @@ function Account(props: {
 }
 export function BankTransfer() {
   const { classes } = useStyles()
+  const [click, setClick] = useState(false)
   const [account, setAccount] = useState({
     id: 1,
   })
@@ -178,12 +203,12 @@ export function BankTransfer() {
   //     <Icon size="1.4rem" stroke={1.5} />
   //   </ActionIcon>
   // ));
+  const handleClick = () => {
+    setClick(true)
+  }
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        {/* <div className={classes.topheading}>
-          <div className={classes.title}>Bank Transfer</div>
-        </div> */}
         <Heading title="Bank Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
@@ -194,14 +219,28 @@ export function BankTransfer() {
           <div className={classes.accountContainer}>
             {fetchedAccount.map((ele) => {
               return (
-                <span key={ele.id}>
+                <span key={ele.id} onClick={handleClick}>
                   <Account setAccount={setAccount} accountdata={ele} />
                 </span>
               )
             })}
           </div>
+          <div className={classes.buttonContainer}>
+            <Link href="/home">
+              <div className={classes.button1}>Back</div>
+            </Link>
+            {click ? (
+              <Link href="/bank-transfer/select-beneficiary">
+                <div className={classes.button1}>Continue</div>
+              </Link>
+            ) : (
+              <div className={classes.button1} style={{ cursor: 'no-drop' }}>
+                Continue
+              </div>
+            )}
+          </div>
 
-          <ButtonGroup href1="/home" href2="/bank-transfer/select-beneficiary" />
+          {/* <ButtonGroup href1="/home" href2="/bank-transfer/select-beneficiary" /> */}
         </div>
       </div>
     </div>

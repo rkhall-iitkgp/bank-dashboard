@@ -1,7 +1,8 @@
-import { createStyles, getStylesRef, TextInput } from '@mantine/core'
+import { createStyles, getStylesRef, Text, TextInput } from '@mantine/core'
 import { hasLength, isNotEmpty, useForm } from '@mantine/form'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { SetStateAction, useState } from 'react'
 import Heading from '../reusable-components/Heading'
 
 const useStyles = createStyles((theme) => ({
@@ -169,6 +170,14 @@ const useStyles = createStyles((theme) => ({
       background: '#558ac9',
     },
   },
+  buttonVerify: {
+    // height:``,
+    // width: `100px`,
+    // backgroundColor: `#ffffff`,
+    marginRight: '60px',
+    // cursor: 'pointer',
+    // borderRadius:,
+  },
   payingtext: {
     paddingTop: `0.25rem`,
     fontWeight: 600,
@@ -190,7 +199,7 @@ export function PaymentForm() {
     },
 
     validate: {
-      name: hasLength({ min: 2, max: 10 }, 'Name must be 2-10 characters long'),
+      name: hasLength({ min: 2, max: 16 }, 'Name must be 2-16 characters long'),
       upi_id: isNotEmpty('Enter your upi id'),
       amount: isNotEmpty('Enter amount'),
     },
@@ -201,6 +210,49 @@ export function PaymentForm() {
   //     <Icon size="1.4rem" stroke={1.5} />
   //   </ActionIcon>
   // ));
+  const [style2, setStyle2] = useState({
+    color: '#0062D6',
+    fontFamily: 'Montserrat',
+    fontWeight: 400,
+    fontSize: '18px',
+    cursor: 'pointer',
+  })
+  const [buttonText, setButtonText] = useState('Verify')
+
+  function handleClick1() {
+    if (form.values.upi_id !== '') {
+      setStyle2({
+        color: '#00AD30',
+        fontFamily: 'Montserrat',
+        fontWeight: 600,
+        fontSize: '18px',
+        cursor: 'pointer',
+      })
+      setButtonText('Verified')
+    }
+  }
+  function handleClick2() {}
+  const handleChange = () => {
+    if (form.values.upi_id === '') {
+      setStyle2({
+        color: '#0062D6',
+        fontFamily: 'Montserrat',
+        fontWeight: 400,
+        fontSize: '18px',
+        cursor: 'no-drop',
+      })
+      setButtonText('Verify')
+    } else {
+      setStyle2({
+        color: '#0062D6',
+        fontFamily: 'Montserrat',
+        fontWeight: 400,
+        fontSize: '18px',
+        cursor: 'pointer',
+      })
+      setButtonText('Verify')
+    }
+  }
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
@@ -258,8 +310,19 @@ export function PaymentForm() {
                 label: classes.inputLabel,
                 root: classes.enterAmountContainer,
               }}
-              required
               {...form.getInputProps('upi_id')}
+              rightSection={
+                <Text
+                  className={classes.buttonVerify}
+                  style={style2}
+                  onClick={
+                    form.values.upi_id !== '' ? handleClick1 : handleClick2
+                  }
+                >
+                  {buttonText}
+                </Text>
+              }
+              required
             />
             <TextInput
               variant="unstyled"
@@ -280,17 +343,31 @@ export function PaymentForm() {
             <Link href="/UPI/verify-upi-id">
               <div className={classes.button1}>Back</div>
             </Link>
-            <div
-              className={classes.button1}
-              onClick={() => {
-                form.validate()
-                if (form.isValid()) {
-                  router.push('/UPI/payment-details-review')
-                }
-              }}
-            >
-              Continue
-            </div>
+            {buttonText !== 'Verify' ? (
+              <div
+                className={classes.button1}
+                onClick={() => {
+                  form.validate()
+                  if (form.isValid()) {
+                    router.push(
+                      `/UPI/payment-details-review?name=${form.values.name}&amount=${form.values.amount}&upi=${form.values.upi_id}`,
+                    )
+                  }
+                }}
+              >
+                Continue
+              </div>
+            ) : (
+              <div
+                className={classes.button1}
+                style={{ cursor: 'no-drop' }}
+                onClick={() => {
+                  form.validate()
+                }}
+              >
+                Continue
+              </div>
+            )}
           </div>
           {/* <ButtonGroup href1="/UPI/Verify" href2="/UPI/Review" /> */}
         </div>

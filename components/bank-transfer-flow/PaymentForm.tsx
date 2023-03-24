@@ -1,7 +1,7 @@
 import { Box, createStyles, TextInput } from '@mantine/core'
-import { hasLength, isNotEmpty, useForm } from '@mantine/form'
+import { hasLength, isNotEmpty, matches, useForm } from '@mantine/form'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { Router, useRouter } from 'next/router'
 import { useState } from 'react'
 import Heading from '../reusable-components/Heading'
 
@@ -55,7 +55,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
-    width: `40vw`,
+    width: `600px`,
     color: `#0052B3`,
   },
 
@@ -99,7 +99,7 @@ const useStyles = createStyles((theme) => ({
   },
   forminside: {
     maxWidth: `90%`,
-    width: `40vw`,
+    width: `500px`,
     padding: theme.spacing.xl,
     margin: `auto`,
   },
@@ -130,7 +130,7 @@ const useStyles = createStyles((theme) => ({
   amountbox: {
     backgroundColor: theme.white,
     borderRadius: theme.radius.md,
-    boxShadow: `0px 6px 20px rgba(0, 0, 0, 0.2)`,
+    // boxShadow: `0px 6px 20px rgba(0, 0, 0, 0.2)`,
     width: `auto`,
     fontFamily: `Montserrat`,
     color: `#0052B3`,
@@ -189,9 +189,11 @@ const useStyles = createStyles((theme) => ({
 
 export function PaymentForm(props: { sbi: any }) {
   const { classes } = useStyles()
+  const [click, setClick] = useState(false)
 
   const [otp, setOtp] = useState(false)
   const router = useRouter()
+  const data = router.query
 
   const form = useForm({
     initialValues: {
@@ -203,9 +205,12 @@ export function PaymentForm(props: { sbi: any }) {
     },
 
     validate: {
-      name: hasLength({ min: 2, max: 10 }, 'Name must be 2-10 characters long'),
+      name: hasLength({ min: 2, max: 16 }, 'Name must be 2-16 characters long'),
       accountno: isNotEmpty('Enter your account no'),
-      reaccountno: isNotEmpty('Re-Enter your account no'),
+      // reaccountno: matches(accountno, 'Re-Enter your account no'),
+      reaccountno: (value, values) =>
+        value !== values.accountno ? 'Re-Enter your account no' : null,
+
       amount: isNotEmpty('Enter amount'),
       // ifsc: isNotEmpty('Enter IFSC'),
     },
@@ -213,133 +218,154 @@ export function PaymentForm(props: { sbi: any }) {
 
   return (
     <Box component="form" mx="auto" onSubmit={form.onSubmit(() => {})}>
-      <form onSubmit={form.onSubmit(console.log)}>
-        <div className={classes.wrapper}>
-          <div className={classes.form}>
-            <Heading title="Bank Transfer" />
-            <div className={classes.forminside}>
-              <div className={classes.titlebox}>
-                <div className={classes.titlebold}>
-                  <span>Pay Beneficiary</span>
+      {/* <form onSubmit={form.onSubmit(console.log)}> */}
+      <div className={classes.wrapper}>
+        <div className={classes.form}>
+          <Heading title="Bank Transfer" />
+          <div className={classes.forminside}>
+            <div className={classes.titlebox}>
+              <div className={classes.titlebold}>
+                <span>Pay Beneficiary</span>
+              </div>
+              <div className={classes.amountbox}>
+                <div className={classes.amountinside}>
+                  <span>Balance:</span>{' '}
+                  <span className={classes.balance}> $5678.00</span>
                 </div>
-                <div className={classes.amountbox}>
-                  <div className={classes.amountinside}>
-                    <span>Balance:</span>{' '}
-                    <span className={classes.balance}> $5678.00</span>
+                <div className={classes.accountnumber}>XXXXXXXX1234</div>
+              </div>
+            </div>
+            <div className={classes.beficiaryformcontainer}>
+              <TextInput
+                placeholder="Name*"
+                mt="md"
+                required
+                withAsterisk
+                classNames={{
+                  input: classes.input,
+                  label: classes.inputLabel,
+                  root: classes.inputcontainer,
+                }}
+                {...form.getInputProps('name')}
+              />
+              <TextInput
+                placeholder="Account Number*"
+                type={'number'}
+                required
+                withAsterisk
+                classNames={{
+                  input: classes.input,
+                  label: classes.inputLabel,
+                  root: classes.inputcontainer,
+                }}
+                {...form.getInputProps('accountno')}
+              />
+              <TextInput
+                placeholder="Re-enter Account Number*"
+                type={'number'}
+                required
+                withAsterisk
+                classNames={{
+                  input: classes.input,
+                  label: classes.inputLabel,
+                  root: classes.inputcontainer,
+                }}
+                {...form.getInputProps('reaccountno')}
+              />
+              <TextInput
+                placeholder="Enter Amount*"
+                type={'number'}
+                mt="md"
+                required
+                withAsterisk
+                classNames={{
+                  input: classes.input,
+                  label: classes.inputLabel,
+                  root: classes.inputcontainer,
+                }}
+                {...form.getInputProps('amount')}
+              />
+              {data.ifsc === 'true' ? (
+                <>
+                  <TextInput
+                    placeholder="IFSC*"
+                    mt="md"
+                    classNames={{
+                      input: classes.input,
+                      label: classes.inputLabel,
+                      root: classes.inputcontainer,
+                    }}
+                    {...form.getInputProps('ifsc')}
+                    required
+                  />
+                  <div className={classes.description}>
+                    The user is responsible for ensuring the accuracy of the
+                    account number, name, and IFSC code entered, and the bank
+                    will not be held liable for any losses resulting from
+                    incorrect information
                   </div>
-                  <div className={classes.accountnumber}>XXXXXXXX1234</div>
-                </div>
-              </div>
-              <div className={classes.beficiaryformcontainer}>
-                <TextInput
-                  placeholder="Name*"
-                  mt="md"
-                  required
-                  withAsterisk
-                  classNames={{
-                    input: classes.input,
-                    label: classes.inputLabel,
-                    root: classes.inputcontainer,
-                  }}
-                  {...form.getInputProps('name')}
-                />
-                <TextInput
-                  placeholder="Account Number*"
-                  type={'number'}
-                  required
-                  withAsterisk
-                  classNames={{
-                    input: classes.input,
-                    label: classes.inputLabel,
-                    root: classes.inputcontainer,
-                  }}
-                  {...form.getInputProps('accountno')}
-                />
-                <TextInput
-                  placeholder="Re-enter Account Number*"
-                  type={'number'}
-                  required
-                  withAsterisk
-                  classNames={{
-                    input: classes.input,
-                    label: classes.inputLabel,
-                    root: classes.inputcontainer,
-                  }}
-                  {...form.getInputProps('reaccountno')}
-                />
-                <TextInput
-                  placeholder="Enter Amount*"
-                  type={'number'}
-                  mt="md"
-                  required
-                  withAsterisk
-                  classNames={{
-                    input: classes.input,
-                    label: classes.inputLabel,
-                    root: classes.inputcontainer,
-                  }}
-                  {...form.getInputProps('amount')}
-                />
-                {props.sbi ? (
-                  <>
-                    <TextInput
-                      placeholder="IFSC*"
-                      mt="md"
-                      classNames={{
-                        input: classes.input,
-                        label: classes.inputLabel,
-                        root: classes.inputcontainer,
-                      }}
-                      {...form.getInputProps('ifsc')}
-                      required
-                    />
-                    <div className={classes.description}>
-                      The user is responsible for ensuring the accuracy of the
-                      account number, name, and IFSC code entered, and the bank
-                      will not be held liable for any losses resulting from
-                      incorrect information
-                    </div>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </div>
-              {otp ? (
-                <TextInput
-                  placeholder="OTP"
-                  type={'number'}
-                  required
-                  mt="md"
-                  classNames={{
-                    input: classes.input,
-                    label: classes.inputLabel,
-                    root: classes.inputcontainer,
-                  }}
-                />
+                </>
               ) : (
                 <></>
               )}
+            </div>
+            {otp ? (
+              <TextInput
+                placeholder="OTP"
+                type={'number'}
+                required
+                mt="md"
+                classNames={{
+                  input: classes.input,
+                  label: classes.inputLabel,
+                  root: classes.inputcontainer,
+                }}
+              />
+            ) : (
+              <></>
+            )}
 
-              <div className={classes.buttoncontainer}>
-                <Link href="/bank-transfer/select-beneficiary">
-                  <div className={classes.button1}>Back</div>
+            <div className={classes.buttoncontainer}>
+              <Link href="/bank-transfer/select-beneficiary">
+                <div className={classes.button1}>Back</div>
+              </Link>
+              <div
+                className={classes.button1}
+                onClick={() => {
+                  form.validate()
+                  if (form.isValid()) {
+                    router.push(
+                      `/bank-transfer/review-payment-details?name=${form.values.name}&amount=${form.values.amount}&ifsc=${form.values.ifsc}&accountNo=${form.values.accountno}`,
+                    )
+                  }
+                }}
+              >
+                Continue
+              </div>
+              {/* {click ? (
+                <Link
+                  href={{
+                    pathname: '/bank-transfer/review-payment-details',
+                    query: {},
+                  }}
+                >
+                  <div className={classes.button1}>Continue</div>
                 </Link>
+              ) : (
                 <div
                   className={classes.button1}
                   onClick={() => {
                     form.validate()
-                    if (form.isValid()) {
-                      router.push('/bank-transfer/review-payment-details')
-                    }
                   }}
                 >
                   Continue
                 </div>
-              </div>
+              )} */}
             </div>
           </div>
         </div>
-      </form>
+      </div>
+      {/* </form> */}
     </Box>
   )
 }
