@@ -23,13 +23,13 @@ a {
     background: black;
   }
 }
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 0.5rem;
 }
-::-webkit-scrollbar-track{
+::-webkit-scrollbar-track {
   background: white;
 }
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
   background: #0062d6;
   border-radius: 5px;
 }
