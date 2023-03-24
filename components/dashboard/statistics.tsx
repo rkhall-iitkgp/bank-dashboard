@@ -70,7 +70,7 @@ const BalanceChart = (props: {
 const SpendingDonut = (props: {
   values: number[]
   legends: string[]
-  setSelection: Function,
+  setSelection: Function
   setValue: Function
 }) => {
   return (
@@ -82,8 +82,8 @@ const SpendingDonut = (props: {
           type: 'donut',
           events: {
             dataPointSelection(e, chart, options) {
-              props.setSelection(parseInt(e?.target?.getAttribute('j')));
-              props.setValue(parseInt(e?.target?.getAttribute('data:value')));
+              props.setSelection(parseInt(e?.target?.getAttribute('j')))
+              props.setValue(parseInt(e?.target?.getAttribute('data:value')))
             },
           },
         },
@@ -168,8 +168,8 @@ const ArticlesData = [
 
 const FinancialStatistics = () => {
   const [categoryIndex, setCategoryIndex] = useState(-1)
-  const [modeIndex, setModeIndex] = useState(-1);
-  const [catValue, setCatValue] = useState(-1);
+  const [modeIndex, setModeIndex] = useState(-1)
+  const [catValue, setCatValue] = useState(-1)
 
   return (
     <Card
@@ -194,7 +194,8 @@ const FinancialStatistics = () => {
               Back
             </Button>
             <Text mx={20} c={'#4D4B4B'} ff="Montserrat" fz={28} fw={800}>
-              Category: {`${PieCategoryData[categoryIndex].mode}` + ` (${catValue}%) `}
+              Category:{' '}
+              {`${PieCategoryData[categoryIndex].mode}` + ` (${catValue}%) `}
             </Text>
           </Group>
         )}
@@ -204,18 +205,23 @@ const FinancialStatistics = () => {
             Financial Statistics
           </Text>
         )}
-
       </Card.Section>
 
-      <Group align={'flex-end'} style={{
-        flex: 1, maxHeight: "28rem", overflow: 'auto',
-      }}>
-        {categoryIndex == -1 &&
+      <Group
+        align={'flex-end'}
+        style={{
+          flex: 1,
+          maxHeight: '28rem',
+          overflow: 'auto',
+        }}
+      >
+        {categoryIndex == -1 && (
           <BalanceChart
             balanceData={TotalBalanceData}
             color="#008FFB"
             width={600}
-          />}
+          />
+        )}
         <Stack style={{ flex: 1 }} align="center">
           <SpendingDonut
             setSelection={setCategoryIndex}
@@ -228,7 +234,7 @@ const FinancialStatistics = () => {
               setSelection={setModeIndex}
               values={PieModeData.map((v) => v.value)}
               legends={PieModeData.map((v) => v.mode)}
-              setValue={(v: number) => { }}
+              setValue={(v: number) => {}}
             />
           )}
           {categoryIndex != -1 && (
@@ -245,13 +251,16 @@ const FinancialStatistics = () => {
 
         {categoryIndex != -1 && (
           <Stack mx={40} style={{ flex: 3 }}>
-            <div style={{
-              // border: "1px solid rgb(131 131 131 / 30%)", 
-              borderRadius: "1rem",
-              padding: "1px",
-              boxShadow: "0px 1px 10px rgba(0, 0, 0, 0.1)"
-            }}>
-              <RecentTransactions /></div>
+            <div
+              style={{
+                // border: "1px solid rgb(131 131 131 / 30%)",
+                borderRadius: '1rem',
+                padding: '1px',
+                boxShadow: '0px 1px 10px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <RecentTransactions />
+            </div>
             <InsightCard insights={InsightList} />
             <ArticlesCard articles={ArticlesData} />
           </Stack>

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { Button, Container, createStyles, Radio, Tabs } from '@mantine/core'
+import { Button, createStyles, Radio, Tabs } from '@mantine/core'
 import Image from 'next/image'
+import { useState } from 'react'
 import useStorage from '../../hooks/useStorage'
 
 const useStyles = createStyles((theme) => ({

@@ -3,7 +3,7 @@ import {
   Button,
   ButtonProps,
   createPolymorphicComponent,
-  Image
+  Image,
 } from '@mantine/core'
 
 const Oflex = styled.div`

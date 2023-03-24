@@ -81,7 +81,7 @@ const Filter = () => {
   const [id, setId] = useState(1)
   const accounts = [8989, 4235]
   const [account, setAccount] = useState(0)
-  const [haveConsent, setHaveConsent] = useState(false);
+  const [haveConsent, setHaveConsent] = useState(false)
 
   return (
     <div style={{ width: '585px', paddingLeft: 50 }}>
@@ -132,9 +132,12 @@ const Filter = () => {
         </Group>
       </div>
 
-      {!haveConsent &&
-        <Checkbox label="By clicking this, I provide my consent to allow the bank to process my transaction data." mb={10} />
-      }
+      {!haveConsent && (
+        <Checkbox
+          label="By clicking this, I provide my consent to allow the bank to process my transaction data."
+          mb={10}
+        />
+      )}
 
       <div>
         {account !== 0 && (
