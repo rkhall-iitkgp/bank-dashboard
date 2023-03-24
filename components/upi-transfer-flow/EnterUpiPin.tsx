@@ -126,13 +126,6 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-function Demo() {
-  return (
-    <Group position="center">
-      <PinInput placeholder="" />
-    </Group>
-  )
-}
 export function EnterUPIpin() {
   const { classes } = useStyles()
   const router = useRouter()
@@ -149,8 +142,11 @@ export function EnterUPIpin() {
             </div>
           </div>
           <div className={classes.description}>
-            <Demo />
+            <Group position="center">
+              <PinInput placeholder="" />
+            </Group>
           </div>
+
           {/* <ButtonGroup href1="/UPI/payment-details-review" href2="/UPI/payment-success" /> */}
           <div className={classes.buttoncontainer}>
             <Link href="/UPI/payment-details-review">

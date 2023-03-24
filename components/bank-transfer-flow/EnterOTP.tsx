@@ -162,6 +162,7 @@ const useStyles = createStyles((theme) => ({
 
   resndotp: {
     textAlign: `end`,
+    cursor: 'pointer',
     color: `#0052B3`,
     ':hover': {
       color: `#68a7f3`,

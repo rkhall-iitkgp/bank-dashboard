@@ -175,7 +175,7 @@ const useStyles = createStyles((theme) => ({
     // width: `100px`,
     // backgroundColor: `#ffffff`,
     marginRight: '60px',
-    cursor: 'no-drop',
+    // cursor: 'pointer',
     // borderRadius:,
   },
   payingtext: {
@@ -217,11 +217,10 @@ export function PaymentForm() {
     fontSize: '18px',
     cursor: 'pointer',
   })
-  const [upiValue, setupiValue] = useState('fg')
   const [buttonText, setButtonText] = useState('Verify')
 
-  function handleClick() {
-    if (upiValue !== '') {
+  function handleClick1() {
+    if (form.values.upi_id !== '') {
       setStyle2({
         color: '#00AD30',
         fontFamily: 'Montserrat',
@@ -230,8 +229,11 @@ export function PaymentForm() {
         cursor: 'pointer',
       })
       setButtonText('Verified')
-    } else {
-      setButtonText('Verify')
+    }
+  }
+  function handleClick2() {}
+  const handleChange = () => {
+    if (form.values.upi_id === '') {
       setStyle2({
         color: '#0062D6',
         fontFamily: 'Montserrat',
@@ -239,6 +241,16 @@ export function PaymentForm() {
         fontSize: '18px',
         cursor: 'no-drop',
       })
+      setButtonText('Verify')
+    } else {
+      setStyle2({
+        color: '#0062D6',
+        fontFamily: 'Montserrat',
+        fontWeight: 400,
+        fontSize: '18px',
+        cursor: 'pointer',
+      })
+      setButtonText('Verify')
     }
   }
   return (
@@ -298,17 +310,19 @@ export function PaymentForm() {
                 label: classes.inputLabel,
                 root: classes.enterAmountContainer,
               }}
+              {...form.getInputProps('upi_id')}
               rightSection={
                 <Text
                   className={classes.buttonVerify}
                   style={style2}
-                  onClick={handleClick}
+                  onClick={
+                    form.values.upi_id !== '' ? handleClick1 : handleClick2
+                  }
                 >
                   {buttonText}
                 </Text>
               }
               required
-              {...form.getInputProps('upi_id')}
             />
             <TextInput
               variant="unstyled"
@@ -329,19 +343,31 @@ export function PaymentForm() {
             <Link href="/UPI/verify-upi-id">
               <div className={classes.button1}>Back</div>
             </Link>
-            <div
-              className={classes.button1}
-              onClick={() => {
-                form.validate()
-                if (form.isValid()) {
-                  router.push(
-                    `/UPI/payment-details-review?name=${form.values.name}&amount=${form.values.amount}&upi=${form.values.upi_id}`,
-                  )
-                }
-              }}
-            >
-              Continue
-            </div>
+            {buttonText !== 'Verify' ? (
+              <div
+                className={classes.button1}
+                onClick={() => {
+                  form.validate()
+                  if (form.isValid()) {
+                    router.push(
+                      `/UPI/payment-details-review?name=${form.values.name}&amount=${form.values.amount}&upi=${form.values.upi_id}`,
+                    )
+                  }
+                }}
+              >
+                Continue
+              </div>
+            ) : (
+              <div
+                className={classes.button1}
+                style={{ cursor: 'no-drop' }}
+                onClick={() => {
+                  form.validate()
+                }}
+              >
+                Continue
+              </div>
+            )}
           </div>
           {/* <ButtonGroup href1="/UPI/Verify" href2="/UPI/Review" /> */}
         </div>

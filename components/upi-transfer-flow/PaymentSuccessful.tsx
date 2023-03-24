@@ -132,7 +132,7 @@ export default function PaymentSuccessPage() {
             <StyledTexthead>Payment Successful</StyledTexthead>
             <Image src="/images/tick.png" width={65} height={65} alt="" />
             <StyledTexthead2>
-              You have successfully paid {data.name}
+              You have successfully paid &nbsp;<b>{data.name}</b>
             </StyledTexthead2>
             <StyledTexthead3>₹{data.amount}</StyledTexthead3>
             <StyledTexthead4>

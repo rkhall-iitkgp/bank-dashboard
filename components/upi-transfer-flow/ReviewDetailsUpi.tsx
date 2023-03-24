@@ -131,7 +131,7 @@ const useStyles = createStyles((theme) => ({
   inputcontainer: {
     backgroundColor: 'white',
     position: `relative`,
-    // paddingTop:`0.75rem`,
+    paddingTop: `0.75rem`,
     marginTop: `0 !important`,
   },
   enterAmountContainer: {
@@ -152,14 +152,31 @@ const useStyles = createStyles((theme) => ({
   },
   beficiaryformcontainer: {
     width: `90%`,
-    paddingTop: `2%`,
+    // paddingTop: `2%`,
     margin: `auto`,
   },
-  buttoncontainer: {
-    display: `flex`,
-    justifyContent: `space-between   `,
-    // margin:`1rem`,
-    marginTop: `2rem`,
+  button1: {
+    background: '#0062D6',
+    borderRadius: '30px',
+    width: '150px',
+    fontFamily: 'Montserrat',
+    color: 'white',
+    fontSize: '1.25rem',
+    padding: '5px 15px',
+    textAlign: 'center',
+    fontWeight: 400,
+    // cursor: 'no-drop',
+    '&:hover': {
+      background: '#558ac9',
+    },
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    // pointerEvents: 'none',
+
+    margin: `2rem 0`,
   },
   button: {
     width: `150px`,
@@ -199,29 +216,7 @@ const useStyles = createStyles((theme) => ({
     textAlign: `end`,
     alignItems: `center`,
   },
-  button1: {
-    background: '#0062D6',
-    borderRadius: '30px',
-    width: '150px',
-    fontFamily: 'Montserrat',
-    color: 'white',
-    fontSize: '1.25rem',
-    padding: '5px 15px',
-    textAlign: 'center',
-    fontWeight: 400,
-    // cursor: 'no-drop',
-    '&:hover': {
-      background: '#558ac9',
-    },
-  },
 
-  buttonContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    // pointerEvents: 'none',
-
-    marginTop: `3rem`,
-  },
   balance: {
     color: '#0052B3',
     fontSize: `1.2rem`,
@@ -248,9 +243,6 @@ export function ReviewDetailsUpi() {
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        {/* <div className={classes.topheading}>
-          <div className={classes.title}>UPI Transfer</div>
-        </div> */}
         <Heading title="UPI Transfer" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
@@ -272,32 +264,6 @@ export function ReviewDetailsUpi() {
               disabled
               required
             />
-            {/* {data.ifsc === 'true' ? (
-              <>
-                <TextInput
-                  placeholder="IFSC*"
-                  type={'number'}
-                  name="ifsc"
-                  // onChange={handleChange}
-                  value={benD.ifsc}
-                  mt="md"
-                  classNames={{
-                    input: classes.input,
-                    label: classes.inputLabel,
-                    root: classes.inputcontainer,
-                  }}
-                  required
-                />
-                <div className={classes.description}>
-                  The user is responsible for ensuring the accuracy of the
-                  account number, name, and IFSC code entered, and the bank will
-                  not be held liable for any losses resulting from incorrect
-                  information
-                </div>
-              </>
-            ) : (
-              <></>
-            )} */}
           </div>
           <TextInput
             label="UPI ID"
@@ -353,7 +319,7 @@ export function ReviewDetailsUpi() {
           />
         </div>
         {/* <ButtonGroup href1="/UPI/payment-details" href2=`/UPI/enter-pin?name=${data.name}&amount=${form.values.amount}&upi=${form.values.upi_id}` /> */}
-        <div className={classes.buttoncontainer}>
+        <div className={classes.buttonContainer}>
           <Link href="/UPI/payment-details">
             <div className={classes.button1}>Back</div>
           </Link>

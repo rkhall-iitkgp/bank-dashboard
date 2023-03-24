@@ -132,10 +132,7 @@ export default function PaymentSuccessful() {
             </StyledTexthead3>
             <StyledTexthead3>
               A/c No. :{' '}
-              <span style={{ color: 'black' }}>
-                {' '}
-                &nbsp;{data.accountNumber}
-              </span>
+              <span style={{ color: 'black' }}> &nbsp;{data.accountNo}</span>
             </StyledTexthead3>
             <StyledTexthead4></StyledTexthead4>
           </StyledBotCont>

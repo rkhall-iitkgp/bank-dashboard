@@ -123,18 +123,19 @@ const useStyles = createStyles((theme) => ({
     flexDirection: `column`,
     alignItems: `center`,
     justifyContent: `center`,
+    cursor: 'pointer',
     ':hover': {
-      border: `2px dotted #0052B3;`,
-      boxShadow: ` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
+      border: `2px solid #040e1b;`,
+      boxShadow: ` 0px 4px 10px rgba(0, 0, 0, 0.25)`,
     },
     ':active': {
-      border: `2px dotted #0052B3;`,
+      border: `2px solid #03080f;`,
       boxShadow: ` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
     },
   },
   active: {
     boxShadow: ` inset 0px 4px 10px rgba(0, 0, 0, 0.25)`,
-    border: `2px solid #0052B3`,
+    border: `2px solid #03080f;`,
   },
   bankname: {
     lineHeight: `0.9rem`,

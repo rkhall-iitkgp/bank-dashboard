@@ -1,5 +1,5 @@
 import { Box, createStyles, TextInput } from '@mantine/core'
-import { hasLength, isNotEmpty, useForm } from '@mantine/form'
+import { hasLength, isNotEmpty, matches, useForm } from '@mantine/form'
 import Link from 'next/link'
 import { Router, useRouter } from 'next/router'
 import { useState } from 'react'
@@ -207,7 +207,10 @@ export function PaymentForm(props: { sbi: any }) {
     validate: {
       name: hasLength({ min: 2, max: 16 }, 'Name must be 2-16 characters long'),
       accountno: isNotEmpty('Enter your account no'),
-      reaccountno: isNotEmpty('Re-Enter your account no'),
+      // reaccountno: matches(accountno, 'Re-Enter your account no'),
+      reaccountno: (value, values) =>
+        value !== values.accountno ? 'Re-Enter your account no' : null,
+
       amount: isNotEmpty('Enter amount'),
       // ifsc: isNotEmpty('Enter IFSC'),
     },

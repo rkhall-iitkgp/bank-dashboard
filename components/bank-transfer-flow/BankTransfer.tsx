@@ -95,7 +95,7 @@ const useStyles = createStyles((theme) => ({
   account: {
     width: `100px`,
     height: `100px`,
-    background: `rgba(0, 82, 179, 0.1)`,
+    background: `rgba(255, 255, 255, 0.996)`,
     borderRadius: `30px`,
     margin: `10px`,
     padding: `10px`,
