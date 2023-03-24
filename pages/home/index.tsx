@@ -1,5 +1,5 @@
 import type { NextPage, GetServerSideProps } from 'next'
-import BankAccount from '../../components/home/add-bank-account/bank_account'
+import BankAccount from '../../components/home/add-bank-account/AddBankAccountSection'
 import Payment from '../../components/home/make-payment-section'
 import Navbar from '../../components/home/navbar/navbar'
 import OfferCardsRow from '../../components/home/offers-referal-section/OfferCardsRow'

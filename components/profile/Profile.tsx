@@ -383,17 +383,19 @@ const Profile = () => {
     user_id: number
   }
   const { getItem } = useStorage()
-  const accountlist = getItem('accounts', 'session')
-  const accountsp: Account[] = JSON.parse(accountlist ?? '')
+  const accountList = getItem('accounts', 'session')
+  const accountsp: Account[] = accountList
+    ? JSON.parse(accountList)
+    : ([] as Account[])
 
   // const accounts: string[] = accountsp.map(account => account.account_no);
-  const accounts: string[] = accountsp.map(
+  const accounts: string[] = accountsp?.map(
     (account) => '****' + account.account_no.substr(-4),
   )
   // const accounts = [8989, 4235, 7382]
   const [accountselected, setAccountselected] = useState<any>()
   const [activeTab, setActiveTab] = useState<string | null>(
-    accounts[0].toString(),
+    accounts[0]?.toString(),
   )
   return (
     <div className={classes.wrapper}>
@@ -466,7 +468,7 @@ const Profile = () => {
                       setAccountselected(ele)
                     }}
                     className={
-                      activeTab === ele.toString()
+                      activeTab === ele?.toString()
                         ? classes.active
                         : classes.tabs
                     }
