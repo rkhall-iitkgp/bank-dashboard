@@ -209,7 +209,7 @@ export function PaymentForm(props: { sbi: any }) {
       accountno: isNotEmpty('Enter your account no'),
       reaccountno: isNotEmpty('Re-Enter your account no'),
       amount: isNotEmpty('Enter amount'),
-      ifsc: isNotEmpty('Enter IFSC'),
+      // ifsc: isNotEmpty('Enter IFSC'),
     },
   })
 
