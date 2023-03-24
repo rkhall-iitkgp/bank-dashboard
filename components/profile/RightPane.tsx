@@ -55,7 +55,6 @@ const useStyles = createStyles((theme) => ({
     background: `white`,
     boxShadow: ` 0px 4px 40px rgba(0, 0, 0, 0.2)`,
     borderRadius: ' 0px 30px 30px 30px',
-    
   },
   tablist: {
     width: `90%`,

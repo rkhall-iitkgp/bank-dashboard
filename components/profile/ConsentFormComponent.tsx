@@ -90,84 +90,77 @@ interface Props {
 }
 const ConsentFormComponent = ({ id, accountselected }: Props) => {
   const { classes } = useStyles()
-  const [data, setData] = useState<string>('')
-  const [transaction, setTransaction] = useState<string>('')
+  const [data, setData] = useState<string>('1')
+  const [transaction, setTransaction] = useState<string>('1')
   console.log('accountselected :', accountselected)
+
   return (
     <div key={`${accountselected}`} style={{ height: '100%' }}>
-      <div className={classes.heading}>Consent Form</div>
+      <div className={classes.heading}>Consent Form ${accountselected}</div>
       <div className={classes.form}>
         <div className={classes.formtitle}>This app would like to:</div>
         <div className={classes.questioncontainer}>
           <div className={classes.question}>Data Permissions:</div>
-          <Radio.Group value={data} onChange={setData} name="DATA">
-            <Radio
-              my={16}
-              name="unlimited-permission"
-              value="1"
-              label={
-                <span className={classes.answercontainer}>
-                  <span className={classes.answer}>Unlimited: </span>
-                  Permission to collect all transaction data for the purpose of
-                  providing better financial services.
-                </span>
-              }
-            />
-            <Radio
-              name="limited-permission"
-              value="2"
-              my={16}
-              label={
-                <span className={classes.answercontainer}>
-                  <span className={classes.answer}>Limited: </span> Asks for
-                  permission each time to access transaction data.
-                </span>
-              }
-            />
+          <Radio
+            checked={data === '1'}
+            onChange={(e: any) => setData('1')}
+            my={16}
+            label={
+              <span className={classes.answercontainer}>
+                <span className={classes.answer}>Unlimited: </span>
+                Permission to collect all transaction data for the purpose of
+                providing better financial services.
+              </span>
+            }
+          />
+          <Radio
+            checked={data === '2'}
+            onChange={(e: any) => setData('2')}
+            my={16}
+            label={
+              <span className={classes.answercontainer}>
+                <span className={classes.answer}>Limited: </span> Asks for
+                permission each time to access transaction data.
+              </span>
+            }
+          />
 
-            <Radio
-              name="no-permission"
-              value="3"
-              my={16}
-              label={
-                <span className={classes.answercontainer}>
-                  <span className={classes.answer}>None: </span> No permission
-                  to access transaction data.
-                </span>
-              }
-            />
-          </Radio.Group>
+          <Radio
+            checked={data === '3'}
+            onChange={(e: any) => setData('3')}
+            my={16}
+            label={
+              <span className={classes.answercontainer}>
+                <span className={classes.answer}>None: </span> No permission to
+                access transaction data.
+              </span>
+            }
+          />
         </div>
         <hr style={{ margin: `5px auto`, width: `70%` }} />
         <div className={classes.questioncontainer}>
           <div className={classes.question}>Transaction Permissions:</div>
-          <Radio.Group
-            value={transaction}
-            onChange={setTransaction}
-            name="transaction-permissions"
-          >
-            <Radio
-              name="allow"
-              value="1"
-              label={
-                <span className={classes.answercontainer}>
-                  <span className={classes.answer}>Allow</span> transaction from
-                  this account
-                </span>
-              }
-              my={16}
-            />
-            <Radio
-              name="do-not-allow"
-              value="2"
-              label={
-                <span className={classes.answercontainer}>
-                  <span className={classes.answer}>Do not allow</span>{' '}
-                  Transaction from this account
-                </span>
-              }
-            />
-          </Radio.Group>
+          <Radio
+            checked={transaction === '1'}
+            onChange={(e: any) => setTransaction('1')}
+            label={
+              <span className={classes.answercontainer}>
+                <span className={classes.answer}>Allow</span> transaction from
+                this account
+              </span>
+            }
+            my={16}
+          />
+          <Radio
+            checked={transaction === '2'}
+            onChange={(e: any) => setTransaction('2')}
+            label={
+              <span className={classes.answercontainer}>
+                <span className={classes.answer}>Do not allow</span> Transaction
+                from this account
+              </span>
+            }
+          />
         </div>
         <div className={classes.button}>
           <Button
