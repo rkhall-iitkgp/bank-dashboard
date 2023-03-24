@@ -55,6 +55,7 @@ const useStyles = createStyles((theme) => ({
     background: `white`,
     boxShadow: ` 0px 4px 40px rgba(0, 0, 0, 0.2)`,
     borderRadius: ' 0px 30px 30px 30px',
+    
   },
   tablist: {
     width: `90%`,
@@ -70,7 +71,9 @@ const RightPane = ({ accounts }: Props) => {
   const [activeTab, setActiveTab] = useState<string | null>(
     accounts[0]?.toString(),
   )
-  const [accountselected, setAccountselected] = useState<any>()
+  const [accountselected, setAccountselected] = useState<any>(
+    String(accounts[0]) ?? '',
+  )
 
   return (
     <>

@@ -27,45 +27,43 @@ const useStyles = createStyles((theme) => ({
   },
   questioncontainer: {
     padding: `5px`,
-    ':first-of-type': {
-      marginTop: `1rem`,
-    },
+    marginTop: '1.8rem',
   },
   question: {
     fontSize: '1rem',
     color: `#4D4B4B`,
     fontWeight: 500,
+    marginBottom: '8px',
   },
   answer: {
     fontFamily: `Montserrat`,
     fontWeight: 600,
-    lineHeight: `1rem`,
+    // lineHeight: `2rem`,
   },
   radio: {
-    width: `20px`,
-    height: `20px`,
-    border: `2px solid #aaa`,
-    borderRadius: '5px',
-    WebkitAppearance: `none`,
-    appearance: `none`,
-    backgroundColor: `#fff`,
-    margin: `0 0.8rem`,
-    position: `relative`,
-    ':checked': {
-      '::before': {
-        content: `" "`,
-        position: `absolute`,
-        width: `14px`,
-        borderRadius: '2.5px',
-        height: `14px`,
-        inset: `0`,
-        margin: `1.2px`,
-        background: `black`,
-      },
-    },
+    // width: `20px`,
+    // height: `20px`,
+    // border: `2px solid #aaa`,
+    // borderRadius: '5px',
+    // WebkitAppearance: `none`,
+    // appearance: `none`,
+    // backgroundColor: `#fff`,
+    // margin: `0 0.8rem`,
+    // ':checked': {
+    //   '::before': {
+    //     content: `" "`,
+    //     width: `14px`,
+    //     borderRadius: '2.5px',
+    //     height: `14px`,
+    //     inset: `0`,
+    //     margin: `1.2px`,
+    //     background: `black`,
+    //   },
+    // },
   },
   answercontainer: {
     lineHeight: `1.2rem`,
+    fontSize: `1rem`,
   },
   control: {
     backgroundColor: `#006AE4`,
@@ -96,51 +94,48 @@ const ConsentFormComponent = ({ id, accountselected }: Props) => {
   const [transaction, setTransaction] = useState<string>('')
   console.log('accountselected :', accountselected)
   return (
-    <div key={`${accountselected}`}>
+    <div key={`${accountselected}`} style={{ height: '100%' }}>
       <div className={classes.heading}>Consent Form</div>
       <div className={classes.form}>
         <div className={classes.formtitle}>This app would like to:</div>
         <div className={classes.questioncontainer}>
           <div className={classes.question}>Data Permissions:</div>
-          <Radio.Group value={data} onChange={setData} name="DATA" withAsterisk>
-            <div style={{ display: 'flex', margin: `10px` }}>
-              <Radio
-                unstyled={true}
-                name="unlimited-permission"
-                value="1"
-                classNames={{ radio: classes.radio, icon: classes.icon }}
-              />
-              <label htmlFor={`${id}1`} className={classes.answercontainer}>
-                <span className={classes.answer}>Unlimited: </span> Permission
-                to collect all transaction data for the purpose of providing
-                better financial services.
-              </label>
-            </div>
-            <div style={{ display: 'flex', margin: `10px` }}>
-              <Radio
-                unstyled={true}
-                name="limited-permission"
-                value="2"
-                classNames={{ radio: classes.radio, icon: classes.icon }}
-              />
-              <label htmlFor={`${id}2`} className={classes.answercontainer}>
-                <span className={classes.answer}>Limited: </span> Asks for
-                permission each time to access transaction data.
-              </label>
-            </div>
+          <Radio.Group value={data} onChange={setData} name="DATA">
+            <Radio
+              my={16}
+              name="unlimited-permission"
+              value="1"
+              label={
+                <span className={classes.answercontainer}>
+                  <span className={classes.answer}>Unlimited: </span>
+                  Permission to collect all transaction data for the purpose of
+                  providing better financial services.
+                </span>
+              }
+            />
+            <Radio
+              name="limited-permission"
+              value="2"
+              my={16}
+              label={
+                <span className={classes.answercontainer}>
+                  <span className={classes.answer}>Limited: </span> Asks for
+                  permission each time to access transaction data.
+                </span>
+              }
+            />
 
-            <div style={{ display: 'flex', margin: `10px` }}>
-              <Radio
-                unstyled={true}
-                name="no-permission"
-                value="3"
-                classNames={{ radio: classes.radio, icon: classes.icon }}
-              />
-              <label htmlFor={`${id}3`} className={classes.answercontainer}>
-                <span className={classes.answer}>None: </span> No permission to
-                access transaction data.
-              </label>
-            </div>
+            <Radio
+              name="no-permission"
+              value="3"
+              my={16}
+              label={
+                <span className={classes.answercontainer}>
+                  <span className={classes.answer}>None: </span> No permission
+                  to access transaction data.
+                </span>
+              }
+            />
           </Radio.Group>
         </div>
         <hr style={{ margin: `5px auto`, width: `70%` }} />
@@ -150,34 +145,28 @@ const ConsentFormComponent = ({ id, accountselected }: Props) => {
             value={transaction}
             onChange={setTransaction}
             name="transaction-permissions"
-            withAsterisk
           >
-            <div style={{ display: 'flex', margin: `10px` }}>
-              <div style={{ display: `flex`, alignItems: `center` }}>
-                <Radio
-                  unstyled={true}
-                  name="allow"
-                  value="1"
-                  classNames={{ radio: classes.radio, icon: classes.icon }}
-                />
-              </div>
-              <label htmlFor={`${id}11`} className={classes.answercontainer}>
-                <span className={classes.answer}>Allow</span> transaction from
-                this account
-              </label>
-            </div>
-            <div style={{ display: 'flex', margin: `10px` }}>
-              <Radio
-                unstyled={true}
-                name="do-not-allow"
-                value="2"
-                classNames={{ radio: classes.radio, icon: classes.icon }}
-              />
-              <label htmlFor={`${id}22`} className={classes.answercontainer}>
-                <span className={classes.answer}>Do not allow</span> Transaction
-                from this account
-              </label>
-            </div>
+            <Radio
+              name="allow"
+              value="1"
+              label={
+                <span className={classes.answercontainer}>
+                  <span className={classes.answer}>Allow</span> transaction from
+                  this account
+                </span>
+              }
+              my={16}
+            />
+            <Radio
+              name="do-not-allow"
+              value="2"
+              label={
+                <span className={classes.answercontainer}>
+                  <span className={classes.answer}>Do not allow</span>{' '}
+                  Transaction from this account
+                </span>
+              }
+            />
           </Radio.Group>
         </div>
         <div className={classes.button}>
