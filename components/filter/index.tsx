@@ -7,6 +7,7 @@ import {
   PinInput,
   ButtonProps,
   createPolymorphicComponent,
+  Checkbox,
 } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
 import styled from '@emotion/styled'
@@ -70,7 +71,7 @@ const AccountSelect = (prop: {
       fz={'lg'}
       size="xl"
     >
-      <Image src={'icons/sbi.png'} mr={25} alt="sbi" />
+      <Image src={'icons/sbi.png'} height={25} mr={25} alt="sbi" />
       {account}
     </Button>
   )
@@ -80,9 +81,10 @@ const Filter = () => {
   const [id, setId] = useState(1)
   const accounts = [8989, 4235]
   const [account, setAccount] = useState(0)
+  const [haveConsent, setHaveConsent] = useState(false)
 
   return (
-    <div style={{ width: '585px' }}>
+    <div style={{ width: '585px', paddingLeft: 50 }}>
       <Group mb={20}>
         <Stack mr={40}>
           <Text c={'#656565'} fz={'lg'} style={{ letterSpacing: '0.1em' }}>
@@ -129,6 +131,13 @@ const Filter = () => {
           ))}
         </Group>
       </div>
+
+      {!haveConsent && (
+        <Checkbox
+          label="By clicking this, I provide my consent to allow the bank to process my transaction data."
+          mb={10}
+        />
+      )}
 
       <div>
         {account !== 0 && (

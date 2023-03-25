@@ -37,7 +37,7 @@ const MakePaymentCard = ({ imageAddress, cardText, alt }: Props) => {
           width={60}
           mx={'auto'}
           alt={alt ?? ''}
-          fit = 'contain'
+          fit="contain"
         />
       </PaymentImage>
       <Text

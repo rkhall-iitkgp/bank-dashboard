@@ -2,7 +2,6 @@ import {
   Button,
   createStyles,
   Group,
-  NumberInput,
   PinInput,
   Stack,
   Text,
@@ -10,13 +9,14 @@ import {
   Title,
   Box
 } from '@mantine/core'
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+
 import PhoneInput from 'react-phone-input-2'
 import { notifications } from '@mantine/notifications';
 import Image from 'next/image'
 import 'react-phone-input-2/lib/style.css'
+import useStorage from '../../hooks/useStorage'
 import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
 import api from '../api'
 
@@ -41,7 +41,7 @@ const useStyles = createStyles((theme) => ({
     lineHeight: 1,
     fontWeight: 400,
     paddingBottom: `5px`,
-    fontSize: `2rem`,
+    fontSize: `3vw`,
   },
   titlebold: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -57,7 +57,7 @@ const useStyles = createStyles((theme) => ({
     fontFamily: `Montserrat`,
     color: theme.colors[theme.primaryColor][0],
     maxWidth: `rem(300)`,
-    fontSize: `0.8rem`,
+    fontSize: `1rem`,
     [theme.fn.smallerThan('sm')]: {
       maxWidth: '100%',
     },
@@ -73,8 +73,8 @@ const useStyles = createStyles((theme) => ({
   },
   sideContainer: {
     width: `100%`,
-    height: `100%`,
-    minHeight: `100vh`,
+    height: `100vh`,
+    // minHeight: `100vh`,
     padding: `2vh`,
   },
   social: {
@@ -138,6 +138,8 @@ const useStyles = createStyles((theme) => ({
     height: `96vh`,
     borderRadius: theme.radius.md,
     boxShadow: theme.shadows.lg,
+    display: 'flex',
+    flexDirection: 'column',
   },
   buttoncontainer: {
     display: `flex`,
@@ -157,32 +159,20 @@ const useStyles = createStyles((theme) => ({
     marginTop: `20px`,
     fontFamily: `Montserrat`,
   },
-  outerimagecontainer: {
-    width: `100%`,
-    position: `relative`,
-    margin: `auto`,
-  },
   imagecontainer: {
-    width: `100%`,
-    position: `relative`,
-    minWidth: `300px`,
-    minHeight: `160%`,
-    top: `0%`,
+    width: '100%',
+    height: '75%'
   },
-  dashboardImage1: {
-    width: `56%`,
-    borderRadius: `8px`,
-    maxHeight: `20vw`,
-    zIndex: 1,
-  },
-  dashboardImage2: {
-    position: `absolute`,
-    width: `44%`,
-    borderRadius: `8px`,
-    zIndex: 2,
-    top: `20%`,
-    left: `40%`,
-  },
+  dashboardImage: {
+    maxWidth: '100%',
+    maxHeight: '100%',
+    verticalAlign: 'center',
+    objectFit: 'cover',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center'
+  }
   error: {
     color: 'red',
     fontSize: `calc(0.875rem - 0.125rem)`,
@@ -210,10 +200,12 @@ export function LoginSignupPage() {
   //   'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user'
   const [signinLoading, setSignInLoading] = useState(false)
   const [signUpLoading, setSignUpLoading] = useState(false)
+  const [buttonClicked, setButtonClicked] = useState(false)
   const [enterOtp, setEnterOtp] = useState(false)
   const router = useRouter()
 
   const SignUp = (contact_no: string, email: string, si: number) => {
+    const { getItem, setItem } = useStorage()
     let res = api
       .post('/user/sendotp/', {
         contact_no: "+" + contact_no,
@@ -235,8 +227,8 @@ export function LoginSignupPage() {
           icon: <><Image alt='' width={50} height={50} src='/images/tick.png'></Image></>,
           loading: false,
         });
-        // sessionStorage.setItem('contact_no', res.data.contact_no)
-        // sessionStorage.setItem('user_id', res.data.user_id)
+        setItem('contact_no', res.data.contact_no, 'session')
+        setItem('user_id', res.data.user_id, 'session')
         return res.data
       })
       .catch((err) => {
@@ -252,7 +244,9 @@ export function LoginSignupPage() {
 
   // const [otpValue, setOtpValue] = useState<boolean>(false)
 
-  const validate = (contact_no: string, otp: string, email: string) => {
+  const Validate = (contact_no: string, otp: string, email: string) => {
+    const { setItem } = useStorage()
+
     let res = api
       .post('user/validateotp/', {
         contact_no: contact_no,
@@ -263,10 +257,10 @@ export function LoginSignupPage() {
       .then((res) => {
         router.replace('/home')
         // save response i.e access token and refresh token in session storage
-        sessionStorage.setItem('contact_no', res.data.contact_no)
-        sessionStorage.setItem('access_token', res.data.access_token)
-        sessionStorage.setItem('refresh_token', res.data.refresh_token)
-        sessionStorage.setItem('user_id', res.data.user_id)
+        setItem('contact_no', res.data.contact_no)
+        setItem('access_token', res.data.access_token)
+        setItem('refresh_token', res.data.refresh_token)
+        setItem('user_id', res.data.user_id)
         return res.data
       })
       .catch((err) => console.log(err))
@@ -336,6 +330,8 @@ export function LoginSignupPage() {
                   <div className={classes.error}>{form.errors?.phone}</div>
                   <TextInput
                     placeholder="Email"
+                    withAsterisk
+                    {...form.getInputProps('email')}
                     type={'email'}
                     error={form.getInputProps('email').error}
                     mt="md"
@@ -422,25 +418,21 @@ export function LoginSignupPage() {
 
         <div className={classes.sideContainer}>
           <div className={classes.sidecontainerinside}>
-            <Title className={classes.title}>
-              A Comprehensive Analysis of your Transactions
-            </Title>
-            <Text className={classes.description} mt="sm" mb={30}>
-              Enter your credentials to access your account
-            </Text>
-            <div className={classes.outerimagecontainer}>
-              <div className={classes.imagecontainer}>
-                <img
-                  className={classes.dashboardImage1}
-                  src="/images/dashboardimg1.png"
-                  alt="dashboard-img"
-                />
-                <img
-                  className={classes.dashboardImage2}
-                  src="/images/dashboardimg2.png"
-                  alt="dashboard-img"
-                />
-              </div>
+            <>
+              <Title className={classes.title}>
+                A Comprehensive Analysis of your Transactions
+              </Title>
+              <Text className={classes.description} mt="sm" mb={30}>
+                Enter your credentials to access your account
+              </Text>
+            </>
+
+            <div className={classes.imagecontainer}>
+              <img
+                className={classes.dashboardImage}
+                src='/images/dashboardimg.png'
+                alt="dashboard-img"
+              />
             </div>
           </div>
         </div>

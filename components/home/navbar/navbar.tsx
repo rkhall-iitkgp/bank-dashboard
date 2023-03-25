@@ -1,8 +1,9 @@
 import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core'
 import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
 import { ProfileCard } from './ProfileCard'
 import { useState } from 'react'
-import { Popover, Text } from '@mantine/core';
+import { Popover, Text } from '@mantine/core'
 import Link from 'next/link'
 
 const StyledNavbar = styled.nav`
@@ -14,7 +15,7 @@ const StyledNavbar = styled.nav`
   height: 4rem;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   width: 100%;
-  width:100%;
+  width: 100%;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -60,17 +61,23 @@ const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
 )
 function Demo() {
   return (
-    <Popover  width='auto' radius={25} position="bottom" withArrow shadow="md">
+    <Popover width="auto" radius={25} position="bottom" withArrow shadow="md">
       <Popover.Target>
         <StyledButton
           variant="gradient"
-          gradient={{ from: 'white', to: 'white' }}>  <StyledUserImage src="/images/dp.png"></StyledUserImage></StyledButton>
+          gradient={{ from: 'white', to: 'white' }}
+        >
+          {' '}
+          <StyledUserImage src="/images/dp.png"></StyledUserImage>
+        </StyledButton>
       </Popover.Target>
-      <Popover.Dropdown>
-       <ProfileCard/>
+      <Popover.Dropdown
+        style={{padding: '0', marginTop: '10px', }}
+      >
+        <ProfileCard />
       </Popover.Dropdown>
     </Popover>
-  );
+  )
 }
 const StyledUserImage = styled.img`
   width: 40px;
@@ -86,45 +93,49 @@ const NavbarIcons = styled.img`
   padding: 6px 8px 10px 8px;
 `
 function Navbar() {
-  const [show,setShow]=useState(false);
-  function setting(){
-        setShow(!show);
+  const router = useRouter()
+
+  const [show, setShow] = useState(false)
+  function setting() {
+    setShow(!show)
   }
   return (
     <>
-    <StyledNavbar>
-      <BankName><Link href="/home">shiftbank</Link></BankName>
-      <StyledButtonBar>
-        <StyledButton
-          variant="gradient"
-          gradient={{ from: 'white', to: 'white' }}
-        >
-          <NavbarIcons src="/images/dashboard.png"></NavbarIcons>Dashboard
-        </StyledButton>
-        <StyledButton
-          variant="gradient"
-          gradient={{ from: 'white', to: 'white' }}
-        >
-          <NavbarIcons src="/images/aboutus.png"></NavbarIcons>About Us
-        </StyledButton>
-        <StyledButton
-          variant="gradient"
-          gradient={{ from: 'white', to: 'white' }}
-        >
-          <NavbarIcons src="/images/support.png"></NavbarIcons>Support
-        </StyledButton>
-        <StyledButton
-          variant="gradient"
-          gradient={{ from: 'white', to: 'white' }}
-        >
-          <NavbarIcons src="/images/FAQs.png"></NavbarIcons>FAQs
-        </StyledButton>
-        {/* <StyledUserImage src="/images/dp.png"></StyledUserImage> */}
-    <Demo/>
-        
-      </StyledButtonBar>
-    </StyledNavbar>
-     {/* <ProfileCard/> */}
+      <StyledNavbar>
+        <BankName>
+          <Link href="/home">shiftbank</Link>
+        </BankName>
+        <StyledButtonBar>
+          <StyledButton
+            variant="gradient"
+            gradient={{ from: 'white', to: 'white' }}
+            onClick={() => router.replace('/dashboard')}
+          >
+            <NavbarIcons src="/images/dashboard.png"></NavbarIcons>Dashboard
+          </StyledButton>
+          <StyledButton
+            variant="gradient"
+            gradient={{ from: 'white', to: 'white' }}
+          >
+            <NavbarIcons src="/images/aboutus.png"></NavbarIcons>About Us
+          </StyledButton>
+          <StyledButton
+            variant="gradient"
+            gradient={{ from: 'white', to: 'white' }}
+          >
+            <NavbarIcons src="/images/support.png"></NavbarIcons>Support
+          </StyledButton>
+          <StyledButton
+            variant="gradient"
+            gradient={{ from: 'white', to: 'white' }}
+          >
+            <NavbarIcons src="/images/FAQs.png"></NavbarIcons>FAQs
+          </StyledButton>
+          {/* <StyledUserImage src="/images/dp.png"></StyledUserImage> */}
+          <Demo />
+        </StyledButtonBar>
+      </StyledNavbar>
+      {/* <ProfileCard/> */}
     </>
   )
 }

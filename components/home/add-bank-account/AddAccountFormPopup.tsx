@@ -1,18 +1,18 @@
 import {
-  createStyles,
-  TextInput,
   Button,
+  createStyles,
   Group,
-  rem,
   Modal,
   NumberInput,
+  rem,
+  TextInput,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 // import { useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import useStorage from '../../../hooks/useStorage'
 import api from '../../api'
 
 const useStyles = createStyles((theme) => ({
@@ -152,14 +152,12 @@ export function AddAccountFormPopup({
   const { classes } = useStyles()
   const [otp, setOtp] = useState<boolean>(false)
   const [opened, { open, close }] = useDisclosure(false)
-
+  const { setItem, getItem } = useStorage()
   const [account_no, setAccount_no] = useState<number | ''>('')
   const [mobile_no, setMobile_no] = useState<string>('')
   const [ifsc, setIfsc] = useState<string>('')
 
   const [otpNum, setOtpNum] = useState<string>('')
-
-
 
   return (
     <Modal
@@ -251,36 +249,38 @@ export function AddAccountFormPopup({
                   size="lg"
                   className={classes.control}
                   onClick={() => {
-                    if (otp == false){
-                        setOtp(true)
-                        console.log(sessionStorage.getItem('contact_no'));
-                        const response = api.post(
-                            '/user/sendaccountotp/', {
-                                contact_no: sessionStorage.getItem('contact_no')
-                        }).then((response) => {
-                            console.log(response)
+                    if (otp == false) {
+                      setOtp(true)
+                      console.log(getItem('contact_no', 'session'))
+                      const response = api
+                        .post('/user/sendaccountotp/', {
+                          contact_no: getItem('contact_no', 'session'),
                         })
-                    }
-                    else {
-
+                        .then((response) => {
+                          console.log(response)
+                        })
+                        .catch((err) => console.log(err))
+                    } else {
                       setBankAccountList(bankAccountList)
                       setIsAddAccountPopupOpen(false)
                       console.log(otpNum)
-                      const contact_no = sessionStorage.getItem('contact_no')
-                        const response = api.post(
-                            '/user/addaccount/', {
-                                contact_no: contact_no,
-                                account_no: account_no,
-                                ifsc: ifsc,
-                                otp: otpNum
-                        }).then((response) => {
-                            bankAccountList.push({
-                                account_no: account_no,
-                                ifsc: ifsc,
-                              })
-                              // sessionStorage.setItem('bankAccountList', JSON.stringify(bankAccountList))
-                            console.log(response)
+                      const contact_no = getItem('contact_no')
+                      const response = api
+                        .post('/user/addaccount/', {
+                          contact_no: contact_no,
+                          account_no: account_no,
+                          ifsc: ifsc,
+                          otp: otpNum,
                         })
+                        .then((response) => {
+                          bankAccountList.push({
+                            account_no: account_no,
+                            ifsc: ifsc,
+                          })
+                          // sessionStorage.setItem('bankAccountList', JSON.stringify(bankAccountList))
+                          console.log(response)
+                        })
+                        .catch((err) => console.log(err))
                     }
                   }}
                 >
