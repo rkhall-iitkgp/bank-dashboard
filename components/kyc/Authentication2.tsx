@@ -1,3 +1,4 @@
+
 import { createStyles } from '@mantine/core'
 import { useState, useRef } from 'react';
 import { FileButton, Button, Group, Text } from '@mantine/core';
@@ -8,7 +9,7 @@ import { Input } from '@mantine/core';
 import { TextInput } from '@mantine/core';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css'
-import { hasLength, isNotEmpty, useForm } from '@mantine/form'
+import ButtonGroup from '../reusable-components/ButtonGroup';
 const _StyledButton = styled(Button)`
   border-width: 0.125rem;
   &:hover { 
@@ -18,7 +19,6 @@ const _StyledButton = styled(Button)`
   padding-left: 0px;
 `;
 const StyledButton = createPolymorphicComponent<'button', ButtonProps>(_StyledButton);
-
 const useStyles = createStyles(() => ({
     container: {
         borderRadius: `30px`,
@@ -59,7 +59,7 @@ const useStyles = createStyles(() => ({
         // margin: '7px',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
     },
     uploadResetContainer: {
         color: `#000000`,
@@ -101,31 +101,21 @@ const useStyles = createStyles(() => ({
         backgroundColor: `#0062D6`,
         borderRadius: `30px`,
         marginTop: '5px',
-      },
-      button2: {
+    },
+    button2: {
         width: `160px`,
         height: '40px',
         backgroundColor: `#0062D6`,
         borderRadius: `30px`,
         marginTop: '5px',
-      },
+    },
 
 }))
 
-export function Authentication1() {
-    const form = useForm({
-        initialValues: {
-          adhaarNo: '',
-          mobileNo: '',
-        },
-    
-        validate: {
-            adhaarNo: hasLength( 12 , 'Adhaar must be 12 digits'),
-            mobileNo: hasLength( 10 ,'Adhaar must be 10 digits'),
-        },
-      })
+export function Authentication2() {
     const [adhaar_no, setAdhaar_no] = useState<number | ''>('')
     const [mobile_no, setMobile_no] = useState<string>('')
+    const [otp_no, setOtp_no] = useState<number | ''>('')
     const [file, setFile] = useState<File | null>(null);
     const resetRef = useRef<() => void>(null);
     const clearFile = () => {
@@ -150,71 +140,70 @@ export function Authentication1() {
                     }}
                 >
                     Authentication
-                    </span>
+                </span>
             </div>
-                
-                <div className={classes.subcontainer}>
-                    <div className={classes.heading2}>
-                        <span
-                            style={{
-                                fontFamily: 'Montserrat',
-                                fontStyle: `normal`,
-                                fontWeight: `600`,
-                                fontSize: `25px`,
-                                lineHeight: `20px`,
-                            }}
-                        >
-                            Enter your details
-                        </span>
-                    </div>
 
-                    <NumberInput
-                        placeholder="Adhaar Number"
-                        type={'number'}
-                        required={true}
-                        hideControls={true}
-                        value={adhaar_no}
-                        onChange={setAdhaar_no}
-                        classNames={{
-                            input: classes.input,
-                            label: classes.inputLabel,
-                            root: classes.inputcontainer,
+            <div className={classes.subcontainer}>
+                <div className={classes.heading2}>
+                    <span
+                        style={{
+                            fontFamily: 'Montserrat',
+                            fontStyle: `normal`,
+                            fontWeight: `600`,
+                            fontSize: `25px`,
+                            lineHeight: `20px`,
                         }}
-                    
-                    />
-                     <PhoneInput
-                placeholder="Mobile Number"
-                value={mobile_no.replaceAll('\\D+', '')}
-                onChange={setMobile_no}
-                country={'in'}
-                containerStyle={{
-                  border: 'none',
-                  borderBottom: `2px solid #eee`,
-                  top: `0.5rem`,
-                  color: '#0052B3',
-                }}
-                inputStyle={{
-                  background: 'transparent',
-                  border: 'none',
-                  margin: '4px 0px',
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontStyle: 'normal',
-                  fontWeight: 500,
-                  fontSize: '18px',
-                  lineHeight: '24px',
-                  color: '#434343',
-                }}
-                buttonStyle={{
-                  background: 'transparent',
-                  border: 'none',
-                }}
-              />
-                    
+                    >
+                        Enter your details
+                    </span>
+                </div>
 
-                
+                <NumberInput
+                    placeholder="Adhaar Number"
+                    type={'number'}
+                    required={true}
+                    hideControls={true}
+                    value={adhaar_no}
+                    onChange={setAdhaar_no}
+                    classNames={{
+                        input: classes.input,
+                        label: classes.inputLabel,
+                        root: classes.inputcontainer,
+                    }}
+                />
+                <PhoneInput
+                    placeholder="Mobile Number"
+                    value={mobile_no.replaceAll('\\D+', '')}
+                    onChange={setMobile_no}
+                    country={'in'}
+                    containerStyle={{
+                        border: 'none',
+                        borderBottom: `2px solid #eee`,
+                        top: `0.5rem`,
+                        color: '#0052B3',
+                    }}
+                    inputStyle={{
+                        background: 'transparent',
+                        border: 'none',
+                        margin: '4px 0px',
+                        fontFamily: 'Montserrat, sans-serif',
+                        fontStyle: 'normal',
+                        fontWeight: 500,
+                        fontSize: '18px',
+                        lineHeight: '24px',
+                        color: '#434343',
+                    }}
+                    buttonStyle={{
+                        background: 'transparent',
+                        border: 'none',
+                    }}
+                />
+
+
+
 
                 <div className={classes.uploadResetContainer}>
-                    
+
                     <Group position="center">
                         <FileButton resetRef={resetRef} onChange={setFile} accept="image/png,image/jpeg">
                             {(props) => <StyledButton style={{ background: '#ffffff' }} {...props}>
@@ -278,76 +267,98 @@ export function Authentication1() {
                             }
                         </StyledButton>
                     </Group>
-                   </div>
-                   {file && (
+                  
+            </div>
+            <div>
+                    {file && (
+                <span
+                    style={{
+                        fontFamily: 'Montserrat',
+                        fontStyle: `normal`,
+                        fontWeight: `500`,
+                        fontSize: `15px`,
+                        lineHeight: `22px`,
+                        color: '#4D4B4B',
+                    }}
+                >
+
+                    Picked file: <br /> {file.name}
+                </span>
+            )}
+            
+             </div>
+             {!file && (
+                <span
+                    style={{
+                        fontFamily: 'Montserrat',
+                        fontStyle: `normal`,
+                        fontWeight: `500`,
+                        fontSize: `15px`,
+                        lineHeight: `22px`,
+                        color: '#4D4B4B',
+                    }}
+                >
+
+                    Please upload your fingerprint for E-KYC verification
+                </span>
+
+            )}
+              <div>
+              <NumberInput
+                    placeholder="OTP"
+                    type={'number'}
+                    required={true}
+                    hideControls={true}
+                    value={otp_no}
+                    onChange={setOtp_no}
+
+                    classNames={{
+                        input: classes.input,
+                        label: classes.inputLabel,
+                        root: classes.inputcontainer,
+                    }}
+                />
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',margin:'5px',width:'100%' }}>
+               
+                    <Button size="xs" className={classes.button1}>
                         <span
                             style={{
                                 fontFamily: 'Montserrat',
                                 fontStyle: `normal`,
                                 fontWeight: `500`,
-                                fontSize: `15px`,
-                                lineHeight: `22px`,
-                                color: '#4D4B4B',
+                                fontSize: `16px`,
+                                lineHeight: `27px`,
                             }}
                         >
+                            Back
+                        </span>{' '}
+                        &nbsp;{' '}
 
-                            Picked file: <br /> {file.name}
-                        </span>
-                    )}
-                    {!file && (
+                    </Button>
+                    <Button size="xs" className={classes.button2}>
                         <span
                             style={{
                                 fontFamily: 'Montserrat',
                                 fontStyle: `normal`,
                                 fontWeight: `500`,
-                                fontSize: `15px`,
-                                lineHeight: `22px`,
-                                color: '#4D4B4B',
+                                fontSize: `16px`,
+                                lineHeight: `27px`,
                             }}
                         >
-
-                            Please upload your fingerprint for E-KYC verification
-                        </span>
-                       
-                    )}
-                   <Button size="xs" className={classes.button1}>
-        <span
-          style={{
-            fontFamily: 'Montserrat',
-            fontStyle: `normal`,
-            fontWeight: `500`,
-            fontSize: `16px`,
-            lineHeight: `27px`,
-          }}
-        >
-          Get OTP
-        </span>{' '}
-        &nbsp;{' '}
-      
-      </Button>
-      <Button size="xs" className={classes.button2}>
-        <span
-          style={{
-            fontFamily: 'Montserrat',
-            fontStyle: `normal`,
-            fontWeight: `500`,
-            fontSize: `16px`,
-            lineHeight: `27px`,
-          }}
-        >
-          Back
-        </span>{' '}
-        &nbsp;{' '}
-      </Button>
-       
-
-      
-    
-                   
-                
+                           Continue
+                        </span>{' '}
+                        &nbsp;{' '}
+                    </Button>
+                </div>
                 </div>
 
-        
-            </div>)
+
+
+          
+             </div>
+        </div>
+
+
+    )
 }
 
