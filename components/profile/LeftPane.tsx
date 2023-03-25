@@ -53,6 +53,10 @@ const useStyles = createStyles((theme) => ({
   phone: {
     lineHeight: `1.3rem`,
   },
+  accountCollection: {
+    maxHeight: '160px',
+    overflowY: 'auto',
+  },
   account: {
     width: `150px`,
     background: `white`,
@@ -158,7 +162,7 @@ const LeftPane = ({ accounts }: Props2) => {
       </div>
       <div>
         <div className={classes.title}>Bank Accounts</div>
-        <div>
+        <div className={classes.accountCollection}>
           {accounts.map((account_no, index) => {
             return (
               <div key={index}>
