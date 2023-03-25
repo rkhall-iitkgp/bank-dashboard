@@ -12,6 +12,7 @@ import {
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
+import { IconCheck, IconX } from '@tabler/icons-react';
 import PhoneInput from 'react-phone-input-2'
 import { notifications } from '@mantine/notifications';
 import Image from 'next/image'
@@ -172,7 +173,7 @@ const useStyles = createStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center'
-  }
+  },
   error: {
     color: 'red',
     fontSize: `calc(0.875rem - 0.125rem)`,
@@ -214,32 +215,46 @@ export function LoginSignupPage() {
         isaccount: 0,
       })
       .then((res) => {
-        setEnterOtp(true)
-        notifications.show({
-          id: 'hello-there',
-          withCloseButton: true,
-          onClose: () => console.log('unmounted'),
-          onOpen: () => console.log('mounted'),
-          autoClose: 5000,
-          title: "Success",
-          message: 'Otp Sent To Your Mobile Number',
-          color: 'green',
-          icon: <><Image alt='' width={50} height={50} src='/images/tick.png'></Image></>,
-          loading: false,
-        });
-        setItem('contact_no', res.data.contact_no, 'session')
-        setItem('user_id', res.data.user_id, 'session')
-        return res.data
+        if (res.status === 201) {
+          setEnterOtp(true)
+          notifications.show({
+            id: 'hello-there',
+            withCloseButton: true,
+            autoClose: 5000,
+            title: "Success",
+            message: 'Otp Sent To Your Mobile Number',
+            color: 'green',
+            icon: <IconCheck size={"1.1rem"} />,
+            loading: false,
+          });
+          setItem('contact_no', res.data.contact_no, 'session')
+          setItem('user_id', res.data.user_id, 'session')
+        }
+        else if (res.status === 400) {
+          setEnterOtp(true)
+          notifications.show({
+            id: 'hello-there',
+            withCloseButton: true,
+            autoClose: 5000,
+            title: "Unsuccessful",
+            message: res.data?.User,
+            color: 'red',
+            icon: <IconX size={"1.1rem"} />,
+            loading: false,
+          });
+        }
+        setSignInLoading(false)
+        setSignUpLoading(false)
+
+        return (res)
       })
       .catch((err) => {
         console.log(err)
-        setSignUpLoading(false)
+        setSignInLoading(false)
         setSignUpLoading(false)
       })
 
     res.then((v) => console.log(v))
-    setSignUpLoading(false)
-    setSignUpLoading(false)
   }
 
   // const [otpValue, setOtpValue] = useState<boolean>(false)
@@ -249,21 +264,47 @@ export function LoginSignupPage() {
 
     let res = api
       .post('user/validateotp/', {
-        contact_no: contact_no,
+        contact_no: "+" + contact_no,
         otp: otp,
         email: email,
         isaccount: 0,
       })
       .then((res) => {
-        router.replace('/home')
-        // save response i.e access token and refresh token in session storage
-        setItem('contact_no', res.data.contact_no)
-        setItem('access_token', res.data.access_token)
-        setItem('refresh_token', res.data.refresh_token)
-        setItem('user_id', res.data.user_id)
-        return res.data
+        if (res.status === 200) {
+          notifications.show({
+            id: 'hello-there',
+            withCloseButton: true,
+            autoClose: 5000,
+            title: "Success",
+            message: `User Succesfull Signed In`,
+            color: 'green',
+            icon: <IconCheck size={"1.1rem"} />,
+            loading: false,
+          });
+          router.replace('/consent')
+          // save response i.e access token and refresh token in session storage
+          setItem('contact_no', res.data.contact_no)
+          setItem('access_token', res.data.access_token)
+          setItem('refresh_token', res.data.refresh_token)
+          setItem('user_id', res.data.user_id)
+        }
+
+
+        return res
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log('hello')
+        notifications.show({
+          id: 'hello-there',
+          withCloseButton: true,
+          autoClose: 5000,
+          title: "Unsuccessful",
+          message: err.response.data?.message,
+          color: 'red',
+          icon: <IconX size={"1.1rem"} />,
+          loading: false,
+        });
+      })
 
     res.then((v) => console.log(v))
   }
@@ -371,9 +412,9 @@ export function LoginSignupPage() {
                       if (!signUpLoading) {
                         form.validate()
                         if (form.isValid()) {
+                          setSignInLoading(true)
                           console.log('mobile , email', form.values.phone, form.values.email)
                           SignUp(form.values.phone, form.values.email, 0)
-                          setSignInLoading(true)
                         }
                       }
                     }}
@@ -406,7 +447,7 @@ export function LoginSignupPage() {
                 <Button
                   className={classes.control}
                   onClick={() => {
-                    validate(form.values.phone, otp, form.values.email)
+                    Validate(form.values.phone, otp, form.values.email)
                   }}
                 >
                   Confirm
