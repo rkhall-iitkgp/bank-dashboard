@@ -23,7 +23,7 @@ const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
-    backgroundColor: `#EEEEEE`,
+    backgroundColor: `#eeeeee`,
     minHeight: `100vh`,
     boxSizing: 'border-box',
     padding: `calc(${theme.spacing.xl} * 1.5)`,
@@ -33,7 +33,6 @@ const useStyles = createStyles((theme) => ({
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
-    background: `grey`,
   },
   container: {
     borderRadius: `30px`,
@@ -41,7 +40,7 @@ const useStyles = createStyles((theme) => ({
     color: `#0052B3`,
     position: 'relative',
     height: `600px`,
-    width: `400px`,
+    width: `600px`,
     margin: `5px`,
     background: `#FFFFFF`,
   },
@@ -69,11 +68,12 @@ const useStyles = createStyles((theme) => ({
     width: `100%`,
     height: `90%`,
     display: `flex`,
-    padding: '30px',
     // margin: '7px',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
+    padding: '40px 100px',
+    // margin:'auto',
   },
   uploadResetContainer: {
     color: `#000000`,
@@ -111,7 +111,7 @@ const useStyles = createStyles((theme) => ({
     width: `100%`,
   },
   button1: {
-    width: `160px`,
+    width: `200px`,
     height: '40px',
     backgroundColor: `#0062D6`,
     borderRadius: `30px`,
@@ -354,8 +354,10 @@ export function Authentication1() {
            
        
         {!show && (
-           <div style={{display:'flex',flexDirection:'column'}}>
-        <Button size="xs" className={classes.button1}>
+           <div style={{display:'flex',flexDirection:'column', gap:'12px', width: '65%'}}>
+        <Button  size = 'lg' className={classes.button1}  style={{
+            width: '100%',
+          }} >
             <span
               style={{
                 fontFamily: 'Montserrat',
@@ -370,7 +372,7 @@ export function Authentication1() {
             </span>{' '}
             &nbsp;{' '}
           </Button>
-          <Button size="xs" className={classes.button2}>
+          <Button className={classes.button2} style={{width:'100%'}}>
             <span
               style={{
                 fontFamily: 'Montserrat',
@@ -388,7 +390,7 @@ export function Authentication1() {
         )}
         { show && (<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',margin:'5px',width:'100%' }}>
                
-               <Button size="xs" className={classes.button1} onClick={onOTP}>
+               <Button size="lg" className={classes.button1} onClick={onOTP}>
                    <span
                        style={{
                            fontFamily: 'Montserrat',
