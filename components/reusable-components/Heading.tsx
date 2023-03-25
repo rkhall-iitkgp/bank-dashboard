@@ -5,7 +5,9 @@ import {
   ReactFragment,
   ReactPortal,
 } from 'react'
+import Link from 'next/link'
 import { Button } from '@mantine/core'
+import { useRouter } from 'next/router'
 const StyledText = styled.div`
   font-weight: 500;
   font-size: 1.2rem;
@@ -17,11 +19,18 @@ const StyledHead = styled.div`
   padding-top: 18px;
   background: #ddedff;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: end;
   padding-bottom: 5px;
   border-radius: 30px 30px 0 0;
+  padding: 1rem;
 `
+
+// function getCurrentURL () {
+//   return window.location.href;
+// }
+
+// const href = getCurrentURL()
 
 function Heading(props: {
   title:
@@ -34,9 +43,18 @@ function Heading(props: {
     | null
     | undefined
 }) {
+  const router = useRouter()
+  let show = (!router.pathname.includes('payment-success'))
+  let justify = show?'flex-start':'center'
+
   return (
-    <StyledHead>
-      
+    <StyledHead style={{justifyContent:justify}}>
+        <Link href={"/home/"}>
+        {show && <Button style={{backgroundColor: "#DD0000", marginRight: "9rem"}} radius="xl" size="xs">
+          Cancel
+        </Button>
+        }
+        </Link>
       <StyledText>{props.title}</StyledText>
     </StyledHead>
   )
