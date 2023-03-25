@@ -15,7 +15,7 @@ import { useForm, isEmail, hasLength } from '@mantine/form';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import useStorage from '../../hooks/useStorage'
-import api from '../api'
+import datams from '../datams'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -183,11 +183,13 @@ export function LoginSignupPage() {
   const [signUpLoading, setSignUpLoading] = useState(false)
   const [buttonClicked, setButtonClicked] = useState(false)
   const [enterOtp, setEnterOtp] = useState(false)
+  const [isSignUp, setIsSignUp] = useState(0);
   const router = useRouter()
 
   const SignUp = (contact_no: string, email: string, si: number) => {
     const { getItem, setItem } = useStorage()
-    let res = api
+    setIsSignUp(si);
+    let res = datams
       .post('/user/sendotp/', {
         contact_no: contact_no,
         email: email,
@@ -210,14 +212,15 @@ export function LoginSignupPage() {
   // const [otpValue, setOtpValue] = useState<boolean>(false)
 
   const Validate = (contact_no: string, otp: string) => {
-    const { setItem } = useStorage()
+    const { setItem } = useStorage();
 
-    let res = api
+    let res = datams
       .post('user/validateotp/', {
         contact_no: contact_no,
         otp: otp,
         email: email,
         isaccount: 0,
+        signup: isSignUp
       })
       .then((res) => {
         router.replace('/home')
@@ -240,7 +243,7 @@ export function LoginSignupPage() {
     },
 
     validate: {
-      phone: hasLength({min: 10, max: 10}, 'Phone Number must be 10 characters long'),
+      phone: hasLength({ min: 10, max: 10 }, 'Phone Number must be 10 characters long'),
       email: isEmail('Invalid Email')
     },
   });
@@ -417,11 +420,11 @@ export function LoginSignupPage() {
             </>
 
             <div className={classes.imagecontainer}>
-                  <img 
-                    className={classes.dashboardImage}
-                    src='/images/dashboardimg.png'
-                    alt="dashboard-img"
-                  />
+              <img
+                className={classes.dashboardImage}
+                src='/images/dashboardimg.png'
+                alt="dashboard-img"
+              />
             </div>
           </div>
         </div>

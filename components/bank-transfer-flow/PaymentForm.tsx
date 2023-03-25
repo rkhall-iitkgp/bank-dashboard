@@ -3,6 +3,7 @@ import { hasLength, isNotEmpty, matches, useForm } from '@mantine/form'
 import Link from 'next/link'
 import { Router, useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import useStorage from '../../hooks/useStorage'
 import Heading from '../reusable-components/Heading'
 
 const useStyles = createStyles((theme) => ({
@@ -202,11 +203,14 @@ export function PaymentForm(props: { sbi: any }) {
   const [otp, setOtp] = useState(false)
   const router = useRouter()
   const data = router.query
+  const { getItem } = useStorage();
+  const account = JSON.parse(getItem('accounts')).filter((v: { id: number }) => v.id + '' == data.id)[0];
+  // console.log('account = ', account);
 
   const form = useForm({
     initialValues: {
       name: '',
-      accountno: '',
+      account_no: '',
       reaccountno: '',
       amount: '',
       ifsc: '',
@@ -214,11 +218,11 @@ export function PaymentForm(props: { sbi: any }) {
 
     validate: {
       name: hasLength({ min: 2, max: 16 }, 'Name must be 2-16 characters long'),
-      accountno: isNotEmpty('Enter your account no'),
+      account_no: isNotEmpty('Enter your account no'),
       // reaccountno: matches(accountno, 'Re-Enter your account no'),
 
       reaccountno: (value, values) =>
-        value !== values.accountno ? 'Re-Enter your account no' : null,
+        value !== values.account_no ? 'Re-Enter your account no' : null,
 
       amount: isNotEmpty('Enter amount'),
       // ifsc: isNotEmpty('Enter IFSC'),
@@ -233,7 +237,7 @@ export function PaymentForm(props: { sbi: any }) {
   })
 
   function handleClick1() {
-    if (form.values.accountno !== '') {
+    if (form.values.account_no !== '') {
       setStyle2({
         color: '#00AD30',
         fontFamily: 'Montserrat',
@@ -244,10 +248,10 @@ export function PaymentForm(props: { sbi: any }) {
       setButtonText('Verified')
     }
   }
-  function handleClick2() {}
+  function handleClick2() { }
 
   useEffect(() => {
-    if (form.values.accountno === '') {
+    if (form.values.account_no === '') {
       setButtonText('Verify')
       setStyle2({
         color: '#0062D6',
@@ -267,11 +271,11 @@ export function PaymentForm(props: { sbi: any }) {
       })
       setButtonText('Verify')
     }
-    return () => {}
-  }, [form.values.accountno])
+    return () => { }
+  }, [form.values.account_no])
 
   return (
-    <Box component="form" mx="auto" onSubmit={form.onSubmit(() => {})}>
+    <Box component="form" mx="auto" onSubmit={form.onSubmit(() => { })}>
       {/* <form onSubmit={form.onSubmit(console.log)}> */}
       <div className={classes.wrapper}>
         <div className={classes.form}>
@@ -284,9 +288,9 @@ export function PaymentForm(props: { sbi: any }) {
               <div className={classes.amountbox}>
                 <div className={classes.amountinside}>
                   <span>Balance:</span>{' '}
-                  <span className={classes.balance}> $5678.00</span>
+                  <span className={classes.balance}> ${account.balance}</span>
                 </div>
-                <div className={classes.accountnumber}>XXXXXXXX1234</div>
+                <div className={classes.accountnumber}>{account.account_no}</div>
               </div>
             </div>
             <div className={classes.beficiaryformcontainer}>
@@ -312,13 +316,13 @@ export function PaymentForm(props: { sbi: any }) {
                   label: classes.inputLabel,
                   root: classes.inputcontainer,
                 }}
-                {...form.getInputProps('accountno')}
+                {...form.getInputProps('account_no')}
                 rightSection={
                   <Text
                     className={classes.buttonVerify}
                     style={style2}
                     onClick={
-                      form.values.accountno !== '' ? handleClick1 : handleClick2
+                      form.values.account_no !== '' ? handleClick1 : handleClick2
                     }
                   >
                     {buttonText}
@@ -375,35 +379,22 @@ export function PaymentForm(props: { sbi: any }) {
                 <></>
               )}
             </div>
-            {/* {otp ? (
-              <TextInput
-                placeholder="OTP"
-                type={'number'}
-                required
-                mt="md"
-                classNames={{
-                  input: classes.input,
-                  label: classes.inputLabel,
-                  root: classes.inputcontainer,
-                }}
-              />
-            ) : (
-              <></>
-            )} */}
 
             <div className={classes.buttoncontainer}>
-              <Link href="/bank-transfer/select-beneficiary">
-                <div className={classes.button1}>Back</div>
-              </Link>
+              <div className={classes.button1} onClick={router.back}>Back</div>
               {buttonText !== 'Verify' ? (
                 <div
                   className={classes.button1}
                   onClick={() => {
                     form.validate()
                     if (form.isValid()) {
-                      router.push(
-                        `/bank-transfer/review-payment-details?name=${form.values.name}&amount=${form.values.amount}&ifsc=${form.values.ifsc}&accountNo=${form.values.accountno}&selfOrOther=${data.selfOrOther}&id=${data.id}`,
-                      )
+                      router.push({
+                        pathname: `/bank-transfer/review-payment-details`,
+                        query: {
+                          name: form.values.name, acc_no: form.values.account_no, amount: form.values.amount, ifsc: form.values.ifsc,
+                          ...router.query
+                        }
+                      })
                     }
                   }}
                 >

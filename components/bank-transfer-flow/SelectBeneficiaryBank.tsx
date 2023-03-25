@@ -262,9 +262,7 @@ export function SelectBeneficiaryBank() {
             />
           </div>
           <div className={classes.buttonContainer}>
-            <Link href="/bank-transfer/">
-              <div className={classes.button1}>Back</div>
-            </Link>
+            <div className={classes.button1} onClick={router.back}>Back</div>
             {click ? (
               <Link
                 href={{
