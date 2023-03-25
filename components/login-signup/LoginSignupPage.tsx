@@ -7,14 +7,18 @@ import {
   Text,
   TextInput,
   Title,
+  Box
 } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useForm, isEmail, hasLength } from '@mantine/form';
 
+import { IconCheck, IconX } from '@tabler/icons-react';
 import PhoneInput from 'react-phone-input-2'
+import { notifications } from '@mantine/notifications';
+import Image from 'next/image'
 import 'react-phone-input-2/lib/style.css'
 import useStorage from '../../hooks/useStorage'
+import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
 import api from '../api'
 
 const useStyles = createStyles((theme) => ({
@@ -169,6 +173,22 @@ const useStyles = createStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center'
+  },
+  error: {
+    color: 'red',
+    fontSize: `calc(0.875rem - 0.125rem)`,
+    lineHeight: `1.2`,
+    marginTop: `12px`
+  },
+  PhoneInput: {
+    border: 'none',
+    borderBottom: `2px solid #eee`,
+    top: `0.5rem`,
+    color: '#0052B3',
+    margin: '6px 0',
+    ':active': {
+      borderBottom: `2px solid red`
+    }
   }
 }))
 
@@ -189,50 +209,105 @@ export function LoginSignupPage() {
     const { getItem, setItem } = useStorage()
     let res = api
       .post('/user/sendotp/', {
-        contact_no: contact_no,
+        contact_no: "+" + contact_no,
         email: email,
         signup: si,
         isaccount: 0,
       })
       .then((res) => {
-        setEnterOtp(true)
-        setItem('contact_no', res.data.contact_no, 'session')
-        setItem('user_id', res.data.user_id, 'session')
-        return res.data
+        if (res.status === 201) {
+          setEnterOtp(true)
+          notifications.show({
+            id: 'hello-there',
+            withCloseButton: true,
+            autoClose: 5000,
+            title: "Success",
+            message: 'Otp Sent To Your Mobile Number',
+            color: 'green',
+            icon: <IconCheck size={"1.1rem"} />,
+            loading: false,
+          });
+          setItem('contact_no', res.data.contact_no, 'session')
+          setItem('user_id', res.data.user_id, 'session')
+        }
+        else if (res.status === 400) {
+          setEnterOtp(true)
+          notifications.show({
+            id: 'hello-there',
+            withCloseButton: true,
+            autoClose: 5000,
+            title: "Unsuccessful",
+            message: res.data?.User,
+            color: 'red',
+            icon: <IconX size={"1.1rem"} />,
+            loading: false,
+          });
+        }
+        setSignInLoading(false)
+        setSignUpLoading(false)
+
+        return (res)
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err)
+        setSignInLoading(false)
+        setSignUpLoading(false)
+      })
 
     res.then((v) => console.log(v))
-    setSignUpLoading(false)
-    setSignUpLoading(false)
   }
 
   // const [otpValue, setOtpValue] = useState<boolean>(false)
 
-  const Validate = (contact_no: string, otp: string) => {
+  const Validate = (contact_no: string, otp: string, email: string) => {
     const { setItem } = useStorage()
 
     let res = api
       .post('user/validateotp/', {
-        contact_no: contact_no,
+        contact_no: "+" + contact_no,
         otp: otp,
         email: email,
         isaccount: 0,
       })
       .then((res) => {
-        router.replace('/home')
-        // save response i.e access token and refresh token in session storage
-        setItem('contact_no', res.data.contact_no)
-        setItem('access_token', res.data.access_token)
-        setItem('refresh_token', res.data.refresh_token)
-        setItem('user_id', res.data.user_id)
-        return res.data
+        if (res.status === 200) {
+          notifications.show({
+            id: 'hello-there',
+            withCloseButton: true,
+            autoClose: 5000,
+            title: "Success",
+            message: `User Succesfull Signed In`,
+            color: 'green',
+            icon: <IconCheck size={"1.1rem"} />,
+            loading: false,
+          });
+          router.replace('/consent')
+          // save response i.e access token and refresh token in session storage
+          setItem('contact_no', res.data.contact_no)
+          setItem('access_token', res.data.access_token)
+          setItem('refresh_token', res.data.refresh_token)
+          setItem('user_id', res.data.user_id)
+        }
+
+
+        return res
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log('hello')
+        notifications.show({
+          id: 'hello-there',
+          withCloseButton: true,
+          autoClose: 5000,
+          title: "Unsuccessful",
+          message: err.response.data?.message,
+          color: 'red',
+          icon: <IconX size={"1.1rem"} />,
+          loading: false,
+        });
+      })
 
     res.then((v) => console.log(v))
   }
-
   const form = useForm({
     initialValues: {
       phone: '',
@@ -240,11 +315,15 @@ export function LoginSignupPage() {
     },
 
     validate: {
-      phone: hasLength({min: 10, max: 10}, 'Phone Number must be 10 characters long'),
-      email: isEmail('Invalid Email')
+      email: isEmail('Invalid email'),
+      phone: hasLength(12, 'Enter a Valid Phone Number')
     },
   });
-
+  const style = `
+  .react-tel-input:active{
+    border: 2px solid red
+  }
+`
   return (
     <div className={classes.wrapper}>
       <div className={classes.grid}>
@@ -254,8 +333,12 @@ export function LoginSignupPage() {
 
             {!enterOtp && (
               <Stack my={10}>
-                <Stack>
+                <style>
+                  {style}
+                </style>
+                <Box component="form">
                   <PhoneInput
+
                     placeholder="Mobile Number"
                     country={'in'}
                     containerStyle={{
@@ -263,11 +346,13 @@ export function LoginSignupPage() {
                       borderBottom: `2px solid #eee`,
                       top: `0.5rem`,
                       color: '#0052B3',
+                      margin: '6px 0',
+
                     }}
                     inputStyle={{
                       background: 'transparent',
                       border: 'none',
-                      margin: '4px 0px',
+                      margin: '4px 0',
                       fontFamily: 'Montserrat, sans-serif',
                       fontStyle: 'normal',
                       fontWeight: 500,
@@ -279,95 +364,63 @@ export function LoginSignupPage() {
                       background: 'transparent',
                       border: 'none',
                     }}
-                    value={mobile.replaceAll('\\D+', '')}
-                    onChange={(e) => setMobile(e)}
+
+                    {...form.getInputProps('phone')}
+
                   />
+                  <div className={classes.error}>{form.errors?.phone}</div>
                   <TextInput
                     placeholder="Email"
                     withAsterisk
                     {...form.getInputProps('email')}
                     type={'email'}
+                    error={form.getInputProps('email').error}
                     mt="md"
                     classNames={{
                       input: classes.input,
                       label: classes.inputLabel,
-                      root: classes.inputcontainer,
+                      root: classes.inputcontainer
                     }}
                     required
-                    value={email}
-                    onChange={(e) => setEmail(e.currentTarget.value)}
-                  />
-                </Stack>
-
-                {/* <>
-                    <Group className={classes.buttoncontainer}>
-                      <Button
-                        className={classes.otpbutton}
-                        onClick={() => {
-                          // if (otpValue == false) setOtpValue(true)
-
-                        }}
-                      >
-                        Get OTP
-                      </Button>
-                    </Group>
-                  </> */}
-
+                    {...form.getInputProps('email')}
+                  />{
+                  }
+                </Box>
                 <Group className={classes.buttoncontainer} mt={15}>
-                  {buttonClicked && (
-                    <Button
-                      disabled
-                      className={classes.button}
-                      loading={signUpLoading}
-                      onClick={() => {
-                        SignUp(mobile, email, 1)
-                        setSignUpLoading(true)
-                        setButtonClicked(true)
-                      }}
-                    >
-                      Sign Up
-                    </Button>
-                  )}
-                  {!buttonClicked && (
-                    <Button
-                      className={classes.button}
-                      loading={signUpLoading}
-                      onClick={() => {
-                        SignUp(mobile, email, 1)
-                        setSignUpLoading(true)
-                        setButtonClicked(true)
-                      }}
-                    >
-                      Sign Up
-                    </Button>
-                  )}
-                  {buttonClicked && (
-                    <Button
-                      disabled
-                      className={classes.button}
-                      loading={signinLoading}
-                      onClick={() => {
-                        SignUp(mobile, email, 0)
-                        setSignInLoading(true)
-                        setButtonClicked(true)
-                      }}
-                    >
-                      Sign In
-                    </Button>
-                  )}
-                  {!buttonClicked && (
-                    <Button
-                      className={classes.button}
-                      loading={signinLoading}
-                      onClick={() => {
-                        SignUp(mobile, email, 0)
-                        setSignInLoading(true)
-                        setButtonClicked(true)
-                      }}
-                    >
-                      Sign In
-                    </Button>
-                  )}
+                  <Button
+                    className={classes.button}
+                    loading={signUpLoading}
+                    onClick={() => {
+                      if (!signinLoading) {
+                        form.validate()
+
+                        if (form.isValid()) {
+                          setSignUpLoading(true)
+                          console.log('mobile , email', form.values.phone, form.values.email)
+                          SignUp(form.values.phone, form.values.email, 1)
+                        }
+                      }
+                    }}
+                  >
+                    Sign Up
+                  </Button>
+                  <Button
+                    className={classes.button}
+                    loading={signinLoading}
+                    onClick={() => {
+                      console.log('form.values.phone', form.values.phone)
+                      if (!signUpLoading) {
+                        form.validate()
+                        if (form.isValid()) {
+                          setSignInLoading(true)
+                          console.log('mobile , email', form.values.phone, form.values.email)
+                          SignUp(form.values.phone, form.values.email, 0)
+                        }
+                      }
+                    }}
+                  >
+                    Sign In
+                  </Button>
                 </Group>
               </Stack>
             )}
@@ -394,8 +447,7 @@ export function LoginSignupPage() {
                 <Button
                   className={classes.control}
                   onClick={() => {
-                    console.log(otp)
-                    Validate(mobile, otp)
+                    Validate(form.values.phone, otp, form.values.email)
                   }}
                 >
                   Confirm
@@ -417,11 +469,11 @@ export function LoginSignupPage() {
             </>
 
             <div className={classes.imagecontainer}>
-                  <img 
-                    className={classes.dashboardImage}
-                    src='/images/dashboardimg.png'
-                    alt="dashboard-img"
-                  />
+              <img
+                className={classes.dashboardImage}
+                src='/images/dashboardimg.png'
+                alt="dashboard-img"
+              />
             </div>
           </div>
         </div>

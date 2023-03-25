@@ -2,7 +2,7 @@ import { createStyles, getStylesRef, Text, TextInput } from '@mantine/core'
 import { hasLength, isNotEmpty, useForm } from '@mantine/form'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { SetStateAction, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import Heading from '../reusable-components/Heading'
 
 const useStyles = createStyles((theme) => ({
@@ -210,6 +210,7 @@ export function PaymentForm() {
   //     <Icon size="1.4rem" stroke={1.5} />
   //   </ActionIcon>
   // ));
+
   const [style2, setStyle2] = useState({
     color: '#0062D6',
     fontFamily: 'Montserrat',
@@ -232,8 +233,10 @@ export function PaymentForm() {
     }
   }
   function handleClick2() {}
-  const handleChange = () => {
+
+  useEffect(() => {
     if (form.values.upi_id === '') {
+      setButtonText('Verify')
       setStyle2({
         color: '#0062D6',
         fontFamily: 'Montserrat',
@@ -252,7 +255,9 @@ export function PaymentForm() {
       })
       setButtonText('Verify')
     }
-  }
+    return () => {}
+  }, [form.values.upi_id])
+
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>

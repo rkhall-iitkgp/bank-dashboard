@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core'
+import { createStyles, Button } from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -229,7 +229,12 @@ export function BankTransfer() {
               <div className={classes.button1}>Back</div>
             </Link>
             {click ? (
-              <Link href="/bank-transfer/select-beneficiary">
+              <Link
+                href={{
+                  pathname: '/bank-transfer/select-beneficiary',
+                  query: account,
+                }}
+              >
                 <div className={classes.button1}>Continue</div>
               </Link>
             ) : (

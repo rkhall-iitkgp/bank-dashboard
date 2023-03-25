@@ -12,7 +12,7 @@ const useStyles = createStyles((theme) => ({
     boxShadow: `0px 2px 20px rgba(0,0,0,0.1)`,
     color: `#0052B3`,
     // position: 'absolute',
-    height: `540px`,
+    height: `560px`,
     width: `350px`,
     display: `flex`,
     flexDirection: `column`,
@@ -43,7 +43,9 @@ const useStyles = createStyles((theme) => ({
     alignItems: `center`,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: '10px'
+    marginBottom: '10px',
+    maxHeight: '110px',
+    overflowY: 'auto',
   },
   accountContainer: {
     cursor: 'pointer',
@@ -53,7 +55,6 @@ const useStyles = createStyles((theme) => ({
     flexdirection: 'row',
     alignItems: 'center',
     width: '120px',
-    height: '45px',
     justifyContent: 'space-around',
     alignitems: 'center',
     margin: '5px',
@@ -115,7 +116,9 @@ export function ProfileCard() {
     { id: 1, bankName: 'sbi', value: '****1234' },
     { id: 2, bankName: 'sbi', value: '****4235' },
     { id: 3, bankName: 'sbi', value: '****8090' },
-    
+    { id: 1, bankName: 'sbi', value: '****1234' },
+    { id: 2, bankName: 'sbi', value: '****4235' },
+    { id: 3, bankName: 'sbi', value: '****8090' },
   ]
   let data = {
     PersonName: 'Bill Gates',

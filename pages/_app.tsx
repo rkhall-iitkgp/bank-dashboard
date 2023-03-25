@@ -2,6 +2,8 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import './../styles/globals.css'
 import { MantineProvider } from '@mantine/core'
+import { Notifications } from '@mantine/notifications';
+
 export default function App(props: AppProps) {
   const { Component, pageProps } = props
 
@@ -24,6 +26,7 @@ export default function App(props: AppProps) {
         }}
       >
         <Component {...pageProps} />
+        <Notifications position="top-center" />
       </MantineProvider>
     </>
   )
