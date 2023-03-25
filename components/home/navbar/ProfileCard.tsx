@@ -43,7 +43,9 @@ const useStyles = createStyles((theme) => ({
     alignItems: `center`,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: '10px'
+    marginBottom: '10px',
+    overflow: 'auto',
+    maxHeight: '120px',
   },
   accountContainer: {
     cursor: 'pointer',
@@ -112,6 +114,9 @@ const AccountCard = ({ bankName, value }: Props) => {
 export function ProfileCard() {
   const { classes } = useStyles()
   let BankAccount = [
+    { id: 1, bankName: 'sbi', value: '****1234' },
+    { id: 2, bankName: 'sbi', value: '****4235' },
+    { id: 3, bankName: 'sbi', value: '****8090' },
     { id: 1, bankName: 'sbi', value: '****1234' },
     { id: 2, bankName: 'sbi', value: '****4235' },
     { id: 3, bankName: 'sbi', value: '****8090' },
