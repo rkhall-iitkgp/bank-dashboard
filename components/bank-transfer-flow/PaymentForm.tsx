@@ -1,8 +1,8 @@
-import { Box, createStyles, TextInput } from '@mantine/core'
+import { Box, createStyles, Text, TextInput } from '@mantine/core'
 import { hasLength, isNotEmpty, matches, useForm } from '@mantine/form'
 import Link from 'next/link'
 import { Router, useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Heading from '../reusable-components/Heading'
 
 const useStyles = createStyles((theme) => ({
@@ -138,6 +138,14 @@ const useStyles = createStyles((theme) => ({
     minHeight: `60px`,
     minWidth: `150px`,
   },
+  buttonVerify: {
+    // height:``,
+    // width: `100px`,
+    // backgroundColor: `#ffffff`,
+    marginRight: '60px',
+    // cursor: 'pointer',
+    // borderRadius:,
+  },
   amountinside: {
     maxWidth: `90%`,
     width: `auto`,
@@ -190,7 +198,7 @@ const useStyles = createStyles((theme) => ({
 export function PaymentForm(props: { sbi: any }) {
   const { classes } = useStyles()
   const [click, setClick] = useState(false)
-
+  const [buttonText, setButtonText] = useState('Verify')
   const [otp, setOtp] = useState(false)
   const router = useRouter()
   const data = router.query
@@ -208,6 +216,7 @@ export function PaymentForm(props: { sbi: any }) {
       name: hasLength({ min: 2, max: 16 }, 'Name must be 2-16 characters long'),
       accountno: isNotEmpty('Enter your account no'),
       // reaccountno: matches(accountno, 'Re-Enter your account no'),
+
       reaccountno: (value, values) =>
         value !== values.accountno ? 'Re-Enter your account no' : null,
 
@@ -215,6 +224,51 @@ export function PaymentForm(props: { sbi: any }) {
       // ifsc: isNotEmpty('Enter IFSC'),
     },
   })
+  const [style2, setStyle2] = useState({
+    color: '#0062D6',
+    fontFamily: 'Montserrat',
+    fontWeight: 400,
+    fontSize: '18px',
+    cursor: 'pointer',
+  })
+
+  function handleClick1() {
+    if (form.values.accountno !== '') {
+      setStyle2({
+        color: '#00AD30',
+        fontFamily: 'Montserrat',
+        fontWeight: 600,
+        fontSize: '18px',
+        cursor: 'pointer',
+      })
+      setButtonText('Verified')
+    }
+  }
+  function handleClick2() {}
+
+  useEffect(() => {
+    if (form.values.accountno === '') {
+      setButtonText('Verify')
+      setStyle2({
+        color: '#0062D6',
+        fontFamily: 'Montserrat',
+        fontWeight: 400,
+        fontSize: '18px',
+        cursor: 'no-drop',
+      })
+      setButtonText('Verify')
+    } else {
+      setStyle2({
+        color: '#0062D6',
+        fontFamily: 'Montserrat',
+        fontWeight: 400,
+        fontSize: '18px',
+        cursor: 'pointer',
+      })
+      setButtonText('Verify')
+    }
+    return () => {}
+  }, [form.values.accountno])
 
   return (
     <Box component="form" mx="auto" onSubmit={form.onSubmit(() => {})}>
@@ -259,7 +313,19 @@ export function PaymentForm(props: { sbi: any }) {
                   root: classes.inputcontainer,
                 }}
                 {...form.getInputProps('accountno')}
+                rightSection={
+                  <Text
+                    className={classes.buttonVerify}
+                    style={style2}
+                    onClick={
+                      form.values.accountno !== '' ? handleClick1 : handleClick2
+                    }
+                  >
+                    {buttonText}
+                  </Text>
+                }
               />
+
               <TextInput
                 placeholder="Re-enter Account Number*"
                 type={'number'}
@@ -285,7 +351,7 @@ export function PaymentForm(props: { sbi: any }) {
                 }}
                 {...form.getInputProps('amount')}
               />
-              {data.ifsc === 'true' ? (
+              {data.selfOrOther !== '1' ? (
                 <>
                   <TextInput
                     placeholder="IFSC*"
@@ -309,7 +375,7 @@ export function PaymentForm(props: { sbi: any }) {
                 <></>
               )}
             </div>
-            {otp ? (
+            {/* {otp ? (
               <TextInput
                 placeholder="OTP"
                 type={'number'}
@@ -323,44 +389,37 @@ export function PaymentForm(props: { sbi: any }) {
               />
             ) : (
               <></>
-            )}
+            )} */}
 
             <div className={classes.buttoncontainer}>
               <Link href="/bank-transfer/select-beneficiary">
                 <div className={classes.button1}>Back</div>
               </Link>
-              <div
-                className={classes.button1}
-                onClick={() => {
-                  form.validate()
-                  if (form.isValid()) {
-                    router.push(
-                      `/bank-transfer/review-payment-details?name=${form.values.name}&amount=${form.values.amount}&ifsc=${form.values.ifsc}&accountNo=${form.values.accountno}`,
-                    )
-                  }
-                }}
-              >
-                Continue
-              </div>
-              {/* {click ? (
-                <Link
-                  href={{
-                    pathname: '/bank-transfer/review-payment-details',
-                    query: {},
+              {buttonText !== 'Verify' ? (
+                <div
+                  className={classes.button1}
+                  onClick={() => {
+                    form.validate()
+                    if (form.isValid()) {
+                      router.push(
+                        `/bank-transfer/review-payment-details?name=${form.values.name}&amount=${form.values.amount}&ifsc=${form.values.ifsc}&accountNo=${form.values.accountno}&selfOrOther=${data.selfOrOther}&id=${data.id}`,
+                      )
+                    }
                   }}
                 >
-                  <div className={classes.button1}>Continue</div>
-                </Link>
+                  Continue
+                </div>
               ) : (
                 <div
                   className={classes.button1}
+                  style={{ cursor: 'no-drop' }}
                   onClick={() => {
                     form.validate()
                   }}
                 >
                   Continue
                 </div>
-              )} */}
+              )}
             </div>
           </div>
         </div>
