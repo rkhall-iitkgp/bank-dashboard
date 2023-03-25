@@ -30,6 +30,7 @@ const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
 )
 
 const kyc = true;
+const add = true;
 
 interface Props {
   SetIsKycPermissionPopUpOpen: Function,
@@ -79,7 +80,7 @@ export default function Payment ({
           </Link>
         )
         }
-          {(kyc) ? ( 
+          {(kyc || add) ? ( 
            <div onClick={()=>{
             SetIsKycPermissionPopUpOpen(true)
            }}> 
