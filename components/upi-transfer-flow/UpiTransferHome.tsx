@@ -179,6 +179,7 @@ function Account(props: {
           width={50}
           height={50}
           alt={''}
+          style={{ objectFit: 'contain' }}
         ></Image>
       </div>
       <div className={classes.bankname}>{props.accountdata.name}</div>
