@@ -9,7 +9,7 @@ import OfferCardsRow from '../../components/home/offers-referal-section/OfferCar
 import SeeYourAnalysis from '../../components/home/see-your-analysis-section/SeeYourAnalysis'
 import { PermissionFormPopup } from '../../components/reusable-components/Permissionprompt'
 import useStorage from '../../hooks/useStorage'
-
+import {KycPermissionFormPopup} from "../../components/reusable-components/Kycprompt"
 const Home: NextPage = () => {
   const { getItem, setItem } = useStorage()
   const [bankAccountList, setBankAccountList] = useState<any[]>([
@@ -80,7 +80,10 @@ const Home: NextPage = () => {
   }, [])
   const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] =
     useState<boolean>(false)
-  return (
+  const [isKycPermissionPopUpOpen, setIsKycPermissionPopUpOpen] =
+    useState<boolean>(false)
+
+    return (
     <>
       <PermissionFormPopup
         isPermissionPopUpOpen={isPermissionPopUpOpen}
@@ -88,7 +91,9 @@ const Home: NextPage = () => {
       />
       <Navbar />
       <SeeYourAnalysis SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen} />
-      <Payment />
+      <Payment 
+        isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
+        SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}/>
       <BankAccount
         bankAccountList={bankAccountList}
         setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
@@ -101,6 +106,12 @@ const Home: NextPage = () => {
           setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
           setBankAccountList={setBankAccountList}
         />
+      ) : (
+        <></>
+      )}
+      {isKycPermissionPopUpOpen ? (
+        <KycPermissionFormPopup  isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
+        SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}/>
       ) : (
         <></>
       )}
