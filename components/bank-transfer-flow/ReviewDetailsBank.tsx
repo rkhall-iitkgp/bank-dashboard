@@ -15,7 +15,6 @@ const useStyles = createStyles((theme) => ({
     background: `grey`,
   },
   titlebox: {
-    width: '90%',
     margin: 'auto',
     fontSize: '28px',
     display: `flex`,
