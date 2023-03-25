@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { Image } from '@mantine/core'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import Heading from '../reusable-components/Heading'
 const StyledContainer = styled.div`
   display: flex;
@@ -14,14 +15,14 @@ const StyledContainer = styled.div`
   font-style: normal;
 `
 const StyledCont = styled.div`
-  width: 40vw;
+  width: 600px;
   box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
 `
 const StyledBot = styled.div`
   padding-top: 2vh;
   padding-bottom: 2vh;
-  width: 40vw;
+  width: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,7 +32,7 @@ const StyledBot = styled.div`
 const StyledBotCont = styled.div`
   margin: auto;
   padding-bottom: 2vh;
-  width: 30vw;
+  width: 500px;
   background: rgba(169, 248, 191, 0.38);
   border-radius: 30px;
   display: flex;
@@ -111,6 +112,8 @@ const StyledTexthead4 = styled.div`
 `
 
 export default function PaymentSuccessful() {
+  const router = useRouter()
+  const data = router.query
   return (
     <StyledContainer>
       <StyledCont>
@@ -120,8 +123,8 @@ export default function PaymentSuccessful() {
             <StyledTexthead>Payment Successful</StyledTexthead>
             <Image src="/images/tick.png" width={65} height={65} alt="" />
             <StyledTexthead2>
-              You have successfully paid John{' '}
-              <span style={{ color: 'black' }}> &nbsp;₹500</span>
+              You have successfully paid {data.name}{' '}
+              <span style={{ color: 'black' }}> &nbsp;₹{data.amount}</span>
             </StyledTexthead2>
             <StyledTexthead3>
               Remaining balance:{' '}
@@ -129,7 +132,7 @@ export default function PaymentSuccessful() {
             </StyledTexthead3>
             <StyledTexthead3>
               A/c No. :{' '}
-              <span style={{ color: 'black' }}> &nbsp;XXXXXXX8989</span>
+              <span style={{ color: 'black' }}> &nbsp;{data.accountNo}</span>
             </StyledTexthead3>
             <StyledTexthead4></StyledTexthead4>
           </StyledBotCont>
