@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core'
+import { createStyles, Button } from '@mantine/core'
 import Image from 'next/image'
 import { useState } from 'react'
 import ButtonGroup from '../reusable-components/ButtonGroup'
@@ -181,6 +181,7 @@ export function BankTransfer() {
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
+      
         {/* <div className={classes.topheading}>
           <div className={classes.title}>Bank Transfer</div>
         </div> */}

@@ -5,6 +5,7 @@ import {
   ReactFragment,
   ReactPortal,
 } from 'react'
+import { Button } from '@mantine/core'
 const StyledText = styled.div`
   font-weight: 500;
   font-size: 1.2rem;
@@ -35,6 +36,7 @@ function Heading(props: {
 }) {
   return (
     <StyledHead>
+      
       <StyledText>{props.title}</StyledText>
     </StyledHead>
   )
