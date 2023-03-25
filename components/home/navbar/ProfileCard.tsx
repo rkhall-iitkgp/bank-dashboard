@@ -5,6 +5,7 @@ import { Group, Stack, Text } from '@mantine/core'
 import Image from 'next/image'
 import { Button } from '@mantine/core'
 import { wrap } from 'module'
+import Link from 'next/link'
 const useStyles = createStyles((theme) => ({
   container: {
     backgroundColor: `#ffffff`,
@@ -235,8 +236,9 @@ export function ProfileCard() {
         </div>
       </div>
 
+      <Link href="/profile">
       <Button size="xs" className={classes.button1}>
-        <span
+        <span 
           style={{
             fontFamily: 'Montserrat',
             fontStyle: `normal`,
@@ -255,6 +257,7 @@ export function ProfileCard() {
           alt={''}
         ></Image>
       </Button>
+      </Link>
       <Button size="xs" className={classes.button2}>
         <span
           style={{
