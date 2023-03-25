@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
+import { useRouter } from 'next/router'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -218,22 +219,19 @@ function AccountType(props: {
 }
 export function SelectBeneficiaryBank() {
   const { classes } = useStyles()
+  const router = useRouter()
+  const data = router.query
   const [click, setClick] = useState(false)
   const [account, setAccount] = useState(2)
-  const [ifscReq, setIfscReq] = useState(false)
+  // const [ifscReq, setIfscReq] = useState(false)
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
   //     <Icon size="1.4rem" stroke={1.5} />
   //   </ActionIcon>
   // ));
   const handleClick = (id: any) => {
-    if (id === 1) {
-      setClick(true)
-      setIfscReq(false)
-    } else {
-      setClick(true)
-      setIfscReq(true)
-    }
+    setClick(true)
+    setAccount(id)
   }
   return (
     <div className={classes.wrapper}>
@@ -272,7 +270,8 @@ export function SelectBeneficiaryBank() {
                 href={{
                   pathname: '/bank-transfer/payment-form',
                   query: {
-                    ifsc: ifscReq,
+                    selfOrOther: account,
+                    id: data.id,
                   },
                 }}
               >
@@ -286,31 +285,9 @@ export function SelectBeneficiaryBank() {
           </div>
 
           {/* <ButtonGroup
-            clickValue={click}
-            href1="/BankTransfer/"
-            href2="/BankTransfer/Paybenificiary"
-          /> */}
-
-          {/* <div className={classes.buttoncontainer}>
-            <Link href="/BankTransfer/">
-              <Button className={classes.button}>Back</Button>
-            </Link>
-            <Link href="/bank-transfer/payment-form">
-              <Button className={classes.button}>Continue</Button>
-            </Link>
-          </div> */}
-          {/* <div className={classes.buttonContainer}>
-            <Link href="/BankTransfer/">
-              <div className={classes.button1}>Back</div>
-            </Link>
-            <Link href="/bank-transfer/payment-form">
-              <div className={classes.button1}>Continue</div>
-            </Link>
-          </div> */}
-          <ButtonGroup
             href1="/bank-transfer/"
             href2="/bank-transfer/payment-form"
-          />
+          /> */}
         </div>
       </div>
     </div>
