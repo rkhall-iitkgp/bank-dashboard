@@ -226,7 +226,12 @@ export function UpiTransferHome() {
               <div className={classes.button1}>Back</div>
             </Link>
             {click ? (
-              <Link href="/UPI/verify-upi-id">
+              <Link
+                href={{
+                  pathname: '/UPI/verify-upi-id',
+                  query: account,
+                }}
+              >
                 <div className={classes.button1}>Continue</div>
               </Link>
             ) : (

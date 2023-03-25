@@ -7,7 +7,7 @@ import {
   Text,
 } from '@mantine/core'
 import Link from 'next/link'
-import { SetStateAction, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 // import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
 
@@ -195,21 +195,9 @@ export function VerifyUPI() {
   })
   const handleChange = (e: { target: { value: SetStateAction<string> } }) => {
     setUpiValue(e.target.value)
-    setStyle({ border: '1px solid white', borderRadius: '15px' })
-    setButtonText('Verify')
-    if (upiValue !== ' ') {
-      setStyle2({
-        color: '#0062D6',
-        fontFamily: 'Montserrat',
-        fontWeight: 400,
-        fontSize: '18px',
-        cursor: 'pointer',
-      })
-    }
   }
-  function handleClick() {
+  function handleClick1() {
     if (upiValue !== '') {
-      setStyle({ border: '1px solid #00AD30', borderRadius: '15px' })
       setStyle2({
         color: '#00AD30',
         fontFamily: 'Montserrat',
@@ -218,9 +206,13 @@ export function VerifyUPI() {
         cursor: 'pointer',
       })
       setButtonText('Verified')
-    } else {
+    }
+  }
+  function handleClick2() {}
+
+  useEffect(() => {
+    if (upiValue === '') {
       setButtonText('Verify')
-      setStyle({ border: '1px solid white', borderRadius: '15px' })
       setStyle2({
         color: '#0062D6',
         fontFamily: 'Montserrat',
@@ -228,8 +220,19 @@ export function VerifyUPI() {
         fontSize: '18px',
         cursor: 'no-drop',
       })
+      setButtonText('Verify')
+    } else {
+      setStyle2({
+        color: '#0062D6',
+        fontFamily: 'Montserrat',
+        fontWeight: 400,
+        fontSize: '18px',
+        cursor: 'pointer',
+      })
+      setButtonText('Verify')
     }
-  }
+    return () => {}
+  }, [upiValue])
   const { classes } = useStyles()
   return (
     <div className={classes.wrapper}>
@@ -253,7 +256,7 @@ export function VerifyUPI() {
                 <Text
                   className={classes.buttonVerify}
                   style={style2}
-                  onClick={handleClick}
+                  onClick={upiValue !== '' ? handleClick1 : handleClick2}
                 >
                   {buttonText}
                 </Text>
