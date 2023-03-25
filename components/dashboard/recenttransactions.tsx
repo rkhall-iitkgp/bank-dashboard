@@ -85,20 +85,20 @@ const TransactionCard = (props: {
     <Card
       radius={'lg'}
       shadow="0px 4px 20px rgba(0, 0, 0, 0.1)"
-      my={10}
-      py={20}
-      mx={15}
+      my={12}
+      p={20}
+      mx={8}
     >
-      <Group px={10} style={{ justifyContent: 'space-between' }}>
+      <Group px={8} style={{ justifyContent: 'space-between' }}>
         <Stack>
           <HoverCard>
             <HoverCard.Target>
               <Text
                 fw={600}
-                fz={19}
+                fz={17}
                 c="#4D4B4B"
                 ff={'Montserrat'}
-                style={{ lineHeight: 0.5 }}
+                style={{ lineHeight: 0.5, cursor: 'default' }}
               >
                 {descriptionShort}
               </Text>
@@ -106,10 +106,10 @@ const TransactionCard = (props: {
             <HoverCard.Dropdown>
               <Text
                 fw={600}
-                fz={12}
+                fz={11}
                 c="#838383"
                 ff={'Montserrat'}
-                style={{ lineHeight: 0.5 }}
+                style={{ lineHeight: 0.5, cursor: 'default' }}
               >
                 {data.description}
               </Text>
@@ -126,16 +126,17 @@ const TransactionCard = (props: {
           </Text>
         </Stack>
 
-        <Text c={dict.color} fw={500} fz={18} mx={13} ff={'Montserrat'}>
+        <Text c={dict.color} fw={600} fz={16} mx={13} ff={'Montserrat'}>
           {dict.sign}&#8377;{dict.amount}
         </Text>
 
-        <Stack style={{ alignItems: 'center', width: '110px' }}>
+        <Stack style={{ alignItems: 'center', width: '4.5rem' }}>
           <Text
             ff={'Montserrat'}
             c={'#4D4B4B'}
             fw={600}
-            style={{ lineHeight: 0.5, margin: 'auto' }}
+            fz={16}
+            style={{ lineHeight: 0.5 }}
           >
             {data.mode}
           </Text>
@@ -143,6 +144,7 @@ const TransactionCard = (props: {
             ff={'Montserrat'}
             style={{ lineHeight: 0.5 }}
             c={palette[paletteIndex]}
+            fz={14}
           >
             {data.category}
           </Text>
@@ -155,7 +157,7 @@ const TransactionCard = (props: {
 const RecentTransactions = () => {
   return (
     <div>
-      <Text ff={'Montserrat'} c="#0062D6" fw={700} fz={22}>
+      <Text ff={'Montserrat'} c="#0062D6" fw={700} fz={22} mt={4} ml={8}>
         Recent Transactions
       </Text>
       <div style={{ maxHeight: '23rem', overflow: 'auto' }}>
