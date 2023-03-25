@@ -140,13 +140,17 @@ export function Authentication1() {
   })
   const [aadhar_no, setaadhar_no] = useState<number | ''>('')
   const [mobile_no, setMobile_no] = useState<string>('')
+  const [otp_no, setOtp_no] = useState<number | ''>('')
+  const [show,setShow]=useState(false);
   const [file, setFile] = useState<File | null>(null)
   const resetRef = useRef<() => void>(null)
   const clearFile = () => {
     setFile(null)
     resetRef.current?.()
   }
-
+   function onOTP(){
+       setShow(!show);
+   }
   const { classes } = useStyles()
   let data = {
     aadharNumber: '1234/12345/12345',
@@ -184,7 +188,7 @@ export function Authentication1() {
           </div>
 
           <NumberInput
-            placeholder="aadhar Number"
+            placeholder="Aadhar Number"
             type={'number'}
             required={true}
             hideControls={true}
@@ -328,7 +332,30 @@ export function Authentication1() {
               Please upload your fingerprint for E-KYC verification
             </span>
           )}
-          <Button size="xs" className={classes.button1}>
+            {show && (<div>
+              <NumberInput
+                    placeholder="OTP"
+                    type={'number'}
+                    required={true}
+                    hideControls={true}
+                    value={otp_no}
+                    onChange={setOtp_no}
+
+                    classNames={{
+                        input: classes.input,
+                        label: classes.inputLabel,
+                        root: classes.inputcontainer,
+                    }}
+                    // required
+                    // {...form.getInputProps('name')}
+                />
+                </div>)
+}         
+           
+       
+        {!show && (
+           <div style={{display:'flex',flexDirection:'column'}}>
+        <Button size="xs" className={classes.button1}>
             <span
               style={{
                 fontFamily: 'Montserrat',
@@ -337,6 +364,7 @@ export function Authentication1() {
                 fontSize: `16px`,
                 lineHeight: `27px`,
               }}
+              onClick={onOTP}
             >
               Get OTP
             </span>{' '}
@@ -356,7 +384,43 @@ export function Authentication1() {
             </span>{' '}
             &nbsp;{' '}
           </Button>
+          </div>
+        )}
+        { show && (<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',margin:'5px',width:'100%' }}>
+               
+               <Button size="xs" className={classes.button1} onClick={onOTP}>
+                   <span
+                       style={{
+                           fontFamily: 'Montserrat',
+                           fontStyle: `normal`,
+                           fontWeight: `500`,
+                           fontSize: `16px`,
+                           lineHeight: `27px`,
+                       }}
+                   >
+                       Back
+                   </span>{' '}
+                   &nbsp;{' '}
+
+               </Button>
+               <Button size="xs" className={classes.button2}>
+                   <span
+                       style={{
+                           fontFamily: 'Montserrat',
+                           fontStyle: `normal`,
+                           fontWeight: `500`,
+                           fontSize: `16px`,
+                           lineHeight: `27px`,
+                       }}
+                   >
+                      Continue
+                   </span>{' '}
+                   &nbsp;{' '}
+               </Button>
+           </div>)
+         }
         </div>
+
       </div>
     </div>
   )
