@@ -193,7 +193,7 @@ export function EnterMPIN() {
 
           {/* <ButtonGroup href1="/UPI/payment-details-review" href2="/UPI/payment-success" /> */}
           <div className={classes.buttoncontainer}>
-            <Link href="/kyc/authentication2">
+            <Link href="/kyc/authentication1">
               <div className={classes.button1}>Back</div>
             </Link>
             <div
@@ -202,7 +202,7 @@ export function EnterMPIN() {
               onClick={() => {
                 form.validate()
                 if (form.isValid()) {
-                  router.push(`/profile`)
+                  router.push(`/home`)
                 }
               }}
             >
