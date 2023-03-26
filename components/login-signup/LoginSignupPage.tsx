@@ -8,7 +8,7 @@ import {
   TextInput,
   Title,
   Box,
-  Checkbox
+  Checkbox,
 } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -19,14 +19,7 @@ import { notifications } from '@mantine/notifications'
 import Image from 'next/image'
 import 'react-phone-input-2/lib/style.css'
 import useStorage from '../../hooks/useStorage'
-import {
-  useForm,
-  isNotEmpty,
-  isEmail,
-  isInRange,
-  hasLength,
-  matches,
-} from '@mantine/form'
+import { useForm, isEmail, hasLength } from '@mantine/form'
 import api from '../api'
 
 const useStyles = createStyles((theme) => ({
@@ -154,10 +147,10 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `center`,
     flexDirection: `column`,
     alignItems: `center`,
-    margin: `auto`
+    margin: `auto`,
   },
   togglesignin: {
-    marginTop: `20px`
+    marginTop: `20px`,
   },
   button: {
     width: `125px`,
@@ -219,7 +212,13 @@ export function LoginSignupPage() {
   const router = useRouter()
   const [isSignIn, setIsSignIn] = useState(true)
   const [checked, setChecked] = useState(false)
-  const SignUp = (contact_no: string, email: string, si: number, name: string, consent: boolean) => {
+  const SignUp = (
+    contact_no: string,
+    email: string,
+    si: number,
+    name: string,
+    consent: boolean,
+  ) => {
     const { getItem, setItem } = useStorage()
     let res = api
       .post('/user/sendotp/', {
@@ -231,34 +230,20 @@ export function LoginSignupPage() {
         isaccount: 0,
       })
       .then((res) => {
-        if (res.status === 201) {
-          setEnterOtp(true)
-          notifications.show({
-            id: 'hello-there',
-            withCloseButton: true,
-            autoClose: 5000,
-            title: "Success",
-            message: 'Otp Sent To Your Mobile Number',
-            color: 'green',
-            icon: <IconCheck size={"1.1rem"} />,
-            loading: false,
-          });
-          setItem('contact_no', res.data.contact_no, 'session')
-          setItem('user_id', res.data.user_id, 'session')
-        }
-        else if (res.status === 400) {
-          setEnterOtp(true)
-          notifications.show({
-            id: 'hello-there',
-            withCloseButton: true,
-            autoClose: 5000,
-            title: "Unsuccessful",
-            message: res.data?.User,
-            color: 'red',
-            icon: <IconX size={"1.1rem"} />,
-            loading: false,
-          });
-        }
+        setEnterOtp(true)
+        notifications.show({
+          id: 'hello-there',
+          withCloseButton: true,
+          autoClose: 5000,
+          title: 'Success',
+          message: 'Otp Sent To Your Mobile Number',
+          color: 'green',
+          icon: <IconCheck size={'1.1rem'} />,
+          loading: false,
+        })
+        setItem('contact_no', res.data.contact_no, 'session')
+        setItem('user_id', res.data.user_id, 'session')
+
         setSignInLoading(false)
         setSignUpLoading(false)
 
@@ -270,12 +255,12 @@ export function LoginSignupPage() {
           id: 'hello-there',
           withCloseButton: true,
           autoClose: 5000,
-          title: "Unsuccessful",
+          title: 'Unsuccessful',
           message: err.response.data?.message,
           color: 'red',
-          icon: <IconX size={"1.1rem"} />,
+          icon: <IconX size={'1.1rem'} />,
           loading: false,
-        });
+        })
         setSignInLoading(false)
         setSignUpLoading(false)
       })
@@ -285,7 +270,13 @@ export function LoginSignupPage() {
 
   // const [otpValue, setOtpValue] = useState<boolean>(false)
 
-  const Validate = (contact_no: string, otp: string, email: string, name: string, consent: boolean) => {
+  const Validate = (
+    contact_no: string,
+    otp: string,
+    email: string,
+    name: string,
+    consent: boolean,
+  ) => {
     const { setItem } = useStorage()
 
     let res = api
@@ -295,7 +286,7 @@ export function LoginSignupPage() {
         email: email,
         isaccount: 0,
         name: name,
-        consent: consent
+        consent: consent,
       })
       .then((res) => {
         if (res.status === 200) {
@@ -308,8 +299,8 @@ export function LoginSignupPage() {
             color: 'green',
             icon: <IconCheck size={'1.1rem'} />,
             loading: false,
-          });
-          router.replace('/consent')
+          })
+          router.replace('/home')
           // save response i.e access token and refresh token in session storage
           setItem('contact_no', res.data.contact_no)
           setItem('access_token', res.data.access_token)
@@ -345,20 +336,21 @@ export function LoginSignupPage() {
     },
 
     validate: {
-      phone: hasLength(12, 'Enter a Valid Phone Number')
+      phone: hasLength(12, 'Enter a Valid Phone Number'),
     },
-  });
+  })
   const form1 = useForm({
     initialValues: {
       email: '',
-      name: ''
+      name: '',
     },
 
     validate: {
       email: isEmail('Invalid email'),
-      phone: hasLength(12, 'Enter a Valid Phone Number')
+      name: hasLength({ min: 2 }, 'Name should be atleast 2 character long'),
     },
-  });
+  })
+
   const style = `
   .react-tel-input:active{
     border: 2px solid red
@@ -375,7 +367,6 @@ export function LoginSignupPage() {
               <Stack my={10}>
                 <style>{style}</style>
                 <Box component="form">
-
                   <PhoneInput
                     placeholder="Mobile Number"
                     country={'in'}
@@ -405,91 +396,149 @@ export function LoginSignupPage() {
                   />
 
                   <div className={classes.error}>{form.errors?.phone}</div>
-                  {!isSignIn ? <TextInput
-                    placeholder="Name"
-                    withAsterisk
-                    mt="md"
-                    classNames={{
-                      input: classes.input,
-                      label: classes.inputLabel,
-                      root: classes.inputcontainer
-                    }}
-                    required
-                    {...form1.getInputProps('name')}
-                  /> : <></>}
-                  {!isSignIn ? <TextInput
-                    placeholder="Email"
-                    withAsterisk
-                    {...form1.getInputProps('email')}
-                    type={'email'}
-                    mt="md"
-                    classNames={{
-                      input: classes.input,
-                      label: classes.inputLabel,
-                      root: classes.inputcontainer,
-                    }}
-                    required
-                    {...form.getInputProps('email')}
-                  />{
-                  }
+                  {!isSignIn ? (
+                    <TextInput
+                      placeholder="Name"
+                      withAsterisk
+                      mt="md"
+                      classNames={{
+                        input: classes.input,
+                        label: classes.inputLabel,
+                        root: classes.inputcontainer,
+                      }}
+                      required
+                      {...form1.getInputProps('name')}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                  {!isSignIn ? (
+                    <TextInput
+                      placeholder="Email"
+                      withAsterisk
+                      {...form1.getInputProps('email')}
+                      type={'email'}
+                      mt="md"
+                      classNames={{
+                        input: classes.input,
+                        label: classes.inputLabel,
+                        root: classes.inputcontainer,
+                      }}
+                      required
+                    />
+                  ) : (
+                    <></>
+                  )}
+                  {!isSignIn ? (
+                    <>
+                      <Checkbox
+                        my={20}
+                        label={
+                          'I herby give my consent to access data and transaction permission'
+                        }
+                        checked={checked}
+                        onChange={(event) =>
+                          setChecked(event.currentTarget.checked)
+                        }
+                      />
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </Box>
                 <Group mt={15}>
-
-                  {isSignIn ? <div className={classes.buttoncontainer}>
-                    <Button
-                      className={classes.button}
-                      loading={signinLoading}
-                      onClick={() => {
-                        console.log('form.values.phone', form.values.phone)
-                        if (!signUpLoading) {
-                          form.validate()
-                          if (form.isValid()) {
-                            setSignInLoading(true)
-                            console.log('mobile , email', form.values.phone, form1.values.email)
-                            SignUp(form.values.phone, form1.values.email, 0, form1.values.name, checked)
+                  {isSignIn ? (
+                    <div className={classes.buttoncontainer}>
+                      <Button
+                        className={classes.button}
+                        loading={signinLoading}
+                        onClick={() => {
+                          console.log('form.values.phone', form.values.phone)
+                          if (!signUpLoading) {
+                            form.validate()
+                            if (form.isValid()) {
+                              setSignInLoading(true)
+                              console.log(
+                                'mobile , email',
+                                form.values.phone,
+                                form1.values.email,
+                              )
+                              SignUp(
+                                form.values.phone,
+                                form1.values.email,
+                                0,
+                                form1.values.name,
+                                checked,
+                              )
+                            }
                           }
-                        }
-                      }}
-                    >
-                      Sign In
-                    </Button>
-                    <div className={classes.togglesignin}>Don't have an account?  <span style={{ color: `black`, fontWeight: 600, cursor: `pointer` }} onClick={() => {
-                      setIsSignIn(false)
-                    }}>Register</span></div>
-                  </div> : <div className={classes.buttoncontainer}> <Button
-                    className={classes.button}
-                    loading={signUpLoading}
-                    onClick={() => {
-                      if (!signinLoading) {
-                        form.validate()
-                        form1.validate()
-                        if (form.isValid() && form1.isValid()) {
-                          setSignUpLoading(true)
-                          console.log('mobile , email', form.values.phone, form.values.email)
-                          SignUp(form.values.phone, form.values.email, 1)
-                        }
-                      }
-                    }}
-                  >
-                    Sign Up
-                  </Button>
-                  <Button
-                    className={classes.button}
-                    loading={signinLoading}
-                    onClick={() => {
-                      console.log('form.values.phone', form.values.phone)
-                      if (!signUpLoading) {
-                        form.validate()
-                        if (form.isValid()) {
-                          setSignInLoading(true)
-                          console.log('mobile , email', form.values.phone, form.values.email)
-                          SignUp(form.values.phone, form.values.email, 0)
-                        }
-                      }
-                    }}
-                  >
-                    Sign In
-                  </Button>
+                        }}
+                      >
+                        Sign In
+                      </Button>
+                      <div className={classes.togglesignin}>
+                        Don't have an account?{' '}
+                        <span
+                          style={{
+                            color: `black`,
+                            fontWeight: 600,
+                            cursor: `pointer`,
+                          }}
+                          onClick={() => {
+                            setIsSignIn(false)
+                          }}
+                        >
+                          Register
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className={classes.buttoncontainer}>
+                      {' '}
+                      <Button
+                        className={classes.button}
+                        loading={signUpLoading}
+                        onClick={() => {
+                          if (!signinLoading) {
+                            form.validate()
+                            form1.validate()
+                            if (form.isValid() && form1.isValid()) {
+                              setSignUpLoading(true)
+                              console.log(
+                                'mobile , email',
+                                form.values.phone,
+                                form1.values.email,
+                              )
+                              SignUp(
+                                form.values.phone,
+                                form1.values.email,
+                                1,
+                                form1.values.name,
+                                checked,
+                              )
+                            }
+                          }
+                        }}
+                      >
+                        Sign Up
+                      </Button>
+                      <div className={classes.togglesignin}>
+                        Have an account?{' '}
+                        <span
+                          style={{
+                            color: `black`,
+                            fontWeight: 600,
+                            cursor: `pointer`,
+                          }}
+                          onClick={() => {
+                            setIsSignIn(true)
+                          }}
+                        >
+                          Login
+                        </span>{' '}
+                      </div>{' '}
+                    </div>
+                  )}
                 </Group>
               </Stack>
             )}
@@ -516,7 +565,13 @@ export function LoginSignupPage() {
                 <Button
                   className={classes.control}
                   onClick={() => {
-                    Validate(form.values.phone, otp, form1.values.email, form1.values.name, checked)
+                    Validate(
+                      form.values.phone,
+                      otp,
+                      form1.values.email,
+                      form1.values.name,
+                      checked,
+                    )
                   }}
                 >
                   Confirm

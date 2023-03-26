@@ -5,7 +5,7 @@ import { useState } from 'react'
 import Filter from '../filter'
 import CashCard from './CashLimitCard'
 import EodBalance from './EODBalanceCard'
-import RecentTransactions from './RecentTransactions'
+import RecentTransactions from './recenttransactions'
 
 const FilterRow = styled.div`
   display: flex;
