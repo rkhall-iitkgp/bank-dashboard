@@ -32,7 +32,7 @@ const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
 const kyc = false
 const add = false
 
-let a
+let a;
 
 if(kyc){
   if(add)
@@ -75,7 +75,7 @@ export default function Payment ({
           style={{ justifyContent: 'space-evenly', alignItems: 'flex-start' }}
           my={12}
         >
-          {(a=0) ? ( 
+          {(!kyc && !add) ? ( 
            <div onClick={()=>{
             SetIsKycPermissionPopUpOpen(true)
            }}> 
@@ -95,7 +95,7 @@ export default function Payment ({
           </Link>
         )
         }
-          {(a=0) ? ( 
+          {(!kyc && !add) ? ( 
            <div onClick={()=>{
             SetIsKycPermissionPopUpOpen(true)
            }}> 
