@@ -20,10 +20,10 @@ const useStyles = createStyles((theme) => ({
     flexDirection: `column`,
     alignItems: `center`,
     justifyContent: `space-around`,
-    height: `100vh`,
+    height: `100%`,
   },
   container2: {
-    height: `100vh`,
+    height: `100%`,
   },
 
   name: {
