@@ -11,10 +11,12 @@ const StyledStack = styled(Stack)`
   margin-left: 4rem;
   margin-right: 4rem;
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
     transition-duration: 0.3s;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
   }
+`
+const Span = styled.span`
+  margin: auto;
 `
 interface Props {
   ratioName?: string
@@ -96,9 +98,9 @@ export function FinancialRatios() {
       >
         {financialRatios.map((ele) => {
           return (
-            <span key={ele.id}>
+            <Span key={ele.id}>
               <RatioCard ratioName={ele.ratioName} value={ele.value} />
-            </span>
+            </Span>
           )
         })}
       </Group>

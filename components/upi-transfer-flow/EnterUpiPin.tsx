@@ -3,6 +3,20 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
+import useStorage from '../../hooks/useStorage'
+import api from '../api'
+import { IconCheck, IconX } from '@tabler/icons-react'
+import { notifications } from '@mantine/notifications'
+import React from 'react'
+import {
+  useForm,
+  isNotEmpty,
+  isEmail,
+  isInRange,
+  hasLength,
+  matches,
+} from '@mantine/form'
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: `100vh`,
@@ -130,6 +144,64 @@ export function EnterUPIpin() {
   const { classes } = useStyles()
   const router = useRouter()
   const data = router.query
+  const [pin, setPin] = React.useState('')
+  const [enterPin, setEnterPin] = React.useState(false)
+  const Validate = (contact_no: string, pin: string, email: string) => {
+    const { setItem } = useStorage()
+
+    let res = api
+      .post('user/creatempin/', {
+        mpin: pin,
+      })
+      .then((res) => {
+        if (!(res.status === 200 || res.status === 201)) {
+          notifications.show({
+            id: 'hello-there',
+            withCloseButton: true,
+            autoClose: 5000,
+            title: 'Success',
+            message: `Incorrect Pin Entered`,
+            color: 'red',
+            icon: <IconCheck size={'1.1rem'} />,
+          })
+          router.replace('/consent')
+
+          setItem('contact_no', res.data.contact_no)
+          setItem('access_token', res.data.access_token)
+          setItem('refresh_token', res.data.refresh_token)
+          setItem('user_id', res.data.user_id)
+        }
+
+        return res
+      })
+      .catch((err) => {
+        console.log('hello')
+        notifications.show({
+          id: 'hello-there',
+          withCloseButton: true,
+          autoClose: 5000,
+          title: 'Incorrect Pin Entered 2',
+          message: err.response.data?.message,
+          color: 'red',
+          icon: <IconX size={'1.1rem'} />,
+          loading: false,
+        })
+      })
+
+    res.then((v) => console.log(v))
+  }
+
+  const form = useForm({
+    initialValues: {
+      phone: '',
+      email: '',
+    },
+
+    validate: {
+      email: isEmail('Invalid email'),
+      phone: hasLength(12, 'Enter a Valid Phone Number'),
+    },
+  })
 
   return (
     <div className={classes.wrapper}>
@@ -143,7 +215,13 @@ export function EnterUPIpin() {
           </div>
           <div className={classes.description}>
             <Group position="center">
-              <PinInput placeholder="" />
+              <PinInput
+                placeholder=""
+                value={pin}
+                onChange={(e) => setPin(e)}
+                mx="auto"
+                length={4}
+              />
             </Group>
           </div>
 
@@ -155,7 +233,14 @@ export function EnterUPIpin() {
             <Link
               href={`/UPI/payment-success?name=${data.name}&amount=${data.amount}&upi=${data.upi}`}
             >
-              <div className={classes.button1}>Continue</div>
+              <div
+                className={classes.button1}
+                onClick={() => {
+                  Validate(form.values.phone, pin, form.values.email)
+                }}
+              >
+                Continue
+              </div>
             </Link>
           </div>
         </div>

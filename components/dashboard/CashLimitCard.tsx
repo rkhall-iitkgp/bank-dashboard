@@ -18,11 +18,11 @@ const CashCard = (props: {
   return (
     <Card
       radius={'lg'}
-      h={130}
       style={{
+        fontSize: '0.8rem',
         boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
         maxWidth: '200px',
-        flex:1,
+        flex: 1,
       }}
     >
       <Card.Section bg={bgc} py={6}>

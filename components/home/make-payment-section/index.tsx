@@ -9,6 +9,10 @@ import {
 } from '@mantine/core'
 import Link from 'next/link'
 import MakePaymentCard from './MakePaymentCards'
+import api from '../../api'
+import useStorage from '../../../hooks/useStorage'
+import { useState } from 'react'
+import { useEffect } from 'react'
 const _StyledButton = styled(Button)`
   border-radius: 30px;
   color: white;
@@ -27,26 +31,50 @@ const _StyledButton = styled(Button)`
 const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
   _StyledButton,
 )
-const kyc = false
-const add = false
+
 interface Props {
   SetIsKycPermissionPopUpOpen: Function
   isKycPermissionPopUpOpen: any
+  setIsAddAccountPopupOpen: Function
 }
 export default function Payment({
   SetIsKycPermissionPopUpOpen,
   isKycPermissionPopUpOpen,
+  setIsAddAccountPopupOpen,
 }: Props) {
-  var a
-  if (kyc) {
-    if (add) {
-      a = 1
-    } else {
-      a = 2
-    }
-  } else {
-    a = 0
+
+const { getItem } = useStorage()
+const [result,setResult]=useState(1)
+const GetKycStatus = () => {
+const accessToken = getItem('access_token','session')
+console.log(accessToken)
+const user_id = getItem('user_id')
+const accLength=JSON.stringify(getItem('accounts')).length
+  const response = api
+  .get(`/user/getkyc/`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  })
+  .then((response) => {
+    (response.data);
+    
+  })
+  .catch((err) =>
+  {
+    (err.response.data.message=='KYC not done') && setResult(0)
+    // console.log(err.response.data.message)
   }
+    )
+
+}
+const [accLength, setAccLength] = useState('[]')
+useEffect(() => {
+  GetKycStatus()
+  // setResult(1)
+  setAccLength(getItem('accounts'))
+}, [])
   return (
     <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '3vh' }}>
       <Card shadow="sm" padding="xs" radius="lg" withBorder bg={'#E0EEFF'}>
@@ -65,7 +93,7 @@ export default function Payment({
           style={{ justifyContent: 'space-evenly', alignItems: 'flex-start' }}
           my={12}
         >
-          {!kyc && !add ? (
+          {result===0 && (
             <div
               onClick={() => {
                 SetIsKycPermissionPopUpOpen(true)
@@ -77,16 +105,24 @@ export default function Payment({
                 alt="Bank Transfer"
               />
             </div>
-          ) : (
-            <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
+          ) }
+         
+            
+            {result===1 &&accLength!=='[]' && <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
               <MakePaymentCard
                 imageAddress="icons/bank-building-white.png"
                 cardText="Bank Transfer"
                 alt="Bank Transfer"
               />
-            </Link>
-          )}
-          {!kyc && !add ? (
+            </Link>}
+            {result === 1 && accLength==='[]' && <div onClick={() => {setIsAddAccountPopupOpen(true)}}><MakePaymentCard
+              imageAddress="icons/bank-building-white.png"
+              cardText="Bank Transfer"
+              alt="Bank Transfer"
+            /></div>}
+            
+          
+          {(result===0) ? (
             <div
               onClick={() => {
                 SetIsKycPermissionPopUpOpen(true)
