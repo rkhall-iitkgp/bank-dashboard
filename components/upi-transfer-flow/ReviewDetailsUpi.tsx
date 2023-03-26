@@ -20,7 +20,6 @@ const useStyles = createStyles((theme) => ({
   },
   titlebox: {
     // marginBottom:`20px`,
-    width: '90%',
     margin: 'auto',
     fontSize: '28px',
     display: `flex`,
@@ -151,7 +150,6 @@ const useStyles = createStyles((theme) => ({
     margin: `auto`,
   },
   beficiaryformcontainer: {
-    width: `90%`,
     // paddingTop: `2%`,
     margin: `auto`,
   },

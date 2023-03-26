@@ -126,13 +126,6 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-interface Props {
-  setBankAccountList: Function
-  setIsAddAccountPopupOpen: Function
-  isAddAccountPopupOpen: boolean
-  bankAccountList: any[]
-}
-
 export function TransactionForm() {
   const { classes } = useStyles()
   const [otp, setOtp] = useState<boolean>(false)

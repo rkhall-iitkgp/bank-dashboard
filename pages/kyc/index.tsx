@@ -1,3 +1,3 @@
-import { KycAuthentication } from "../../components/kyc/Authentication1";
+import { Authentication1 } from "../../components/kyc/Authentication1";
 
-export default KycAuthentication
+export default Authentication1
