@@ -160,7 +160,7 @@ const RecentTransactions = () => {
       <Text ff={'Montserrat'} c="#0062D6" fw={700} fz={22} mt={4} ml={8}>
         Recent Transactions
       </Text>
-      <div style={{ maxHeight: '23rem', overflow: 'auto' }}>
+      <div style={{ maxHeight: '18rem', overflow: 'auto' }}>
         {transactions.map((t) => (
           <div key={t.date}>
             <TransactionCard data={t} />
