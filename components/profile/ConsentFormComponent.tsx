@@ -12,13 +12,13 @@ const useStyles = createStyles((theme) => ({
     height: `80%`,
     minWidth: `400px`,
     maxWidth: `500px`,
-    maxHeight: `420px`,
+    maxHeight: `380px`,
     marginLeft: `10px`,
     marginTop: `3vh`,
   },
   heading: {
     width: `100%`,
-    height: `10%`,
+    height: `15%`,
     padding: `10px`,
     paddingTop: `20px`,
     background: `#DDEDFF`,
@@ -159,15 +159,6 @@ const ConsentFormComponent = ({ id, accountselected }: Props) => {
             }}
           >
             Confirm
-          </Button>
-          <Button
-            size="lg"
-            className={classes.control}
-            onClick={() => {
-              router.push("/home")
-            }}
-          >
-            Later
           </Button>
         </div>
       </div>
