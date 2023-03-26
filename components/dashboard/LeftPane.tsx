@@ -96,7 +96,7 @@ const LeftPane = ({ accountsList }: Props) => {
                 />
               }
               radius="lg"
-              placeholder="bank account"
+              placeholder="Bank Account"
               value={selectedBankAccount}
               onChange={SetSelectedBankAccount}
               data={accountsList}

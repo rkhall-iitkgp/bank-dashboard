@@ -15,6 +15,9 @@ const StyledStack = styled(Stack)`
     transition-duration: 0.3s;
   }
 `
+const Span = styled.span`
+  margin: auto;
+`
 interface Props {
   ratioName?: string
   value?: string
@@ -95,9 +98,9 @@ export function FinancialRatios() {
       >
         {financialRatios.map((ele) => {
           return (
-            <span key={ele.id}>
+            <Span key={ele.id}>
               <RatioCard ratioName={ele.ratioName} value={ele.value} />
-            </span>
+            </Span>
           )
         })}
       </Group>
