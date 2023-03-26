@@ -8,11 +8,14 @@ import {
   TextInput,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 // import { useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import useStorage from '../../../hooks/useStorage'
+import { IconCheck, IconX } from '@tabler/icons-react';
+import useStorage from '../../../hooks/useStorage';
+import { notifications } from '@mantine/notifications';
+
 import api from '../../api'
 import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
 const useStyles = createStyles((theme) => ({
@@ -162,7 +165,6 @@ export function AddAccountFormPopup({
   const [account_no, setAccount_no] = useState<number | ''>('')
   const [mobile_no, setMobile_no] = useState<string>('')
   const [ifsc, setIfsc] = useState<string>('')
-
   const [otpNum, setOtpNum] = useState<string>('')
   const form = useForm({
     initialValues: {
@@ -178,6 +180,24 @@ export function AddAccountFormPopup({
 
     },
   });
+  useEffect(() => {
+
+
+    return () => {
+      api.get(`/user/accounts/${getItem("user_id")}/`, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } })
+        .then((response) => {
+          console.log(response.data.accounts)
+          const responseArray = response.data
+          setBankAccountList(responseArray)
+          console.log(bankAccountList)
+
+          setItem('accounts', response.request.responseText)
+          return response
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [])
+
   return (
     <Modal
       withCloseButton={false}
@@ -277,13 +297,35 @@ export function AddAccountFormPopup({
                         const response = api
                           .post('/user/sendaccountotp/', {
                             "contact_no": "+" + form.values.phone
-                          })
+                          }, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } })
                           .then((response) => {
                             console.log(response)
                             setOtp(true)
+                            notifications.show({
+                              id: 'hello-there',
+                              withCloseButton: true,
+                              autoClose: 5000,
+                              title: "Success",
+                              message: 'Otp sent to your mobile number',
+                              color: 'green',
+                              icon: <IconCheck size={"1.1rem"} />,
+                              loading: false,
+                            });
 
                           })
-                          .catch((err) => console.log(err))
+                          .catch((err) => {
+                            console.log('err', err)
+                            notifications.show({
+                              id: 'hello-there',
+                              withCloseButton: true,
+                              autoClose: 5000,
+                              title: "Unsuccessful",
+                              message: err.response.data?.message,
+                              color: 'red',
+                              icon: <IconX size={"1.1rem"} />,
+                              loading: false,
+                            });
+                          })
                       }
                     } else {
                       setBankAccountList(bankAccountList)
@@ -291,21 +333,39 @@ export function AddAccountFormPopup({
                       console.log(otpNum)
                       const contact_no = getItem('contact_no')
                       const response = api
-                        .post('/user/addaccount/', {
-                          contact_no: form.values.phone,
+                        .post(`/user/accounts/${getItem("user_id")}/`, {
+                          contact_no: "+" + form.values.phone,
                           account_no: form.values.account_no,
                           ifsc: form.values.IFSC,
                           otp: otpNum,
-                        })
+                        }, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } })
                         .then((response) => {
-                          bankAccountList.push({
-                            account_no: form.values.account_no,
-                            ifsc: form.values.IFSC,
-                          })
+                          notifications.show({
+                            id: 'hello-there',
+                            withCloseButton: true,
+                            autoClose: 5000,
+                            title: "Success",
+                            message: 'Account Succesfully Added',
+                            color: 'green',
+                            icon: <IconCheck size={"1.1rem"} />,
+                            loading: false,
+                          });
                           // sessionStorage.setItem('bankAccountList', JSON.stringify(bankAccountList))
                           console.log(response)
                         })
-                        .catch((err) => console.log(err))
+                        .catch((err) => {
+                          console.log('err', err)
+                          notifications.show({
+                            id: 'hello-there',
+                            withCloseButton: true,
+                            autoClose: 5000,
+                            title: "Unsuccessful",
+                            message: err.response.data?.message,
+                            color: 'red',
+                            icon: <IconX size={"1.1rem"} />,
+                            loading: false,
+                          });
+                        })
                     }
                   }}
                 >
