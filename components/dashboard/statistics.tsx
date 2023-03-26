@@ -4,7 +4,7 @@ const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 import { useState } from 'react'
 import ArticlesCard from './articlesCard'
 import InsightCard from './insightCard'
-import RecentTransactions from './RecentTransactions'
+import RecentTransactions from './recenttransactions'
 
 const BalanceChart = (props: {
   balanceData: { x: string; y: number }[]
@@ -19,6 +19,7 @@ const BalanceChart = (props: {
       type="area"
       height={340}
       width={width}
+      margin={'auto'}
       options={{
         fill: { colors: [color] },
         dataLabels: { enabled: false },
@@ -211,8 +212,9 @@ const FinancialStatistics = () => {
         align={'flex-end'}
         style={{
           flex: 1,
-          maxHeight: '28rem',
+          maxHeight: '14rem',
           overflow: 'auto',
+          margin: 'auto',
         }}
       >
         {categoryIndex == -1 && (
@@ -259,7 +261,7 @@ const FinancialStatistics = () => {
                 boxShadow: '0px 1px 10px rgba(0, 0, 0, 0.1)',
               }}
             >
-              <RecentTransactions/>
+              <RecentTransactions />
             </div>
             <InsightCard insights={InsightList} />
             <ArticlesCard articles={ArticlesData} />
