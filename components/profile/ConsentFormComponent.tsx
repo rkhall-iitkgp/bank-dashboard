@@ -1,8 +1,17 @@
 import { Button, createStyles, Radio } from '@mantine/core'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { useState } from 'react'
+import useStorage from '../../hooks/useStorage'
 
 const useStyles = createStyles((theme) => ({
+  wrap: {
+    background: `white`,
+    borderRadius: `30px`,
+    boxShadow: ` 0px 4px 40px rgba(0, 0, 0, 0.2)`,
+    width: `80%`,
+    maxWidth: `700px`
+  },
   heading: {
     width: `100%`,
     height: `10%`,
@@ -11,7 +20,7 @@ const useStyles = createStyles((theme) => ({
     background: `#DDEDFF`,
     fontSize: `1.3rem`,
     textAlign: `center`,
-    borderRadius: ' 0px 30px 0px 0px',
+    borderRadius: ' 30px 30px 0px 0px',
     color: ` #0052B3`,
   },
   form: {
@@ -75,9 +84,11 @@ const useStyles = createStyles((theme) => ({
   },
   button: {
     display: `flex`,
+    flexDirection: `column`,
+    gap: `20px`,
     alignItems: `center`,
     justifyContent: `center`,
-    marginTop: 'auto',
+    marginTop: '30px',
   },
   icon: {
     display: `none`,
@@ -91,25 +102,24 @@ interface Props {
 const ConsentFormComponent = ({ id, accountselected }: Props) => {
   const { classes } = useStyles()
   const [data, setData] = useState<string>('1')
-  const [transaction, setTransaction] = useState<string>('1')
   // console.log('accountselected :', accountselected)
-
+  const router = useRouter()
+  const { setItem } = useStorage()
   return (
-    <div key={`${accountselected}`} style={{ height: '100%' }}>
-      <div className={classes.heading}>Consent Form ${accountselected}</div>
+    <div key={`${accountselected}`} style={{ height: '100%' }} className={classes.wrap}>
+      <div className={classes.heading}>Consent Form</div>
       <div className={classes.form}>
-        <div className={classes.formtitle}>This app would like to:</div>
+        <div className={classes.formtitle}>This app requires:</div>
         <div className={classes.questioncontainer}>
-          <div className={classes.question}>Data Permissions:</div>
+          <div className={classes.question}>Data and Transaction Permissions::</div>
           <Radio
             checked={data === '1'}
             onChange={(e: any) => setData('1')}
             my={16}
             label={
               <span className={classes.answercontainer}>
-                <span className={classes.answer}>Unlimited: </span>
-                Permission to collect all transaction data for the purpose of
-                providing better financial services.
+                <span className={classes.answer}>Allow: </span>
+
               </span>
             }
           />
@@ -119,64 +129,39 @@ const ConsentFormComponent = ({ id, accountselected }: Props) => {
             my={16}
             label={
               <span className={classes.answercontainer}>
-                <span className={classes.answer}>Limited: </span> Asks for
-                permission each time to access transaction data.
+                <span className={classes.answer}>Do Not Allow: </span>
               </span>
             }
           />
 
-          <Radio
-            checked={data === '3'}
-            onChange={(e: any) => setData('3')}
-            my={16}
-            label={
-              <span className={classes.answercontainer}>
-                <span className={classes.answer}>None: </span> No permission to
-                access transaction data.
-              </span>
-            }
-          />
+
         </div>
-        <hr style={{ margin: `5px auto`, width: `70%` }} />
-        <div className={classes.questioncontainer}>
-          <div className={classes.question}>Transaction Permissions:</div>
-          <Radio
-            checked={transaction === '1'}
-            onChange={(e: any) => setTransaction('1')}
-            label={
-              <span className={classes.answercontainer}>
-                <span className={classes.answer}>Allow</span> transaction from
-                this account
-              </span>
-            }
-            my={16}
-          />
-          <Radio
-            checked={transaction === '2'}
-            onChange={(e: any) => setTransaction('2')}
-            label={
-              <span className={classes.answercontainer}>
-                <span className={classes.answer}>Do not allow</span> Transaction
-                from this account
-              </span>
-            }
-          />
-        </div>
+
         <div className={classes.button}>
           <Button
             size="lg"
             className={classes.control}
             onClick={() => {
-              if (data || transaction) {
+              if (data) {
                 console.log({
                   account: accountselected,
                   data: data,
-                  transaction: transaction,
                 })
+                setItem("permission", 'true')
+                router.push("/home")
               }
             }}
           >
             Confirm
+          </Button>
+          <Button
+            size="lg"
+            className={classes.control}
+            onClick={() => {
+              router.push("/home")
+            }}
+          >
+            Later
           </Button>
         </div>
       </div>

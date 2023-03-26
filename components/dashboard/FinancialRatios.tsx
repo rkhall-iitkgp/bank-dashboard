@@ -73,7 +73,7 @@ export function FinancialRatios() {
   ]
 
   return (
-    <Card radius={'lg'} style={{ flex: 3 }} mx={20} p={0}>
+    <Card radius={'lg'} style={{ flex: 5 }} mx={20} p={0}>
       <Card.Section h={70} bg={'#DDEDFF'} pt={25}>
         <Text
           c={'#0052B3'}

@@ -8,11 +8,15 @@ import {
   TextInput,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 // import { useState } from 'react'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import useStorage from '../../../hooks/useStorage'
+import { IconCheck, IconX } from '@tabler/icons-react';
+import useStorage from '../../../hooks/useStorage';
+mport { notifications } from '@mantine/notifications';
+
+import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
 import api from '../../datams'
 
 const useStyles = createStyles((theme) => ({
@@ -135,6 +139,12 @@ const useStyles = createStyles((theme) => ({
     width: `90%`,
     margin: `auto`,
   },
+  error: {
+    color: 'red',
+    fontSize: `calc(0.875rem - 0.125rem)`,
+    lineHeight: `1.2`,
+    marginTop: `12px`
+  },
 }))
 
 interface Props {
@@ -156,8 +166,38 @@ export function AddAccountFormPopup({
   const [account_no, setAccount_no] = useState<number | ''>('')
   const [mobile_no, setMobile_no] = useState<string>('')
   const [ifsc, setIfsc] = useState<string>('')
-
   const [otpNum, setOtpNum] = useState<string>('')
+  const form = useForm({
+    initialValues: {
+      phone: '',
+      account_no: '',
+      IFSC: ""
+    },
+
+    validate: {
+      phone: hasLength(12, 'Enter a Valid Phone Number'),
+      account_no: isInRange({ min: 100000000000, max: 999999999999 }, 'Enter a Valid Account Number'),
+      IFSC: matches(/^[A-Z]{4}0[A-Z0-9]{6}$/, "Enter A Valid IFSC Code")
+
+    },
+  });
+  useEffect(() => {
+
+
+    return () => {
+      api.get(`/user/accounts/${getItem("user_id")}/`, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } })
+        .then((response) => {
+          console.log(response.data.accounts)
+          const responseArray = response.data
+          setBankAccountList(responseArray)
+          console.log(bankAccountList)
+
+          setItem('accounts', response.request.responseText)
+          return response
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [])
 
   return (
     <Modal
@@ -182,18 +222,17 @@ export function AddAccountFormPopup({
                 type={'number'}
                 required={true}
                 hideControls={true}
-                value={account_no}
-                onChange={setAccount_no}
+
                 classNames={{
                   input: classes.input,
                   label: classes.inputLabel,
                   root: classes.inputcontainer,
                 }}
+                {...form.getInputProps('account_no')}
+
               />
               <PhoneInput
                 placeholder="Mobile Number"
-                value={mobile_no.replaceAll('\\D+', '')}
-                onChange={setMobile_no}
                 country={'in'}
                 containerStyle={{
                   border: 'none',
@@ -216,17 +255,20 @@ export function AddAccountFormPopup({
                   background: 'transparent',
                   border: 'none',
                 }}
+                {...form.getInputProps('phone')}
               />
+              <div className={classes.error}>{form.errors?.phone}</div>
               <TextInput
                 placeholder="IFSC"
                 mt="md"
-                value={ifsc}
-                onChange={(e) => setIfsc(e.currentTarget.value)}
+
                 classNames={{
                   input: classes.input,
                   label: classes.inputLabel,
                   root: classes.inputcontainer,
                 }}
+                {...form.getInputProps('IFSC')}
+
               />
               {otp ? (
                 <TextInput
@@ -250,37 +292,81 @@ export function AddAccountFormPopup({
                   className={classes.control}
                   onClick={() => {
                     if (otp == false) {
-                      setOtp(true)
-                      console.log(getItem('contact_no', 'session'))
-                      const response = api
-                        .post('/user/sendaccountotp/', {
-                          contact_no: getItem('contact_no', 'session'),
-                        })
-                        .then((response) => {
-                          console.log(response)
-                        })
-                        .catch((err) => console.log(err))
+                      console.log('contact_no', form.values.account_no)
+                      form.validate()
+                      if (form.isValid()) {
+                        const response = api
+                          .post('/user/sendaccountotp/', {
+                            "contact_no": "+" + form.values.phone
+                          }, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } })
+                          .then((response) => {
+                            console.log(response)
+                            setOtp(true)
+                            notifications.show({
+                              id: 'hello-there',
+                              withCloseButton: true,
+                              autoClose: 5000,
+                              title: "Success",
+                              message: 'Otp sent to your mobile number',
+                              color: 'green',
+                              icon: <IconCheck size={"1.1rem"} />,
+                              loading: false,
+                            });
+
+                          })
+                          .catch((err) => {
+                            console.log('err', err)
+                            notifications.show({
+                              id: 'hello-there',
+                              withCloseButton: true,
+                              autoClose: 5000,
+                              title: "Unsuccessful",
+                              message: err.response.data?.message,
+                              color: 'red',
+                              icon: <IconX size={"1.1rem"} />,
+                              loading: false,
+                            });
+                          })
+                      }
                     } else {
                       setBankAccountList(bankAccountList)
                       setIsAddAccountPopupOpen(false)
                       console.log(otpNum)
                       const contact_no = getItem('contact_no')
                       const response = api
-                        .post('/user/addaccount/', {
-                          contact_no: contact_no,
-                          account_no: account_no,
-                          ifsc: ifsc,
+                        .post(`/user/accounts/${getItem("user_id")}/`, {
+                          contact_no: "+" + form.values.phone,
+                          account_no: form.values.account_no,
+                          ifsc: form.values.IFSC,
                           otp: otpNum,
-                        })
+                        }, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } })
                         .then((response) => {
-                          bankAccountList.push({
-                            account_no: account_no,
-                            ifsc: ifsc,
-                          })
+                          notifications.show({
+                            id: 'hello-there',
+                            withCloseButton: true,
+                            autoClose: 5000,
+                            title: "Success",
+                            message: 'Account Succesfully Added',
+                            color: 'green',
+                            icon: <IconCheck size={"1.1rem"} />,
+                            loading: false,
+                          });
                           // sessionStorage.setItem('bankAccountList', JSON.stringify(bankAccountList))
                           console.log(response)
                         })
-                        .catch((err) => console.log(err))
+                        .catch((err) => {
+                          console.log('err', err)
+                          notifications.show({
+                            id: 'hello-there',
+                            withCloseButton: true,
+                            autoClose: 5000,
+                            title: "Unsuccessful",
+                            message: err.response.data?.message,
+                            color: 'red',
+                            icon: <IconX size={"1.1rem"} />,
+                            loading: false,
+                          });
+                        })
                     }
                   }}
                 >

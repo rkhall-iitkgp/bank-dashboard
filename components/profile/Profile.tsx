@@ -3,7 +3,7 @@ import useStorage from '../../hooks/useStorage'
 import { AccountType } from './constants'
 import LeftPane from './LeftPane'
 import RightPane from './RightPane'
-
+import { KycAuthentication } from '../kyc/Authentication1'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -30,34 +30,37 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const Profile = () => {
+interface props {
+  bankAccountList: any[]
+  loading: boolean
+}
+const Profile = ({ bankAccountList }: props) => {
   const { classes } = useStyles()
   const { getItem } = useStorage()
-  const accountList = getItem('accounts', 'session')
-  const accountsp: AccountType[] = accountList
-    ? JSON.parse(accountList)
-    : ([] as AccountType[])
+
 
   // const accounts: string[] = accountsp.map(account => account.account_no);
   // const accounts: string[] = accountsp?.map(
   //   (account) => '****' + account.account_no.substr(-4),
   // )
-  const accounts = [8989, 4235, 7382]
+  const bankAccountList1 = [2353]
 
   return (
     <div className={classes.wrapper}>
+       <KycAuthentication/>
       <div className={classes.container1}>
-        <LeftPane accounts={accounts} />
+        <LeftPane accounts={bankAccountList} />
       </div>
       <div className={classes.container2}>
-        {accounts.length ? (
-          <RightPane accounts={accounts} />
+        {bankAccountList1.length ? (
+          <RightPane accounts={bankAccountList} />
         ) : (
           <>
             No Accounts Connected Yet. Add an account to access all the cool
             features!!
           </>
         )}
+       
       </div>
     </div>
   )

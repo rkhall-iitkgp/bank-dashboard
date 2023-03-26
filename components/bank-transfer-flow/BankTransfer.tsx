@@ -167,7 +167,7 @@ function Account(props: {
   return (
     <div
       className={classes.account}
-      id={props.accountdata.id}
+      id={props.accountdata.account_no.slice(8, 12)}
       onClick={(event) => {
         props.setAccount({ id: props.accountdata.id })
         const accountlist = Array.from(
@@ -177,7 +177,7 @@ function Account(props: {
           e.classList.remove(classes.active)
         })
         document
-          .getElementById(props.accountdata.id)
+          .getElementById(props.accountdata.account_no.slice(8, 12))
           ?.classList.add(classes.active)
       }}
     >
@@ -189,7 +189,7 @@ function Account(props: {
         style={{ paddingBottom: '6px' }}
       ></Image>
       <div className={classes.bankname}>State Bank Of India</div>
-      <div className={classes.accountnumber}>{props.accountdata.account_no}</div>
+      <div className={classes.accountnumber}>{"****" + props.accountdata.account_no.slice(8, 12)}</div>
     </div>
   )
 }
@@ -229,7 +229,7 @@ export function BankTransfer() {
           <div className={classes.accountContainer}>
             {fetchedAccount.map((ele: { id: number, account_no: string, ifsc: string }) => {
               return (
-                <span key={ele.id} onClick={handleClick}>
+                <span key={ele.account_no.slice(8, 12)} onClick={handleClick}>
                   <Account setAccount={setAccount} accountdata={ele} />
                 </span>
               )
