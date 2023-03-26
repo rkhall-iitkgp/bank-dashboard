@@ -9,7 +9,11 @@ import {
 } from '@mantine/core'
 import Link from 'next/link'
 import MakePaymentCard from './MakePaymentCards'
-
+import api from '../../api'
+import { useEffect } from 'react'
+import useStorage from '../../../hooks/useStorage'
+import { useState } from 'react'
+import { PermissionFormPopup } from '../../reusable-components/Permissionprompt'
 const _StyledButton = styled(Button)`
   border-radius: 30px;
   color: white;
@@ -30,6 +34,34 @@ const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
 )
 
 const Payment = () => {
+  const { getItem } = useStorage()
+  const [result,setResult]=useState('1')
+  const [url,setUrl]=useState('/bank-transfer')
+  const GetKycStatus = () => {
+    const accessToken = getItem('access_token','session')
+    console.log(accessToken)
+    const user_id = getItem('user_id')
+  
+    const response = api
+      .get(`/user/getkyc/`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        (response.data);
+        
+      })
+      .catch((err) =>((err.response.data.message=='KYC not done') && setResult('0')))
+    {result=='0' && <PermissionFormPopup isPermissionPopUpOpen= {true}/>}
+  }
+  useEffect(() => {
+   
+    GetKycStatus()
+      
+  }, [])
+ 
   return (
     <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '3vh' }}>
       <Card shadow="sm" padding="xs" radius="lg" withBorder bg={'#E0EEFF'}>
@@ -55,7 +87,7 @@ const Payment = () => {
           style={{ justifyContent: 'space-evenly', alignItems: 'flex-start' }}
           my={12}
         >
-          <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
+          <Link href="/bank-transfer" onClick={} style={{ textDecoration: 'none' }}>
             <MakePaymentCard
               imageAddress="icons/bank-building-white.png"
               cardText="Bank Transfer"
