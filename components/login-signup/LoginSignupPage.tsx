@@ -7,18 +7,25 @@ import {
   Text,
   TextInput,
   Title,
-  Box
+  Box,
 } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-import { IconCheck, IconX } from '@tabler/icons-react';
+import { IconCheck, IconX } from '@tabler/icons-react'
 import PhoneInput from 'react-phone-input-2'
-import { notifications } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications'
 import Image from 'next/image'
 import 'react-phone-input-2/lib/style.css'
 import useStorage from '../../hooks/useStorage'
-import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
+import {
+  useForm,
+  isNotEmpty,
+  isEmail,
+  isInRange,
+  hasLength,
+  matches,
+} from '@mantine/form'
 import api from '../api'
 
 const useStyles = createStyles((theme) => ({
@@ -118,7 +125,6 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: `#006AE4`,
     borderRadius: `20px`,
     margin: `1rem`,
-    width: `300px`,
   },
   forminside: {
     maxWidth: `80%`,
@@ -162,7 +168,7 @@ const useStyles = createStyles((theme) => ({
   },
   imagecontainer: {
     width: '100%',
-    height: '75%'
+    height: '75%',
   },
   dashboardImage: {
     maxWidth: '100%',
@@ -172,13 +178,13 @@ const useStyles = createStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignContent: 'center'
+    alignContent: 'center',
   },
   error: {
     color: 'red',
     fontSize: `calc(0.875rem - 0.125rem)`,
     lineHeight: `1.2`,
-    marginTop: `12px`
+    marginTop: `12px`,
   },
   PhoneInput: {
     border: 'none',
@@ -187,9 +193,9 @@ const useStyles = createStyles((theme) => ({
     color: '#0052B3',
     margin: '6px 0',
     ':active': {
-      borderBottom: `2px solid red`
-    }
-  }
+      borderBottom: `2px solid red`,
+    },
+  },
 }))
 
 export function LoginSignupPage() {
@@ -209,7 +215,7 @@ export function LoginSignupPage() {
     const { getItem, setItem } = useStorage()
     let res = api
       .post('/user/sendotp/', {
-        contact_no: "+" + contact_no,
+        contact_no: '+' + contact_no,
         email: email,
         signup: si,
         isaccount: 0,
@@ -221,32 +227,31 @@ export function LoginSignupPage() {
             id: 'hello-there',
             withCloseButton: true,
             autoClose: 5000,
-            title: "Success",
+            title: 'Success',
             message: 'Otp Sent To Your Mobile Number',
             color: 'green',
-            icon: <IconCheck size={"1.1rem"} />,
+            icon: <IconCheck size={'1.1rem'} />,
             loading: false,
-          });
+          })
           setItem('contact_no', res.data.contact_no, 'session')
           setItem('user_id', res.data.user_id, 'session')
-        }
-        else if (res.status === 400) {
+        } else if (res.status === 400) {
           setEnterOtp(true)
           notifications.show({
             id: 'hello-there',
             withCloseButton: true,
             autoClose: 5000,
-            title: "Unsuccessful",
+            title: 'Unsuccessful',
             message: res.data?.User,
             color: 'red',
-            icon: <IconX size={"1.1rem"} />,
+            icon: <IconX size={'1.1rem'} />,
             loading: false,
-          });
+          })
         }
         setSignInLoading(false)
         setSignUpLoading(false)
 
-        return (res)
+        return res
       })
       .catch((err) => {
         console.log(err)
@@ -264,7 +269,7 @@ export function LoginSignupPage() {
 
     let res = api
       .post('user/validateotp/', {
-        contact_no: "+" + contact_no,
+        contact_no: '+' + contact_no,
         otp: otp,
         email: email,
         isaccount: 0,
@@ -275,12 +280,12 @@ export function LoginSignupPage() {
             id: 'hello-there',
             withCloseButton: true,
             autoClose: 5000,
-            title: "Success",
+            title: 'Success',
             message: `User Succesfull Signed In`,
             color: 'green',
-            icon: <IconCheck size={"1.1rem"} />,
+            icon: <IconCheck size={'1.1rem'} />,
             loading: false,
-          });
+          })
           router.replace('/consent')
           // save response i.e access token and refresh token in session storage
           setItem('contact_no', res.data.contact_no)
@@ -288,7 +293,6 @@ export function LoginSignupPage() {
           setItem('refresh_token', res.data.refresh_token)
           setItem('user_id', res.data.user_id)
         }
-
 
         return res
       })
@@ -298,12 +302,12 @@ export function LoginSignupPage() {
           id: 'hello-there',
           withCloseButton: true,
           autoClose: 5000,
-          title: "Unsuccessful",
+          title: 'Unsuccessful',
           message: err.response.data?.message,
           color: 'red',
-          icon: <IconX size={"1.1rem"} />,
+          icon: <IconX size={'1.1rem'} />,
           loading: false,
-        });
+        })
       })
 
     res.then((v) => console.log(v))
@@ -316,9 +320,9 @@ export function LoginSignupPage() {
 
     validate: {
       email: isEmail('Invalid email'),
-      phone: hasLength(12, 'Enter a Valid Phone Number')
+      phone: hasLength(12, 'Enter a Valid Phone Number'),
     },
-  });
+  })
   const style = `
   .react-tel-input:active{
     border: 2px solid red
@@ -333,12 +337,9 @@ export function LoginSignupPage() {
 
             {!enterOtp && (
               <Stack my={10}>
-                <style>
-                  {style}
-                </style>
+                <style>{style}</style>
                 <Box component="form">
                   <PhoneInput
-
                     placeholder="Mobile Number"
                     country={'in'}
                     containerStyle={{
@@ -347,7 +348,6 @@ export function LoginSignupPage() {
                       top: `0.5rem`,
                       color: '#0052B3',
                       margin: '6px 0',
-
                     }}
                     inputStyle={{
                       background: 'transparent',
@@ -364,9 +364,7 @@ export function LoginSignupPage() {
                       background: 'transparent',
                       border: 'none',
                     }}
-
                     {...form.getInputProps('phone')}
-
                   />
                   <div className={classes.error}>{form.errors?.phone}</div>
                   <TextInput
@@ -379,12 +377,12 @@ export function LoginSignupPage() {
                     classNames={{
                       input: classes.input,
                       label: classes.inputLabel,
-                      root: classes.inputcontainer
+                      root: classes.inputcontainer,
                     }}
                     required
                     {...form.getInputProps('email')}
-                  />{
-                  }
+                  />
+                  {}
                 </Box>
                 <Group className={classes.buttoncontainer} mt={15}>
                   <Button
@@ -396,7 +394,11 @@ export function LoginSignupPage() {
 
                         if (form.isValid()) {
                           setSignUpLoading(true)
-                          console.log('mobile , email', form.values.phone, form.values.email)
+                          console.log(
+                            'mobile , email',
+                            form.values.phone,
+                            form.values.email,
+                          )
                           SignUp(form.values.phone, form.values.email, 1)
                         }
                       }
@@ -413,7 +415,11 @@ export function LoginSignupPage() {
                         form.validate()
                         if (form.isValid()) {
                           setSignInLoading(true)
-                          console.log('mobile , email', form.values.phone, form.values.email)
+                          console.log(
+                            'mobile , email',
+                            form.values.phone,
+                            form.values.email,
+                          )
                           SignUp(form.values.phone, form.values.email, 0)
                         }
                       }
@@ -471,7 +477,7 @@ export function LoginSignupPage() {
             <div className={classes.imagecontainer}>
               <img
                 className={classes.dashboardImage}
-                src='/images/dashboardimg.png'
+                src="/images/dashboardimg.png"
                 alt="dashboard-img"
               />
             </div>
