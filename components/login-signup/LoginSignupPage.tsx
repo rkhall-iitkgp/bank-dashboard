@@ -8,6 +8,7 @@ import {
   TextInput,
   Title,
   Box,
+  Checkbox
 } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -150,7 +151,13 @@ const useStyles = createStyles((theme) => ({
   },
   buttoncontainer: {
     display: `flex`,
-    justifyContent: `space-between`,
+    justifyContent: `center`,
+    flexDirection: `column`,
+    alignItems: `center`,
+    margin: `auto`
+  },
+  togglesignin: {
+    marginTop: `20px`
   },
   button: {
     width: `125px`,
@@ -210,14 +217,17 @@ export function LoginSignupPage() {
   const [buttonClicked, setButtonClicked] = useState(false)
   const [enterOtp, setEnterOtp] = useState(false)
   const router = useRouter()
-
-  const SignUp = (contact_no: string, email: string, si: number) => {
+  const [isSignIn, setIsSignIn] = useState(true)
+  const [checked, setChecked] = useState(false)
+  const SignUp = (contact_no: string, email: string, si: number, name: string, consent: boolean) => {
     const { getItem, setItem } = useStorage()
     let res = api
       .post('/user/sendotp/', {
         contact_no: '+' + contact_no,
         email: email,
         signup: si,
+        name: name,
+        consent: consent,
         isaccount: 0,
       })
       .then((res) => {
@@ -227,26 +237,27 @@ export function LoginSignupPage() {
             id: 'hello-there',
             withCloseButton: true,
             autoClose: 5000,
-            title: 'Success',
+            title: "Success",
             message: 'Otp Sent To Your Mobile Number',
             color: 'green',
-            icon: <IconCheck size={'1.1rem'} />,
+            icon: <IconCheck size={"1.1rem"} />,
             loading: false,
-          })
+          });
           setItem('contact_no', res.data.contact_no, 'session')
           setItem('user_id', res.data.user_id, 'session')
-        } else if (res.status === 400) {
+        }
+        else if (res.status === 400) {
           setEnterOtp(true)
           notifications.show({
             id: 'hello-there',
             withCloseButton: true,
             autoClose: 5000,
-            title: 'Unsuccessful',
+            title: "Unsuccessful",
             message: res.data?.User,
             color: 'red',
-            icon: <IconX size={'1.1rem'} />,
+            icon: <IconX size={"1.1rem"} />,
             loading: false,
-          })
+          });
         }
         setSignInLoading(false)
         setSignUpLoading(false)
@@ -255,6 +266,16 @@ export function LoginSignupPage() {
       })
       .catch((err) => {
         console.log(err)
+        notifications.show({
+          id: 'hello-there',
+          withCloseButton: true,
+          autoClose: 5000,
+          title: "Unsuccessful",
+          message: err.response.data?.message,
+          color: 'red',
+          icon: <IconX size={"1.1rem"} />,
+          loading: false,
+        });
         setSignInLoading(false)
         setSignUpLoading(false)
       })
@@ -264,7 +285,7 @@ export function LoginSignupPage() {
 
   // const [otpValue, setOtpValue] = useState<boolean>(false)
 
-  const Validate = (contact_no: string, otp: string, email: string) => {
+  const Validate = (contact_no: string, otp: string, email: string, name: string, consent: boolean) => {
     const { setItem } = useStorage()
 
     let res = api
@@ -273,6 +294,8 @@ export function LoginSignupPage() {
         otp: otp,
         email: email,
         isaccount: 0,
+        name: name,
+        consent: consent
       })
       .then((res) => {
         if (res.status === 200) {
@@ -285,21 +308,25 @@ export function LoginSignupPage() {
             color: 'green',
             icon: <IconCheck size={'1.1rem'} />,
             loading: false,
-          })
+          });
           router.replace('/consent')
           // save response i.e access token and refresh token in session storage
           setItem('contact_no', res.data.contact_no)
           setItem('access_token', res.data.access_token)
           setItem('refresh_token', res.data.refresh_token)
           setItem('user_id', res.data.user_id)
+          setItem('name', res.data.name)
+          setItem('email', res.data.email)
+          setItem('contact_no', res.data.contact_no)
+          setItem('kyc', res.data.kyc)
         }
 
         return res
       })
       .catch((err) => {
-        console.log('hello')
+        console.log(err.response.status)
         notifications.show({
-          id: 'hello-there',
+          id: err.response.status,
           withCloseButton: true,
           autoClose: 5000,
           title: 'Unsuccessful',
@@ -315,14 +342,23 @@ export function LoginSignupPage() {
   const form = useForm({
     initialValues: {
       phone: '',
+    },
+
+    validate: {
+      phone: hasLength(12, 'Enter a Valid Phone Number')
+    },
+  });
+  const form1 = useForm({
+    initialValues: {
       email: '',
+      name: ''
     },
 
     validate: {
       email: isEmail('Invalid email'),
-      phone: hasLength(12, 'Enter a Valid Phone Number'),
+      phone: hasLength(12, 'Enter a Valid Phone Number')
     },
-  })
+  });
   const style = `
   .react-tel-input:active{
     border: 2px solid red
@@ -339,6 +375,7 @@ export function LoginSignupPage() {
               <Stack my={10}>
                 <style>{style}</style>
                 <Box component="form">
+
                   <PhoneInput
                     placeholder="Mobile Number"
                     country={'in'}
@@ -366,13 +403,25 @@ export function LoginSignupPage() {
                     }}
                     {...form.getInputProps('phone')}
                   />
+
                   <div className={classes.error}>{form.errors?.phone}</div>
-                  <TextInput
+                  {!isSignIn ? <TextInput
+                    placeholder="Name"
+                    withAsterisk
+                    mt="md"
+                    classNames={{
+                      input: classes.input,
+                      label: classes.inputLabel,
+                      root: classes.inputcontainer
+                    }}
+                    required
+                    {...form1.getInputProps('name')}
+                  /> : <></>}
+                  {!isSignIn ? <TextInput
                     placeholder="Email"
                     withAsterisk
-                    {...form.getInputProps('email')}
+                    {...form1.getInputProps('email')}
                     type={'email'}
-                    error={form.getInputProps('email').error}
                     mt="md"
                     classNames={{
                       input: classes.input,
@@ -381,24 +430,42 @@ export function LoginSignupPage() {
                     }}
                     required
                     {...form.getInputProps('email')}
-                  />
-                  {}
+                  />{
+                  }
                 </Box>
-                <Group className={classes.buttoncontainer} mt={15}>
-                  <Button
+                <Group mt={15}>
+
+                  {isSignIn ? <div className={classes.buttoncontainer}>
+                    <Button
+                      className={classes.button}
+                      loading={signinLoading}
+                      onClick={() => {
+                        console.log('form.values.phone', form.values.phone)
+                        if (!signUpLoading) {
+                          form.validate()
+                          if (form.isValid()) {
+                            setSignInLoading(true)
+                            console.log('mobile , email', form.values.phone, form1.values.email)
+                            SignUp(form.values.phone, form1.values.email, 0, form1.values.name, checked)
+                          }
+                        }
+                      }}
+                    >
+                      Sign In
+                    </Button>
+                    <div className={classes.togglesignin}>Don't have an account?  <span style={{ color: `black`, fontWeight: 600, cursor: `pointer` }} onClick={() => {
+                      setIsSignIn(false)
+                    }}>Register</span></div>
+                  </div> : <div className={classes.buttoncontainer}> <Button
                     className={classes.button}
                     loading={signUpLoading}
                     onClick={() => {
                       if (!signinLoading) {
                         form.validate()
-
-                        if (form.isValid()) {
+                        form1.validate()
+                        if (form.isValid() && form1.isValid()) {
                           setSignUpLoading(true)
-                          console.log(
-                            'mobile , email',
-                            form.values.phone,
-                            form.values.email,
-                          )
+                          console.log('mobile , email', form.values.phone, form.values.email)
                           SignUp(form.values.phone, form.values.email, 1)
                         }
                       }
@@ -415,11 +482,7 @@ export function LoginSignupPage() {
                         form.validate()
                         if (form.isValid()) {
                           setSignInLoading(true)
-                          console.log(
-                            'mobile , email',
-                            form.values.phone,
-                            form.values.email,
-                          )
+                          console.log('mobile , email', form.values.phone, form.values.email)
                           SignUp(form.values.phone, form.values.email, 0)
                         }
                       }
@@ -453,7 +516,7 @@ export function LoginSignupPage() {
                 <Button
                   className={classes.control}
                   onClick={() => {
-                    Validate(form.values.phone, otp, form.values.email)
+                    Validate(form.values.phone, otp, form1.values.email, form1.values.name, checked)
                   }}
                 >
                   Confirm
