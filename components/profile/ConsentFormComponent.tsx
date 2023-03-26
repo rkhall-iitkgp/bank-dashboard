@@ -2,6 +2,7 @@ import { Button, createStyles, Radio } from '@mantine/core'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useState } from 'react'
+import useStorage from '../../hooks/useStorage'
 
 const useStyles = createStyles((theme) => ({
   wrap: {
@@ -103,7 +104,7 @@ const ConsentFormComponent = ({ id, accountselected }: Props) => {
   const [data, setData] = useState<string>('1')
   // console.log('accountselected :', accountselected)
   const router = useRouter()
-
+  const { setItem } = useStorage()
   return (
     <div key={`${accountselected}`} style={{ height: '100%' }} className={classes.wrap}>
       <div className={classes.heading}>Consent Form</div>
@@ -146,7 +147,7 @@ const ConsentFormComponent = ({ id, accountselected }: Props) => {
                   account: accountselected,
                   data: data,
                 })
-                sessionStorage.setItem("permission", "true")
+                setItem("permission", 'true')
                 router.push("/home")
               }
             }}
