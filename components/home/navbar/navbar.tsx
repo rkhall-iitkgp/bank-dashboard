@@ -72,7 +72,7 @@ function Demo() {
         </StyledButton>
       </Popover.Target>
       <Popover.Dropdown
-        style={{padding: '0', marginTop: '10px', }}
+        style={{ padding: '0', marginTop: '10px', }}
       >
         <ProfileCard />
       </Popover.Dropdown>
@@ -109,7 +109,7 @@ function Navbar() {
           <StyledButton
             variant="gradient"
             gradient={{ from: 'white', to: 'white' }}
-            onClick={() => router.replace('/dashboard')}
+            onClick={() => router.push('/dashboard')}
           >
             <NavbarIcons src="/images/dashboard.png"></NavbarIcons>Dashboard
           </StyledButton>

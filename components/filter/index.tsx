@@ -12,6 +12,7 @@ import {
 import { DateInput } from '@mantine/dates'
 import styled from '@emotion/styled'
 import { useState } from 'react'
+import useStorage from '../../hooks/useStorage'
 const _PeriodButton = styled(Button)`
   width: 213px;
   height: 48px;
@@ -47,41 +48,46 @@ const PeriodItem = (prop: {
 }
 
 const AccountSelect = (prop: {
-  account: number
+  account: { account_no: string, id: number }
   setAccount: Function
-  curSelection: number
+  curSelection: number, key: number
 }) => {
-  const { account, setAccount, curSelection } = prop
+  const { account, setAccount, curSelection, key } = prop
+  console.log(prop);
   return (
-    <Button
+    <Button key={key}
       style={{
         backgroundColor: '#E6EFF9',
         color: '#000000',
         border: '2px solid #E6EFF9',
-        borderColor: curSelection === account ? '#0062D6' : '',
+        borderColor: curSelection === account.id ? '#0062D6' : '',
         boxShadow:
-          curSelection === account
+          curSelection === account.id
             ? 'inset 0px 4px 18px rgba(0, 0, 0, 0.2)'
             : '',
         margin: '0.5rem',
       }}
       radius="xl"
-      onClick={() => setAccount(account)}
+      onClick={() => setAccount(account.id)}
       fw="bold"
       fz={'lg'}
       size="xl"
     >
       <Image src={'icons/sbi.png'} height={25} mr={25} alt="sbi" />
-      {account}
+      {account.account_no}
     </Button>
   )
 }
 
-const Filter = () => {
-  const [id, setId] = useState(1)
-  const accounts = [8989, 4235]
-  const [account, setAccount] = useState(0)
-  const [haveConsent, setHaveConsent] = useState(false)
+const Filter = (props: { account: number, setAccount: Function }) => {
+  const [id, setId] = useState(1);
+  const { getItem } = useStorage();
+  const accounts = JSON.parse(getItem('accounts'));
+  const { account, setAccount } = props;
+  const [haveConsent, setHaveConsent] = useState(false);
+  const filterHandler = () => {
+
+  }
 
   return (
     <div style={{ width: '585px', paddingLeft: 50 }}>
@@ -121,10 +127,10 @@ const Filter = () => {
         </Text>
 
         <Group>
-          {accounts.map((it, v) => (
+          {accounts.map((it: { id: number, account_no: string }, v: number) => (
             <AccountSelect
-              key={it}
-              account={v}
+              key={v}
+              account={it}
               setAccount={setAccount}
               curSelection={account}
             />
@@ -158,6 +164,19 @@ const Filter = () => {
           </>
         )}
       </div>
+
+      <Button
+        radius={'xl'}
+        variant="gradient"
+        gradient={{ from: '#0062D6', to: '#0062D6' }}
+        onClick={() => filterHandler()}
+        px={55}
+        ff="Montserrat"
+        fw={500}
+        ml="23rem"
+      >
+        Filter
+      </Button>
     </div>
   )
 }

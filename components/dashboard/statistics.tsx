@@ -117,6 +117,64 @@ const MontlySpendingChart = (props: { data: { x: string; y: number }[] }) => {
     />
   )
 }
+var transactions = [
+  {
+    description: 'Jesse Pinkman Johnson',
+    date: '19 March, 2023, 17:10',
+    credit: 100,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Entertainment',
+  },
+  {
+    description: 'Jesse Pinkman Johnson',
+    date: '19 March, 2023, 17:10',
+    credit: 0,
+    debit: 200,
+    mode: 'UPI',
+    category: 'Food',
+  },
+  {
+    description: 'Heisenberg',
+    date: '19 March, 2023, 18:10',
+    credit: 0,
+    debit: 1000,
+    mode: 'Bank',
+    category: 'Travel',
+  },
+  {
+    description: 'Spotify',
+    date: '19 March, 2023, 17:20',
+    credit: 59,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Travel',
+  },
+  {
+    description: 'Spotify',
+    date: '19 March, 2023, 17:30',
+    credit: 59,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Travel',
+  },
+  {
+    description: 'Spotify',
+    date: '19 March, 2023, 15:10',
+    credit: 59,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Travel',
+  },
+  {
+    description: 'Spotify',
+    date: '19 March, 2023, 17:50',
+    credit: 59,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Travel',
+  },
+]
 const PieCategoryData = [
   { value: 25.6, mode: 'Entertainment' },
   { value: 32, mode: 'Food' },
@@ -234,7 +292,7 @@ const FinancialStatistics = () => {
               setSelection={setModeIndex}
               values={PieModeData.map((v) => v.value)}
               legends={PieModeData.map((v) => v.mode)}
-              setValue={(v: number) => {}}
+              setValue={(v: number) => { }}
             />
           )}
           {categoryIndex != -1 && (
@@ -259,7 +317,7 @@ const FinancialStatistics = () => {
                 boxShadow: '0px 1px 10px rgba(0, 0, 0, 0.1)',
               }}
             >
-              <RecentTransactions />
+              <RecentTransactions transactions={transactions} />
             </div>
             <InsightCard insights={InsightList} />
             <ArticlesCard articles={ArticlesData} />

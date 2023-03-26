@@ -218,7 +218,7 @@ export function EnterOTP() {
     }).catch(err => console.log(err))
 
     response.then(v => console.log(v));
-    router.replace('/bank-transfer/payment-success')
+    router.replace({ pathname: '/bank-transfer/payment-success', query: { id: data.id, amount: data.amount } })
   };
 
   return (

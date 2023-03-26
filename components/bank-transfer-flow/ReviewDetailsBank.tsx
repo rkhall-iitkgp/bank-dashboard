@@ -209,7 +209,7 @@ export function ReviewDetailsBank(props: { sbi: any }) {
       })
       .catch((err) => console.log(err))
 
-    router.push({ pathname: '/bank-transfer/confirm-otp', query: router.query });
+    router.replace({ pathname: '/bank-transfer/confirm-otp', query: router.query });
     response.then((v) => console.log(v));
   };
 

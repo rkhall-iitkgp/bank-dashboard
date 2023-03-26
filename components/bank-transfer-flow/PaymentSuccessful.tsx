@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { Image } from '@mantine/core'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Heading from '../reusable-components/Heading'
+import useStorage from '../../hooks/useStorage'
+import datams from '../datams'
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -113,7 +115,48 @@ const StyledTexthead4 = styled.div`
 
 export default function PaymentSuccessful() {
   const router = useRouter()
-  const data = router.query
+  const data = router.query;
+  const { getItem, setItem } = useStorage();
+
+  const [bankAccountList, setBankAccountList] = useState<any[]>([
+    { account_no: 1297, id: 0 },
+  ])
+
+  const [account, setAcc] = useState({ id: 0, account_no: 0, balance: 0 });
+
+  const GetAccounts = () => {
+    const accessToken = getItem('access_token')
+    console.log(accessToken)
+    const user_id = getItem('user_id')
+
+    const response = datams
+      .get(`/user/accounts/${user_id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        console.log(response.data.accounts)
+        const responseArray = response.data
+        responseArray.map((acc: any) => {
+          let temp = bankAccountList
+          temp.push(acc)
+          setBankAccountList(temp)
+        })
+        // console.log('bank accounts list =', bankAccountList)
+
+        setAcc(bankAccountList.filter(v => v.id == data.id)[0]);
+        setItem('accounts', response.request.responseText)
+        return response
+      })
+      .catch((err) => console.log(err))
+  };
+
+  useEffect(() => {
+    GetAccounts();
+  }, []);
+
   return (
     <StyledContainer>
       <StyledCont>
@@ -128,11 +171,11 @@ export default function PaymentSuccessful() {
             </StyledTexthead2>
             <StyledTexthead3>
               Remaining balance:{' '}
-              <span style={{ color: 'black' }}> &nbsp;₹11,845.67</span>
+              <span style={{ color: 'black' }}> &nbsp;₹{account.balance}</span>
             </StyledTexthead3>
             <StyledTexthead3>
               A/c No. :{' '}
-              <span style={{ color: 'black' }}> &nbsp;{data.accountNo}</span>
+              <span style={{ color: 'black' }}> &nbsp;{account.account_no}</span>
             </StyledTexthead3>
             <StyledTexthead4></StyledTexthead4>
           </StyledBotCont>
