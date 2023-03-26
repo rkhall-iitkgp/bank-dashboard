@@ -117,6 +117,14 @@ export function ProfileCard() {
   const { getItem } = useStorage()
 
   let BankAccount = JSON.parse(getItem("accounts"))
+  // let BankAccount = [
+  //   { id: 1, bankName: 'sbi', value: '****1234' },
+  //   { id: 2, bankName: 'sbi', value: '****4235' },
+  //   { id: 3, bankName: 'sbi', value: '****8090' },
+  //   { id: 1, bankName: 'sbi', value: '****1234' },
+  //   { id: 2, bankName: 'sbi', value: '****4235' },
+  //   { id: 3, bankName: 'sbi', value: '****8090' },
+  // ]
   let data = {
     PersonName: 'Bill Gates',
     Email: 'bgiamrich@gmail.com',

@@ -14,7 +14,7 @@ const useStyles = createStyles((theme) => ({
     width: `305px`,
     margin: `5px`,
     display: `flex`,
-    flex: 1,
+    flex: 2,
   },
   subcontainer1: {
     color: `#737373`,

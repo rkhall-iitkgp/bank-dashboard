@@ -4,7 +4,7 @@ const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 import { useState } from 'react'
 import ArticlesCard from './articlesCard'
 import InsightCard from './insightCard'
-import RecentTransactions from './recenttransactions'
+import RecentTransactions from './RecentTransactions'
 
 const BalanceChart = (props: {
   balanceData: { x: string; y: number }[]
@@ -259,7 +259,7 @@ const FinancialStatistics = () => {
                 boxShadow: '0px 1px 10px rgba(0, 0, 0, 0.1)',
               }}
             >
-              <RecentTransactions />
+              <RecentTransactions/>
             </div>
             <InsightCard insights={InsightList} />
             <ArticlesCard articles={ArticlesData} />
