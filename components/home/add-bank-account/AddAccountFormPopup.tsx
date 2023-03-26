@@ -14,7 +14,7 @@ import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { IconCheck, IconX } from '@tabler/icons-react';
 import useStorage from '../../../hooks/useStorage';
-mport { notifications } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 
 import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
 import api from '../../datams'
