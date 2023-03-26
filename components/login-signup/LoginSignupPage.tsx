@@ -300,7 +300,12 @@ export function LoginSignupPage() {
           setItem('email', res.data.email)
           setItem('contact_no', res.data.contact_no)
           setItem('kyc', res.data.kyc)
+<<<<<<< HEAD
           setItem('accounts','[]')
+=======
+          setItem('consent', res.data.consent)
+          setItem('accounts', "[]")
+>>>>>>> 42b13d116e2eeab513a5f7c82f529c012f5c4719
         }
         return res
       })
