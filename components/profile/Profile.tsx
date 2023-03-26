@@ -45,49 +45,53 @@ const useStyles = createStyles((theme) => ({
     flexDirection: `column`,
     justifyContent: `space-between`,
     marginLeft: '8vw',
-    
+
   },
 }))
 
-const Profile = () => {
+interface props {
+  bankAccountList: any[]
+  loading: boolean
+}
+const Profile = ({ bankAccountList, loading }: props) => {
   const { classes } = useStyles()
   const { getItem } = useStorage()
   const { setItem } = useStorage()
-  const [result,setResult]=useState('1')
-const GetKycStatus = () => {
-  const accessToken = getItem('access_token','session')
-  console.log(accessToken)
-  const user_id = getItem('user_id')
+  const [result, setResult] = useState('1')
+  // const GetKycStatus = () => {
+  //   const accessToken = getItem('access_token','session')
+  //   console.log(accessToken)
+  //   const user_id = getItem('user_id')
 
-  const response = api
-    .get(`/user/getkyc/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
-    .then((response) => {
-      (response.data);
-      
-    })
-    .catch((err) =>((err.response.data.message=='KYC not done') && setResult('0')))
-  
-}
+  //   const response = api
+  //     .get(`/user/getkyc/`, {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //         'Content-Type': 'application/json',
+  //       },
+  //     })
+  //     .then((response) => {
+  //       (response.data);
 
- 
+  //     })
+  //     .catch((err) =>((err.response.data.message=='KYC not done') && setResult('0')))
+
+  // }
+
+
   const bankAccountList1 = [2353]
-  
-  useEffect(() => {
-   
-    GetKycStatus()
-      
-  }, [])
+
+  // useEffect(() => {
+
+  //   GetKycStatus()
+
+  // }, [])
   return (
     <div className={classes.wrapper}>
-      {result=='0' &&
-       <KycAuthentication/>}
+      {result == '0' &&
+        <KycAuthentication />}
       <div className={classes.container1}>
-        <LeftPane accounts={accounts} />
+        <LeftPane accounts={bankAccountList} />
       </div>
       <div className={classes.container2}>
         <KycAuthentication />
