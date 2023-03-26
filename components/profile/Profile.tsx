@@ -3,6 +3,9 @@ import useStorage from '../../hooks/useStorage'
 import { AccountType } from './constants'
 import LeftPane from './LeftPane'
 import RightPane from './RightPane'
+import api from '../../components/api'
+import { useEffect } from 'react'
+import { useState } from 'react'
 import { KycAuthentication } from '../kyc/KycAuthentication'
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -17,6 +20,17 @@ const useStyles = createStyles((theme) => ({
     display: `grid`,
     gridTemplateColumns: `40% 60%`,
     background: `white`,
+  },
+  account: {
+    width: `150px`,
+    background: `white`,
+    borderRadius: `50px`,
+    margin: `10px`,
+    display: `flex`,
+    alignItems: `center`,
+    justifyContent: `space-around`,
+    backgroundColor: `#E6EFF9`,
+    padding: '5px 15px',
   },
   container1: {
     display: `flex`,
@@ -38,19 +52,40 @@ const useStyles = createStyles((theme) => ({
 const Profile = () => {
   const { classes } = useStyles()
   const { getItem } = useStorage()
-  const accountList = getItem('accounts', 'session')
-  const accountsp: AccountType[] = accountList
-    ? JSON.parse(accountList)
-    : ([] as AccountType[])
+  const { setItem } = useStorage()
+  const [result,setResult]=useState('1')
+const GetKycStatus = () => {
+  const accessToken = getItem('access_token','session')
+  console.log(accessToken)
+  const user_id = getItem('user_id')
 
-  // const accounts: string[] = accountsp.map(account => account.account_no);
-  // const accounts: string[] = accountsp?.map(
-  //   (account) => '****' + account.account_no.substr(-4),
-  // )
-  const accounts = [8989, 4235, 7382]
+  const response = api
+    .get(`/user/getkyc/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((response) => {
+      (response.data);
+      
+    })
+    .catch((err) =>((err.response.data.message=='KYC not done') && setResult('0')))
+  
+}
 
+ 
+  const bankAccountList1 = [2353]
+  
+  useEffect(() => {
+   
+    GetKycStatus()
+      
+  }, [])
   return (
     <div className={classes.wrapper}>
+      {result=='0' &&
+       <KycAuthentication/>}
       <div className={classes.container1}>
         <LeftPane accounts={accounts} />
       </div>
