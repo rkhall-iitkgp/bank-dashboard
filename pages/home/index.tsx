@@ -12,9 +12,7 @@ import useStorage from '../../hooks/useStorage'
 
 const Home: NextPage = () => {
   const { getItem, setItem } = useStorage()
-  const [bankAccountList, setBankAccountList] = useState<any[]>([
-    { account_no: 1297 },
-  ])
+  const [bankAccountList, setBankAccountList] = useState<any[]>([])
   const [isAddAccountPopupOpen, setIsAddAccountPopupOpen] =
     useState<boolean>(false)
 
@@ -73,13 +71,36 @@ const Home: NextPage = () => {
   //     }).catch((err) => console.log(err))
   // }
 
+  // useEffect(() => {
+  //   if (!getItem('accounts')) {
+  //     GetAccounts()
+  //   }
+  // }, [])
   useEffect(() => {
-    if (!getItem('accounts')) {
-      GetAccounts()
+
+
+    return () => {
+      setLoading(true)
+      api.get(`/user/accounts/${getItem("user_id")}/`, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } })
+        .then((response) => {
+          console.log(response.data.accounts)
+          const responseArray = response.data
+          setBankAccountList(responseArray)
+          console.log(bankAccountList)
+
+          setItem('accounts', response.request.responseText)
+          setLoading(false)
+          return response
+        })
+        .catch((err) => {
+          console.log('error', err)
+          setLoading(false)
+        })
     }
   }, [])
   const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] =
     useState<boolean>(false)
+  const [loading, setLoading] = useState(false)
   return (
     <>
       <PermissionFormPopup
@@ -92,6 +113,7 @@ const Home: NextPage = () => {
       <BankAccount
         bankAccountList={bankAccountList}
         setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
+        loading={loading}
       />
       <OfferCardsRow />
       {isAddAccountPopupOpen ? (
