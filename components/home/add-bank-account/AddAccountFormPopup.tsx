@@ -1,16 +1,20 @@
 import {
-  createStyles,
-  TextInput,
   Button,
+  createStyles,
   Group,
-  rem,
   Modal,
   NumberInput,
+  rem,
+  TextInput,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import axios from 'axios'
 import { useState } from 'react'
-
+// import { useState } from 'react'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+import useStorage from '../../../hooks/useStorage'
+import api from '../../api'
+import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
 const useStyles = createStyles((theme) => ({
   wrapper: {
     // backgroundColor: `#000000de`,
@@ -87,7 +91,7 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 500,
     fontSize: '18px',
     lineHeight: '24px',
-    color: '#0052B3',
+    color: '#434343',
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     border: '0',
@@ -96,7 +100,6 @@ const useStyles = createStyles((theme) => ({
     borderBottom: `2px solid #eee`,
     margin: '4px 0px',
   },
-
   inputLabel: {
     color: theme.black,
     position: `absolute`,
@@ -132,6 +135,12 @@ const useStyles = createStyles((theme) => ({
     width: `90%`,
     margin: `auto`,
   },
+  error: {
+    color: 'red',
+    fontSize: `calc(0.875rem - 0.125rem)`,
+    lineHeight: `1.2`,
+    marginTop: `12px`
+  },
 }))
 
 interface Props {
@@ -149,12 +158,26 @@ export function AddAccountFormPopup({
   const { classes } = useStyles()
   const [otp, setOtp] = useState<boolean>(false)
   const [opened, { open, close }] = useDisclosure(false)
-
+  const { setItem, getItem } = useStorage()
   const [account_no, setAccount_no] = useState<number | ''>('')
+  const [mobile_no, setMobile_no] = useState<string>('')
   const [ifsc, setIfsc] = useState<string>('')
 
   const [otpNum, setOtpNum] = useState<string>('')
+  const form = useForm({
+    initialValues: {
+      phone: '',
+      account_no: '',
+      IFSC: ""
+    },
 
+    validate: {
+      phone: hasLength(12, 'Enter a Valid Phone Number'),
+      account_no: isInRange({ min: 100000000000, max: 999999999999 }, 'Enter a Valid Account Number'),
+      IFSC: matches(/^[A-Z]{4}0[A-Z0-9]{6}$/, "Enter A Valid IFSC Code")
+
+    },
+  });
   return (
     <Modal
       withCloseButton={false}
@@ -178,35 +201,53 @@ export function AddAccountFormPopup({
                 type={'number'}
                 required={true}
                 hideControls={true}
-                value={account_no}
-                onChange={setAccount_no}
+
                 classNames={{
                   input: classes.input,
                   label: classes.inputLabel,
                   root: classes.inputcontainer,
                 }}
+                {...form.getInputProps('account_no')}
+
               />
-              <NumberInput
+              <PhoneInput
                 placeholder="Mobile Number"
-                type="number"
-                mt="md"
-                hideControls={true}
-                classNames={{
-                  input: classes.input,
-                  label: classes.inputLabel,
-                  root: classes.inputcontainer,
+                country={'in'}
+                containerStyle={{
+                  border: 'none',
+                  borderBottom: `2px solid #eee`,
+                  top: `0.5rem`,
+                  color: '#0052B3',
                 }}
+                inputStyle={{
+                  background: 'transparent',
+                  border: 'none',
+                  margin: '4px 0px',
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  fontSize: '18px',
+                  lineHeight: '24px',
+                  color: '#434343',
+                }}
+                buttonStyle={{
+                  background: 'transparent',
+                  border: 'none',
+                }}
+                {...form.getInputProps('phone')}
               />
+              <div className={classes.error}>{form.errors?.phone}</div>
               <TextInput
                 placeholder="IFSC"
                 mt="md"
-                value={ifsc}
-                onChange={(e) => setIfsc(e.currentTarget.value)}
+
                 classNames={{
                   input: classes.input,
                   label: classes.inputLabel,
                   root: classes.inputcontainer,
                 }}
+                {...form.getInputProps('IFSC')}
+
               />
               {otp ? (
                 <TextInput
@@ -229,34 +270,42 @@ export function AddAccountFormPopup({
                   size="lg"
                   className={classes.control}
                   onClick={() => {
-                    if (otp == false){
-                        setOtp(true)
-                        console.log(sessionStorage.getItem('contact_no'));
-                        const response = axios.post(
-                            'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user/sendaccountotp/', {
-                                contact_no: sessionStorage.getItem('contact_no')
-                        }).then((response) => {
+                    if (otp == false) {
+                      console.log('contact_no', form.values.account_no)
+                      form.validate()
+                      if (form.isValid()) {
+                        const response = api
+                          .post('/user/sendaccountotp/', {
+                            "contact_no": "+" + form.values.phone
+                          })
+                          .then((response) => {
                             console.log(response)
-                        })
-                    }
-                    else {
-                      bankAccountList.push({
-                        account_no: account_no,
-                        ifsc: ifsc,
-                      })
+                            setOtp(true)
+
+                          })
+                          .catch((err) => console.log(err))
+                      }
+                    } else {
                       setBankAccountList(bankAccountList)
                       setIsAddAccountPopupOpen(false)
                       console.log(otpNum)
-                      const contact_no = sessionStorage.getItem('contact_no')
-                        const response = axios.post(
-                            'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user/addaccount/', {
-                                contact_no: contact_no,
-                                account_no: account_no,
-                                ifsc: ifsc,
-                                otp: otpNum
-                        }).then((response) => {
-                            console.log(response)
+                      const contact_no = getItem('contact_no')
+                      const response = api
+                        .post('/user/addaccount/', {
+                          contact_no: form.values.phone,
+                          account_no: form.values.account_no,
+                          ifsc: form.values.IFSC,
+                          otp: otpNum,
                         })
+                        .then((response) => {
+                          bankAccountList.push({
+                            account_no: form.values.account_no,
+                            ifsc: form.values.IFSC,
+                          })
+                          // sessionStorage.setItem('bankAccountList', JSON.stringify(bankAccountList))
+                          console.log(response)
+                        })
+                        .catch((err) => console.log(err))
                     }
                   }}
                 >

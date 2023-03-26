@@ -1,5 +1,10 @@
 import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core'
 import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
+import { ProfileCard } from './ProfileCard'
+import { useState } from 'react'
+import { Popover, Text } from '@mantine/core'
+import Link from 'next/link'
 
 const StyledNavbar = styled.nav`
   display: flex;
@@ -54,6 +59,26 @@ const _StyledButton = styled(Button)`
 const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
   _StyledButton,
 )
+function Demo() {
+  return (
+    <Popover width="auto" radius={25} position="bottom" withArrow shadow="md">
+      <Popover.Target>
+        <StyledButton
+          variant="gradient"
+          gradient={{ from: 'white', to: 'white' }}
+        >
+          {' '}
+          <StyledUserImage src="/images/dp.png"></StyledUserImage>
+        </StyledButton>
+      </Popover.Target>
+      <Popover.Dropdown
+        style={{padding: '0', marginTop: '10px', }}
+      >
+        <ProfileCard />
+      </Popover.Dropdown>
+    </Popover>
+  )
+}
 const StyledUserImage = styled.img`
   width: 40px;
   height: 40px;
@@ -68,37 +93,50 @@ const NavbarIcons = styled.img`
   padding: 6px 8px 10px 8px;
 `
 function Navbar() {
+  const router = useRouter()
+
+  const [show, setShow] = useState(false)
+  function setting() {
+    setShow(!show)
+  }
   return (
-    <StyledNavbar>
-      <BankName>shiftbank</BankName>
-      <StyledButtonBar>
-        <StyledButton
-          variant="gradient"
-          gradient={{ from: 'white', to: 'white' }}
-        >
-          <NavbarIcons src="/images/dashboard.png"></NavbarIcons>Dashboard
-        </StyledButton>
-        <StyledButton
-          variant="gradient"
-          gradient={{ from: 'white', to: 'white' }}
-        >
-          <NavbarIcons src="/images/aboutus.png"></NavbarIcons>About Us
-        </StyledButton>
-        <StyledButton
-          variant="gradient"
-          gradient={{ from: 'white', to: 'white' }}
-        >
-          <NavbarIcons src="/images/support.png"></NavbarIcons>Support
-        </StyledButton>
-        <StyledButton
-          variant="gradient"
-          gradient={{ from: 'white', to: 'white' }}
-        >
-          <NavbarIcons src="/images/FAQs.png"></NavbarIcons>FAQs
-        </StyledButton>
-        <StyledUserImage src="/images/dp.png"></StyledUserImage>
-      </StyledButtonBar>
-    </StyledNavbar>
+    <>
+      <StyledNavbar>
+        <BankName>
+          <Link href="/home">shiftbank</Link>
+        </BankName>
+        <StyledButtonBar>
+          <StyledButton
+            variant="gradient"
+            gradient={{ from: 'white', to: 'white' }}
+            onClick={() => router.replace('/dashboard')}
+          >
+            <NavbarIcons src="/images/dashboard.png"></NavbarIcons>Dashboard
+          </StyledButton>
+          <StyledButton
+            variant="gradient"
+            gradient={{ from: 'white', to: 'white' }}
+          >
+            <NavbarIcons src="/images/aboutus.png"></NavbarIcons>About Us
+          </StyledButton>
+          <StyledButton
+            variant="gradient"
+            gradient={{ from: 'white', to: 'white' }}
+          >
+            <NavbarIcons src="/images/support.png"></NavbarIcons>Support
+          </StyledButton>
+          <StyledButton
+            variant="gradient"
+            gradient={{ from: 'white', to: 'white' }}
+          >
+            <NavbarIcons src="/images/FAQs.png"></NavbarIcons>FAQs
+          </StyledButton>
+          {/* <StyledUserImage src="/images/dp.png"></StyledUserImage> */}
+          <Demo />
+        </StyledButtonBar>
+      </StyledNavbar>
+      {/* <ProfileCard/> */}
+    </>
   )
 }
 export default Navbar

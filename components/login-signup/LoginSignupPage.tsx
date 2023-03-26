@@ -2,16 +2,24 @@ import {
   Button,
   createStyles,
   Group,
-  NumberInput,
   PinInput,
   Stack,
   Text,
   TextInput,
   Title,
+  Box
 } from '@mantine/core'
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+
+import { IconCheck, IconX } from '@tabler/icons-react';
+import PhoneInput from 'react-phone-input-2'
+import { notifications } from '@mantine/notifications';
+import Image from 'next/image'
+import 'react-phone-input-2/lib/style.css'
+import useStorage from '../../hooks/useStorage'
+import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
+import api from '../api'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -34,7 +42,7 @@ const useStyles = createStyles((theme) => ({
     lineHeight: 1,
     fontWeight: 400,
     paddingBottom: `5px`,
-    fontSize: `2rem`,
+    fontSize: `3vw`,
   },
   titlebold: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -50,7 +58,7 @@ const useStyles = createStyles((theme) => ({
     fontFamily: `Montserrat`,
     color: theme.colors[theme.primaryColor][0],
     maxWidth: `rem(300)`,
-    fontSize: `0.8rem`,
+    fontSize: `1rem`,
     [theme.fn.smallerThan('sm')]: {
       maxWidth: '100%',
     },
@@ -66,8 +74,8 @@ const useStyles = createStyles((theme) => ({
   },
   sideContainer: {
     width: `100%`,
-    height: `100%`,
-    minHeight: `100vh`,
+    height: `100vh`,
+    // minHeight: `100vh`,
     padding: `2vh`,
   },
   social: {
@@ -81,7 +89,7 @@ const useStyles = createStyles((theme) => ({
   input: {
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
-    color: theme.black,
+    color: '#434343',
 
     '&::placeholder': {
       color: theme.colors.gray[5],
@@ -92,6 +100,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: '0',
     background: 'transparent',
     borderBottom: `2px solid #eee`,
+    fontFamily: `Montserrat`,
   },
 
   inputLabel: {
@@ -130,6 +139,8 @@ const useStyles = createStyles((theme) => ({
     height: `96vh`,
     borderRadius: theme.radius.md,
     boxShadow: theme.shadows.lg,
+    display: 'flex',
+    flexDirection: 'column',
   },
   buttoncontainer: {
     display: `flex`,
@@ -149,32 +160,36 @@ const useStyles = createStyles((theme) => ({
     marginTop: `20px`,
     fontFamily: `Montserrat`,
   },
-  outerimagecontainer: {
-    width: `100%`,
-    position: `relative`,
-    margin: `auto`,
-  },
   imagecontainer: {
-    width: `100%`,
-    position: `relative`,
-    minWidth: `300px`,
-    minHeight: `160%`,
-    top: `0%`,
+    width: '100%',
+    height: '75%'
   },
-  dashboardImage1: {
-    width: `56%`,
-    borderRadius: `8px`,
-    maxHeight: `20vw`,
-    zIndex: 1,
+  dashboardImage: {
+    maxWidth: '100%',
+    maxHeight: '100%',
+    verticalAlign: 'center',
+    objectFit: 'cover',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center'
   },
-  dashboardImage2: {
-    position: `absolute`,
-    width: `44%`,
-    borderRadius: `8px`,
-    zIndex: 2,
-    top: `20%`,
-    left: `40%`,
+  error: {
+    color: 'red',
+    fontSize: `calc(0.875rem - 0.125rem)`,
+    lineHeight: `1.2`,
+    marginTop: `12px`
   },
+  PhoneInput: {
+    border: 'none',
+    borderBottom: `2px solid #eee`,
+    top: `0.5rem`,
+    color: '#0052B3',
+    margin: '6px 0',
+    ':active': {
+      borderBottom: `2px solid red`
+    }
+  }
 }))
 
 export function LoginSignupPage() {
@@ -182,58 +197,133 @@ export function LoginSignupPage() {
   const [mobile, setMobile] = useState('')
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
-  const BASEURL =
-    'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user'
+  // const BASEURL =
+  //   'https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user'
   const [signinLoading, setSignInLoading] = useState(false)
   const [signUpLoading, setSignUpLoading] = useState(false)
+  const [buttonClicked, setButtonClicked] = useState(false)
   const [enterOtp, setEnterOtp] = useState(false)
   const router = useRouter()
 
   const SignUp = (contact_no: string, email: string, si: number) => {
-    let res = axios
-      .post(`${BASEURL}/sendotp/`, {
-        contact_no: contact_no,
+    const { getItem, setItem } = useStorage()
+    let res = api
+      .post('/user/sendotp/', {
+        contact_no: "+" + contact_no,
         email: email,
         signup: si,
         isaccount: 0,
       })
       .then((res) => {
-        setEnterOtp(true)
-        // sessionStorage.setItem('contact_no', res.data.contact_no)
-        // sessionStorage.setItem('user_id', res.data.user_id)
-        return res.data
+        if (res.status === 201) {
+          setEnterOtp(true)
+          notifications.show({
+            id: 'hello-there',
+            withCloseButton: true,
+            autoClose: 5000,
+            title: "Success",
+            message: 'Otp Sent To Your Mobile Number',
+            color: 'green',
+            icon: <IconCheck size={"1.1rem"} />,
+            loading: false,
+          });
+          setItem('contact_no', res.data.contact_no, 'session')
+          setItem('user_id', res.data.user_id, 'session')
+        }
+        else if (res.status === 400) {
+          setEnterOtp(true)
+          notifications.show({
+            id: 'hello-there',
+            withCloseButton: true,
+            autoClose: 5000,
+            title: "Unsuccessful",
+            message: res.data?.User,
+            color: 'red',
+            icon: <IconX size={"1.1rem"} />,
+            loading: false,
+          });
+        }
+        setSignInLoading(false)
+        setSignUpLoading(false)
+
+        return (res)
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err)
+        setSignInLoading(false)
+        setSignUpLoading(false)
+      })
 
     res.then((v) => console.log(v))
-    setSignUpLoading(false)
-    setSignUpLoading(false)
   }
 
   // const [otpValue, setOtpValue] = useState<boolean>(false)
 
-  const validate = (contact_no: string, otp: string) => {
-    let res = axios
-      .post(`${BASEURL}/validateotp/`, {
-        contact_no: contact_no,
-        otp: parseInt(otp),
+  const Validate = (contact_no: string, otp: string, email: string) => {
+    const { setItem } = useStorage()
+
+    let res = api
+      .post('user/validateotp/', {
+        contact_no: "+" + contact_no,
+        otp: otp,
         email: email,
         isaccount: 0,
       })
       .then((res) => {
-        router.replace('/home')
-        // save response i.e access token and refresh token in session storage
-        sessionStorage.setItem('contact_no', res.data.contact_no)
-        sessionStorage.setItem('access_token', res.data.access_token)
-        sessionStorage.setItem('refresh_token', res.data.refresh_token)
-        sessionStorage.setItem('user_id', res.data.user_id)
-        return res.data
+        if (res.status === 200) {
+          notifications.show({
+            id: 'hello-there',
+            withCloseButton: true,
+            autoClose: 5000,
+            title: "Success",
+            message: `User Succesfull Signed In`,
+            color: 'green',
+            icon: <IconCheck size={"1.1rem"} />,
+            loading: false,
+          });
+          router.replace('/consent')
+          // save response i.e access token and refresh token in session storage
+          setItem('contact_no', res.data.contact_no)
+          setItem('access_token', res.data.access_token)
+          setItem('refresh_token', res.data.refresh_token)
+          setItem('user_id', res.data.user_id)
+        }
+
+
+        return res
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log('hello')
+        notifications.show({
+          id: 'hello-there',
+          withCloseButton: true,
+          autoClose: 5000,
+          title: "Unsuccessful",
+          message: err.response.data?.message,
+          color: 'red',
+          icon: <IconX size={"1.1rem"} />,
+          loading: false,
+        });
+      })
 
     res.then((v) => console.log(v))
   }
+  const form = useForm({
+    initialValues: {
+      phone: '',
+      email: '',
+    },
 
+    validate: {
+      email: isEmail('Invalid email'),
+      phone: hasLength(12, 'Enter a Valid Phone Number')
+    },
+  });
+  const style = `
+  .react-tel-input:active{
+    border: 2px solid red
+  }
+`
   return (
     <div className={classes.wrapper}>
       <div className={classes.grid}>
@@ -243,40 +333,73 @@ export function LoginSignupPage() {
 
             {!enterOtp && (
               <Stack my={10}>
-                <Stack>
-                  <TextInput
+                <style>
+                  {style}
+                </style>
+                <Box component="form">
+                  <PhoneInput
+
                     placeholder="Mobile Number"
-                    type={'number'}
-                    required
-                    classNames={{
-                      input: classes.input,
-                      label: classes.inputLabel,
-                      root: classes.inputcontainer,
+                    country={'in'}
+                    containerStyle={{
+                      border: 'none',
+                      borderBottom: `2px solid #eee`,
+                      top: `0.5rem`,
+                      color: '#0052B3',
+                      margin: '6px 0',
+
                     }}
-                    value={mobile}
-                    onChange={(e) => setMobile(e.currentTarget.value)}
+                    inputStyle={{
+                      background: 'transparent',
+                      border: 'none',
+                      margin: '4px 0',
+                      fontFamily: 'Montserrat, sans-serif',
+                      fontStyle: 'normal',
+                      fontWeight: 500,
+                      // fontSize: '18px',
+                      lineHeight: '24px',
+                      color: '#434343',
+                    }}
+                    buttonStyle={{
+                      background: 'transparent',
+                      border: 'none',
+                    }}
+
+                    {...form.getInputProps('phone')}
+
                   />
+                  <div className={classes.error}>{form.errors?.phone}</div>
                   <TextInput
                     placeholder="Email"
+                    withAsterisk
+                    {...form.getInputProps('email')}
                     type={'email'}
+                    error={form.getInputProps('email').error}
                     mt="md"
                     classNames={{
                       input: classes.input,
                       label: classes.inputLabel,
-                      root: classes.inputcontainer,
+                      root: classes.inputcontainer
                     }}
                     required
-                    value={email}
-                    onChange={(e) => setEmail(e.currentTarget.value)}
-                  />
-                </Stack>
+                    {...form.getInputProps('email')}
+                  />{
+                  }
+                </Box>
                 <Group className={classes.buttoncontainer} mt={15}>
                   <Button
                     className={classes.button}
                     loading={signUpLoading}
                     onClick={() => {
-                      SignUp(mobile, email, 1)
-                      setSignUpLoading(true)
+                      if (!signinLoading) {
+                        form.validate()
+
+                        if (form.isValid()) {
+                          setSignUpLoading(true)
+                          console.log('mobile , email', form.values.phone, form.values.email)
+                          SignUp(form.values.phone, form.values.email, 1)
+                        }
+                      }
                     }}
                   >
                     Sign Up
@@ -285,8 +408,15 @@ export function LoginSignupPage() {
                     className={classes.button}
                     loading={signinLoading}
                     onClick={() => {
-                      SignUp(mobile, email, 0)
-                      setSignInLoading(true)
+                      console.log('form.values.phone', form.values.phone)
+                      if (!signUpLoading) {
+                        form.validate()
+                        if (form.isValid()) {
+                          setSignInLoading(true)
+                          console.log('mobile , email', form.values.phone, form.values.email)
+                          SignUp(form.values.phone, form.values.email, 0)
+                        }
+                      }
                     }}
                   >
                     Sign In
@@ -309,7 +439,6 @@ export function LoginSignupPage() {
                   Enter OTP
                 </Text>
                 <PinInput
-                  inputMode="numeric"
                   value={otp}
                   onChange={(e) => setOtp(e)}
                   mx="auto"
@@ -318,8 +447,7 @@ export function LoginSignupPage() {
                 <Button
                   className={classes.control}
                   onClick={() => {
-                    console.log(otp)
-                    validate(mobile, otp)
+                    Validate(form.values.phone, otp, form.values.email)
                   }}
                 >
                   Confirm
@@ -331,25 +459,21 @@ export function LoginSignupPage() {
 
         <div className={classes.sideContainer}>
           <div className={classes.sidecontainerinside}>
-            <Title className={classes.title}>
-              A Comprehensive Analysis of your Transactions
-            </Title>
-            <Text className={classes.description} mt="sm" mb={30}>
-              Enter your credentials to access your account
-            </Text>
-            <div className={classes.outerimagecontainer}>
-              <div className={classes.imagecontainer}>
-                <img
-                  className={classes.dashboardImage1}
-                  src="/images/dashboardimg1.png"
-                  alt="dashboard-img"
-                />
-                <img
-                  className={classes.dashboardImage2}
-                  src="/images/dashboardimg2.png"
-                  alt="dashboard-img"
-                />
-              </div>
+            <>
+              <Title className={classes.title}>
+                A Comprehensive Analysis of your Transactions
+              </Title>
+              <Text className={classes.description} mt="sm" mb={30}>
+                Enter your credentials to access your account
+              </Text>
+            </>
+
+            <div className={classes.imagecontainer}>
+              <img
+                className={classes.dashboardImage}
+                src='/images/dashboardimg.png'
+                alt="dashboard-img"
+              />
             </div>
           </div>
         </div>
