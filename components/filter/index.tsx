@@ -11,7 +11,8 @@ import {
 } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
 import styled from '@emotion/styled'
-import { useState } from 'react'
+import { Key, useState } from 'react'
+import useStorage from '../../hooks/useStorage'
 const _PeriodButton = styled(Button)`
   width: 213px;
   height: 48px;
@@ -47,9 +48,9 @@ const PeriodItem = (prop: {
 }
 
 const AccountSelect = (prop: {
-  account: number
+  account: any
   setAccount: Function
-  curSelection: number
+  curSelection: any
 }) => {
   const { account, setAccount, curSelection } = prop
   return (
@@ -72,14 +73,15 @@ const AccountSelect = (prop: {
       size="xl"
     >
       <Image src={'icons/sbi.png'} height={25} mr={25} alt="sbi" />
-      {account}
+      {"****" + account.account_no.slice(8, 12)}
     </Button>
   )
 }
 
 const Filter = () => {
   const [id, setId] = useState(1)
-  const accounts = [8989, 4235]
+  const { getItem } = useStorage()
+  const accounts = JSON.parse(getItem("accounts"))
   const [account, setAccount] = useState(0)
   const [haveConsent, setHaveConsent] = useState(false)
 
@@ -121,10 +123,10 @@ const Filter = () => {
         </Text>
 
         <Group>
-          {accounts.map((it, v) => (
+          {accounts.map((it: { account_no: Key | null | undefined }, v: any) => (
             <AccountSelect
-              key={it}
-              account={v}
+              key={it.account_no}
+              account={it}
               setAccount={setAccount}
               curSelection={account}
             />
