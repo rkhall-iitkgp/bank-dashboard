@@ -85,6 +85,7 @@ const Home: NextPage = () => {
       <Payment
         isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
         SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
+        setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
       />
       <BankAccount
         bankAccountList={bankAccountList}
