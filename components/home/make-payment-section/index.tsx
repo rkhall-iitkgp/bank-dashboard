@@ -29,7 +29,36 @@ const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
   _StyledButton,
 )
 
-const Payment = () => {
+const kyc = false
+const add = false
+
+
+interface Props {
+  SetIsKycPermissionPopUpOpen: Function,
+  isKycPermissionPopUpOpen:any
+}
+
+export default function Payment ({
+  SetIsKycPermissionPopUpOpen,
+  isKycPermissionPopUpOpen
+}: Props) {
+
+
+  var a
+
+if(kyc){
+  if(add)
+  {
+    a=1
+  }
+  else{
+    a=2;
+  }
+}
+else{
+  a=0;
+}
+
   return (
     <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '3vh' }}>
       <Card shadow="sm" padding="xs" radius="lg" withBorder bg={'#E0EEFF'}>
@@ -43,32 +72,53 @@ const Payment = () => {
           >
             Make Payment
           </Text>
-          <StyledButton
-            variant="gradient"
-            gradient={{ from: '#0062D6', to: '#0062D6' }}
-          >
-            Click here to activate
-          </StyledButton>
         </Group>
 
         <Group
           style={{ justifyContent: 'space-evenly', alignItems: 'flex-start' }}
           my={12}
         >
+          {(!kyc && !add) ? ( 
+           <div onClick={()=>{
+            SetIsKycPermissionPopUpOpen(true)
+           }}> 
+           <MakePaymentCard 
+           imageAddress="icons/bank-building-white.png"
+           cardText="Bank Transfer"
+           alt="Bank Transfer"
+         />
+         </div>
+          ) : (
+            
           <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
-            <MakePaymentCard
-              imageAddress="icons/bank-building-white.png"
-              cardText="Bank Transfer"
-              alt="Bank Transfer"
-            />
+          <MakePaymentCard
+            imageAddress="icons/bank-building-white.png"
+            cardText="Bank Transfer"
+            alt="Bank Transfer"
+          />
           </Link>
-          <Link href="/UPI">
+        )
+        }
+          {(!kyc && !add) ? ( 
+           <div onClick={()=>{
+            SetIsKycPermissionPopUpOpen(true)
+           }}> 
+           <MakePaymentCard
+              imageAddress="icons/upi.png"
+              cardText="UPI Payment"
+              alt="UPI Payment"
+            />
+         </div>
+          ) : (
+            <Link href="/UPI">
             <MakePaymentCard
               imageAddress="icons/upi.png"
               cardText="UPI Payment"
               alt="UPI Payment"
             />
           </Link>
+        )
+        }   
           <MakePaymentCard
             imageAddress="icons/payphone.png"
             cardText="Pay Phone Number"
@@ -99,5 +149,3 @@ const Payment = () => {
     </div>
   )
 }
-
-export default Payment
