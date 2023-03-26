@@ -3,7 +3,7 @@ import useStorage from '../../hooks/useStorage'
 import { AccountType } from './constants'
 import LeftPane from './LeftPane'
 import RightPane from './RightPane'
-import { KycAuthentication } from '../kyc/Authentication1'
+import { KycAuthentication } from '../kyc/KycAuthentication'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
