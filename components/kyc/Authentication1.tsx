@@ -1,3 +1,4 @@
+
 import { createStyles } from '@mantine/core'
 import { useState, useRef } from 'react'
 import { FileButton, Button, Group, Text } from '@mantine/core'
@@ -8,7 +9,10 @@ import { Input } from '@mantine/core'
 import { TextInput } from '@mantine/core'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import { Router, useRouter } from 'next/router'
 import { hasLength, isNotEmpty, useForm } from '@mantine/form'
+import Link from 'next/link'
+import Heading from '../reusable-components/Heading'
 const _StyledButton = styled(Button)`
   border-width: 0.125rem;
   &:hover {
@@ -16,119 +20,201 @@ const _StyledButton = styled(Button)`
     transform: scale(1.02);
   }
   padding-left: 0px;
-`;
-const StyledButton = createPolymorphicComponent<'button', ButtonProps>(_StyledButton);
-const useStyles = createStyles(() => ({
-    container: {
-        borderRadius: `30px`,
-        boxShadow: `0px 2px 20px rgba(0,0,0,0.1)`,
-        color: `#0052B3`,
-        position: 'relative',
-        height: `300px`,
-        width: `400px`,
-        margin: `5px`,
+`
+const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
+  _StyledButton,
+)
 
+const useStyles = createStyles((theme) => ({
+  wrapper: {
+    backgroundColor: `#eeeeee`,
+    minHeight: `100vh`,
+    boxSizing: 'border-box',
+    padding: `calc(${theme.spacing.xl} * 1.5)`,
+    [theme.fn.smallerThan('sm')]: {
+      padding: `calc(${theme.spacing.xl} * 1.5)`,
     },
-    heading1: {
-        width: `100%`,
-        height: `20%`,
-        padding: `20px`,
-        background: `#DDEDFF`,
-        fontSize: `1.3rem`,
-        textAlign: `center`,
-        borderRadius: ' 30px 30px 0px 0px',
-        color: ` #0052B3`,
-    },
-    heading2: {
-        width: `100%`,
-        height: `20%`,
-        padding: `20px`,
-        fontSize: `0.6rem`,
-        textAlign: `center`,
-       
-    },
+    display: `flex`,
+    justifyContent: `center`,
+    alignItems: `center`,
+  },
+  container: {
+    borderRadius: `30px`,
+    boxShadow: `0px 2px 20px rgba(0,0,0,0.1)`,
+    color: `#0052B3`,
+    position: 'relative',
+    height: `600px`,
+    width: `600px`,
+    margin: `5px`,
+    background: `#FFFFFF`,
+  },
+  heading1: {
+    width: `100%`,
+    height: `10%`,
+    padding: `20px`,
+    background: `#DDEDFF`,
+    fontSize: `1.3rem`,
+    textAlign: `center`,
+    borderRadius: ' 30px 30px 0px 0px',
+    color: ` #0052B3`,
+  },
+  heading2: {
+    width: `100%`,
+    height: `10%`,
+    // padding: `20px`,
+    fontSize: `0.6rem`,
+    textAlign: `center`,
+  },
 
-    subcontainer: {
-        color: `#000000`,
-        position: 'absolute',
-        width: `100%`,
-        height: `80%`,
-        display: `flex`,
-        padding: '18px',
-        margin: '7px',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-    },
-    uploadResetContainer: {
-        color: `#000000`,
-        display: `flex`,
-        alignItems: `center`,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: `2px`,
-    },
-
+  subcontainer: {
+    color: `#000000`,
+    position: 'absolute',
+    width: `100%`,
+    height: `90%`,
+    display: `flex`,
+    // margin: '7px',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '40px 100px',
+    // margin:'auto',
+  },
+  uploadResetContainer: {
+    color: `#000000`,
+    display: `flex`,
+    alignItems: `center`,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: `2px`,
+  },
+  input: {
+    fontFamily: 'Montserrat, sans-serif',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: '18px',
+    lineHeight: '24px',
+    color: '#434343',
+    backgroundColor: '#fffff',
+    borderColor: 'grey',
+    border: '0',
+    borderRadius: '0',
+    background: 'transparent',
+    borderBottom: `2px solid #eee`,
+    margin: '4px 0px',
+  },
+  inputLabel: {
+    color: 'black',
+    position: `absolute`,
+    top: `1.5rem`,
+    transition: `0.25s ease`,
+  },
+  inputcontainer: {
+    position: `relative`,
+    paddingTop: `0.75rem`,
+    marginTop: `0 !important`,
+    width: `100%`,
+  },
+  button1: {
+    width: `200px`,
+    height: '40px',
+    backgroundColor: `#0062D6`,
+    borderRadius: `30px`,
+    marginTop: '5px',
+  },
+  button2: {
+    width: `160px`,
+    height: '40px',
+    backgroundColor: `#0062D6`,
+    borderRadius: `30px`,
+    marginTop: '5px',
+  },
 }))
 
-export function KycAuthentication() {
-    const [file, setFile] = useState<File | null>(null);
-    const resetRef = useRef<() => void>(null);
-    const clearFile = () => {
-        setFile(null);
-        resetRef.current?.();
-    };
+export function Authentication1() {
 
-    const { classes } = useStyles()
-    let data = {
-       adhaarNumber:'1234/12345/12345',
-    }
-    return (
-        <div className={classes.container}>
+     const router = useRouter()
 
-            <div className={classes.heading1}>
-                <span
-                    style={{
-                        fontFamily: 'Montserrat',
-                        fontStyle: `normal`,
-                        fontWeight: `500`,
-                        fontSize: `20px`,
-                        lineHeight: `20px`,
-                    }}
-                >
-                    Authentication
-                </span>
-            </div>
-            <div className={classes.heading2}>
-                <span
-                    style={{
-                        fontFamily: 'Montserrat',
-                        fontStyle: `normal`,
-                        fontWeight: `600`,
-                        fontSize: `25px`,
-                        lineHeight: `20px`,
-                    }}
-                >
-                   Enter your details
-                </span>
-            </div>
+    const form = useForm({
+    initialValues: {
+      aadhar_no: '',
+      number: '',
+      otp: '',
+    },
+
+    validate: {
+      aadhar_no: isNotEmpty('Aadhar Number must be 2-16 characters long'),
+      number: isNotEmpty('Enter your Number'),
+      otp: isNotEmpty('Enter OTP'),
+    },
+})
+
+
+//   const [aadhar_no, setaadhar_no] = useState<number | ''>('')
+//   const [mobile_no, setMobile_no] = useState<string>('')
+//   const [otp_no, setOtp_no] = useState<number | ''>('')
+  const [show,setShow]=useState(false);
+  const [file, setFile] = useState<File | null>(null)
+  const resetRef = useRef<() => void>(null)
+  const clearFile = () => {
+    setFile(null)
+    resetRef.current?.()
+  }
+   function onOTP(){
+       setShow(!show);
+   }
+  const { classes } = useStyles()
+  let data = {
+    aadharNumber: '1234/12345/12345',
+  }
+  return (
+    <div className={classes.wrapper}>
+      <div className={classes.container}>
+        {/* <div className={classes.heading1}>
+          <span
+            style={{
+              fontFamily: 'Montserrat',
+              fontStyle: `normal`,
+              fontWeight: `500`,
+              fontSize: `20px`,
+              lineHeight: `20px`,
+            }}
+          >
+            Authentication
+          </span>
+        </div> */}
+        <Heading title='Authentication' />
+
+        <div className={classes.subcontainer}>
+          <div className={classes.heading2}>
+            <span
+              style={{
+                fontFamily: 'Montserrat',
+                fontStyle: `normal`,
+                fontWeight: `600`,
+                fontSize: `25px`,
+                lineHeight: `20px`,
+              }}
+            >
+              Enter your details
+            </span>
+          </div>
 
           <NumberInput
             placeholder="Aadhar Number"
             type={'number'}
             required={true}
             hideControls={true}
-            value={aadhar_no}
-            onChange={setaadhar_no}
             classNames={{
               input: classes.input,
               label: classes.inputLabel,
               root: classes.inputcontainer,
             }}
+            {...form.getInputProps('aadhar_no')}
           />
           <PhoneInput
             placeholder="Mobile Number"
-            value={mobile_no.replaceAll('\\D+', '')}
-            onChange={setMobile_no}
+            // value={mobile_no.replaceAll('\\D+', '')}
+            // onChange={setMobile_no}
             country={'in'}
             containerStyle={{
               border: 'none',
@@ -151,6 +237,7 @@ export function KycAuthentication() {
               background: 'transparent',
               border: 'none',
             }}
+            {...form.getInputProps('number')}
           />
 
           <div className={classes.uploadResetContainer}>
@@ -263,14 +350,15 @@ export function KycAuthentication() {
                     type={'number'}
                     required={true}
                     hideControls={true}
-                    value={otp_no}
-                    onChange={setOtp_no}
+                    // value={otp_no}
+                    // onChange={setOtp_no}
 
                     classNames={{
                         input: classes.input,
                         label: classes.inputLabel,
                         root: classes.inputcontainer,
                     }}
+                    {...form.getInputProps('otp')}
                     // required
                     // {...form.getInputProps('name')}
                 />
@@ -297,6 +385,7 @@ export function KycAuthentication() {
             </span>{' '}
             &nbsp;{' '}
           </Button>
+          <Link href='/home'>
           <Button className={classes.button2} style={{width:'100%'}}>
             <span
               style={{
@@ -311,10 +400,11 @@ export function KycAuthentication() {
             </span>{' '}
             &nbsp;{' '}
           </Button>
+          </Link>
           </div>
         )}
         { show && (<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',margin:'5px',width:'100%' }}>
-               
+            <Link href='/home'>
                <Button size="lg" className={classes.button1} onClick={onOTP}>
                    <span
                        style={{
@@ -330,8 +420,18 @@ export function KycAuthentication() {
                    &nbsp;{' '}
 
                </Button>
+            </Link>
+               {/* <Link href='/kyc/enter-mpin'> */}
                <Button size="xs" className={classes.button2}>
                    <span
+                   onClick={() => {
+                    form.validate()
+                    if (form.isValid()) {
+                        router.push(
+                            `/kyc/enter-mpin`
+                        )
+                    }
+                   }}
                        style={{
                            fontFamily: 'Montserrat',
                            fontStyle: `normal`,
@@ -344,6 +444,7 @@ export function KycAuthentication() {
                    </span>{' '}
                    &nbsp;{' '}
                </Button>
+               {/* </Link> */}
            </div>)
          }
         </div>

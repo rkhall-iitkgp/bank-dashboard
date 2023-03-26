@@ -192,7 +192,7 @@ import {
                 To see the analysis, please provide your Aadhar Card number for authentication using E-KYC
                 </div>
                 <Group mt="lg">
-                  <Link href="/kyc" style={{ margin: 'auto' }}>
+                  <Link href="/kyc/authentication1" style={{ margin: 'auto' }}>
                     <Button size="lg" className={classes.control}>
                       Provide Details
                     </Button>

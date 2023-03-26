@@ -3,7 +3,7 @@ import useStorage from '../../hooks/useStorage'
 import { AccountType } from './constants'
 import LeftPane from './LeftPane'
 import RightPane from './RightPane'
-import { KycAuthentication } from '../kyc/Authentication1'
+import { Authentication1 } from '../kyc/Authentication1'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -55,7 +55,7 @@ const Profile = () => {
       </div> 
       <div className={classes.container2}>
         <div >
-          <KycAuthentication/>
+          <Authentication1/>
         </div>
         {accounts.length ? (
           <RightPane accounts={accounts} />

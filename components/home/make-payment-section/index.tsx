@@ -32,7 +32,19 @@ const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
 const kyc = false
 const add = false
 
-let a;
+
+interface Props {
+  SetIsKycPermissionPopUpOpen: Function,
+  isKycPermissionPopUpOpen:any
+}
+
+export default function Payment ({
+  SetIsKycPermissionPopUpOpen,
+  isKycPermissionPopUpOpen
+}: Props) {
+
+
+  var a
 
 if(kyc){
   if(add)
@@ -47,15 +59,6 @@ else{
   a=0;
 }
 
-interface Props {
-  SetIsKycPermissionPopUpOpen: Function,
-  isKycPermissionPopUpOpen:any
-}
-
-export default function Payment ({
-  SetIsKycPermissionPopUpOpen,
-  isKycPermissionPopUpOpen
-}: Props) {
   return (
     <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '3vh' }}>
       <Card shadow="sm" padding="xs" radius="lg" withBorder bg={'#E0EEFF'}>
@@ -86,6 +89,7 @@ export default function Payment ({
          />
          </div>
           ) : (
+            
           <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
           <MakePaymentCard
             imageAddress="icons/bank-building-white.png"
