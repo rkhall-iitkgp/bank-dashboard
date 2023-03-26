@@ -49,12 +49,14 @@ function Heading(props: {
 
   return (
     <StyledHead style={{justifyContent:justify}}>
-        <Link href={"/home/"}>
+        <div onClick={() => {
+          router.replace('/home')
+        }}>
         {show && <Button style={{backgroundColor: "#DD0000", marginRight: "9rem", alignItems: "center"}} radius="xl" size="xs">
           Cancel
         </Button>
         }
-        </Link>
+        </div>
       <StyledText>{props.title}</StyledText>
     </StyledHead>
   )

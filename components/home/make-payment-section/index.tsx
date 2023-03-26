@@ -65,7 +65,7 @@ export default function Payment({
           style={{ justifyContent: 'space-evenly', alignItems: 'flex-start' }}
           my={12}
         >
-          {!kyc && !add ? (
+          {kyc && add ? (
             <div
               onClick={() => {
                 SetIsKycPermissionPopUpOpen(true)
