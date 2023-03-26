@@ -76,6 +76,7 @@ const GetKycStatus = () => {
 
  
   const bankAccountList1 = [2353]
+  const accounts = [2343, 4567]
   
   useEffect(() => {
    

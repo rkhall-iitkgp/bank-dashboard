@@ -52,10 +52,9 @@ const Payment = () => {
       })
       .then((response) => {
         (response.data);
-        
       })
       .catch((err) =>((err.response.data.message=='KYC not done') && setResult('0')))
-    {result=='0' && setIsPermissionPopUpOpen() && <PermissionFormPopup SetIsPermissionPopUpOpen()/>}
+    
   }
   useEffect(() => {
    
@@ -88,7 +87,7 @@ const Payment = () => {
           style={{ justifyContent: 'space-evenly', alignItems: 'flex-start' }}
           my={12}
         >
-          <Link href="/bank-transfer" onClick={} style={{ textDecoration: 'none' }}>
+          <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
             <MakePaymentCard
               imageAddress="icons/bank-building-white.png"
               cardText="Bank Transfer"
