@@ -6,8 +6,10 @@ import useStorage from '../../hooks/useStorage'
 
 const ProfilePage = () => {
   const { getItem, setItem } = useStorage()
-  const [bankAccountList, setBankAccountList] = useState([])
+
+
   const [loading, setLoading] = useState(false)
+  const [bankAccountList, setBankAccountList] = useState<any[]>([])
   const GetKycStatus = () => {
     const accessToken = getItem('access_token', 'session')
     console.log(accessToken)
@@ -35,6 +37,12 @@ const ProfilePage = () => {
       })
       .catch((err) => err.response.data.message)
   }
+  useEffect(() => {
+    setLoading(true)
+    setBankAccountList(JSON.parse(getItem("accounts")))
+    setLoading(false)
+
+  }, [])
 
   return (
     <>
