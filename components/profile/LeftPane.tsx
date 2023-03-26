@@ -20,10 +20,10 @@ const useStyles = createStyles((theme) => ({
     flexDirection: `column`,
     alignItems: `center`,
     justifyContent: `space-around`,
-    height: `100%`,
+    height: `100vh`,
   },
   container2: {
-    height: `100%`,
+    height: `100vh`,
   },
 
   name: {
@@ -129,7 +129,7 @@ const AccountSelect = ({ account_no }: Props) => {
         height={20}
         src="/icons/sbi.png"
       ></Image>
-      <div className={classes.content}>{'**** ' + account_no.toString().slice(8, 12)}</div>
+      <div className={classes.content}>{'**** ' + account_no}</div>
     </div>
   )
 }
@@ -166,7 +166,7 @@ const LeftPane = ({ accounts }: Props2) => {
           {accounts.map((account_no, index) => {
             return (
               <div key={index}>
-                <AccountSelect account_no={account_no.account_no} />
+                <AccountSelect account_no={account_no} />
               </div>
             )
           })}

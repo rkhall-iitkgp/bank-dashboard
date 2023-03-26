@@ -100,11 +100,14 @@ const Home: NextPage = () => {
   }, [])
   const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] =
     useState<boolean>(false)
+
   const [isKycPermissionPopUpOpen, setIsKycPermissionPopUpOpen] =
     useState<boolean>(false)
 
+
   const [loading, setLoading] = useState(false)
   return (
+
     <>
       <PermissionFormPopup
         isPermissionPopUpOpen={isPermissionPopUpOpen}
