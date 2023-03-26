@@ -12,7 +12,6 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     height: `220px`,
     width: `305px`,
-    margin: `5px`,
     display: `flex`,
     flex: 2,
   },

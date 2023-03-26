@@ -40,6 +40,15 @@ const SelectBankAccount = styled.div`
   color: white;
   flex: 3;
 `
+const ContainerLeft = styled(Container)`
+  flex: 1;
+  @media (max-width: 1450px) {
+    flex: 1.25;
+  }
+  @media (max-width: 1200px) {
+    flex: 2;
+  }
+`
 
 interface Props {
   accountsList: any[]
@@ -65,7 +74,7 @@ const LeftPane = ({ accountsList }: Props) => {
       >
         <Filter />
       </Modal>
-      <Container style={{ flex: 1 }}>
+      <ContainerLeft>
         <FilterRow style={{ justifyContent: 'space-between' }}>
           <FilterCard onClick={open}>
             Apply Filter
@@ -113,7 +122,7 @@ const LeftPane = ({ accountsList }: Props) => {
         <EodBalance balance="$1,23,456" comparision={4.6} />
 
         <RecentTransactions />
-      </Container>
+      </ContainerLeft>
     </>
   )
 }
