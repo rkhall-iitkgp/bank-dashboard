@@ -35,7 +35,7 @@ const Dashboard = () => {
     )
   }
 
-  const AccountFakeData = ['**** 1234', '**** 1324', '**** 4231', '**** 3214']
+  const AccountFakeData = [{ "id": 1, "account_no": "465645862596", "ifsc": "SBIN100002", "upi": null, "balance": 0, "user_id": 1 }, { "id": 2, "account_no": "465658632596", "ifsc": "SBIN100002", "upi": null, "balance": 0, "user_id": 1 }, { "id": 3, "account_no": "980323909102", "ifsc": "SBIN0928192", "upi": null, "balance": 0, "user_id": 1 }]
 
   const Container = styled.div`
     display: flex;

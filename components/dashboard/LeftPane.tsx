@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
-import { Stack, Group, Card, Select, Image, Modal, Text } from '@mantine/core'
+import { Stack, Group, Card, Select, Image, Modal, Text, Avatar } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import Filter from '../filter'
 import CashCard from './CashLimitCard'
 import EodBalance from './EODBalanceCard'
@@ -41,6 +41,27 @@ const SelectBankAccount = styled.div`
   flex: 3;
 `
 
+interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
+  image: string;
+  label: string;
+  description: string;
+}
+const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
+  ({ image, label, description, ...others }: ItemProps, ref) => (
+    <div ref={ref} {...others}>
+      <Group noWrap>
+        <Avatar src={image} size={20} />
+
+        <div>
+          <Text size="sm">{label}</Text>
+          <Text size="xs" opacity={0.65}>
+            {description}
+          </Text>
+        </div>
+      </Group>
+    </div>
+  )
+);
 interface Props {
   accountsList: any[]
 }
@@ -52,6 +73,21 @@ const LeftPane = ({ accountsList }: Props) => {
     '1256',
   )
   const [opened, { open, close }] = useDisclosure(false)
+  useEffect(() => {
+
+    accountsList.forEach(e => {
+      e.value = e
+      e.label = "****" + e.account_no.slice(8, 12)
+      e.image = 'icons/sbilogo.png'
+      e.name = e.account_no
+      e.descripitiom = e.account_no
+    })
+
+  }, [])
+  useEffect(() => {
+
+    console.log('selectedBankAccount', selectedBankAccount)
+  }, [selectedBankAccount])
 
   return (
     <>
@@ -86,11 +122,15 @@ const LeftPane = ({ accountsList }: Props) => {
                   alt="sbi-logo"
                 />
               }
+              itemComponent={SelectItem}
+              // searchable
               radius="lg"
               placeholder="bank account"
               value={selectedBankAccount}
               onChange={SetSelectedBankAccount}
               data={accountsList}
+
+
             />
           </SelectBankAccount>
         </FilterRow>
