@@ -21,23 +21,35 @@ const useStyles = createStyles((theme) => ({
     gridTemplateColumns: `40% 60%`,
     background: `white`,
   },
+  account: {
+    width: `150px`,
+    background: `white`,
+    borderRadius: `50px`,
+    margin: `10px`,
+    display: `flex`,
+    alignItems: `center`,
+    justifyContent: `space-around`,
+    backgroundColor: `#E6EFF9`,
+    padding: '5px 15px',
+  },
   container1: {
     display: `flex`,
     flexDirection: `column`,
     alignItems: `center`,
     justifyContent: `space-around`,
-    height: `100%`,
+    height: `87vh`,
   },
   container2: {
-    height: `100%`,
+    height: `87vh`,
+    display: `flex`,
+    flexDirection: `column`,
+    justifyContent: `space-between`,
+    marginLeft: '8vw',
+    
   },
 }))
 
-interface props {
-  bankAccountList: any[]
-  loading: boolean
-}
-const Profile = ({ bankAccountList }: props) => {
+const Profile = () => {
   const { classes } = useStyles()
   const { getItem } = useStorage()
   const { setItem } = useStorage()
@@ -75,18 +87,11 @@ const GetKycStatus = () => {
       {result=='0' &&
        <KycAuthentication/>}
       <div className={classes.container1}>
-        <LeftPane accounts={bankAccountList} />
+        <LeftPane accounts={accounts} />
       </div>
       <div className={classes.container2}>
-        {bankAccountList1.length ? (
-          <RightPane accounts={bankAccountList} />
-        ) : (
-          <>
-            No Accounts Connected Yet. Add an account to access all the cool
-            features!!
-          </>
-        )}
-       
+        <KycAuthentication />
+        <RightPane />
       </div>
     </div>
   )

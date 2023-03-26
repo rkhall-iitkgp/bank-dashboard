@@ -1,3 +1,4 @@
+
 import { createStyles } from '@mantine/core'
 import { useState, useRef } from 'react'
 import { FileButton, Button, Group, Text } from '@mantine/core'
@@ -8,7 +9,10 @@ import { Input } from '@mantine/core'
 import { TextInput } from '@mantine/core'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import { Router, useRouter } from 'next/router'
 import { hasLength, isNotEmpty, useForm } from '@mantine/form'
+import Link from 'next/link'
+import Heading from '../reusable-components/Heading'
 const _StyledButton = styled(Button)`
   border-width: 0.125rem;
   &:hover {
@@ -127,20 +131,27 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export function Authentication1() {
-  const form = useForm({
+
+     const router = useRouter()
+
+    const form = useForm({
     initialValues: {
-      aadharNo: '',
-      mobileNo: '',
+      aadhar_no: '',
+      number: '',
+      otp: '',
     },
 
     validate: {
-      aadharNo: hasLength(12, 'Aadhar must be 12 digits'),
-      mobileNo: hasLength(10, 'Aadhar must be 10 digits'),
+      aadhar_no: isNotEmpty('Aadhar Number must be 2-16 characters long'),
+      number: isNotEmpty('Enter your Number'),
+      otp: isNotEmpty('Enter OTP'),
     },
-  })
-  const [aadhar_no, setaadhar_no] = useState<number | ''>('')
-  const [mobile_no, setMobile_no] = useState<string>('')
-  const [otp_no, setOtp_no] = useState<number | ''>('')
+})
+
+
+//   const [aadhar_no, setaadhar_no] = useState<number | ''>('')
+//   const [mobile_no, setMobile_no] = useState<string>('')
+//   const [otp_no, setOtp_no] = useState<number | ''>('')
   const [show,setShow]=useState(false);
   const [file, setFile] = useState<File | null>(null)
   const resetRef = useRef<() => void>(null)
@@ -158,7 +169,7 @@ export function Authentication1() {
   return (
     <div className={classes.wrapper}>
       <div className={classes.container}>
-        <div className={classes.heading1}>
+        {/* <div className={classes.heading1}>
           <span
             style={{
               fontFamily: 'Montserrat',
@@ -170,7 +181,8 @@ export function Authentication1() {
           >
             Authentication
           </span>
-        </div>
+        </div> */}
+        <Heading title='Authentication' />
 
         <div className={classes.subcontainer}>
           <div className={classes.heading2}>
@@ -192,18 +204,17 @@ export function Authentication1() {
             type={'number'}
             required={true}
             hideControls={true}
-            value={aadhar_no}
-            onChange={setaadhar_no}
             classNames={{
               input: classes.input,
               label: classes.inputLabel,
               root: classes.inputcontainer,
             }}
+            {...form.getInputProps('aadhar_no')}
           />
           <PhoneInput
             placeholder="Mobile Number"
-            value={mobile_no.replaceAll('\\D+', '')}
-            onChange={setMobile_no}
+            // value={mobile_no.replaceAll('\\D+', '')}
+            // onChange={setMobile_no}
             country={'in'}
             containerStyle={{
               border: 'none',
@@ -226,6 +237,7 @@ export function Authentication1() {
               background: 'transparent',
               border: 'none',
             }}
+            {...form.getInputProps('number')}
           />
 
           <div className={classes.uploadResetContainer}>
@@ -338,14 +350,15 @@ export function Authentication1() {
                     type={'number'}
                     required={true}
                     hideControls={true}
-                    value={otp_no}
-                    onChange={setOtp_no}
+                    // value={otp_no}
+                    // onChange={setOtp_no}
 
                     classNames={{
                         input: classes.input,
                         label: classes.inputLabel,
                         root: classes.inputcontainer,
                     }}
+                    {...form.getInputProps('otp')}
                     // required
                     // {...form.getInputProps('name')}
                 />
@@ -372,6 +385,7 @@ export function Authentication1() {
             </span>{' '}
             &nbsp;{' '}
           </Button>
+          <Link href='/home'>
           <Button className={classes.button2} style={{width:'100%'}}>
             <span
               style={{
@@ -386,10 +400,11 @@ export function Authentication1() {
             </span>{' '}
             &nbsp;{' '}
           </Button>
+          </Link>
           </div>
         )}
         { show && (<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',margin:'5px',width:'100%' }}>
-               
+            <Link href='/home'>
                <Button size="lg" className={classes.button1} onClick={onOTP}>
                    <span
                        style={{
@@ -405,8 +420,18 @@ export function Authentication1() {
                    &nbsp;{' '}
 
                </Button>
+            </Link>
+               {/* <Link href='/kyc/enter-mpin'> */}
                <Button size="xs" className={classes.button2}>
                    <span
+                   onClick={() => {
+                    form.validate()
+                    if (form.isValid()) {
+                        router.push(
+                            `/kyc/enter-mpin`
+                        )
+                    }
+                   }}
                        style={{
                            fontFamily: 'Montserrat',
                            fontStyle: `normal`,
@@ -419,6 +444,7 @@ export function Authentication1() {
                    </span>{' '}
                    &nbsp;{' '}
                </Button>
+               {/* </Link> */}
            </div>)
          }
         </div>

@@ -28,9 +28,11 @@ const useStyles = createStyles((theme) => ({
     boxShadow: `0px 2px 20px rgba(0,0,0,0.1)`,
     color: `#0052B3`,
     position: 'relative',
-    height: `350px`,
-    width: `400px`,
-    margin: `5px`,
+    height: `300px`,
+    width: `80%`,
+    maxWidth: `500px`,
+    minWidth: `400px`,
+    marginLeft: `10px`,
 
     background: `#FFFFFF`,
     // gap:'1rem'

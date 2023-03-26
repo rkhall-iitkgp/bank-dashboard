@@ -3,7 +3,6 @@ import api from '../../components/api'
 import Navbar from '../../components/home/navbar/navbar'
 import Profile from '../../components/profile/Profile'
 import useStorage from '../../hooks/useStorage'
-
 const index = () => {
 
   const { getItem, setItem } = useStorage()

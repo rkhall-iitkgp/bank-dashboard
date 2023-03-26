@@ -37,6 +37,7 @@ const Payment = () => {
   const { getItem } = useStorage()
   const [result,setResult]=useState('1')
   const [url,setUrl]=useState('/bank-transfer')
+  const [isPermissionPopUpOpen, setIsPermissionPopUpOpen]=useState<boolean>(false)
   const GetKycStatus = () => {
     const accessToken = getItem('access_token','session')
     console.log(accessToken)
@@ -54,7 +55,7 @@ const Payment = () => {
         
       })
       .catch((err) =>((err.response.data.message=='KYC not done') && setResult('0')))
-    {result=='0' && <PermissionFormPopup isPermissionPopUpOpen= {true}/>}
+    {result=='0' && setIsPermissionPopUpOpen() && <PermissionFormPopup SetIsPermissionPopUpOpen()/>}
   }
   useEffect(() => {
    
