@@ -80,7 +80,7 @@ const LeftPane = ({ accountsList }: Props) => {
       e.label = "****" + e.account_no.slice(8, 12)
       e.image = 'icons/sbilogo.png'
       e.name = e.account_no
-      e.descripitiom = e.account_no
+      e.description = e.account_no
     })
 
   }, [])
@@ -99,7 +99,7 @@ const LeftPane = ({ accountsList }: Props) => {
         onClose={close}
         centered
       >
-        <Filter />
+        <Filter todashboard={false} />
       </Modal>
       <Container style={{ flex: 1 }}>
         <FilterRow style={{ justifyContent: 'space-between' }}>

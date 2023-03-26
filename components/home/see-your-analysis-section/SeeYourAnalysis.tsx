@@ -43,8 +43,9 @@ const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
 )
 interface Props {
   SetIsPermissionPopUpOpen: Function
+  setIsfilteropen: Function
 }
-function SeeYourAnalysis({ SetIsPermissionPopUpOpen }: Props) {
+function SeeYourAnalysis({ SetIsPermissionPopUpOpen, setIsfilteropen }: Props) {
   return (
     <Container>
       <TextDiv>
@@ -56,7 +57,8 @@ function SeeYourAnalysis({ SetIsPermissionPopUpOpen }: Props) {
       <StyledButton
         variant="default"
         onClick={() => {
-          SetIsPermissionPopUpOpen(true)
+          // SetIsPermissionPopUpOpen(true)
+          setIsfilteropen(true)
         }}
       >
         See your analysis

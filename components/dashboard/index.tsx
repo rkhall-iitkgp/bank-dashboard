@@ -12,6 +12,7 @@ import RecentTransactions from './RecentTransactions'
 import styled from '@emotion/styled'
 import LeftPane from './LeftPane'
 import RightPane from './RightPane'
+import useStorage from '../../hooks/useStorage'
 
 const Dashboard = () => {
   const AccountComponent = (props: { label: string; ref: any }) => {
@@ -34,9 +35,8 @@ const Dashboard = () => {
       </Group>
     )
   }
-
-  const AccountFakeData = [{ "id": 1, "account_no": "465645862596", "ifsc": "SBIN100002", "upi": null, "balance": 0, "user_id": 1 }, { "id": 2, "account_no": "465658632596", "ifsc": "SBIN100002", "upi": null, "balance": 0, "user_id": 1 }, { "id": 3, "account_no": "980323909102", "ifsc": "SBIN0928192", "upi": null, "balance": 0, "user_id": 1 }]
-
+  const { getItem } = useStorage()
+  const AccountFakeData = JSON.parse(getItem("accounts"))
   const Container = styled.div`
     display: flex;
     width: '100%';

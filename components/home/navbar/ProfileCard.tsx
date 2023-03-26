@@ -160,7 +160,7 @@ export function ProfileCard() {
             color: '#000000',
           }}
         >
-          {data.PersonName}
+          {getItem("name")}
         </span>
         <span
           style={{
@@ -172,7 +172,7 @@ export function ProfileCard() {
             color: '#4D4B4B',
           }}
         >
-          {data.Email}
+          {getItem("email")}
         </span>
       </div>
       <div
@@ -206,7 +206,7 @@ export function ProfileCard() {
             color: '#000000',
           }}
         >
-          {data.PhoneNumber}
+          {getItem("contact_no").slice(0, 3) + " " + getItem("contact_no").slice(3)}
         </span>
       </div>
       <div
@@ -244,26 +244,26 @@ export function ProfileCard() {
       </div>
 
       <Link href="/profile">
-      <Button size="xs" className={classes.button1}>
-        <span 
-          style={{
-            fontFamily: 'Montserrat',
-            fontStyle: `normal`,
-            fontWeight: `500`,
-            fontSize: `16px`,
-            lineHeight: `27px`,
-          }}
-        >
-          Settings
-        </span>{' '}
-        &nbsp;{' '}
-        <Image
-          src={'/../public/icons/settings.png'}
-          width={18}
-          height={18}
-          alt={''}
-        ></Image>
-      </Button>
+        <Button size="xs" className={classes.button1}>
+          <span
+            style={{
+              fontFamily: 'Montserrat',
+              fontStyle: `normal`,
+              fontWeight: `500`,
+              fontSize: `16px`,
+              lineHeight: `27px`,
+            }}
+          >
+            Settings
+          </span>{' '}
+          &nbsp;{' '}
+          <Image
+            src={'/../public/icons/settings.png'}
+            width={18}
+            height={18}
+            alt={''}
+          ></Image>
+        </Button>
       </Link>
       <Button size="xs" className={classes.button2}>
         <span
