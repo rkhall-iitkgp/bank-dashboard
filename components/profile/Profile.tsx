@@ -87,7 +87,7 @@ const GetKycStatus = () => {
       {result=='0' &&
        <KycAuthentication/>}
       <div className={classes.container1}>
-        <LeftPane accounts={accounts} />
+        <LeftPane accounts={bankAccountList1} />
       </div>
       <div className={classes.container2}>
         <KycAuthentication />
