@@ -4,6 +4,7 @@ import {
   ButtonProps,
   createPolymorphicComponent,
   Image,
+  Loader,
 } from '@mantine/core'
 
 const Oflex = styled.div`
@@ -125,10 +126,12 @@ const StyledText1 = styled.div`
 interface Props {
   setIsAddAccountPopupOpen: Function
   bankAccountList: any[]
+  loading: any
 }
 export default function BankAccount({
   bankAccountList,
   setIsAddAccountPopupOpen,
+  loading
 }: Props) {
   return (
     <Container>
@@ -139,6 +142,9 @@ export default function BankAccount({
         </AddAccountButton>
       </Iflex>
       <Oflex>
+        {loading ?
+          <Loader size={40} m={30} />
+          : <></>}
         {bankAccountList.map((bankAccount) => {
           return (
             <div key={bankAccount.account_no}>
@@ -146,7 +152,7 @@ export default function BankAccount({
                 <BankImage>
                   <Image src="images/sbi1.png" alt="sbi" />
                 </BankImage>
-                <AccountNumber>****{bankAccount.account_no}</AccountNumber>
+                <AccountNumber>****{bankAccount.account_no.slice(8, 12)}</AccountNumber>
               </StyledCard>
             </div>
           )
