@@ -1,10 +1,9 @@
-import { createStyles, TextInput, getStylesRef } from '@mantine/core'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-import ButtonGroup from '../reusable-components/ButtonGroup'
+import {createStyles, getStylesRef, TextInput} from '@mantine/core'
+import {useRouter} from 'next/router'
 import Heading from '../reusable-components/Heading'
 import useStorage from '../../hooks/useStorage'
 import transms from '../transms'
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,

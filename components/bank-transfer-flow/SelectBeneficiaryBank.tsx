@@ -1,10 +1,9 @@
-import { createStyles } from '@mantine/core'
+import {createStyles} from '@mantine/core'
 import Image from 'next/image'
-import { useState } from 'react'
+import {useState} from 'react'
 import Link from 'next/link'
-import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {

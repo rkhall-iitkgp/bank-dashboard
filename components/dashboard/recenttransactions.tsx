@@ -1,4 +1,4 @@
-import { Card, Text, Group, Stack, HoverCard } from '@mantine/core'
+import {Card, Group, HoverCard, Stack, Text} from '@mantine/core'
 
 const palette = ['#D56EEA', '#26DD76', '#FFAA57', '#4198FF']
 
@@ -170,7 +170,7 @@ const RecentTransactions = (prop: {
       <Text ff={'Montserrat'} c="#0062D6" fw={700} fz={22} mt={4} ml={8}>
         Recent Transactions
       </Text>
-      <div style={{ maxHeight: '23rem', overflow: 'auto' }}>
+      <div style={{ maxHeight: '18rem', overflow: 'auto' }}>
         {transactions.map((t) => (
           <div key={t.date}>
             <TransactionCard data={t} />

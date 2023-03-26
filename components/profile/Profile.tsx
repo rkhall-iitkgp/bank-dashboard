@@ -1,12 +1,10 @@
-import { createStyles } from '@mantine/core'
+import {createStyles} from '@mantine/core'
 import useStorage from '../../hooks/useStorage'
-import { AccountType } from './constants'
 import LeftPane from './LeftPane'
 import RightPane from './RightPane'
-import api from '../../components/datams'
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { KycAuthentication } from '../kyc/KycAuthentication'
+import {useState} from 'react'
+import {KycAuthentication} from '../kyc/KycAuthentication'
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -49,46 +47,49 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const Profile = () => {
+interface props {
+  bankAccountList: any[]
+  loading: boolean
+}
+const Profile = ({ bankAccountList, loading }: props) => {
   const { classes } = useStyles()
-  const { getItem, setItem } = useStorage()
+  const { getItem } = useStorage()
+  const { setItem } = useStorage()
   const [result, setResult] = useState('1')
-  console.log(`getitem accounts = `, getItem('accounts'))
-  const accounts = JSON.parse(getItem('accounts')).map((v: { account_no: string }) => v.account_no);
+  // const GetKycStatus = () => {
+  //   const accessToken = getItem('access_token','session')
+  //   console.log(accessToken)
+  //   const user_id = getItem('user_id')
 
-  const GetKycStatus = () => {
-    const accessToken = getItem('access_token', 'session')
-    console.log(accessToken)
-    const user_id = getItem('user_id')
+  //   const response = api
+  //     .get(`/user/getkyc/`, {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //         'Content-Type': 'application/json',
+  //       },
+  //     })
+  //     .then((response) => {
+  //       (response.data);
 
-    const response = api
-      .get(`/user/getkyc/`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        (response.data);
+  //     })
+  //     .catch((err) =>((err.response.data.message=='KYC not done') && setResult('0')))
 
-      })
-      .catch((err) => ((err.response.data.message == 'KYC not done') && setResult('0')))
-  }
+  // }
 
 
   const bankAccountList1 = [2353]
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    GetKycStatus()
+  //   GetKycStatus()
 
-  }, [])
+  // }, [])
   return (
     <div className={classes.wrapper}>
       {result == '0' &&
         <KycAuthentication />}
       <div className={classes.container1}>
-        <LeftPane accounts={accounts} />
+        <LeftPane accounts={bankAccountList} />
       </div>
       <div className={classes.container2}>
         <KycAuthentication />

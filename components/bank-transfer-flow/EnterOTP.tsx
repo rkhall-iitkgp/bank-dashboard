@@ -1,10 +1,8 @@
-import { createStyles, TextInput } from '@mantine/core'
+import {createStyles, TextInput} from '@mantine/core'
 // import ButtonGroup from './SmallComponents/ButtonGroup'
-
-import { SetStateAction, useState } from 'react'
+import {SetStateAction, useState} from 'react'
 // import { isNotEmpty, useForm } from '@mantine/form'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 import Heading from '../reusable-components/Heading'
 import useStorage from '../../hooks/useStorage'
 import transms from '../transms'

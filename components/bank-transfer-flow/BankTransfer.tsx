@@ -1,11 +1,9 @@
-import { createStyles, Button } from '@mantine/core'
+import {createStyles} from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
+import {useRouter} from 'next/router'
+import {useState} from 'react'
 import useStorage from '../../hooks/useStorage'
-import datams from '../datams'
-import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 //   import { ContactIconsList } from '../ContactIcons/ContactIcons';

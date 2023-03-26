@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
-import { Stack, Group, Card, Select, Image, Modal, Text } from '@mantine/core'
+import { Group, Image, Modal, Select } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useState } from 'react'
 import Filter from '../filter'
 import CashCard from './CashLimitCard'
 import EodBalance from './EODBalanceCard'
-import RecentTransactions from './RecentTransactions'
+import RecentTransactions from './recenttransactions'
 
 const FilterRow = styled.div`
   display: flex;
@@ -40,6 +40,15 @@ const SelectBankAccount = styled.div`
   color: white;
   flex: 3;
 `
+const ContainerLeft = styled(Container)`
+  flex: 1;
+  @media (max-width: 1450px) {
+    flex: 1.25;
+  }
+  @media (max-width: 1200px) {
+    flex: 2;
+  }
+`
 
 interface Props {
   accountsList: any[]
@@ -52,6 +61,7 @@ const LeftPane = ({ accountsList }: Props) => {
     '1256',
   )
   const [opened, { open, close }] = useDisclosure(false)
+  const [account, setaccount] = useState(0);
 
   return (
     <>
@@ -63,9 +73,9 @@ const LeftPane = ({ accountsList }: Props) => {
         onClose={close}
         centered
       >
-        <Filter />
+        <Filter account={account} setAccount={setaccount} />
       </Modal>
-      <Container style={{ flex: 1 }}>
+      <ContainerLeft>
         <FilterRow style={{ justifyContent: 'space-between' }}>
           <FilterCard onClick={open}>
             Apply Filter
@@ -87,7 +97,7 @@ const LeftPane = ({ accountsList }: Props) => {
                 />
               }
               radius="lg"
-              placeholder="bank account"
+              placeholder="Bank Account"
               value={selectedBankAccount}
               onChange={SetSelectedBankAccount}
               data={accountsList}
@@ -112,8 +122,8 @@ const LeftPane = ({ accountsList }: Props) => {
 
         <EodBalance balance="$1,23,456" comparision={4.6} />
 
-        <RecentTransactions />
-      </Container>
+        <RecentTransactions transactions={[]} />
+      </ContainerLeft>
     </>
   )
 }

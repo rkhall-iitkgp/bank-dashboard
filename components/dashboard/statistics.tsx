@@ -1,10 +1,11 @@
-import { Card, Stack, Group, Text, Button } from '@mantine/core'
+import { Button, Card, Group, Stack, Text } from '@mantine/core'
 import dynamic from 'next/dynamic'
-const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 import { useState } from 'react'
 import ArticlesCard from './articlesCard'
 import InsightCard from './insightCard'
-import RecentTransactions from './RecentTransactions'
+import RecentTransactions from './recenttransactions'
+
+const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const BalanceChart = (props: {
   balanceData: { x: string; y: number }[]
@@ -19,6 +20,7 @@ const BalanceChart = (props: {
       type="area"
       height={340}
       width={width}
+      margin={'auto'}
       options={{
         fill: { colors: [color] },
         dataLabels: { enabled: false },
@@ -269,8 +271,9 @@ const FinancialStatistics = () => {
         align={'flex-end'}
         style={{
           flex: 1,
-          maxHeight: '28rem',
+          maxHeight: '14rem',
           overflow: 'auto',
+          margin: 'auto',
         }}
       >
         {categoryIndex == -1 && (

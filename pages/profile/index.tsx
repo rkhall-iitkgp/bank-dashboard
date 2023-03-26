@@ -3,11 +3,13 @@ import api from '../../components/datams'
 import Navbar from '../../components/home/navbar/navbar'
 import Profile from '../../components/profile/Profile'
 import useStorage from '../../hooks/useStorage'
-const index = () => {
 
+const ProfilePage = () => {
   const { getItem, setItem } = useStorage()
-  const [bankAccountList, setBankAccountList] = useState([])
+
+
   const [loading, setLoading] = useState(false)
+  const [bankAccountList, setBankAccountList] = useState<any[]>([])
   const GetKycStatus = () => {
     const accessToken = getItem('access_token', 'session')
     console.log(accessToken)
@@ -21,7 +23,7 @@ const index = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data)
         // const responseArray = response.data
         // responseArray.map((acc: any) => {
         //   let temp = bankAccountList
@@ -35,13 +37,19 @@ const index = () => {
       })
       .catch((err) => err.response.data.message)
   }
+  useEffect(() => {
+    setLoading(true)
+    setBankAccountList(JSON.parse(getItem("accounts")))
+    setLoading(false)
+
+  }, [])
 
   return (
     <>
       <Navbar />
-      <Profile />
+      <Profile loading={loading} bankAccountList={bankAccountList} />
     </>
   )
 }
 
-export default index
+export default ProfilePage

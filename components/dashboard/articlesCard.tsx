@@ -1,4 +1,4 @@
-import { Card, Text, List } from '@mantine/core'
+import {Card, List, Text} from '@mantine/core'
 
 const ArticlesCard = (props: { articles: string[] }) => {
   return (

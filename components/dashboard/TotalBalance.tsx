@@ -1,9 +1,7 @@
-import { createStyles } from '@mantine/core'
-import Heading from '../reusable-components/Heading'
-import styled from '@emotion/styled'
-import { Group, Stack, Text } from '@mantine/core'
+import {createStyles} from '@mantine/core'
 import Image from 'next/image'
-const useStyles = createStyles((theme) => ({
+
+const useStyles = createStyles(() => ({
   container: {
     backgroundColor: `#ffffff`,
     borderRadius: `30px`,
@@ -12,7 +10,6 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     height: `220px`,
     width: `305px`,
-    margin: `5px`,
     display: `flex`,
     flex: 2,
   },
@@ -20,7 +17,7 @@ const useStyles = createStyles((theme) => ({
     color: `#737373`,
     position: 'absolute',
     top: `10px`,
-    left: `27px`,
+    left: `1rem`,
     width: `144px`,
     height: `18px`,
     textAlign: `center`,
@@ -45,7 +42,7 @@ const useStyles = createStyles((theme) => ({
     color: `#000000`,
     position: 'absolute',
     top: `62px`,
-    left: `27px`,
+    left: `1rem`,
     width: `240px`,
     height: `52px`,
     display: `flex`,
@@ -57,7 +54,7 @@ const useStyles = createStyles((theme) => ({
     fontSize: `1rem`,
     position: 'absolute',
     top: `120px`,
-    left: `27px`,
+    left: `1rem`,
     width: `58px`,
     height: `20px`,
     textAlign: `center`,
@@ -72,7 +69,7 @@ const useStyles = createStyles((theme) => ({
     color: `#737373`,
     position: 'absolute',
     top: `149px`,
-    left: `27px`,
+    left: `1rem`,
     width: `178px`,
     height: `18px`,
     textAlign: `center`,
@@ -84,7 +81,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export function TotalBalance() {
-  const { classes } = useStyles()
+  const { classes } = useStyles();
   let data = {
     totalBalance: '₹1,23,456',
     increment: '4.74%',
@@ -139,7 +136,7 @@ export function TotalBalance() {
             fontFamily: 'Montserrat',
             fontStyle: `normal`,
             fontWeight: `700`,
-            fontSize: `36px`,
+            fontSize: `1.75rem`,
             lineHeight: `44px`,
           }}
         >

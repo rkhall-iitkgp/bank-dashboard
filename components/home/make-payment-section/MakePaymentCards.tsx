@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Group, Stack, Image, Text } from '@mantine/core'
+import {Group, Image, Stack, Text} from '@mantine/core'
 
 const PaymentImage = styled(Group)`
   background-color: #0062d6;

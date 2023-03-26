@@ -1,14 +1,9 @@
-import { createStyles } from '@mantine/core'
-import { useState, useRef } from 'react'
-import { FileButton, Button, Group, Text } from '@mantine/core'
-import { ButtonProps, createPolymorphicComponent } from '@mantine/core'
+import {Button, ButtonProps, createPolymorphicComponent, createStyles, FileButton, Group} from '@mantine/core'
+import {useRef, useState} from 'react'
 import styled from '@emotion/styled'
-import { NumberInput } from '@mantine/core'
-import { Input } from '@mantine/core'
-import { TextInput } from '@mantine/core'
-import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import { hasLength, isNotEmpty, useForm } from '@mantine/form'
+import {hasLength, useForm} from '@mantine/form'
+
 const _StyledButton = styled(Button)`
   border-width: 0.125rem;
   &:hover {
@@ -144,7 +139,7 @@ export function KycAuthentication() {
    function onOTP(){
        setShow(!show);
    }
-  const { classes } = useStyles()
+  const { classes } = useStyles();
   let data = {
     aadharNumber: '1234/12345/12345',
   }

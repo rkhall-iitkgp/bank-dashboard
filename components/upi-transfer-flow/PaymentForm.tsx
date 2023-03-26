@@ -1,8 +1,8 @@
-import { createStyles, getStylesRef, Text, TextInput } from '@mantine/core'
-import { hasLength, isNotEmpty, useForm } from '@mantine/form'
+import {createStyles, getStylesRef, Text, TextInput} from '@mantine/core'
+import {hasLength, isNotEmpty, useForm} from '@mantine/form'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { SetStateAction, useEffect, useState } from 'react'
+import {useRouter} from 'next/router'
+import {useEffect, useState} from 'react'
 import Heading from '../reusable-components/Heading'
 
 const useStyles = createStyles((theme) => ({

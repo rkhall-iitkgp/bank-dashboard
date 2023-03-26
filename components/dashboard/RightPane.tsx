@@ -1,7 +1,7 @@
-import { Stack, Group, Text } from '@mantine/core'
-import { FinancialRatios } from './FinancialRatios'
+import {Group, Stack, Text} from '@mantine/core'
+import {FinancialRatios} from './FinancialRatios'
 import FinancialStatistics from './statistics'
-import { TotalBalance } from './TotalBalance'
+import {TotalBalance} from './TotalBalance'
 
 const RightPane = () => {
   return (

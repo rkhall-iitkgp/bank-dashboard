@@ -1,18 +1,19 @@
 import {
-  Button,
-  Text,
-  Group,
-  Stack,
-  Image,
-  PinInput,
-  ButtonProps,
-  createPolymorphicComponent,
-  Checkbox,
+    Button,
+    ButtonProps,
+    Checkbox,
+    createPolymorphicComponent,
+    Group,
+    Image,
+    PinInput,
+    Stack,
+    Text,
 } from '@mantine/core'
-import { DateInput } from '@mantine/dates'
+import {DateInput} from '@mantine/dates'
 import styled from '@emotion/styled'
-import { Key, useState } from 'react'
+import {Key, useState} from 'react'
 import useStorage from '../../hooks/useStorage'
+
 const _PeriodButton = styled(Button)`
   width: 213px;
   height: 48px;

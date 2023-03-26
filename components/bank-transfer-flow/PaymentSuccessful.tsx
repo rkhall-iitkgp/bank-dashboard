@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from '@emotion/styled'
-import { Image } from '@mantine/core'
+import {Image} from '@mantine/core'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 import Heading from '../reusable-components/Heading'
 import useStorage from '../../hooks/useStorage'
 import datams from '../datams'
+
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;

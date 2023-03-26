@@ -1,5 +1,4 @@
-import { Button } from '@mantine/core'
-import { ButtonProps, createPolymorphicComponent } from '@mantine/core'
+import {Button, ButtonProps, createPolymorphicComponent} from '@mantine/core'
 import styled from '@emotion/styled'
 
 const Container = styled.div`
