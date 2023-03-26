@@ -310,6 +310,8 @@ export function LoginSignupPage() {
           setItem('email', res.data.email)
           setItem('contact_no', res.data.contact_no)
           setItem('kyc', res.data.kyc)
+          setItem('consent', res.data.consent)
+          setItem('accounts', "[]")
         }
 
         return res

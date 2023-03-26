@@ -2,7 +2,6 @@ import { Button, createStyles, Radio } from '@mantine/core'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useState } from 'react'
-import useStorage from '../../hooks/useStorage'
 
 const useStyles = createStyles((theme) => ({
   wrap: {
@@ -10,11 +9,16 @@ const useStyles = createStyles((theme) => ({
     borderRadius: `30px`,
     boxShadow: ` 0px 4px 40px rgba(0, 0, 0, 0.2)`,
     width: `80%`,
-    maxWidth: `700px`
+    height: `80%`,
+    minWidth: `400px`,
+    maxWidth: `500px`,
+    maxHeight: `380px`,
+    marginLeft: `10px`,
+    marginTop: `3vh`,
   },
   heading: {
     width: `100%`,
-    height: `10%`,
+    height: `15%`,
     padding: `10px`,
     paddingTop: `20px`,
     background: `#DDEDFF`,
@@ -22,13 +26,15 @@ const useStyles = createStyles((theme) => ({
     textAlign: `center`,
     borderRadius: ' 30px 30px 0px 0px',
     color: ` #0052B3`,
+    display: `flex`,
+    alignItems: `center`,
+    justifyContent: `center`,
   },
   form: {
     padding: `30px`,
     display: `flex`,
     flexDirection: `column`,
     justifyContent: `space-evenly`,
-    height: `90%`,
   },
   formtitle: {
     fontSize: `1rem`,
@@ -104,7 +110,7 @@ const ConsentFormComponent = ({ id, accountselected }: Props) => {
   const [data, setData] = useState<string>('1')
   // console.log('accountselected :', accountselected)
   const router = useRouter()
-  const { setItem } = useStorage()
+
   return (
     <div key={`${accountselected}`} style={{ height: '100%' }} className={classes.wrap}>
       <div className={classes.heading}>Consent Form</div>
@@ -147,21 +153,12 @@ const ConsentFormComponent = ({ id, accountselected }: Props) => {
                   account: accountselected,
                   data: data,
                 })
-                setItem("permission", 'true')
+                sessionStorage.setItem("permission", "true")
                 router.push("/home")
               }
             }}
           >
             Confirm
-          </Button>
-          <Button
-            size="lg"
-            className={classes.control}
-            onClick={() => {
-              router.push("/home")
-            }}
-          >
-            Later
           </Button>
         </div>
       </div>

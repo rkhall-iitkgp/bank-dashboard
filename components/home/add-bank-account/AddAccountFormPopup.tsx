@@ -175,7 +175,7 @@ export function AddAccountFormPopup({
 
     validate: {
       phone: hasLength(12, 'Enter a Valid Phone Number'),
-      account_no: isInRange({ min: 100000000000, max: 999999999999 }, 'Enter a Valid Account Number'),
+      account_no: isInRange({ min: 10000000000, max: 99999999999 }, 'Enter a Valid Account Number'),
       IFSC: matches(/^[A-Z]{4}0[A-Z0-9]{6}$/, "Enter A Valid IFSC Code")
 
     },
