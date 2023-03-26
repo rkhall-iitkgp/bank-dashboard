@@ -29,8 +29,10 @@ const useStyles = createStyles((theme) => ({
     color: `#0052B3`,
     position: 'relative',
     height: `350px`,
-    width: `400px`,
-    margin: `5px`,
+    width: `80%`,
+    maxWidth: `500px`,
+    minWidth: `400px`,
+    marginLeft: `10px`,
 
     background: `#FFFFFF`,
     // gap:'1rem'

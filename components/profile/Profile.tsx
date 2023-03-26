@@ -23,10 +23,15 @@ const useStyles = createStyles((theme) => ({
     flexDirection: `column`,
     alignItems: `center`,
     justifyContent: `space-around`,
-    height: `100%`,
+    height: `87vh`,
   },
   container2: {
-    height: `100%`,
+    height: `87vh`,
+    display: `flex`,
+    flexDirection: `column`,
+    justifyContent: `space-between`,
+    marginLeft: '8vw',
+    
   },
 }))
 
@@ -46,20 +51,12 @@ const Profile = () => {
 
   return (
     <div className={classes.wrapper}>
-       <KycAuthentication/>
       <div className={classes.container1}>
         <LeftPane accounts={accounts} />
       </div>
       <div className={classes.container2}>
-        {accounts.length ? (
-          <RightPane accounts={accounts} />
-        ) : (
-          <>
-            No Accounts Connected Yet. Add an account to access all the cool
-            features!!
-          </>
-        )}
-       
+        <KycAuthentication />
+        <RightPane />
       </div>
     </div>
   )

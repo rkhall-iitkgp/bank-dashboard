@@ -9,7 +9,12 @@ const useStyles = createStyles((theme) => ({
     borderRadius: `30px`,
     boxShadow: ` 0px 4px 40px rgba(0, 0, 0, 0.2)`,
     width: `80%`,
-    maxWidth: `700px`
+    height: `80%`,
+    minWidth: `400px`,
+    maxWidth: `500px`,
+    maxHeight: `420px`,
+    marginLeft: `10px`,
+    marginTop: `3vh`,
   },
   heading: {
     width: `100%`,
@@ -21,13 +26,15 @@ const useStyles = createStyles((theme) => ({
     textAlign: `center`,
     borderRadius: ' 30px 30px 0px 0px',
     color: ` #0052B3`,
+    display: `flex`,
+    alignItems: `center`,
+    justifyContent: `center`,
   },
   form: {
     padding: `30px`,
     display: `flex`,
     flexDirection: `column`,
     justifyContent: `space-evenly`,
-    height: `90%`,
   },
   formtitle: {
     fontSize: `1rem`,
