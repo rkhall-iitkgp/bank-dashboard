@@ -6,6 +6,8 @@ import Image from 'next/image'
 import { Button } from '@mantine/core'
 import { wrap } from 'module'
 import Link from 'next/link'
+import useStorage from '../../../hooks/useStorage'
+import { Key } from 'react'
 const useStyles = createStyles((theme) => ({
   container: {
     backgroundColor: `#ffffff`,
@@ -105,7 +107,7 @@ const AccountCard = ({ bankName, value }: Props) => {
             color: '#000000',
           }}
         >
-          {value}
+          {"****" + value?.slice(8, 12)}
         </Text>
       </div>
     </div>
@@ -113,14 +115,17 @@ const AccountCard = ({ bankName, value }: Props) => {
 }
 export function ProfileCard() {
   const { classes } = useStyles()
-  let BankAccount = [
-    { id: 1, bankName: 'sbi', value: '****1234' },
-    { id: 2, bankName: 'sbi', value: '****4235' },
-    { id: 3, bankName: 'sbi', value: '****8090' },
-    { id: 1, bankName: 'sbi', value: '****1234' },
-    { id: 2, bankName: 'sbi', value: '****4235' },
-    { id: 3, bankName: 'sbi', value: '****8090' },
-  ]
+  const { getItem } = useStorage()
+
+  let BankAccount = JSON.parse(getItem("accounts"))
+  // let BankAccount = [
+  //   { id: 1, bankName: 'sbi', value: '****1234' },
+  //   { id: 2, bankName: 'sbi', value: '****4235' },
+  //   { id: 3, bankName: 'sbi', value: '****8090' },
+  //   { id: 1, bankName: 'sbi', value: '****1234' },
+  //   { id: 2, bankName: 'sbi', value: '****4235' },
+  //   { id: 3, bankName: 'sbi', value: '****8090' },
+  // ]
   let data = {
     PersonName: 'Bill Gates',
     Email: 'bgiamrich@gmail.com',
@@ -141,7 +146,7 @@ export function ProfileCard() {
           width={80}
           height={80}
           alt={''}
-          style={{margin: '20px 0'}}
+          style={{ margin: '20px 0' }}
         ></Image>
         <span
           style={{
@@ -223,12 +228,12 @@ export function ProfileCard() {
           Bank Accounts
         </span>
         <div className={classes.accountCollection}>
-          {BankAccount.map((ele, key) => {
+          {BankAccount.map((ele: { id: Key | null | undefined; bankName: string | undefined; account_no: string | undefined }, key: any) => {
             return (
               <span key={ele.id}>
                 <AccountCard
                   bankName={ele.bankName}
-                  value={ele.value}
+                  value={ele.account_no}
                 ></AccountCard>
               </span>
             )
@@ -266,6 +271,9 @@ export function ProfileCard() {
             fontWeight: `500`,
             fontSize: `16px`,
             lineHeight: `27px`,
+          }}
+          onClick={() => {
+            sessionStorage.clear()
           }}
         >
           Logout

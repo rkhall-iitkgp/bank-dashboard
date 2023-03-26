@@ -2,6 +2,7 @@ import { createStyles, Button } from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
+import useStorage from '../../hooks/useStorage'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
@@ -156,7 +157,7 @@ const useStyles = createStyles((theme) => ({
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 function Account(props: {
-  accountdata: { id: any }
+  accountdata: { account_no: string }
   setAccount: (arg0: any) => void
 }) {
   const { classes } = useStyles()
@@ -164,7 +165,7 @@ function Account(props: {
   return (
     <div
       className={classes.account}
-      id={props.accountdata.id}
+      id={props.accountdata.account_no.slice(8, 12)}
       onClick={(event) => {
         props.setAccount(props.accountdata)
         const accountlist = Array.from(
@@ -174,7 +175,7 @@ function Account(props: {
           e.classList.remove(classes.active)
         })
         document
-          .getElementById(props.accountdata.id)
+          .getElementById(props.accountdata.account_no.slice(8, 12))
           ?.classList.add(classes.active)
       }}
     >
@@ -186,7 +187,7 @@ function Account(props: {
         style={{ paddingBottom: '6px' }}
       ></Image>
       <div className={classes.bankname}>State Bank Of India</div>
-      <div className={classes.accountnumber}>999{props.accountdata.id}</div>
+      <div className={classes.accountnumber}>{"****" + props.accountdata.account_no.slice(8, 12)}</div>
     </div>
   )
 }
@@ -196,7 +197,8 @@ export function BankTransfer() {
   const [account, setAccount] = useState({
     id: 1,
   })
-  let fetchedAccount = [{ id: 1 }, { id: 2 }, { id: 3 }]
+  const { getItem } = useStorage()
+  let fetchedAccount = JSON.parse(getItem("accounts"))
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
   //     <Icon size="1.4rem" stroke={1.5} />
@@ -216,9 +218,9 @@ export function BankTransfer() {
             </div>
           </div>
           <div className={classes.accountContainer}>
-            {fetchedAccount.map((ele) => {
+            {fetchedAccount.map((ele: { account_no: any }) => {
               return (
-                <span key={ele.id} onClick={handleClick}>
+                <span key={ele.account_no.slice(8, 12)} onClick={handleClick}>
                   <Account setAccount={setAccount} accountdata={ele} />
                 </span>
               )

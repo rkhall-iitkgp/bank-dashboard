@@ -129,7 +129,7 @@ const AccountSelect = ({ account_no }: Props) => {
         height={20}
         src="/icons/sbi.png"
       ></Image>
-      <div className={classes.content}>{'**** ' + account_no}</div>
+      <div className={classes.content}>{'**** ' + account_no.toString().slice(8, 12)}</div>
     </div>
   )
 }
@@ -166,7 +166,7 @@ const LeftPane = ({ accounts }: Props2) => {
           {accounts.map((account_no, index) => {
             return (
               <div key={index}>
-                <AccountSelect account_no={account_no} />
+                <AccountSelect account_no={account_no.account_no} />
               </div>
             )
           })}
