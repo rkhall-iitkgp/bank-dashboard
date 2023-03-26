@@ -44,42 +44,11 @@ const Home: NextPage = () => {
       .catch((err) => console.log(err))
   }
 
-  // const getServerSideProps = () => {
-  //   const accessToken = sessionStorage.getItem('access_token')
-  //   console.log(accessToken)
-  //   const user_id = sessionStorage.getItem('user_id')
-
-  //   const response = api
-  //     .get(`/user/accounts/${user_id}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //         'Content-Type': 'application/json',
-  //       },
-  //     })
-  //     .then((response) => {
-  //       console.log(response.data.accounts)
-  //       const responseArray = response.data.accounts
-  //       responseArray.map((acc: any) => {
-  //         let temp = bankAccountList
-  //         temp.push(acc)
-  //         setBankAccountList(temp)
-  //       })
-  //       console.log(bankAccountList)
-
-  //       sessionStorage.setItem('accounts', response.request.responseText)
-  //       return response
-  //     }).catch((err) => console.log(err))
-  // }
-
-  // useEffect(() => {
-  //   if (!getItem('accounts')) {
-  //     GetAccounts()
-  //   }
-  // }, [])
   useEffect(() => {
 
 
     return () => {
+       
       setLoading(true)
       api.get(`/user/accounts/${getItem("user_id")}/`, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } })
         .then((response) => {
