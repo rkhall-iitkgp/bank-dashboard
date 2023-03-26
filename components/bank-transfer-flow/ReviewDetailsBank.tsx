@@ -253,7 +253,7 @@ export function ReviewDetailsBank(props: { sbi: any }) {
               label="Account Number"
               variant="unstyled"
               mt="md"
-              value={data.acc_no}
+              value={`****` + data.account_no?.slice(8, 12)}
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,

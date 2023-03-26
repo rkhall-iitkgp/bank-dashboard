@@ -90,7 +90,7 @@ const useStyles = createStyles((theme) => ({
     margin: `1rem 1rem 1rem 1rem`,
     display: `flex`,
     flexDirection: `row`,
-    justifyContent: `space-between`,
+    justifyContent: `center`,
     alignItems: `center`,
     minWidth: `400px`,
   },
@@ -196,7 +196,7 @@ function Account(props: {
 export function BankTransfer() {
   const { getItem } = useStorage();
   // console.log("user_id = ", getItem("user_id"));
-  console.log("accounts = ", getItem("accounts"))
+  // console.log("accounts = ", getItem("accounts"))
 
   const { classes } = useStyles()
   const [click, setClick] = useState(false)

@@ -4,6 +4,10 @@ import { useRouter } from 'next/router'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
 import { useForm, hasLength } from '@mantine/form'
+import api from '../datams'
+import { IconCheck, IconX } from '@tabler/icons-react';
+import { notifications } from '@mantine/notifications';
+import useStorage from '../../hooks/useStorage'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: `100vh`,
@@ -138,7 +142,7 @@ export function EnterMPIN() {
   const { classes } = useStyles()
   const router = useRouter()
   const data = router.query
-
+  const { getItem } = useStorage()
   const form = useForm({
     initialValues: {
       mpin1: '',
@@ -147,7 +151,7 @@ export function EnterMPIN() {
     validate: {
       mpin1: hasLength({ min: 4, max: 4 }, 'MPIN must be 4 characters long'),
       mpin2: (value, values) =>
-        value !== values.mpin1 ? 'Re-enter your MPIN' : null,
+        value !== values.mpin1 ? 'MPIN Does not Match' : null,
     },
   })
 
@@ -155,7 +159,7 @@ export function EnterMPIN() {
     <Box
       className={classes.wrapper}
       component="form"
-      onSubmit={form.onSubmit(() => {})}
+      onSubmit={form.onSubmit(() => { })}
     >
       <div className={classes.form}>
         <Heading title="Authentication" />
@@ -171,6 +175,7 @@ export function EnterMPIN() {
               <Group position="center">
                 <PinInput
                   required
+                  mask={true}
                   placeholder=""
                   {...form.getInputProps('mpin1')}
                 />
@@ -183,6 +188,7 @@ export function EnterMPIN() {
               <Group position="center">
                 <PinInput
                   required
+                  mask={true}
                   placeholder=""
                   {...form.getInputProps('mpin2')}
                 />
@@ -193,7 +199,7 @@ export function EnterMPIN() {
 
           {/* <ButtonGroup href1="/UPI/payment-details-review" href2="/UPI/payment-success" /> */}
           <div className={classes.buttoncontainer}>
-            <Link href="/kyc/authentication2">
+            <Link href="/kyc/authentication1">
               <div className={classes.button1}>Back</div>
             </Link>
             <div
@@ -202,7 +208,37 @@ export function EnterMPIN() {
               onClick={() => {
                 form.validate()
                 if (form.isValid()) {
-                  router.push(`/profile`)
+                  api.post("/user/creatempin/", {
+                    "mpin": form.values.mpin1
+                  }, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } }).then((response) => {
+                    console.log(response)
+                    router.push(
+                      `/home`
+                    )
+                    notifications.show({
+                      id: 'hello-there',
+                      withCloseButton: true,
+                      autoClose: 5000,
+                      title: "Success",
+                      message: response.data.message,
+                      color: 'green',
+                      icon: <IconCheck size={"1.1rem"} />,
+                      loading: false,
+                    });
+                  })
+                    .catch((err) => {
+                      console.log('err', err)
+                      notifications.show({
+                        id: 'hello-there',
+                        withCloseButton: true,
+                        autoClose: 5000,
+                        title: "Unsuccessful",
+                        message: err.response.data?.message,
+                        color: 'red',
+                        icon: <IconX size={"1.1rem"} />,
+                        loading: false,
+                      });
+                    })
                 }
               }}
             >

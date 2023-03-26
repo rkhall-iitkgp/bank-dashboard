@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Router, useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import useStorage from '../../hooks/useStorage'
+import datams from '../datams'
 import Heading from '../reusable-components/Heading'
 
 const useStyles = createStyles((theme) => ({
@@ -198,13 +199,13 @@ const useStyles = createStyles((theme) => ({
 
 export function PaymentForm(props: { sbi: any }) {
   const { classes } = useStyles()
-  const [click, setClick] = useState(false)
   const [buttonText, setButtonText] = useState('Verify')
-  const [otp, setOtp] = useState(false)
   const router = useRouter()
   const data = router.query
   const { getItem } = useStorage();
   const account = JSON.parse(getItem('accounts')).filter((v: { id: number }) => v.id + '' == data.id)[0];
+  const accessToken = getItem('access_token');
+  const [ben_account_id, setBenAccId] = useState('');
   // console.log('account = ', account);
 
   const form = useForm({
@@ -214,6 +215,7 @@ export function PaymentForm(props: { sbi: any }) {
       reaccountno: '',
       amount: '',
       ifsc: '',
+      account_id: ''
     },
 
     validate: {
@@ -228,6 +230,7 @@ export function PaymentForm(props: { sbi: any }) {
       // ifsc: isNotEmpty('Enter IFSC'),
     },
   })
+
   const [style2, setStyle2] = useState({
     color: '#0062D6',
     fontFamily: 'Montserrat',
@@ -238,14 +241,35 @@ export function PaymentForm(props: { sbi: any }) {
 
   function handleClick1() {
     if (form.values.account_no !== '') {
-      setStyle2({
-        color: '#00AD30',
-        fontFamily: 'Montserrat',
-        fontWeight: 600,
-        fontSize: '18px',
-        cursor: 'pointer',
-      })
-      setButtonText('Verified')
+      if (data.selfOrOther === '1') {
+        let response = datams.post('/user/getid/', {
+          "account_no": form.values.account_no
+        }, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        }).then(res => res.data).catch(err =>
+          console.log(err)
+        );
+
+        response.then((v) => {
+          if (form.values.account_no !== account.account_no && v?.account_id) {
+            setStyle2({ ...style2, color: '#00AD30' })
+            setButtonText('Verified');
+            console.log('v = ', v);
+            setBenAccId(v.account_id);
+          } else {
+            setButtonText('Cannot Find Account')
+            setStyle2({ ...style2, color: "red" })
+          }
+        })
+      } else {
+        setStyle2({ ...style2, color: '#00AD30' })
+        setButtonText('Verified');
+        setBenAccId(form.values.account_no);
+      }
+
     }
   }
   function handleClick2() { }
@@ -290,7 +314,7 @@ export function PaymentForm(props: { sbi: any }) {
                   <span>Balance:</span>{' '}
                   <span className={classes.balance}> ${account.balance}</span>
                 </div>
-                <div className={classes.accountnumber}>{account.account_no}</div>
+                <div className={classes.accountnumber}>****{account.account_no.slice(8, 12)}</div>
               </div>
             </div>
             <div className={classes.beficiaryformcontainer}>
@@ -321,6 +345,7 @@ export function PaymentForm(props: { sbi: any }) {
                   <Text
                     className={classes.buttonVerify}
                     style={style2}
+                    onChange={() => { setStyle2({ ...style2, color: '#0062D6' }) }}
                     onClick={
                       form.values.account_no !== '' ? handleClick1 : handleClick2
                     }
@@ -391,8 +416,8 @@ export function PaymentForm(props: { sbi: any }) {
                       router.push({
                         pathname: `/bank-transfer/review-payment-details`,
                         query: {
-                          name: form.values.name, acc_no: form.values.account_no, amount: form.values.amount, ifsc: form.values.ifsc,
-                          ...router.query
+                          name: form.values.name, acc_no: ben_account_id, amount: form.values.amount, ifsc: form.values.ifsc,
+                          ...router.query, account_no: form.values.account_no
                         }
                       })
                     }

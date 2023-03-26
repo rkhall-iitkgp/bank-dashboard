@@ -50,7 +50,7 @@ function Heading(props: {
   return (
     <StyledHead style={{justifyContent:justify}}>
         <Link href={"/home/"}>
-        {show && <Button style={{backgroundColor: "#DD0000", marginRight: "9rem"}} radius="xl" size="xs">
+        {show && <Button style={{backgroundColor: "#DD0000", marginRight: "9rem", alignItems: "center"}} radius="xl" size="xs">
           Cancel
         </Button>
         }

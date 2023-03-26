@@ -122,7 +122,7 @@ export default function PaymentSuccessful() {
     { account_no: 1297, id: 0 },
   ])
 
-  const [account, setAcc] = useState({ id: 0, account_no: 0, balance: 0 });
+  const [account, setAcc] = useState({ id: 0, account_no: '', balance: 0 });
 
   const GetAccounts = () => {
     const accessToken = getItem('access_token')
@@ -175,7 +175,7 @@ export default function PaymentSuccessful() {
             </StyledTexthead3>
             <StyledTexthead3>
               A/c No. :{' '}
-              <span style={{ color: 'black' }}> &nbsp;{account.account_no}</span>
+              <span style={{ color: 'black' }}> &nbsp;****{account.account_no.slice(8, 12)}</span>
             </StyledTexthead3>
             <StyledTexthead4></StyledTexthead4>
           </StyledBotCont>
