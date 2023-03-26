@@ -76,66 +76,9 @@ const RightPane = ({ accounts }: Props) => {
 
   return (
     <>
-      <Tabs
-        value={activeTab}
-        onTabChange={(e) => {
-          setActiveTab(e)
-        }}
-        unstyled={true}
-        className={classes.container2}
-      >
-        <Tabs.List className={classes.tablist}>
-          {accounts.map((account_no, index) => {
-            return (
-              <span key={account_no}>
-                <Tabs.Tab
-                  key={account_no}
-                  value={`${account_no}`}
-                  id={`${account_no}`}
-                  onClick={() => {
-                    setAccountselected(account_no)
-                  }}
-                  className={
-                    activeTab === account_no?.toString()
-                      ? classes.active
-                      : classes.tabs
-                  }
-                >
-                  <div className={classes.tablabel}>
-                    <Image
-                      alt=""
-                      width={35}
-                      height={35}
-                      src="/icons/sbi.png"
-                    ></Image>
-                    <div className={classes.content}>
-                      {'**** ' + account_no}
-                    </div>
-                  </div>
-                </Tabs.Tab>
-              </span>
-            )
-          })}
-        </Tabs.List>
-        {accounts.map((account_no) => {
-          return (
-            <Tabs.Panel
-              className={classes.tabcontainer}
-              value={`${account_no}`}
-              key={account_no}
-            >
-              <ConsentFormComponent
-                key={account_no}
-                id={account_no}
-                accountselected={accountselected}
-              />
-            </Tabs.Panel>
-          )
-        })}
-        {/* <div className={classes.tabcontainer}>
-          <Form id={1} accountselected={accountselected} />
-        </div> */}
-      </Tabs>
+    <div style={{width: '100%', height: '100%'}}>
+      <ConsentFormComponent/>
+    </div>
     </>
   )
 }

@@ -15,14 +15,19 @@ const useStyles = createStyles(() => ({
         justifyContent: `center`,
         alignItems: `center`,
         backgroundColor: `#EEEEEE`
+    },
+    consentwrap:{
+        width:`80%`,
+        maxWidth:`700px`
     }
 }))
 const index = () => {
     const { classes } = useStyles()
     return (
         <div className={classes.wraper}>
+            <div className={classes.consentwrap}>
             <ConsentFormComponent />
-
+            </div>
         </div>
     )
 }

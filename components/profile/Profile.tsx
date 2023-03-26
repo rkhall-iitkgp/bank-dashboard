@@ -14,8 +14,9 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan('sm')]: {
       padding: `calc(${theme.spacing.xl} * 1.5)`,
     },
-    display: `grid`,
-    gridTemplateColumns: `40% 60%`,
+    justifyContent: `space-evenly`,
+    display: `flex`,
+    flex: `40% 60%`,
     background: `white`,
   },
   container1: {
@@ -23,10 +24,13 @@ const useStyles = createStyles((theme) => ({
     flexDirection: `column`,
     alignItems: `center`,
     justifyContent: `space-around`,
-    height: `100%`,
+    height: `100%`
   },
   container2: {
     height: `100%`,
+    display: `flex`,
+    flex: `50% 50%`,
+    flexDirection: `column`
   },
 }))
 
@@ -46,11 +50,13 @@ const Profile = () => {
 
   return (
     <div className={classes.wrapper}>
-       <KycAuthentication/>
       <div className={classes.container1}>
         <LeftPane accounts={accounts} />
-      </div>
+      </div> 
       <div className={classes.container2}>
+        <div >
+          <KycAuthentication/>
+        </div>
         {accounts.length ? (
           <RightPane accounts={accounts} />
         ) : (
@@ -59,7 +65,6 @@ const Profile = () => {
             features!!
           </>
         )}
-       
       </div>
     </div>
   )

@@ -19,9 +19,9 @@ const useStyles = createStyles(() => ({
         boxShadow: `0px 2px 20px rgba(0,0,0,0.1)`,
         color: `#0052B3`,
         position: 'relative',
-        height: `300px`,
+        height: `45vh`,
         width: `400px`,
-        margin: `5px`,
+        marginBottom: `30px`,
 
     },
     heading1: {
@@ -42,15 +42,13 @@ const useStyles = createStyles(() => ({
         textAlign: `center`,
        
     },
-
     subcontainer: {
         color: `#000000`,
         position: 'absolute',
         width: `100%`,
         height: `80%`,
         display: `flex`,
-        padding: '18px',
-        margin: '7px',
+        padding: '30px',
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
@@ -93,19 +91,7 @@ export function KycAuthentication() {
                     Authentication
                 </span>
             </div>
-            <div className={classes.heading2}>
-                <span
-                    style={{
-                        fontFamily: 'Montserrat',
-                        fontStyle: `normal`,
-                        fontWeight: `600`,
-                        fontSize: `25px`,
-                        lineHeight: `20px`,
-                    }}
-                >
-                   Enter your details
-                </span>
-            </div>
+            
 
 
             <div className={classes.subcontainer}>

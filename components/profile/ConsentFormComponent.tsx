@@ -8,14 +8,13 @@ const useStyles = createStyles((theme) => ({
     background: `white`,
     borderRadius: `30px`,
     boxShadow: ` 0px 4px 40px rgba(0, 0, 0, 0.2)`,
-    width: `80%`,
-    maxWidth: `700px`
+    width: `100%`,
+    // maxWidth: `700px`
   },
   heading: {
     width: `100%`,
     height: `10%`,
-    padding: `10px`,
-    paddingTop: `20px`,
+    paddingTop: `7px`,
     background: `#DDEDFF`,
     fontSize: `1.3rem`,
     textAlign: `center`,
@@ -23,10 +22,12 @@ const useStyles = createStyles((theme) => ({
     color: ` #0052B3`,
   },
   form: {
-    padding: `30px`,
+    paddingLeft: `30px`,
+    paddingRight: `30px`,
+    marginTop: `10px`,
     display: `flex`,
     flexDirection: `column`,
-    justifyContent: `space-evenly`,
+    justifyContent: `flex-start`,
     height: `90%`,
   },
   formtitle: {
@@ -35,7 +36,7 @@ const useStyles = createStyles((theme) => ({
   },
   questioncontainer: {
     padding: `5px`,
-    marginTop: '1.8rem',
+    marginTop: '1rem',
   },
   question: {
     fontSize: '0.9rem',
@@ -84,10 +85,11 @@ const useStyles = createStyles((theme) => ({
   button: {
     display: `flex`,
     flexDirection: `column`,
-    gap: `20px`,
+    gap: `10px`,
     alignItems: `center`,
     justifyContent: `center`,
-    marginTop: '30px',
+    marginTop: '15px',
+    marginBottom: '15px',
   },
   icon: {
     display: `none`,
