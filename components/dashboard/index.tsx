@@ -1,6 +1,6 @@
 import { Card, Group, Image, Modal, Select, Stack, Text } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Filter from '../filter'
 import Navbar from '../home/navbar/navbar'
 import CashCard from './CashLimitCard'
@@ -36,13 +36,16 @@ const Dashboard = () => {
     )
   }
   const { getItem } = useStorage()
-  const AccountFakeData = JSON.parse(getItem("accounts"))
+  let AccountFakeData: any[] = JSON.parse(getItem("accounts"))
   const Container = styled.div`
     display: flex;
     width: '100%';
     height: 100vh;
     margin-top: 16px;
   `
+  useEffect(() => {
+  }, [])
+
   return (
     <div style={{ backgroundColor: '#F4F4F4' }}>
       <Navbar />

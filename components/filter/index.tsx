@@ -55,7 +55,7 @@ const PeriodItem = (prop: {
   form: any
 }) => {
   const { id, text, setId, curId, form } = prop
-  const text1 = text.split(" ")
+  const text1: any = text.split(" ")
   return (
     <PeriodButton
       style={{
@@ -112,7 +112,7 @@ const Filter = ({ todashboard }: props) => {
   const [id, setId] = useState(1)
   const { getItem } = useStorage()
   const accounts = JSON.parse(getItem("accounts"))
-  const [account, setAccount] = useState(null)
+  const [account, setAccount] = useState<any>(null)
   const [mpin, setMpin] = useState<string | null>(null)
   const [haveConsent, setHaveConsent] = useState(false)
   const { classes } = useStyles()
@@ -186,7 +186,7 @@ const Filter = ({ todashboard }: props) => {
       )} */}
 
       <div>
-        {account && (
+        {account && todashboard && (
           <>
             <div>
               <Text c={'#656565'} fz={'lg'} style={{ letterSpacing: '0.1em' }}>
@@ -212,8 +212,20 @@ const Filter = ({ todashboard }: props) => {
           size="lg"
           className={classes.control}
           onClick={() => {
+            if (!mpin) {
+              setMpin(getItem('mpin'))
+            }
             if (mpin && id && account) {
-              // api.post()
+              api.post("/user/gettrxn/", {
+                "account_no": account.account_no,
+                "mpin": mpin,
+                "startDate": form.values.Datefrom,
+                "endDate": form.values.Dateto
+
+              }, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } }).then((res) => {
+                console.log('res', res)
+
+              }).catch(err => console.log('err', err))
             }
           }}
         >
