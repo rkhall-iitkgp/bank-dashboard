@@ -5,7 +5,7 @@ import { forwardRef, useEffect, useState } from 'react'
 import Filter from '../filter'
 import CashCard from './CashLimitCard'
 import EodBalance from './EODBalanceCard'
-import RecentTransactions from './RecentTransactions'
+import RecentTransactions from './recenttransactions'
 
 const FilterRow = styled.div`
   display: flex;
@@ -39,6 +39,15 @@ const SelectBankAccount = styled.div`
   cursor: pointer;
   color: white;
   flex: 3;
+`
+const ContainerLeft = styled(Container)`
+  flex: 1;
+  @media (max-width: 1450px) {
+    flex: 1.25;
+  }
+  @media (max-width: 1200px) {
+    flex: 2;
+  }
 `
 
 interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
@@ -101,7 +110,7 @@ const LeftPane = ({ accountsList }: Props) => {
       >
         <Filter todashboard={false} />
       </Modal>
-      <Container style={{ flex: 1 }}>
+      <ContainerLeft>
         <FilterRow style={{ justifyContent: 'space-between' }}>
           <FilterCard onClick={open}>
             Apply Filter
@@ -125,7 +134,7 @@ const LeftPane = ({ accountsList }: Props) => {
               itemComponent={SelectItem}
               // searchable
               radius="lg"
-              placeholder="bank account"
+              placeholder="Bank Account"
               value={selectedBankAccount}
               onChange={SetSelectedBankAccount}
               data={accountsList}
@@ -153,7 +162,7 @@ const LeftPane = ({ accountsList }: Props) => {
         <EodBalance balance="$1,23,456" comparision={4.6} />
 
         <RecentTransactions />
-      </Container>
+      </ContainerLeft>
     </>
   )
 }
