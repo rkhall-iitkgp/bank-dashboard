@@ -76,7 +76,7 @@ interface Props {
   accountsList: any[]
 }
 const LeftPane = ({ accountsList }: Props) => {
-  const useAccount = useAccountStore()
+  const useAccount = useAccountStore();
   const [depositLimit, setDepositLimit] = useState(1000)
   const [withdrawlLimit, setWithdrawlLimit] = useState(1000)
   const selectedBankAccount = useAccountStore((state) => state.account_no)
