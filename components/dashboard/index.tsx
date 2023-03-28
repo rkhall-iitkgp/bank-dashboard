@@ -39,7 +39,7 @@ const Dashboard = () => {
     response.then((v) => {
       console.log('response = ', v)
       setTransactionData(v.transactions)
-    })
+    }).catch((e)=>console.log(e))
   }
 
   useEffect(GetTransactions, [])
@@ -64,10 +64,15 @@ const Dashboard = () => {
       </Group>
     )
   }
-
-  const ACCOUNTFAKEDATA = JSON.parse(getItem('accounts')).map(
-    (v: { account_no: string }) => v.account_no,
-  )
+  const accounts = getItem('accounts')
+  let ACCOUNTFAKEDATA
+  try {
+    ACCOUNTFAKEDATA = JSON.parse(accounts ?? JSON.stringify({}))?.map(
+      (v: { account_no: string }) => v.account_no,
+    )
+  } catch {
+    console.log('json parsing error')
+  }
 
   const Container = styled.div`
     display: flex;

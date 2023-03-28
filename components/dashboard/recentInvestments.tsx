@@ -56,7 +56,7 @@ const RecentInvestments = () => {
         Recent Investments
       </Text>
       <div style={{ maxHeight: '23rem', overflow: 'auto' }}>
-        {investments.map((t, index) => (
+        {investments?.map((t, index) => (
           <div key={index}>
             <InvestmentsCard data={t} />
           </div>

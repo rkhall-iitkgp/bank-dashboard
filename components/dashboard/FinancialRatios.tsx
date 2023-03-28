@@ -96,7 +96,7 @@ export function FinancialRatios() {
         align="flex-start"
         style={{ flexWrap: 'wrap', overflow: 'auto', flex: 1 }}
       >
-        {financialRatios.map((ele) => {
+        {financialRatios?.map((ele) => {
           return (
             <Span key={ele.id}>
               <RatioCard ratioName={ele.ratioName} value={ele.value} />

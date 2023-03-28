@@ -100,7 +100,7 @@ const LeftPane = ({ accountsList }: Props) => {
               placeholder="Bank Account"
               value={selectedBankAccount}
               onChange={SetSelectedBankAccount}
-              data={accountsList}
+              data={accountsList??[]}
             />
           </SelectBankAccount>
         </FilterRow>

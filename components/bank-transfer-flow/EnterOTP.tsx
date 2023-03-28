@@ -68,7 +68,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     color: theme.black,
-    fontFamily: "Montserrat",
+    fontFamily: 'Montserrat',
 
     '&::placeholder': {
       color: theme.colors.gray[5],
@@ -177,14 +177,14 @@ const useStyles = createStyles((theme) => ({
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
 export function EnterOTP() {
-  const { classes } = useStyles();
-  const [otp, setOtp] = useState('');
-  const router = useRouter();
-  const data = router.query;
-  const { getItem } = useStorage();
-  const contact_no = getItem('contact_no');
-  const user_id = getItem('user_id');
-  const accessToken = getItem('access_token');
+  const { classes } = useStyles()
+  const [otp, setOtp] = useState('')
+  const router = useRouter()
+  const data = router.query
+  const { getItem } = useStorage()
+  const contact_no = getItem('contact_no')
+  const user_id = getItem('user_id')
+  const accessToken = getItem('access_token')
 
   const handleChange = (event: {
     target: { value: SetStateAction<string> }
@@ -196,34 +196,42 @@ export function EnterOTP() {
     otp: otp,
     debit_account_id: data.id,
     amount: data.amount,
-    date: "2023-03-26",
+    date: '2023-03-26',
     mode: 0,
     user_id: user_id,
     credit_account_id: data.acc_no,
     contact_no: contact_no,
-    description: "this is the description"
+    description: 'this is the description',
   }
 
   const handlePayment = () => {
-    console.log('data = ', sendingData);
-    let response = transms.post('/makepayment/', sendingData, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    }).then(res => {
-      return res.data
-    }).catch(err => console.log(err))
+    console.log('data = ', sendingData)
+    let response = transms
+      .post('/makepayment/', sendingData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
 
-    response.then(v => {
-      if (v) {
-        console.log(v)
-        router.replace({ pathname: '/bank-transfer/payment-success', query: { id: data.id, amount: data.amount } })
-      } else {
-        alert("wrong otp");
-      }
-    });
-  };
+    response
+      .then((v) => {
+        if (v) {
+          console.log(v)
+          router.replace({
+            pathname: '/bank-transfer/payment-success',
+            query: { id: data.id, amount: data.amount },
+          })
+        } else {
+          alert('wrong otp')
+        }
+      })
+      .catch((err) => console.log(err))
+  }
 
   return (
     <div className={classes.wrapper}>
@@ -236,8 +244,8 @@ export function EnterOTP() {
             </div>
           </div>
           <div className={classes.description}>
-            We have sent an OTP to your mobile number { } registered with
-            your bank account. Please enter OTP and proceed
+            We have sent an OTP to your mobile number {} registered with your
+            bank account. Please enter OTP and proceed
           </div>
 
           <TextInput
@@ -255,17 +263,20 @@ export function EnterOTP() {
           />
           <div className={classes.resndotp}>Resend OTP</div>
           <div className={classes.buttonContainer}>
-            <div className={classes.button1} onClick={router.back}>Back</div>
+            <div className={classes.button1} onClick={router.back}>
+              Back
+            </div>
 
             {otp !== '' ? (
-              <div className={classes.button1} onClick={handlePayment}>Continue</div>
+              <div className={classes.button1} onClick={handlePayment}>
+                Continue
+              </div>
             ) : (
               <div className={classes.button1} style={{ cursor: 'no-drop' }}>
                 Continue
               </div>
             )}
           </div>
-
         </div>
       </div>
     </div>

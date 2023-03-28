@@ -186,38 +186,48 @@ const useStyles = createStyles((theme) => ({
 
 export function ReviewDetailsBank(props: { sbi: any }) {
   const { classes } = useStyles()
-  const router = useRouter();
-  const data = router.query;
-  const { getItem } = useStorage();
-  const accessToken = getItem("access_token");
-  const contact_no = getItem('contact_no');
-  const account = JSON.parse(getItem('accounts')).filter((v: { id: number }) => v.id + '' == data.id)[0];
+  const router = useRouter()
+  const data = router.query
+  const { getItem } = useStorage()
+  const accessToken = getItem('access_token')
+  const contact_no = getItem('contact_no')
+  const account = JSON.parse(getItem('accounts')).filter(
+    (v: { id: number }) => v.id + '' == data.id,
+  )[0]
 
   const handleContinue = () => {
-    const response = transms.post(`/sendTrxnOtp/`, {
-      contact_no: contact_no,
-    }, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    const response = transms
+      .post(
+        `/sendTrxnOtp/`,
+        {
+          contact_no: contact_no,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      )
       .then((res) => {
         return res.data
       })
-      .catch((err) =>
-        console.log(err)
-      )
+      .catch((err) => console.log(err))
 
-    response.then((v) => {
-      if (v) {
-        console.log(v)
-        router.replace({ pathname: '/bank-transfer/confirm-otp', query: router.query });
-      } else {
-        alert('error sending otp')
-      }
-    });
-  };
+    response
+      .then((v) => {
+        if (v) {
+          console.log(v)
+          router.replace({
+            pathname: '/bank-transfer/confirm-otp',
+            query: router.query,
+          })
+        } else {
+          alert('error sending otp')
+        }
+      })
+      .catch((e) => console.log(e))
+  }
 
   return (
     <div className={classes.wrapper}>
@@ -301,8 +311,12 @@ export function ReviewDetailsBank(props: { sbi: any }) {
             )}
           </div>
           <div className={classes.buttonContainer}>
-            <div className={classes.button1} onClick={router.back}>Back</div>
-            <div className={classes.button1} onClick={handleContinue}>Continue</div>
+            <div className={classes.button1} onClick={router.back}>
+              Back
+            </div>
+            <div className={classes.button1} onClick={handleContinue}>
+              Continue
+            </div>
           </div>
         </div>
       </div>

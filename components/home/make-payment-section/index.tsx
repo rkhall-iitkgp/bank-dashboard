@@ -48,7 +48,7 @@ export default function Payment({
     const accessToken = getItem('access_token', 'session')
     console.log(accessToken)
     const user_id = getItem('user_id')
-    const accLength = JSON.stringify(getItem('accounts')).length
+    const accLength = JSON.stringify(getItem('accounts'))?.length
     const response = api
       .get(`/user/getkyc/`, {
         headers: {

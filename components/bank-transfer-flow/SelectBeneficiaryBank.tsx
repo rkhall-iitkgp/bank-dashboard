@@ -222,12 +222,7 @@ export function SelectBeneficiaryBank() {
   const data = router.query
   const [click, setClick] = useState(false)
   const [account, setAccount] = useState(2)
-  // const [ifscReq, setIfscReq] = useState(false)
-  // const icons = social.map((Icon, index) => (
-  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-  //     <Icon size="1.4rem" stroke={1.5} />
-  //   </ActionIcon>
-  // ));
+  
   const handleClick = (id: any) => {
     setClick(true)
     setAccount(id)

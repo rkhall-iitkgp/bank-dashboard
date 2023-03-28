@@ -155,14 +155,18 @@ interface Props {
   SetIsKycPermissionPopUpOpen: Function
   setIsAddAccountPopupOpen: Function
 }
-export default function SeeYourAnalysis({ SetIsPermissionPopUpOpen, SetIsKycPermissionPopUpOpen, setIsAddAccountPopupOpen }: Props) {
+export default function SeeYourAnalysis({
+  SetIsPermissionPopUpOpen,
+  SetIsKycPermissionPopUpOpen,
+  setIsAddAccountPopupOpen,
+}: Props) {
   const { getItem } = useStorage()
   const [result, setResult] = useState(1)
   const GetKycStatus = () => {
     const accessToken = getItem('access_token', 'session')
     console.log(accessToken)
     const user_id = getItem('user_id')
-    const accLength = JSON.stringify(getItem('accounts')).length
+    const accLength = JSON.stringify(getItem('accounts'))?.length
     const response = api
       .get(`/user/getkyc/`, {
         headers: {
@@ -171,22 +175,19 @@ export default function SeeYourAnalysis({ SetIsPermissionPopUpOpen, SetIsKycPerm
         },
       })
       .then((response) => {
-        (response.data);
-
+        response.data
       })
       .catch((err) => {
-        (err.response.data.message == 'KYC not done') && setResult(0)
+        err.response.data.message == 'KYC not done' && setResult(0)
         // console.log(err.response.data.message)
-      }
-      )
-
+      })
   }
   const [accLength, setAccLength] = useState('[]')
   useEffect(() => {
     GetKycStatus()
     // setResult(0)
     setAccLength(getItem('accounts'))
-    console.log(result);
+    console.log(result)
   }, [])
   return (
     <Container>
@@ -197,7 +198,6 @@ export default function SeeYourAnalysis({ SetIsPermissionPopUpOpen, SetIsKycPerm
         financial decisions.
       </TextDiv>
       {result === 0 && (
-
         <StyledButton
           variant="default"
           onClick={() => {
@@ -208,23 +208,26 @@ export default function SeeYourAnalysis({ SetIsPermissionPopUpOpen, SetIsKycPerm
         </StyledButton>
       )}
 
-      {result === 1 && accLength !== '[]' && <StyledButton
-        variant="default"
-        onClick={() => {
-          SetIsPermissionPopUpOpen(true)
-        }}
-      >
-        See your analysis
-      </StyledButton>}
-      {result === 1 && accLength === '[]' && <StyledButton
-        variant="default"
-        onClick={() => {
-          setIsAddAccountPopupOpen(true)
-        }}
-      >
-        See your analysis
-      </StyledButton>}
-
+      {result === 1 && accLength !== '[]' && (
+        <StyledButton
+          variant="default"
+          onClick={() => {
+            SetIsPermissionPopUpOpen(true)
+          }}
+        >
+          See your analysis
+        </StyledButton>
+      )}
+      {result === 1 && accLength === '[]' && (
+        <StyledButton
+          variant="default"
+          onClick={() => {
+            setIsAddAccountPopupOpen(true)
+          }}
+        >
+          See your analysis
+        </StyledButton>
+      )}
     </Container>
   )
 }
