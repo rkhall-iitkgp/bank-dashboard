@@ -71,7 +71,7 @@ const Dashboard = () => {
       (v: { account_no: string }) => v.account_no,
     )
   } catch {
-    console.log('json parsing error')
+    console.log('accounts data: json parsing error')
   }
 
   const Container = styled.div`
