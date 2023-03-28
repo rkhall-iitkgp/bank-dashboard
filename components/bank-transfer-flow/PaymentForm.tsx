@@ -1,8 +1,10 @@
+import React from 'react'
 import { Box, createStyles, Text, TextInput } from '@mantine/core'
-import { hasLength, isNotEmpty, matches, useForm } from '@mantine/form'
-import Link from 'next/link'
-import { Router, useRouter } from 'next/router'
+import { hasLength, isNotEmpty, useForm } from '@mantine/form'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import useStorage from '../../hooks/useStorage'
+import datams from '../datams'
 import Heading from '../reusable-components/Heading'
 
 const useStyles = createStyles((theme) => ({
@@ -197,33 +199,45 @@ const useStyles = createStyles((theme) => ({
 
 export function PaymentForm(props: { sbi: any }) {
   const { classes } = useStyles()
-  const [click, setClick] = useState(false)
   const [buttonText, setButtonText] = useState('Verify')
-  const [otp, setOtp] = useState(false)
   const router = useRouter()
   const data = router.query
+  const { getItem } = useStorage()
+  let account
+  try {
+    account = JSON.parse(getItem('accounts') ?? '[]')?.filter(
+      (v: { id: number }) => v.id + '' == data.id,
+    )[0]
+  } catch {
+    console.log('JSON parsing error')
+  }
+  const accessToken = getItem('access_token')
+  const [ben_account_id, setBenAccId] = useState('')
+  // console.log('account = ', account);
 
   const form = useForm({
     initialValues: {
       name: '',
-      accountno: '',
+      account_no: '',
       reaccountno: '',
       amount: '',
       ifsc: '',
+      account_id: '',
     },
 
     validate: {
       name: hasLength({ min: 2, max: 16 }, 'Name must be 2-16 characters long'),
-      accountno: isNotEmpty('Enter your account no'),
+      account_no: isNotEmpty('Enter your account no'),
       // reaccountno: matches(accountno, 'Re-Enter your account no'),
 
       reaccountno: (value, values) =>
-        value !== values.accountno ? 'Re-Enter your account no' : null,
+        value !== values.account_no ? 'Re-Enter your account no' : null,
 
       amount: isNotEmpty('Enter amount'),
       // ifsc: isNotEmpty('Enter IFSC'),
     },
   })
+
   const [style2, setStyle2] = useState({
     color: '#0062D6',
     fontFamily: 'Montserrat',
@@ -233,21 +247,46 @@ export function PaymentForm(props: { sbi: any }) {
   })
 
   function handleClick1() {
-    if (form.values.accountno !== '') {
-      setStyle2({
-        color: '#00AD30',
-        fontFamily: 'Montserrat',
-        fontWeight: 600,
-        fontSize: '18px',
-        cursor: 'pointer',
-      })
-      setButtonText('Verified')
+    if (form.values.account_no !== '') {
+      if (data.selfOrOther === '1') {
+        const response = datams
+          .post(
+            '/user/getid/',
+            {
+              account_no: form.values.account_no,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+          .then((res) => res.data)
+          .catch((err) => console.log(err))
+
+        response.then((v) => {
+          if (form.values.account_no !== account.account_no && v?.account_id) {
+            setStyle2({ ...style2, color: '#00AD30' })
+            setButtonText('Verified')
+            console.log('v = ', v)
+            setBenAccId(v.account_id)
+          } else {
+            setButtonText('Cannot Find Account')
+            setStyle2({ ...style2, color: 'red' })
+          }
+        })
+      } else {
+        setStyle2({ ...style2, color: '#00AD30' })
+        setButtonText('Verified')
+        setBenAccId(form.values.account_no)
+      }
     }
   }
   function handleClick2() {}
 
   useEffect(() => {
-    if (form.values.accountno === '') {
+    if (form.values.account_no === '') {
       setButtonText('Verify')
       setStyle2({
         color: '#0062D6',
@@ -268,7 +307,7 @@ export function PaymentForm(props: { sbi: any }) {
       setButtonText('Verify')
     }
     return () => {}
-  }, [form.values.accountno])
+  }, [form.values.account_no])
 
   return (
     <Box component="form" mx="auto" onSubmit={form.onSubmit(() => {})}>
@@ -284,9 +323,11 @@ export function PaymentForm(props: { sbi: any }) {
               <div className={classes.amountbox}>
                 <div className={classes.amountinside}>
                   <span>Balance:</span>{' '}
-                  <span className={classes.balance}> $5678.00</span>
+                  <span className={classes.balance}> ${account?.balance}</span>
                 </div>
-                <div className={classes.accountnumber}>XXXXXXXX1234</div>
+                <div className={classes.accountnumber}>
+                  ****{account?.account_no.slice(8, 12)}
+                </div>
               </div>
             </div>
             <div className={classes.beficiaryformcontainer}>
@@ -312,13 +353,18 @@ export function PaymentForm(props: { sbi: any }) {
                   label: classes.inputLabel,
                   root: classes.inputcontainer,
                 }}
-                {...form.getInputProps('accountno')}
+                {...form.getInputProps('account_no')}
                 rightSection={
                   <Text
                     className={classes.buttonVerify}
                     style={style2}
+                    onChange={() => {
+                      setStyle2({ ...style2, color: '#0062D6' })
+                    }}
                     onClick={
-                      form.values.accountno !== '' ? handleClick1 : handleClick2
+                      form.values.account_no !== ''
+                        ? handleClick1
+                        : handleClick2
                     }
                   >
                     {buttonText}
@@ -375,35 +421,28 @@ export function PaymentForm(props: { sbi: any }) {
                 <></>
               )}
             </div>
-            {/* {otp ? (
-              <TextInput
-                placeholder="OTP"
-                type={'number'}
-                required
-                mt="md"
-                classNames={{
-                  input: classes.input,
-                  label: classes.inputLabel,
-                  root: classes.inputcontainer,
-                }}
-              />
-            ) : (
-              <></>
-            )} */}
 
             <div className={classes.buttoncontainer}>
-              <Link href="/bank-transfer/select-beneficiary">
-                <div className={classes.button1}>Back</div>
-              </Link>
+              <div className={classes.button1} onClick={router.back}>
+                Back
+              </div>
               {buttonText !== 'Verify' ? (
                 <div
                   className={classes.button1}
                   onClick={() => {
                     form.validate()
                     if (form.isValid()) {
-                      router.push(
-                        `/bank-transfer/review-payment-details?name=${form.values.name}&amount=${form.values.amount}&ifsc=${form.values.ifsc}&accountNo=${form.values.accountno}&selfOrOther=${data.selfOrOther}&id=${data.id}`,
-                      )
+                      router.push({
+                        pathname: `/bank-transfer/review-payment-details`,
+                        query: {
+                          name: form.values.name,
+                          acc_no: ben_account_id,
+                          amount: form.values.amount,
+                          ifsc: form.values.ifsc,
+                          ...router.query,
+                          account_no: form.values.account_no,
+                        },
+                      })
                     }
                   }}
                 >

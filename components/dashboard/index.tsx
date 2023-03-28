@@ -2,7 +2,6 @@ import { Card, Group, Image, Modal, Select, Stack, Text } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useEffect, useState } from 'react'
 import Filter from '../filter'
-import Navbar from '../home/navbar/navbar'
 import CashCard from './CashLimitCard'
 import EodBalance from './EODBalanceCard'
 import { FinancialRatios } from './FinancialRatios'
@@ -10,11 +9,48 @@ import FinancialStatistics from './statistics'
 import { TotalBalance } from './TotalBalance'
 import RecentTransactions from './recenttransactions'
 import styled from '@emotion/styled'
+import Navbar from '../home/navbar/navbar'
 import LeftPane from './LeftPane'
 import RightPane from './RightPane'
 import useStorage from '../../hooks/useStorage'
+import transms from '../transms'
 
 const Dashboard = () => {
+  const [depositLimit, setDepositLimit] = useState(1000)
+  const [withdrawlLimit, setWithdrawlLimit] = useState(1000)
+  const [opened, { open, close }] = useDisclosure(false)
+  const [account_id, setAccount_id] = useState(1)
+  const { getItem } = useStorage()
+  const accessToken = getItem('access_token')
+  const [transactionData, setTransactionData] = useState([
+    { description: '', date: '', credit: 0, debit: 0, mode: '0', category: '' },
+  ])
+
+  const GetTransactions = () => {
+    let response = transms
+      .post(
+        '/getTrxn/',
+        {
+          mpin: '1234',
+          account_no: '1',
+          timeline: '500',
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      .then((res) => res.data)
+    response.then((v) => {
+      console.log('response = ', v)
+      setTransactionData(v.transactions)
+    }).catch((e) => console.log(e))
+  }
+
+  useEffect(GetTransactions, [])
+
   const AccountComponent = (props: { label: string; ref: any }) => {
     return (
       <Group
@@ -35,8 +71,17 @@ const Dashboard = () => {
       </Group>
     )
   }
-  const { getItem } = useStorage()
-  let AccountFakeData: any[] = JSON.parse(getItem("accounts"))
+
+  const accounts = getItem('accounts')
+  let ACCOUNTFAKEDATA
+  try {
+    ACCOUNTFAKEDATA = JSON.parse(accounts ?? JSON.stringify({}))?.map(
+      (v: { account_no: string }) => v.account_no,
+    )
+  } catch {
+    console.log('accounts data: json parsing error')
+  }
+
   const Container = styled.div`
     display: flex;
     width: '100%';
@@ -48,8 +93,9 @@ const Dashboard = () => {
   return (
     <div style={{ backgroundColor: '#F4F4F4' }}>
       <Navbar />
+
       <Container>
-        <LeftPane accountsList={AccountFakeData} />
+        <LeftPane accountsList={ACCOUNTFAKEDATA} />
         <RightPane />
       </Container>
     </div>

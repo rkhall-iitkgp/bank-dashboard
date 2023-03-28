@@ -1,7 +1,6 @@
-import { Button, createStyles, Radio } from '@mantine/core'
-import { useRouter } from 'next/router'
-import React from 'react'
-import { useState } from 'react'
+import {Button, createStyles, Radio} from '@mantine/core'
+import {useRouter} from 'next/router'
+import React, {useState} from 'react'
 
 const useStyles = createStyles((theme) => ({
   wrap: {

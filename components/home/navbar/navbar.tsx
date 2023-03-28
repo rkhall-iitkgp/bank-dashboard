@@ -1,9 +1,8 @@
-import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core'
+import {Button, ButtonProps, createPolymorphicComponent, Popover} from '@mantine/core'
 import styled from '@emotion/styled'
-import { useRouter } from 'next/router'
-import { ProfileCard } from './ProfileCard'
-import { useState } from 'react'
-import { Popover, Text } from '@mantine/core'
+import {useRouter} from 'next/router'
+import {ProfileCard} from './ProfileCard'
+import {useState} from 'react'
 import Link from 'next/link'
 
 const StyledNavbar = styled.nav`
@@ -72,7 +71,7 @@ function Demo() {
         </StyledButton>
       </Popover.Target>
       <Popover.Dropdown
-        style={{padding: '0', marginTop: '10px', }}
+        style={{ padding: '0', marginTop: '10px', }}
       >
         <ProfileCard />
       </Popover.Dropdown>
@@ -109,7 +108,7 @@ function Navbar() {
           <StyledButton
             variant="gradient"
             gradient={{ from: 'white', to: 'white' }}
-            onClick={() => router.replace('/dashboard')}
+            onClick={() => router.push('/dashboard')}
           >
             <NavbarIcons src="/images/dashboard.png"></NavbarIcons>Dashboard
           </StyledButton>

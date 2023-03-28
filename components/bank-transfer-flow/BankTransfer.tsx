@@ -1,9 +1,9 @@
-import { createStyles, Button } from '@mantine/core'
+import {createStyles} from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import {useRouter} from 'next/router'
+import {useState} from 'react'
 import useStorage from '../../hooks/useStorage'
-import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 //   import { ContactIconsList } from '../ContactIcons/ContactIcons';
@@ -88,7 +88,7 @@ const useStyles = createStyles((theme) => ({
     margin: `1rem 1rem 1rem 1rem`,
     display: `flex`,
     flexDirection: `row`,
-    justifyContent: `space-between`,
+    justifyContent: `center`,
     alignItems: `center`,
     minWidth: `400px`,
   },
@@ -157,7 +157,7 @@ const useStyles = createStyles((theme) => ({
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 function Account(props: {
-  accountdata: { account_no: string }
+  accountdata: { id: any, account_no: string }
   setAccount: (arg0: any) => void
 }) {
   const { classes } = useStyles()
@@ -167,7 +167,7 @@ function Account(props: {
       className={classes.account}
       id={props.accountdata.account_no.slice(8, 12)}
       onClick={(event) => {
-        props.setAccount(props.accountdata)
+        props.setAccount({ id: props.accountdata.id })
         const accountlist = Array.from(
           document.getElementsByClassName(classes.account),
         )
@@ -192,18 +192,21 @@ function Account(props: {
   )
 }
 export function BankTransfer() {
+  const { getItem } = useStorage();
+  // console.log("user_id = ", getItem("user_id"));
+  // console.log("accounts = ", getItem("accounts"))
+
   const { classes } = useStyles()
   const [click, setClick] = useState(false)
+  const router = useRouter();
   const [account, setAccount] = useState({
     id: 1,
   })
-  const { getItem } = useStorage()
-  let fetchedAccount = JSON.parse(getItem("accounts"))
-  // const icons = social.map((Icon, index) => (
-  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-  //     <Icon size="1.4rem" stroke={1.5} />
-  //   </ActionIcon>
-  // ));
+  let accounts = getItem("accounts");
+  let fetchedAccount = JSON.parse(accounts ? accounts : "[]");
+  console.log(fetchedAccount);
+
+
   const handleClick = () => {
     setClick(true)
   }
@@ -218,7 +221,7 @@ export function BankTransfer() {
             </div>
           </div>
           <div className={classes.accountContainer}>
-            {fetchedAccount.map((ele: { account_no: any }) => {
+            {fetchedAccount?.map((ele: { id: number, account_no: string, ifsc: string }) => {
               return (
                 <span key={ele.account_no.slice(8, 12)} onClick={handleClick}>
                   <Account setAccount={setAccount} accountdata={ele} />
@@ -227,9 +230,7 @@ export function BankTransfer() {
             })}
           </div>
           <div className={classes.buttonContainer}>
-            <Link href="/home">
-              <div className={classes.button1}>Back</div>
-            </Link>
+            <div className={classes.button1} onClick={router.back}>Back</div>
             {click ? (
               <Link
                 href={{

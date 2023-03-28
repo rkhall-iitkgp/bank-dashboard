@@ -1,21 +1,13 @@
-import { createStyles, Group, PinInput } from '@mantine/core'
+import {createStyles, Group, PinInput} from '@mantine/core'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import ButtonGroup from '../reusable-components/ButtonGroup'
+import {useRouter} from 'next/router'
 import Heading from '../reusable-components/Heading'
 import useStorage from '../../hooks/useStorage'
-import api from '../api'
-import { IconCheck, IconX } from '@tabler/icons-react'
-import { notifications } from '@mantine/notifications'
+import api from '../datams'
+import {IconCheck, IconX} from '@tabler/icons-react'
+import {notifications} from '@mantine/notifications'
 import React from 'react'
-import {
-  useForm,
-  isNotEmpty,
-  isEmail,
-  isInRange,
-  hasLength,
-  matches,
-} from '@mantine/form'
+import {hasLength, isEmail, useForm,} from '@mantine/form'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {

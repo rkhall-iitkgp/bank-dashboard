@@ -1,15 +1,7 @@
-import {
-  createStyles,
-  TextInput,
-  Button,
-  Group,
-  rem,
-  Modal,
-  NumberInput,
-} from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
+import {Button, createStyles, Group, Modal,} from '@mantine/core'
+import {useDisclosure} from '@mantine/hooks'
 import Link from 'next/link'
-import { useState } from 'react'
+import {useState} from 'react'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {

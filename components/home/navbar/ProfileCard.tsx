@@ -1,14 +1,9 @@
-import { createStyles } from '@mantine/core'
-import Heading from '../../reusable-components/Heading'
-import styled from '@emotion/styled'
-import { Group, Stack, Text } from '@mantine/core'
+import {Button, createStyles, Text} from '@mantine/core'
 import Image from 'next/image'
-import { Button } from '@mantine/core'
-import { wrap } from 'module'
 import Link from 'next/link'
 
 import useStorage from '../../../hooks/useStorage'
-import { Key } from 'react'
+import {Key} from 'react'
 
 const useStyles = createStyles((theme) => ({
   container: {
