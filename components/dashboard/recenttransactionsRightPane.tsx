@@ -1,4 +1,4 @@
-import {Card, Group, HoverCard, Stack, Text} from '@mantine/core'
+import { Card, Text, Group, Stack, HoverCard } from '@mantine/core'
 
 const palette = ['#D56EEA', '#26DD76', '#FFAA57', '#4198FF']
 
@@ -73,7 +73,7 @@ const TransactionCard = (props: {
 }) => {
   const { data } = props
   var dict =
-    data.credit != null
+    data.credit != 0
       ? { color: '#0062D6', amount: data.credit, sign: '+' }
       : { color: '#4D4B4B', amount: data.debit, sign: '-' }
 
@@ -154,23 +154,13 @@ const TransactionCard = (props: {
   )
 }
 
-const RecentTransactions = (prop: {
-  transactions: {
-    date: string
-    description: string
-    credit: number
-    debit: number
-    mode: string
-    category: string
-  }[]
-}) => {
-  const { transactions } = prop;
+const RecentTransactions = () => {
   return (
     <div>
       <Text ff={'Montserrat'} c="#0062D6" fw={700} fz={22} mt={4} ml={8}>
         Recent Transactions
       </Text>
-      <div style={{ maxHeight: '55vh', overflow: 'auto' }}>
+      <div style={{ maxHeight: '30vh', overflow: 'auto' }}>
         {transactions.map((t) => (
           <div key={t.date}>
             <TransactionCard data={t} />

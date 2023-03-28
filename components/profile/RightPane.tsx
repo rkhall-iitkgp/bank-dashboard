@@ -1,5 +1,5 @@
-import { Tabs, createStyles, Image } from '@mantine/core'
-import React, { useState } from 'react'
+import {createStyles} from '@mantine/core'
+import React from 'react'
 import ConsentFormComponent from './ConsentFormComponent'
 
 const useStyles = createStyles((theme) => ({

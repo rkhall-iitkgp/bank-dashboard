@@ -1,8 +1,14 @@
-import { createStyles, getStylesRef, Text, TextInput } from '@mantine/core'
+import {
+  createStyles,
+  getStylesRef,
+  Text,
+  TextInput,
+  Select,
+} from '@mantine/core'
 import { hasLength, isNotEmpty, useForm } from '@mantine/form'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Heading from '../reusable-components/Heading'
 import useStorage from '../../hooks/useStorage'
 
@@ -292,6 +298,7 @@ export function PaymentForm() {
                 root: classes.inputcontainer,
               }}
             />
+
             <div className={classes.payingtext}>Paying</div>
             <TextInput
               placeholder="Name*"
@@ -318,17 +325,6 @@ export function PaymentForm() {
               {...form.getInputProps('upi_id')}
               value={upi_id}
               onChange={(e) => { setUpi(e.target.value); setItem('payingupiid', e.target.value) }}
-              // rightSection={
-              //   <Text
-              //     className={classes.buttonVerify}
-              //     style={style2}
-              //     onClick={
-              //       form.values.upi_id !== '' ? handleClick1 : handleClick2
-              //     }
-              //   >
-              //     {buttonText}
-              //   </Text>
-              // }
               required
             />
             <TextInput
@@ -381,19 +377,7 @@ export function PaymentForm() {
             >
               Continue
             </div>
-            {/*  ) : ( */}
-            {/*  <div */}
-            {/* //   className={classes.button1} */}
-            {/* //   style={{ cursor: 'no-drop' }} */}
-            {/* //   onClick={() => { */}
-            {/* //     form.validate() */}
-            {/* //   }} */}
-            {/* // > */}
-            {/* //   Continue */}
-            {/* // </div> */}
-            {/* // )} */}
           </div>
-          {/* <ButtonGroup href1="/UPI/Verify" href2="/UPI/Review" /> */}
         </div>
       </div>
     </div>

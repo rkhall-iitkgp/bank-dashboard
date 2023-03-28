@@ -1,11 +1,4 @@
-import {
-  createStyles,
-  TextInput,
-  Button,
-  Group,
-  PinInput,
-  Text,
-} from '@mantine/core'
+import {createStyles, Group, PinInput, Text, TextInput,} from '@mantine/core'
 import Link from 'next/link'
 import { SetStateAction, useEffect, useState, ChangeEvent } from 'react'
 // import ButtonGroup from '../reusable-components/ButtonGroup'
@@ -153,7 +146,7 @@ const useStyles = createStyles((theme) => ({
   button1: {
     background: '#0062D6',
     borderRadius: '30px',
-    width: '150px',
+    width: '140px',
     fontFamily: 'Montserrat',
     color: 'white',
     fontSize: '1.25rem',
@@ -249,6 +242,10 @@ export function VerifyUPI() {
       })
       setButtonText('Verify')
     } else {
+      setStyle({
+        border: 'solid 1px #00AD30',
+        borderRadius: '15px',
+      })
       setStyle2({
         color: '#0062D6',
         fontFamily: 'Montserrat',

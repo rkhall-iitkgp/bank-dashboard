@@ -1,4 +1,4 @@
-import { Image, MantineProvider } from '@mantine/core'
+import {Image} from '@mantine/core'
 import styled from '@emotion/styled'
 
 const StyledContainer = styled.div`

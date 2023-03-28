@@ -1,18 +1,15 @@
-import { createStyles } from '@mantine/core'
-import Heading from '../reusable-components/Heading'
-import styled from '@emotion/styled'
-import { Group, Stack, Text } from '@mantine/core'
+import {createStyles} from '@mantine/core'
 import Image from 'next/image'
-const useStyles = createStyles((theme) => ({
+
+const useStyles = createStyles(() => ({
   container: {
     backgroundColor: `#ffffff`,
     borderRadius: `30px`,
     boxShadow: `0px 2px 20px rgba(0,0,0,0.1)`,
     color: `#0052B3`,
     position: 'relative',
-    height: `220px`,
-    width: `305px`,
-    margin: `5px`,
+    height: `155px`,
+    width: `1000px`,
     display: `flex`,
     flex: 2,
   },
@@ -20,7 +17,7 @@ const useStyles = createStyles((theme) => ({
     color: `#737373`,
     position: 'absolute',
     top: `10px`,
-    left: `27px`,
+    left: `1rem`,
     width: `144px`,
     height: `18px`,
     textAlign: `center`,
@@ -33,21 +30,21 @@ const useStyles = createStyles((theme) => ({
     color: `#737373`,
     position: 'absolute',
     top: `10px`,
-    right: `3px`,
+    right: `10px`,
     width: `102px`,
     height: `15px`,
-    marginTop: `15px`,
-    textAlign: `center`,
+    marginTop: `18px`,
+    textAlign: `right`,
     display: `flex`,
-    justifyContent: `space`,
+    justifyContent: `flex-end`,
   },
   subcontainer2: {
     color: `#000000`,
     position: 'absolute',
     top: `62px`,
-    left: `27px`,
+    left: `1rem`,
     width: `240px`,
-    height: `52px`,
+    height: `20px`,
     display: `flex`,
     alignItems: `center`,
     padding: `2px`,
@@ -56,10 +53,10 @@ const useStyles = createStyles((theme) => ({
     color: `#737373`,
     fontSize: `1rem`,
     position: 'absolute',
-    top: `120px`,
-    left: `27px`,
+    top: `90px`,
+    left: `1rem`,
     width: `58px`,
-    height: `20px`,
+    height: `16px`,
     textAlign: `center`,
     display: `flex`,
     justifyContent: `center`,
@@ -71,8 +68,8 @@ const useStyles = createStyles((theme) => ({
   subcontainer4: {
     color: `#737373`,
     position: 'absolute',
-    top: `149px`,
-    left: `27px`,
+    top: `110px`,
+    left: `1rem`,
     width: `178px`,
     height: `18px`,
     textAlign: `center`,
@@ -84,7 +81,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export function TotalBalance() {
-  const { classes } = useStyles()
+  const { classes } = useStyles();
   let data = {
     totalBalance: '₹1,23,456',
     increment: '4.74%',
@@ -99,7 +96,7 @@ export function TotalBalance() {
             fontFamily: 'Montserrat',
             fontStyle: `normal`,
             fontWeight: `500`,
-            fontSize: `16px`,
+            fontSize: `14px`,
             lineHeight: `20px`,
           }}
         >
@@ -114,20 +111,20 @@ export function TotalBalance() {
             fontStyle: `normal`,
             fontWeight: `500`,
             fontSize: `12px`,
-            lineHeight: `15px`,
+            lineHeight: `18px`,
           }}
         >
           <Image
             src={'/../public/icons/sbi.png'}
-            width={15}
-            height={15}
+            width={10}
+            height={10}
             alt={''}
           ></Image>
           {data.number}
           <Image
             src={'/../public/icons/polygon.png'}
-            width={10}
-            height={10}
+            width={8}
+            height={8}
             alt={''}
           ></Image>
         </span>
@@ -139,7 +136,7 @@ export function TotalBalance() {
             fontFamily: 'Montserrat',
             fontStyle: `normal`,
             fontWeight: `700`,
-            fontSize: `36px`,
+            fontSize: `1.6rem`,
             lineHeight: `44px`,
           }}
         >

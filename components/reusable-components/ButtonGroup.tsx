@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import Link from 'next/link'
-import { createStyles, TextInput, Button, Group, rem } from '@mantine/core'
-import { UrlObject } from 'url'
+import {createStyles} from '@mantine/core'
+import {UrlObject} from 'url'
+
 const useStyles = createStyles((theme) => ({
   button1: {
     background: '#0062D6',

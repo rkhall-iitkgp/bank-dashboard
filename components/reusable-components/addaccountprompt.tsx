@@ -1,17 +1,9 @@
-import {
-    createStyles,
-    TextInput,
-    Button,
-    Group,
-    rem,
-    Modal,
-    NumberInput,
-  } from '@mantine/core'
-  import { useDisclosure } from '@mantine/hooks'
-  import Link from 'next/link'
-  import { useState } from 'react'
-  
-  const useStyles = createStyles((theme) => ({
+import {Button, createStyles, Group, Modal,} from '@mantine/core'
+import {useDisclosure} from '@mantine/hooks'
+import Link from 'next/link'
+import {useState} from 'react'
+
+const useStyles = createStyles((theme) => ({
     wrapper: {
       // backgroundColor: `#000000de`,
       // position: `fixed`,
@@ -205,4 +197,3 @@ import {
       </Modal>
     )
   }
-  

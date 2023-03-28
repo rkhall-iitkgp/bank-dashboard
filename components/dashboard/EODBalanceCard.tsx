@@ -1,4 +1,4 @@
-import { Card, Text, Group, Stack, HoverCard } from '@mantine/core'
+import {Group, Stack, Text} from '@mantine/core'
 
 const EodBalance = (props: { balance: string; comparision: number }) => {
   return (
@@ -10,6 +10,8 @@ const EodBalance = (props: { balance: string; comparision: number }) => {
         boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
         borderRadius: '2rem',
         justifyContent: 'space-between',
+        width: '220px',
+        height: '155px',
       }}
     >
       <Stack
@@ -23,16 +25,18 @@ const EodBalance = (props: { balance: string; comparision: number }) => {
           fw={500}
           ff="Montserrat"
           style={{ lineHeight: 0.5 }}
+          fz="0.9rem"
+          mt={20}
         >
           Average EOD Balance
         </Text>
-        <Text fw={700} fz="1.5rem" ff="Montserrat" style={{ lineHeight: 0.8 }}>
+        <Text fw={700} fz="1.5rem" ff="Montserrat" mt={5} style={{ lineHeight: 0.5 }}>
           {props.balance}
         </Text>
       </Stack>
       <Stack
-        mr={20}
-        align="center"
+        ml={20}
+        align="left"
         style={{
           flex: 1,
         }}
@@ -40,6 +44,8 @@ const EodBalance = (props: { balance: string; comparision: number }) => {
         <Group
           bg={'#E8F6F0'}
           w={60}
+          h={20}
+          ml={0}
           style={{
             borderRadius: '0.4rem',
             justifyContent: 'center',
@@ -47,12 +53,12 @@ const EodBalance = (props: { balance: string; comparision: number }) => {
           }}
         >
           <Text
-            mx={15}
+            // mx={0}
             c={'#2CC578'}
             ff="Montserrat"
-            fz={14}
+            fz={12}
             fw={600}
-            style={{ display: 'flex' }}
+            style={{ display: 'flex', alignItems: 'flex-start' }}
           >
             {props.comparision}%
           </Text>
@@ -62,7 +68,7 @@ const EodBalance = (props: { balance: string; comparision: number }) => {
           fw={500}
           fz={12}
           ff="Montserrat"
-          style={{ lineHeight: 1.3 }}
+          style={{ lineHeight: 0.5 }}
         >
           Compared to last 1 week
         </Text>

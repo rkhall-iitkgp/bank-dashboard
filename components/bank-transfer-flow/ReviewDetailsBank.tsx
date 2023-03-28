@@ -1,8 +1,9 @@
-import { createStyles, TextInput, getStylesRef } from '@mantine/core'
+import { createStyles, getStylesRef, TextInput } from '@mantine/core'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
-import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
+import useStorage from '../../hooks/useStorage'
+import transms from '../transms'
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -187,6 +188,47 @@ export function ReviewDetailsBank(props: { sbi: any }) {
   const { classes } = useStyles()
   const router = useRouter()
   const data = router.query
+  const { getItem } = useStorage()
+  const accessToken = getItem('access_token')
+  const contact_no = getItem('contact_no')
+  const account = JSON.parse(getItem('accounts')).filter(
+    (v: { id: number }) => v.id + '' == data.id,
+  )[0]
+
+  const handleContinue = () => {
+    const response = transms
+      .post(
+        `/sendTrxnOtp/`,
+        {
+          contact_no: contact_no,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+
+    response
+      .then((v) => {
+        if (v) {
+          console.log(v)
+          router.replace({
+            pathname: '/bank-transfer/confirm-otp',
+            query: router.query,
+          })
+        } else {
+          alert('error sending otp')
+        }
+      })
+      .catch((e) => console.log(e))
+  }
+
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
@@ -208,7 +250,7 @@ export function ReviewDetailsBank(props: { sbi: any }) {
                 label: classes.inputLabel,
                 root: classes.enterAmountContainer,
               }}
-              value={`197288882222`}
+              value={account?.account_no}
               disabled
             />
 
@@ -228,7 +270,7 @@ export function ReviewDetailsBank(props: { sbi: any }) {
               label="Account Number"
               variant="unstyled"
               mt="md"
-              value={data.accountNo}
+              value={`****` + data.account_no?.slice(8, 12)}
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
@@ -267,37 +309,14 @@ export function ReviewDetailsBank(props: { sbi: any }) {
             ) : (
               <></>
             )}
-            {/* <TextInput
-              label="IFSC"
-              variant="unstyled"
-              mt="md"
-              value={data.ifsc}
-              classNames={{
-                input: classes.input,
-                label: classes.inputLabel,
-                root: classes.inputcontainer,
-              }}
-              required
-              disabled
-            /> */}
           </div>
-          {/* <ButtonGroup
-            href1="/BankTransfer/Paybenificiary"
-            href2="/BankTransfer/Otpconfirm"
-          /> */}
           <div className={classes.buttonContainer}>
-            <Link href="/bank-transfer/payment-form">
-              <div className={classes.button1}>Back</div>
-            </Link>
-
-            <Link
-              href={{
-                pathname: '/bank-transfer/confirm-otp',
-                query: data,
-              }}
-            >
-              <div className={classes.button1}>Continue</div>
-            </Link>
+            <div className={classes.button1} onClick={router.back}>
+              Back
+            </div>
+            <div className={classes.button1} onClick={handleContinue}>
+              Continue
+            </div>
           </div>
         </div>
       </div>

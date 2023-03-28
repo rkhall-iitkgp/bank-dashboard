@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
-import api from '../../components/api'
+import api from '../../components/datams'
 import { AddAccountFormPopup } from '../../components/home/add-bank-account/AddAccountFormPopup'
 import BankAccount from '../../components/home/add-bank-account/AddBankAccountSection'
 import Payment from '../../components/home/make-payment-section'
@@ -81,10 +81,14 @@ const Home: NextPage = () => {
         SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
       />
       <Navbar />
-      <SeeYourAnalysis SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen} />
+      <SeeYourAnalysis 
+      SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen} 
+      SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
+        setIsAddAccountPopupOpen={setIsAddAccountPopupOpen} />
       <Payment
         isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
         SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
+        setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
       />
       <BankAccount
         bankAccountList={bankAccountList}

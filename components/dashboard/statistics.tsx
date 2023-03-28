@@ -1,10 +1,11 @@
-import { Card, Stack, Group, Text, Button } from '@mantine/core'
+import { Button, Card, Group, Stack, Text } from '@mantine/core'
 import dynamic from 'next/dynamic'
-const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 import { useState } from 'react'
 import ArticlesCard from './articlesCard'
 import InsightCard from './insightCard'
-import RecentTransactions from './RecentTransactions'
+import RecentTransactionsRightPane from './recenttransactionsRightPane'
+
+const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const BalanceChart = (props: {
   balanceData: { x: string; y: number }[]
@@ -19,6 +20,7 @@ const BalanceChart = (props: {
       type="area"
       height={340}
       width={width}
+      margin={'auto'}
       options={{
         fill: { colors: [color] },
         dataLabels: { enabled: false },
@@ -88,10 +90,10 @@ const SpendingDonut = (props: {
           },
         },
         labels: props.legends,
-        dataLabels: { style: { fontSize: '0.5rem' } },
+        dataLabels: { style: { fontSize: '0.3rem' } },
         legend: { fontFamily: 'Montserrat', fontWeight: 500 },
       }}
-      width={400}
+      width={350}
     />
   )
 }
@@ -117,6 +119,64 @@ const MontlySpendingChart = (props: { data: { x: string; y: number }[] }) => {
     />
   )
 }
+var transactions = [
+  {
+    description: 'Jesse Pinkman Johnson',
+    date: '19 March, 2023, 17:10',
+    credit: 100,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Entertainment',
+  },
+  {
+    description: 'Jesse Pinkman Johnson',
+    date: '19 March, 2023, 17:10',
+    credit: 0,
+    debit: 200,
+    mode: 'UPI',
+    category: 'Food',
+  },
+  {
+    description: 'Heisenberg',
+    date: '19 March, 2023, 18:10',
+    credit: 0,
+    debit: 1000,
+    mode: 'Bank',
+    category: 'Travel',
+  },
+  {
+    description: 'Spotify',
+    date: '19 March, 2023, 17:20',
+    credit: 59,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Travel',
+  },
+  {
+    description: 'Spotify',
+    date: '19 March, 2023, 17:30',
+    credit: 59,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Travel',
+  },
+  {
+    description: 'Spotify',
+    date: '19 March, 2023, 15:10',
+    credit: 59,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Travel',
+  },
+  {
+    description: 'Spotify',
+    date: '19 March, 2023, 17:50',
+    credit: 59,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Travel',
+  },
+]
 const PieCategoryData = [
   { value: 25.6, mode: 'Entertainment' },
   { value: 32, mode: 'Food' },
@@ -173,7 +233,7 @@ const FinancialStatistics = () => {
 
   return (
     <Card
-      radius={'lg'}
+      // radius={'lg'}
       style={{
         boxShadow: '0px 2px 40px rgba(0, 0, 0, 0.1)',
       }}
@@ -211,15 +271,16 @@ const FinancialStatistics = () => {
         align={'flex-end'}
         style={{
           flex: 1,
-          maxHeight: '28rem',
+          maxHeight: '25rem',
           overflow: 'auto',
+          margin: 'auto',
         }}
       >
         {categoryIndex == -1 && (
           <BalanceChart
             balanceData={TotalBalanceData}
             color="#008FFB"
-            width={600}
+            width={450}
           />
         )}
         <Stack style={{ flex: 1 }} align="center">
@@ -242,7 +303,7 @@ const FinancialStatistics = () => {
               <BalanceChart
                 balanceData={TotalBalanceData}
                 color="#00A76D"
-                width={500}
+                width={450}
               />
               <MontlySpendingChart data={MontlySpendingData} />
             </>
@@ -250,7 +311,7 @@ const FinancialStatistics = () => {
         </Stack>
 
         {categoryIndex != -1 && (
-          <Stack mx={40} style={{ flex: 3 }}>
+          <Stack mx={10} style={{ flex: 3 }} styles={{ maxHeight: '25rem' }}>
             <div
               style={{
                 // border: "1px solid rgb(131 131 131 / 30%)",
@@ -259,8 +320,9 @@ const FinancialStatistics = () => {
                 boxShadow: '0px 1px 10px rgba(0, 0, 0, 0.1)',
               }}
             >
-              <RecentTransactions/>
+              <RecentTransactionsRightPane />
             </div>
+
             <InsightCard insights={InsightList} />
             <ArticlesCard articles={ArticlesData} />
           </Stack>

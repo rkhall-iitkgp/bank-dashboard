@@ -1,7 +1,6 @@
-import { createStyles, Group, PinInput } from '@mantine/core'
+import {createStyles, Group, PinInput} from '@mantine/core'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import ButtonGroup from '../reusable-components/ButtonGroup'
+import {useRouter} from 'next/router'
 import Heading from '../reusable-components/Heading'
 import useStorage from '../../hooks/useStorage'
 import trxnapi from '../trxnapi'
@@ -179,7 +178,11 @@ export function EnterUPIpin() {
           </div>
           <div className={classes.description}>
             <Group position="center">
-              <PinInput placeholder="" />
+              <PinInput
+                placeholder=""
+                mx="auto"
+                length={4}
+              />
             </Group>
           </div>
 

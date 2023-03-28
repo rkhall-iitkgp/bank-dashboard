@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { Image } from '@mantine/core'
+import {Image} from '@mantine/core'
 import Link from 'next/link'
 import Heading from '../reusable-components/Heading'
 import { useRouter } from 'next/router'
@@ -54,19 +54,23 @@ const StyledText = styled.div`
   color: #0052b3;
 `
 const StyledBut = styled.div`
-  padding: 15px;
-  height: 5vh;
+  padding: 2px 18px;
   font-weight: 400;
   font-size: 1rem;
   line-height: 29px;
   background: #0062d6;
   border-radius: 30px;
   margin-top: 25px;
-
+  margin-bottom: 1vh;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition-duration: 0.2s;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
 `
 const StyledTexthead = styled.div`
   font-weight: 600;
