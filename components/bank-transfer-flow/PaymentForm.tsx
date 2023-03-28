@@ -1,7 +1,8 @@
-import {Box, createStyles, Text, TextInput} from '@mantine/core'
-import {hasLength, isNotEmpty, useForm} from '@mantine/form'
-import {useRouter} from 'next/router'
-import {useEffect, useState} from 'react'
+import React from 'react'
+import { Box, createStyles, Text, TextInput } from '@mantine/core'
+import { hasLength, isNotEmpty, useForm } from '@mantine/form'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import useStorage from '../../hooks/useStorage'
 import datams from '../datams'
 import Heading from '../reusable-components/Heading'
@@ -201,10 +202,17 @@ export function PaymentForm(props: { sbi: any }) {
   const [buttonText, setButtonText] = useState('Verify')
   const router = useRouter()
   const data = router.query
-  const { getItem } = useStorage();
-  const account = JSON.parse(getItem('accounts')).filter((v: { id: number }) => v.id + '' == data.id)[0];
-  const accessToken = getItem('access_token');
-  const [ben_account_id, setBenAccId] = useState('');
+  const { getItem } = useStorage()
+  let account
+  try {
+    account = JSON.parse(getItem('accounts') ?? '[]')?.filter(
+      (v: { id: number }) => v.id + '' == data.id,
+    )[0]
+  } catch {
+    console.log('JSON parsing error')
+  }
+  const accessToken = getItem('access_token')
+  const [ben_account_id, setBenAccId] = useState('')
   // console.log('account = ', account);
 
   const form = useForm({
@@ -214,7 +222,7 @@ export function PaymentForm(props: { sbi: any }) {
       reaccountno: '',
       amount: '',
       ifsc: '',
-      account_id: ''
+      account_id: '',
     },
 
     validate: {
@@ -241,37 +249,41 @@ export function PaymentForm(props: { sbi: any }) {
   function handleClick1() {
     if (form.values.account_no !== '') {
       if (data.selfOrOther === '1') {
-        let response = datams.post('/user/getid/', {
-          "account_no": form.values.account_no
-        }, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-          },
-        }).then(res => res.data).catch(err =>
-          console.log(err)
-        );
+        const response = datams
+          .post(
+            '/user/getid/',
+            {
+              account_no: form.values.account_no,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+          .then((res) => res.data)
+          .catch((err) => console.log(err))
 
         response.then((v) => {
           if (form.values.account_no !== account.account_no && v?.account_id) {
             setStyle2({ ...style2, color: '#00AD30' })
-            setButtonText('Verified');
-            console.log('v = ', v);
-            setBenAccId(v.account_id);
+            setButtonText('Verified')
+            console.log('v = ', v)
+            setBenAccId(v.account_id)
           } else {
             setButtonText('Cannot Find Account')
-            setStyle2({ ...style2, color: "red" })
+            setStyle2({ ...style2, color: 'red' })
           }
         })
       } else {
         setStyle2({ ...style2, color: '#00AD30' })
-        setButtonText('Verified');
-        setBenAccId(form.values.account_no);
+        setButtonText('Verified')
+        setBenAccId(form.values.account_no)
       }
-
     }
   }
-  function handleClick2() { }
+  function handleClick2() {}
 
   useEffect(() => {
     if (form.values.account_no === '') {
@@ -294,11 +306,11 @@ export function PaymentForm(props: { sbi: any }) {
       })
       setButtonText('Verify')
     }
-    return () => { }
+    return () => {}
   }, [form.values.account_no])
 
   return (
-    <Box component="form" mx="auto" onSubmit={form.onSubmit(() => { })}>
+    <Box component="form" mx="auto" onSubmit={form.onSubmit(() => {})}>
       {/* <form onSubmit={form.onSubmit(console.log)}> */}
       <div className={classes.wrapper}>
         <div className={classes.form}>
@@ -311,9 +323,11 @@ export function PaymentForm(props: { sbi: any }) {
               <div className={classes.amountbox}>
                 <div className={classes.amountinside}>
                   <span>Balance:</span>{' '}
-                  <span className={classes.balance}> ${account.balance}</span>
+                  <span className={classes.balance}> ${account?.balance}</span>
                 </div>
-                <div className={classes.accountnumber}>****{account.account_no.slice(8, 12)}</div>
+                <div className={classes.accountnumber}>
+                  ****{account?.account_no.slice(8, 12)}
+                </div>
               </div>
             </div>
             <div className={classes.beficiaryformcontainer}>
@@ -344,9 +358,13 @@ export function PaymentForm(props: { sbi: any }) {
                   <Text
                     className={classes.buttonVerify}
                     style={style2}
-                    onChange={() => { setStyle2({ ...style2, color: '#0062D6' }) }}
+                    onChange={() => {
+                      setStyle2({ ...style2, color: '#0062D6' })
+                    }}
                     onClick={
-                      form.values.account_no !== '' ? handleClick1 : handleClick2
+                      form.values.account_no !== ''
+                        ? handleClick1
+                        : handleClick2
                     }
                   >
                     {buttonText}
@@ -405,7 +423,9 @@ export function PaymentForm(props: { sbi: any }) {
             </div>
 
             <div className={classes.buttoncontainer}>
-              <div className={classes.button1} onClick={router.back}>Back</div>
+              <div className={classes.button1} onClick={router.back}>
+                Back
+              </div>
               {buttonText !== 'Verify' ? (
                 <div
                   className={classes.button1}
@@ -415,9 +435,13 @@ export function PaymentForm(props: { sbi: any }) {
                       router.push({
                         pathname: `/bank-transfer/review-payment-details`,
                         query: {
-                          name: form.values.name, acc_no: ben_account_id, amount: form.values.amount, ifsc: form.values.ifsc,
-                          ...router.query, account_no: form.values.account_no
-                        }
+                          name: form.values.name,
+                          acc_no: ben_account_id,
+                          amount: form.values.amount,
+                          ifsc: form.values.ifsc,
+                          ...router.query,
+                          account_no: form.values.account_no,
+                        },
                       })
                     }
                   }}
