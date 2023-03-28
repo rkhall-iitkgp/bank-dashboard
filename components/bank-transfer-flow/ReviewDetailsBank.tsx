@@ -1,5 +1,5 @@
-import {createStyles, getStylesRef, TextInput} from '@mantine/core'
-import {useRouter} from 'next/router'
+import { createStyles, getStylesRef, TextInput } from '@mantine/core'
+import { useRouter } from 'next/router'
 import Heading from '../reusable-components/Heading'
 import useStorage from '../../hooks/useStorage'
 import transms from '../transms'
@@ -205,10 +205,18 @@ export function ReviewDetailsBank(props: { sbi: any }) {
       .then((res) => {
         return res.data
       })
-      .catch((err) => console.log(err))
+      .catch((err) =>
+        console.log(err)
+      )
 
-    router.replace({ pathname: '/bank-transfer/confirm-otp', query: router.query });
-    response.then((v) => console.log(v));
+    response.then((v) => {
+      if (v) {
+        console.log(v)
+        router.replace({ pathname: '/bank-transfer/confirm-otp', query: router.query });
+      } else {
+        alert('error sending otp')
+      }
+    });
   };
 
   return (
