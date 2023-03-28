@@ -9,14 +9,20 @@ const StockStatistics = () => (
     }}
     mr={15}
   >
-    <Text mx={30} mt={25} c={'#4D4B4B'} ff="Montserrat" fw={800} fz={30} style={{paddingBottom: `1.875rem`, marginTop: `1.5625rem`}}>
+    <Text
+      mx={30}
+      mt={25}
+      c={'#4D4B4B'}
+      ff="Montserrat"
+      fw={800}
+      fz={30}
+      style={{ paddingBottom: `1.875rem`, marginTop: `1.5625rem` }}
+    >
       Stocks Analysis
     </Text>
     <Flex>
-    <TradingViewWidget 
-        size="small"
-    />
-    {/* <RecentInvestments /> */}
+        <TradingViewWidget />
+      {/* <RecentInvestments /> */}
     </Flex>
   </Card>
 )
