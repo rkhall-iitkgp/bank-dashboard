@@ -1,4 +1,10 @@
-import { createStyles, getStylesRef, Text, TextInput } from '@mantine/core'
+import {
+  createStyles,
+  getStylesRef,
+  Text,
+  TextInput,
+  Select,
+} from '@mantine/core'
 import { hasLength, isNotEmpty, useForm } from '@mantine/form'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -269,7 +275,7 @@ export function PaymentForm() {
             </div>
           </div>
           <div className={classes.beficiaryformcontainer}>
-            <TextInput
+            {/* <TextInput
               label="Paying From"
               variant="unstyled"
               type={'number'}
@@ -281,13 +287,35 @@ export function PaymentForm() {
               }}
               value={`197288882222`}
               disabled
+            /> */}
+            <Select
+              label="Paying From"
+              variant="unstyled"
+              placeholder="Enter Account Number"
+              mt="md"
+              data={[
+                { value: 'acc1', label: 'a1' },
+                { value: 'acc2', label: 'a2' },
+                { value: 'acc3', label: 'a3' },
+                { value: 'acc4', label: 'a4' },
+              ]}
+              classNames={{
+                input: classes.input,
+                label: classes.inputLabel,
+                root: classes.inputcontainer,
+              }}
             />
 
-            <TextInput
+            <Select
               label="UPI ID"
               variant="unstyled"
-              disabled
-              value="myself@oksbi"
+              placeholder="Enter UPI ID"
+              data={[
+                { value: 'acc1', label: 'a1' },
+                { value: 'acc2', label: 'a2' },
+                { value: 'acc3', label: 'a3' },
+                { value: 'acc4', label: 'a4' },
+              ]}
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
