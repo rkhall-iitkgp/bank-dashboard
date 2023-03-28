@@ -1,10 +1,9 @@
-import { createStyles } from '@mantine/core'
+import {createStyles} from '@mantine/core'
 import Image from 'next/image'
-import { useState } from 'react'
+import {useState} from 'react'
 import Link from 'next/link'
-import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -223,12 +222,7 @@ export function SelectBeneficiaryBank() {
   const data = router.query
   const [click, setClick] = useState(false)
   const [account, setAccount] = useState(2)
-  // const [ifscReq, setIfscReq] = useState(false)
-  // const icons = social.map((Icon, index) => (
-  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-  //     <Icon size="1.4rem" stroke={1.5} />
-  //   </ActionIcon>
-  // ));
+  
   const handleClick = (id: any) => {
     setClick(true)
     setAccount(id)
@@ -262,9 +256,7 @@ export function SelectBeneficiaryBank() {
             />
           </div>
           <div className={classes.buttonContainer}>
-            <Link href="/bank-transfer/">
-              <div className={classes.button1}>Back</div>
-            </Link>
+            <div className={classes.button1} onClick={router.back}>Back</div>
             {click ? (
               <Link
                 href={{

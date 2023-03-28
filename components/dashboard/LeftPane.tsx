@@ -35,7 +35,6 @@ const SelectBankAccount = styled.div`
   border-radius: 50px;
   display: flex;
   gap: 8px;
-  background-color: #0062d6;
   cursor: pointer;
   color: white;
   flex: 3;
@@ -61,6 +60,7 @@ const LeftPane = ({ accountsList }: Props) => {
     '1256',
   )
   const [opened, { open, close }] = useDisclosure(false)
+  const [account, setaccount] = useState(0);
 
   return (
     <>
@@ -72,7 +72,7 @@ const LeftPane = ({ accountsList }: Props) => {
         onClose={close}
         centered
       >
-        <Filter />
+        <Filter account={account} setAccount={setaccount} />
       </Modal>
       <ContainerLeft>
         <FilterRow style={{ justifyContent: 'space-between' }}>
@@ -99,7 +99,7 @@ const LeftPane = ({ accountsList }: Props) => {
               placeholder="Bank Account"
               value={selectedBankAccount}
               onChange={SetSelectedBankAccount}
-              data={accountsList}
+              data={accountsList??[]}
             />
           </SelectBankAccount>
         </FilterRow>
@@ -119,9 +119,9 @@ const LeftPane = ({ accountsList }: Props) => {
           />
         </Group>
 
-        <EodBalance balance="$1,23,456" comparision={4.6} />
+        {/* <EodBalance balance="$1,23,456" comparision={4.6} /> */}
 
-        <RecentTransactions />
+        <RecentTransactions transactions={[]} />
       </ContainerLeft>
     </>
   )

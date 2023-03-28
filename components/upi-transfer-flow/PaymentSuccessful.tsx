@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { Image } from '@mantine/core'
+import {Image} from '@mantine/core'
 import Link from 'next/link'
 import Heading from '../reusable-components/Heading'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
+
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;

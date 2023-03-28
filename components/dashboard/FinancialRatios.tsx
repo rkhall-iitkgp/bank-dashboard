@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Group, Stack, Text, Card } from '@mantine/core'
+import {Card, Group, Stack, Text} from '@mantine/core'
 
 const StyledStack = styled(Stack)`
   cursor: pointer;
@@ -8,7 +8,7 @@ const StyledStack = styled(Stack)`
   width: 130px;
   height: 75px;
   align-items: center;
-  margin-left: 4rem;
+  margin-left: 2rem;
   margin-right: 4rem;
   &:hover {
     transform: scale(1.1);
@@ -75,13 +75,13 @@ export function FinancialRatios() {
   ]
 
   return (
-    <Card radius={'lg'} style={{ flex: 5 }} mx={20} p={0}>
-      <Card.Section h={70} bg={'#DDEDFF'} pt={25}>
+    <Card radius={'lg'} style={{ flex: 5 }} mr={15} p={0}>
+      <Card.Section h={60} bg={'#DDEDFF'} pt={25}>
         <Text
           c={'#0052B3'}
           fw={500}
           ff="Montserrat"
-          fz={30}
+          fz={20}
           align="center"
           style={{ lineHeight: '1.3' }}
         >
@@ -90,13 +90,13 @@ export function FinancialRatios() {
       </Card.Section>
       <Group
         mx="auto"
-        py={10}
-        h={170}
+        py={20}
+        h={150}
         noWrap={false}
-        align="flex-start"
-        style={{ flexWrap: 'wrap', overflow: 'auto', flex: 1 }}
+        align="center"
+        style={{ flexWrap: 'wrap', overflow: 'auto', flex: 1, height: '110px' }}
       >
-        {financialRatios.map((ele) => {
+        {financialRatios?.map((ele) => {
           return (
             <Span key={ele.id}>
               <RatioCard ratioName={ele.ratioName} value={ele.value} />

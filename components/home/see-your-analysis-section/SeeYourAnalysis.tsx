@@ -1,8 +1,7 @@
 import { Button } from '@mantine/core'
 import { ButtonProps, createPolymorphicComponent } from '@mantine/core'
 import styled from '@emotion/styled'
-import Link from 'next/link'
-import api from '../../api'
+import api from '../../datams'
 import useStorage from '../../../hooks/useStorage'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -52,17 +51,19 @@ interface Props {
   // isKycPermissionPopUpOpen: any
   SetIsAddAccountPopupOpen: Function
 }
-function SeeYourAnalysis({ SetIsKycPermissionPopUpOpen,SetIsPermissionPopUpOpen,
-  // isKycPermissionPopUpOpen,
-  SetIsAddAccountPopupOpen, }: Props) {
-    const { getItem } = useStorage()
-const [result,setResult]=useState(1)
+export default function SeeYourAnalysis({
+  SetIsPermissionPopUpOpen,
+  SetIsKycPermissionPopUpOpen,
+  SetIsAddAccountPopupOpen,
+}: Props) {
+  const { getItem } = useStorage()
+  const [result, setResult] = useState(1)
   const GetKycStatus = () => {
     const accessToken = getItem('access_token','session')
     console.log(accessToken)
     const user_id = getItem('user_id')
-    const accLength=JSON.stringify(getItem('accounts')).length
-      const response = api
+    const accLength = JSON.stringify(getItem('accounts'))?.length
+    const response = api
       .get(`/user/getkyc/`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -70,23 +71,20 @@ const [result,setResult]=useState(1)
         },
       })
       .then((response) => {
-        (response.data);
-        
+        response.data
       })
-      .catch((err) =>
-      {
-        (err.response.data.message=='KYC not done') && setResult(0)
+      .catch((err) => {
+        err.response.data.message == 'KYC not done' && setResult(0)
         // console.log(err.response.data.message)
-      }
-        )
-    
-    }
+      })
+  }
   const [accLength, setAccLength] = useState('[]')
-useEffect(() => {
-  GetKycStatus()
-  // setResult(1)
-  setAccLength(getItem('accounts'))
-}, [])
+  useEffect(() => {
+    GetKycStatus()
+    // setResult(0)
+    setAccLength(getItem('accounts'))
+    console.log(result)
+  }, [])
   return (
     <Container>
       <TextDiv>
@@ -95,47 +93,39 @@ useEffect(() => {
         transactions and offer insights to help you <br /> make informed
         financial decisions.
       </TextDiv>
-      {result===0 && (
-            <div
-              onClick={() => {
-                SetIsKycPermissionPopUpOpen(true)
-              }}
-            >
-              <StyledButton
-        variant="default"
-        // onClick={() => {
-        //   SetIsPermissionPopUpOpen(true)
-        // }}
-      >
-        See your analysis
-      </StyledButton>
-            </div>
-          ) }
-         
-            
-            {result===1 &&accLength!=='[]' && <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
-            <StyledButton
-        variant="default"
-        // onClick={() => {
-        //   SetIsPermissionPopUpOpen(true)
-        // }}
-      >
-        See your analysis
-      </StyledButton>
-            </Link>}
-            {result === 1 && accLength==='[]' && <div onClick={() => {SetIsAddAccountPopupOpen(true)}}>
-            <StyledButton
-        variant="default"
-        // onClick={() => {
-        //   SetIsPermissionPopUpOpen(true)
-        // }}
-      >
-        See your analysis
-      </StyledButton></div>}
+      {result === 0 && (
+        <StyledButton
+          variant="default"
+          onClick={() => {
+            SetIsKycPermissionPopUpOpen(true)
+          }}
+        >
+          See your analysis
+        </StyledButton>
+      )}
+
+      {result === 1 && accLength !== '[]' && (
+        <StyledButton
+          variant="default"
+          onClick={() => {
+            SetIsPermissionPopUpOpen(true)
+          }}
+        >
+          See your analysis
+        </StyledButton>
+      )}
+      {result === 1 && accLength === '[]' && (
+        <StyledButton
+          variant="default"
+          onClick={() => {
+            SetIsAddAccountPopupOpen(true)
+          }}
+        >
+          See your analysis
+        </StyledButton>
+      )}
     </Container>
   )
 }
-export default SeeYourAnalysis
 
-
-
+// export default SeeYourAnalysis

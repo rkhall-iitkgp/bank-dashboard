@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import api from '../../components/api'
+import api from '../../components/datams'
 import Navbar from '../../components/home/navbar/navbar'
 import Profile from '../../components/profile/Profile'
 import useStorage from '../../hooks/useStorage'

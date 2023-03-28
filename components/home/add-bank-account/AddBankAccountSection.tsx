@@ -1,11 +1,5 @@
 import styled from '@emotion/styled'
-import {
-  Button,
-  ButtonProps,
-  createPolymorphicComponent,
-  Image,
-  Loader,
-} from '@mantine/core'
+import {Button, ButtonProps, createPolymorphicComponent, Image, Loader,} from '@mantine/core'
 
 const Oflex = styled.div`
   display: flex;

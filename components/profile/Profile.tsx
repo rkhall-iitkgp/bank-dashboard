@@ -1,12 +1,10 @@
-import { createStyles } from '@mantine/core'
+import {createStyles} from '@mantine/core'
 import useStorage from '../../hooks/useStorage'
-import { AccountType } from './constants'
 import LeftPane from './LeftPane'
 import RightPane from './RightPane'
-import api from '../../components/api'
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { KycAuthentication } from '../kyc/KycAuthentication'
+import {useState} from 'react'
+import {KycAuthentication} from '../kyc/KycAuthentication'
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,

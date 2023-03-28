@@ -5,14 +5,14 @@ import {
   Card,
   createPolymorphicComponent,
   Group,
-  Text,
+  Text
 } from '@mantine/core'
 import Link from 'next/link'
-import MakePaymentCard from './MakePaymentCards'
-import api from '../../api'
+import { useEffect, useState } from 'react'
 import useStorage from '../../../hooks/useStorage'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import api from '../../datams'
+import MakePaymentCard from './MakePaymentCards'
+
 const _StyledButton = styled(Button)`
   border-radius: 30px;
   color: white;
@@ -67,8 +67,9 @@ export default function Payment({
   const [accLength, setAccLength] = useState('[]')
   useEffect(() => {
     GetKycStatus()
-    // setResult(1)
+    // setResult(0)
     setAccLength(getItem('accounts'))
+    console.log(result)
   }, [])
   return (
     <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '3vh' }}>
