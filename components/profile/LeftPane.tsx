@@ -135,7 +135,7 @@ const AccountSelect = ({ account_no }: Props) => {
 }
 
 interface Props2 {
-  accounts: any[]
+    accounts: any[]
 }
 const LeftPane = ({ accounts }: Props2) => {
   const { classes } = useStyles()

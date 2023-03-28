@@ -4,6 +4,7 @@ import {useRouter} from 'next/router'
 import {ProfileCard} from './ProfileCard'
 import {useState} from 'react'
 import Link from 'next/link'
+import React from 'react'
 
 const StyledNavbar = styled.nav`
   display: flex;
@@ -58,7 +59,20 @@ const _StyledButton = styled(Button)`
 const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
   _StyledButton,
 )
+
+// interface Props {
+//     bankAccountList: any[]
+// }
+
 function Demo() {
+
+    // const [bankAccountList, setBankAccountList] = React.useState<any[]>([])
+    // React.useEffect(() => {
+    //     const accounts = sessionStorage.getItem('accounts')        
+    //     if (accounts) {
+    //         setBankAccountList(JSON.parse(accounts))
+    //     }
+    // }, [])
   return (
     <Popover width="auto" radius={25} position="bottom" withArrow shadow="md">
       <Popover.Target>
@@ -91,6 +105,8 @@ const NavbarIcons = styled.img`
   height: 36px;
   padding: 6px 8px 10px 8px;
 `
+
+
 function Navbar() {
   const router = useRouter()
 
@@ -98,6 +114,14 @@ function Navbar() {
   function setting() {
     setShow(!show)
   }
+
+  // const [bankAccountList, setBankAccountList] = React.useState<any[]>([])
+  // React.useEffect(() => {
+  //     const accounts = sessionStorage.getItem('accounts')        
+  //     if (accounts) {
+  //         setBankAccountList(JSON.parse(accounts))
+  //     }
+  // }, [])
   return (
     <>
       <StyledNavbar>
@@ -131,6 +155,7 @@ function Navbar() {
             <NavbarIcons src="/images/FAQs.png"></NavbarIcons>FAQs
           </StyledButton>
           {/* <StyledUserImage src="/images/dp.png"></StyledUserImage> */}
+          {/* <Demo bankAccountList={bankAccountList}/> */}
           <Demo />
         </StyledButtonBar>
       </StyledNavbar>

@@ -75,6 +75,7 @@ const useStyles = createStyles((theme) => ({
 interface Props {
   bankName?: string
   value?: string
+  bankAccountList: any[]
 }
 
 const AccountCard = ({ bankName, value }: Props) => {
@@ -110,7 +111,8 @@ const AccountCard = ({ bankName, value }: Props) => {
     </div>
   )
 }
-export function ProfileCard() {
+
+export function ProfileCard({bankAccountList}:Props) {
   const { classes } = useStyles()
   const { getItem } = useStorage()
 
