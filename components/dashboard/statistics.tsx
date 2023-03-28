@@ -259,7 +259,7 @@ const FinancialStatistics = () => {
                 boxShadow: '0px 1px 10px rgba(0, 0, 0, 0.1)',
               }}
             >
-              <RecentTransactions/>
+              <RecentTransactions />
             </div>
             <InsightCard insights={InsightList} />
             <ArticlesCard articles={ArticlesData} />

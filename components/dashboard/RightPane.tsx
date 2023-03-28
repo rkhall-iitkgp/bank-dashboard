@@ -2,7 +2,7 @@ import { Stack, Group, Text, Select, createStyles, Tabs } from '@mantine/core'
 import { useState } from 'react'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
-import StockStatistics from './stockStats'
+import StockStatistics from './StocksStatistics'
 import { TotalBalance } from './TotalBalance'
 import ExportButton from './ExportButton'
 
