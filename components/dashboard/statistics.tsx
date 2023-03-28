@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import { useState } from 'react'
 import ArticlesCard from './articlesCard'
 import InsightCard from './insightCard'
-import RecentTransactions from './recenttransactions'
+import RecentTransactionsRightPane from './recenttransactionsRightPane'
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -90,10 +90,10 @@ const SpendingDonut = (props: {
           },
         },
         labels: props.legends,
-        dataLabels: { style: { fontSize: '0.5rem' } },
+        dataLabels: { style: { fontSize: '0.3rem' } },
         legend: { fontFamily: 'Montserrat', fontWeight: 500 },
       }}
-      width={400}
+      width={350}
     />
   )
 }
@@ -271,7 +271,7 @@ const FinancialStatistics = () => {
         align={'flex-end'}
         style={{
           flex: 1,
-          maxHeight: '14rem',
+          maxHeight: '25rem',
           overflow: 'auto',
           margin: 'auto',
         }}
@@ -280,7 +280,7 @@ const FinancialStatistics = () => {
           <BalanceChart
             balanceData={TotalBalanceData}
             color="#008FFB"
-            width={600}
+            width={450}
           />
         )}
         <Stack style={{ flex: 1 }} align="center">
@@ -295,7 +295,7 @@ const FinancialStatistics = () => {
               setSelection={setModeIndex}
               values={PieModeData.map((v) => v.value)}
               legends={PieModeData.map((v) => v.mode)}
-              setValue={(v: number) => { }}
+              setValue={(v: number) => {}}
             />
           )}
           {categoryIndex != -1 && (
@@ -303,7 +303,7 @@ const FinancialStatistics = () => {
               <BalanceChart
                 balanceData={TotalBalanceData}
                 color="#00A76D"
-                width={500}
+                width={450}
               />
               <MontlySpendingChart data={MontlySpendingData} />
             </>
@@ -311,7 +311,7 @@ const FinancialStatistics = () => {
         </Stack>
 
         {categoryIndex != -1 && (
-          <Stack mx={40} style={{ flex: 3 }}>
+          <Stack mx={10} style={{ flex: 3 }} styles={{ maxHeight: '25rem' }}>
             <div
               style={{
                 // border: "1px solid rgb(131 131 131 / 30%)",
@@ -320,8 +320,9 @@ const FinancialStatistics = () => {
                 boxShadow: '0px 1px 10px rgba(0, 0, 0, 0.1)',
               }}
             >
-              <RecentTransactions transactions={transactions} />
+              <RecentTransactionsRightPane />
             </div>
+
             <InsightCard insights={InsightList} />
             <ArticlesCard articles={ArticlesData} />
           </Stack>

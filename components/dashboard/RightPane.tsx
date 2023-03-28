@@ -2,16 +2,16 @@ import { createStyles, Group, Stack, Tabs, Text } from '@mantine/core'
 import ExportButton from './ExportButton'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
+import EodBalance from './EODBalanceCard'
 import StockStatistics from './StocksStatistics'
 import { TotalBalance } from './TotalBalance'
 
 const useStyles = createStyles((theme) => ({
   header: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    width: '50%',
+    justifyContent: 'space-between',
+    width: '95%',
   },
   tab: {
     color: 'black',
@@ -50,19 +50,22 @@ const RightPane = () => {
   return (
     <>
       <Stack className="right-side" style={{ flex: 2.5 }}>
-        <Group mx={10}>
-          <Text fz={35} fw={700} ff="Montserrat">
-            Welcome Back,
-          </Text>
-          <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
-            Bill Gates!
-          </Text>
-          <div className={classes.header}>
+        <Group mx={10} className={classes.header}>
+          <div style={{ display: 'flex' }}>
+            <Text fz={35} fw={700} ff="Montserrat">
+              Welcome Back,&nbsp;
+            </Text>
+            <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
+              Bill Gates!
+            </Text>
+          </div>
+          <div style={{ justifyContent: 'flex-end' }}>
             <ExportButton />
           </div>
         </Group>
         <Group>
           <TotalBalance />
+          <EodBalance balance="$1,23,456" comparision={4.6} />
           <FinancialRatios />
         </Group>
         <Tabs defaultValue="financial">

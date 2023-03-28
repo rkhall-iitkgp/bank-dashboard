@@ -35,7 +35,6 @@ const SelectBankAccount = styled.div`
   border-radius: 50px;
   display: flex;
   gap: 8px;
-  background-color: #0062d6;
   cursor: pointer;
   color: white;
   flex: 3;
@@ -120,7 +119,7 @@ const LeftPane = ({ accountsList }: Props) => {
           />
         </Group>
 
-        <EodBalance balance="$1,23,456" comparision={4.6} />
+        {/* <EodBalance balance="$1,23,456" comparision={4.6} /> */}
 
         <RecentTransactions transactions={[]} />
       </ContainerLeft>
