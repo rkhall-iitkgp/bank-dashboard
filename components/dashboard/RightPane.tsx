@@ -2,7 +2,7 @@ import { Stack, Group, Text, Select, createStyles, Tabs } from '@mantine/core'
 import { useState } from 'react'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
-import StockStatistics from './stockStats'
+import StockStatistics from './StocksStatistics'
 import { TotalBalance } from './TotalBalance'
 import ExportButton from './ExportButton'
 
@@ -12,20 +12,36 @@ const useStyles = createStyles((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    width: '30rem',
+    width: '50%',
   },
   tab: {
     color: 'black',
     fontWeight: 600,
     fontSize: '1.5rem',
-    paddingInline: '2rem',
+    paddingInline: '3rem',
     fontFamily: 'Montserrat',
-    background: 'white',
+    backgroundColor: '#f4f4f4',
 
+    '&:first-of-type': {
+      borderTopLeftRadius: '20px',
+    },
+
+    '&:last-of-type': {
+      borderTopRightRadius: '20px',
+    },
+    '&[data-active]': {
+      backgroundColor: '#fff',
+      border: 'none',
+      color: theme.colors.blue[7],
+    },
   },
+
   tabsPanel: {
-    background: 'white',
-    borderTopLeftRadius: '0px',
+    backgroundColor: '#fff',
+    // borderRadius: '40px',
+    // borderTopLeftRadius: '0px !important',
+    height: '0',
+    border: 'none',
   }
 }))
 
@@ -34,7 +50,7 @@ const RightPane = () => {
 
   return (
     <>
-      <Stack className="right-side" style={{ flex: 2.5 }}>
+      <Stack className="right-side" style={{ flex: 2.5 }} >
         <Group mx={10}>
           <Text fz={35} fw={700} ff="Montserrat">
             Welcome Back,
@@ -51,10 +67,9 @@ const RightPane = () => {
           <FinancialRatios />
         </Group>
         <Tabs
-          radius="md"
           defaultValue="financial"
         >
-          <Tabs.List>
+          <Tabs.List style={{ border: 'none' }}>
             <Tabs.Tab value="financial" className={classes.tab}>
               Finances
             </Tabs.Tab>

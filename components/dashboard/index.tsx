@@ -1,12 +1,12 @@
-import { Group, Image, Text } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
-import { useEffect, useState } from 'react'
-import Navbar from '../home/navbar/navbar'
 import styled from '@emotion/styled'
+import { Group, Image, Text } from '@mantine/core'
+import Navbar from '../home/navbar/navbar'
 import LeftPane from './LeftPane'
 import RightPane from './RightPane'
 import useStorage from '../../hooks/useStorage'
 import transms from '../transms'
+import { useEffect, useState } from 'react'
+import { useDisclosure } from '@mantine/hooks'
 
 const Dashboard = () => {
   const [depositLimit, setDepositLimit] = useState(1000)

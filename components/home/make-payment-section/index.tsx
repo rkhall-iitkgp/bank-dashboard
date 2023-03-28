@@ -35,14 +35,13 @@ export default function Payment({
   isKycPermissionPopUpOpen,
   setIsAddAccountPopupOpen,
 }: Props) {
-
   const { getItem } = useStorage()
   const [result, setResult] = useState(1)
   const GetKycStatus = () => {
     const accessToken = getItem('access_token', 'session')
     console.log(accessToken)
     const user_id = getItem('user_id')
-    const accLength = JSON.stringify(getItem('accounts')).length
+    const accLength = JSON.stringify(getItem('accounts'))?.length
     const response = api
       .get(`/user/getkyc/`, {
         headers: {
@@ -51,22 +50,18 @@ export default function Payment({
         },
       })
       .then((response) => {
-        (response.data);
-
+        response.data
       })
       .catch((err) => {
-        (err.response.data.message == 'KYC not done') && setResult(0)
+        err.response.data.message == 'KYC not done' && setResult(0)
         // console.log(err.response.data.message)
-      }
-      )
-
+      })
   }
   const [accLength, setAccLength] = useState('[]')
   useEffect(() => {
     GetKycStatus()
-    // setResult(0)
+    // setResult(1)
     setAccLength(getItem('accounts'))
-    console.log(result);
   }, [])
   return (
     <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '3vh' }}>
@@ -100,18 +95,28 @@ export default function Payment({
             </div>
           )}
 
-          {result === 1 && accLength !== '[]' && <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
-            <MakePaymentCard
-              imageAddress="icons/bank-building-white.png"
-              cardText="Bank Transfer"
-              alt="Bank Transfer"
-            />
-          </Link>}
-          {result === 1 && accLength === '[]' && <div onClick={() => { setIsAddAccountPopupOpen(true) }}><MakePaymentCard
-            imageAddress="icons/bank-building-white.png"
-            cardText="Bank Transfer"
-            alt="Bank Transfer"
-          /></div>}
+          {result === 1 && accLength !== '[]' && (
+            <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
+              <MakePaymentCard
+                imageAddress="icons/bank-building-white.png"
+                cardText="Bank Transfer"
+                alt="Bank Transfer"
+              />
+            </Link>
+          )}
+          {result === 1 && accLength === '[]' && (
+            <div
+              onClick={() => {
+                setIsAddAccountPopupOpen(true)
+              }}
+            >
+              <MakePaymentCard
+                imageAddress="icons/bank-building-white.png"
+                cardText="Bank Transfer"
+                alt="Bank Transfer"
+              />
+            </div>
+          )}
 
           {result === 0 && (
             <div
@@ -127,21 +132,28 @@ export default function Payment({
             </div>
           )}
 
-          {result === 1 && accLength !== '[]' && <Link href="/UPI" style={{ textDecoration: 'none' }}>
-            <MakePaymentCard
-              imageAddress="icons/upi.png"
-              cardText="UPI Payment"
-              alt="UPI Payment"
-            />
-          </Link>}
-          {result === 1 && accLength === '[]' && <div onClick={() => { setIsAddAccountPopupOpen(true) }}>
-            <MakePaymentCard
-              imageAddress="icons/upi.png"
-              cardText="UPI Payment"
-              alt="UPI Payment"
-            />
-          </div>}
-
+          {result === 1 && accLength !== '[]' && (
+            <Link href="/UPI" style={{ textDecoration: 'none' }}>
+              <MakePaymentCard
+                imageAddress="icons/upi.png"
+                cardText="UPI Payment"
+                alt="UPI Payment"
+              />
+            </Link>
+          )}
+          {result === 1 && accLength === '[]' && (
+            <div
+              onClick={() => {
+                setIsAddAccountPopupOpen(true)
+              }}
+            >
+              <MakePaymentCard
+                imageAddress="icons/upi.png"
+                cardText="UPI Payment"
+                alt="UPI Payment"
+              />
+            </div>
+          )}
 
           {/* {(result===0) ? (
             <div
