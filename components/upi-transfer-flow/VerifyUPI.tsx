@@ -7,9 +7,11 @@ import {
   Text,
 } from '@mantine/core'
 import Link from 'next/link'
-import { SetStateAction, useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState, ChangeEvent } from 'react'
 // import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
+import { NativeSelect } from '@mantine/core';
+import useStorage from '../../hooks/useStorage';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -181,7 +183,31 @@ function Demo() {
 }
 export function VerifyUPI() {
   const [buttonText, setButtonText] = useState('Verify')
-  const [upiValue, setUpiValue] = useState('')
+  const [upiValue, setUpiValue] = useState('');
+  const [data, setData] = useState([{ value: [], label: [] }]);
+  const { getItem, setItem } = useStorage()
+
+  
+  useEffect(() => {
+    const storedAccounts = getItem('accounts');
+    // console.log(storedAccounts)
+    if (storedAccounts !== null) {
+      const accounts = JSON.parse(storedAccounts);
+      const upis = accounts.map((account: { upi: string | null }) => account.upi);
+      console.log(upis);
+      
+      let upi = []
+      let ele;
+      upis.map((ele)=>{
+        upi.push({value: ele, label: ele})
+      })
+      setData(upi)
+      console.log(data);
+      
+    } else {
+      console.log('No accounts found in session storage.');
+    }
+  }, []);
   const [style, setStyle] = useState({
     border: '1px solid white',
     borderRadius: '15px',
@@ -193,9 +219,10 @@ export function VerifyUPI() {
     fontSize: '18px',
     cursor: 'pointer',
   })
-  const handleChange = (e: { target: { value: SetStateAction<string> } }) => {
-    setUpiValue(e.target.value)
-  }
+  // const handleChange = (selectedOption: { value: string | null; label: string | null }) => {
+  //   setUpiValue({value : selectedOption.value, label: selectedOption.label})
+  //   console.log(selectedOption.value)
+  // }
   function handleClick1() {
     if (upiValue !== '') {
       setStyle2({
@@ -208,7 +235,7 @@ export function VerifyUPI() {
       setButtonText('Verified')
     }
   }
-  function handleClick2() {}
+  function handleClick2() { }
 
   useEffect(() => {
     if (upiValue === '') {
@@ -231,7 +258,7 @@ export function VerifyUPI() {
       })
       setButtonText('Verify')
     }
-    return () => {}
+    return () => { }
   }, [upiValue])
   const { classes } = useStyles()
   return (
@@ -239,14 +266,14 @@ export function VerifyUPI() {
       <div className={classes.form}>
         <Heading title="UPI Transfer" />
         <div className={classes.forminside}>
-          <div className={classes.titlebox}>
+          {/* <div className={classes.titlebox}>
             <div className={classes.titlebold}>
               <span>Verify UPI</span>
             </div>
-          </div>
+          </div> */}
 
           <div className={classes.description}>
-            <TextInput
+            {/* <TextInput
               placeholder="Enter UPI ID*"
               style={style}
               classNames={{ input: classes.input1 }}
@@ -261,7 +288,8 @@ export function VerifyUPI() {
                   {buttonText}
                 </Text>
               }
-            />
+            /> */}
+            <NativeSelect value={upiValue}  onChange={(event) => {console.log(event.currentTarget.value);setUpiValue(event.currentTarget.value);setItem('upi', event.currentTarget.value) }} data={data} onClick={upiValue !== '' ? handleClick1 : handleClick2} />
           </div>
 
           <div className={classes.buttonContainer}>

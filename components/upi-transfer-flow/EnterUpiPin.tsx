@@ -3,6 +3,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
+import useStorage from '../../hooks/useStorage'
+import trxnapi from '../trxnapi'
+import Router from 'next/router'
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: `100vh`,
@@ -130,6 +134,38 @@ export function EnterUPIpin() {
   const { classes } = useStyles()
   const router = useRouter()
   const data = router.query
+  const { getItem, removeItem } = useStorage()
+
+  function upiPay() {
+    const contact_no = getItem('contact_no')
+    const amount = getItem('payingamount')
+    const debit_upi_id = getItem('upi')
+    const credit_upi_id = getItem('payingupiid')
+    const description = getItem('description')
+    const mode = 1
+    const user_id = getItem('user_id')
+    const otp = 123456
+    const accessToken = getItem('access_token')
+    const payload = {
+      contact_no,
+      amount,
+      debit_upi_id,
+      credit_upi_id,
+      description,
+      mode,
+      user_id,
+      otp,
+    }
+    trxnapi.post('/makepayment/', payload, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    }).then(res => {
+      router.replace({ pathname: '/UPI/payment-success'})
+      return res.data
+    }).catch(err => console.log(err))
+  }
 
   return (
     <div className={classes.wrapper}>
@@ -152,11 +188,7 @@ export function EnterUPIpin() {
             <Link href="/UPI/payment-details-review">
               <div className={classes.button1}>Back</div>
             </Link>
-            <Link
-              href={`/UPI/payment-success?name=${data.name}&amount=${data.amount}&upi=${data.upi}`}
-            >
-              <div className={classes.button1}>Continue</div>
-            </Link>
+              <div className={classes.button1} onClick= {upiPay}>Confirm</div>
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { Image } from '@mantine/core'
 import Link from 'next/link'
 import Heading from '../reusable-components/Heading'
 import { useRouter } from 'next/router'
+import useStorage from '../../hooks/useStorage'
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -123,6 +124,19 @@ const StyledTexthead4 = styled.div`
 export default function PaymentSuccessPage() {
   const router = useRouter()
   const data = router.query
+  const { getItem, removeItem } = useStorage()
+  const [amount, setAmount] = React.useState(getItem('payingamount'))
+  const [upi, setUpi] = React.useState(getItem('payingupiid'))
+  const [name, setName] = React.useState(getItem('payingname'))
+
+  function clearData() {
+    removeItem('upi')
+    removeItem('payingupiid')
+    removeItem('description')
+    removeItem('payingamount')
+    removeItem('payingname')
+  }
+
   return (
     <StyledContainer>
       <StyledCont>
@@ -132,15 +146,15 @@ export default function PaymentSuccessPage() {
             <StyledTexthead>Payment Successful</StyledTexthead>
             <Image src="/images/tick.png" width={65} height={65} alt="" />
             <StyledTexthead2>
-              You have successfully paid &nbsp;<b>{data.name}</b>
+              You have successfully paid &nbsp;<b>{name}</b>
             </StyledTexthead2>
-            <StyledTexthead3>₹{data.amount}</StyledTexthead3>
+            <StyledTexthead3>₹{amount}</StyledTexthead3>
             <StyledTexthead4>
-              UPI ID : <span style={{ color: 'black' }}> &nbsp;{data.upi}</span>
+              UPI ID : <span style={{ color: 'black' }}> &nbsp;{upi}</span>
             </StyledTexthead4>
           </StyledBotCont>
           <Link href="/home">
-            <StyledBut>Make Another Payment</StyledBut>
+            <StyledBut onClick={clearData} >Make Another Payment</StyledBut>
           </Link>
         </StyledBot>
       </StyledCont>

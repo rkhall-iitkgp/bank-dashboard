@@ -27,7 +27,7 @@ const _StyledButton = styled(Button)`
 const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
   _StyledButton,
 )
-const kyc = false
+const kyc = true
 const add = false
 interface Props {
   SetIsKycPermissionPopUpOpen: Function

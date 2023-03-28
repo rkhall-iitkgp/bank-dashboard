@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { createStyles, TextInput, getStylesRef } from '@mantine/core'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
+import useStorage from '../../hooks/useStorage'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -233,6 +234,13 @@ export function ReviewDetailsUpi() {
 
   const { classes } = useStyles()
 
+  const { getItem, setItem } = useStorage()
+  const upiid = getItem('upi')
+  const name = getItem('payingname')
+  const payingupiid = getItem('payingupiid')
+  const amount = getItem('payingamount')
+  const desc = getItem('description')
+
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
   //     <Icon size="1.4rem" stroke={1.5} />
@@ -249,24 +257,10 @@ export function ReviewDetailsUpi() {
             </div>
           </div>
           <div className={classes.beficiaryformcontainer}>
-            <TextInput
-              label="Paying From"
-              variant="unstyled"
-              type={'number'}
-              classNames={{
-                input: classes.input,
-                label: classes.inputLabel,
-                root: classes.enterAmountContainer,
-              }}
-              value={`197288882222`}
-              disabled
-              required
-            />
-          </div>
           <TextInput
             label="UPI ID"
             variant="unstyled"
-            value={`WelcomtoGc@iitkgp`}
+            value={upiid}
             disabled
             classNames={{
               input: classes.input,
@@ -274,7 +268,8 @@ export function ReviewDetailsUpi() {
               root: classes.inputcontainer,
             }}
           />
-          <div />
+          </div>
+
           <div className={classes.payingtext}>Paying</div>
           <TextInput
             label="Name"
@@ -286,13 +281,13 @@ export function ReviewDetailsUpi() {
             }}
             required
             disabled
-            value={data.name}
+            value={name}
           />
           <TextInput
             label="UPI ID"
             variant="unstyled"
             mt="md"
-            value={data.upi}
+            value={payingupiid}
             classNames={{
               input: classes.input,
               label: classes.inputLabel,
@@ -305,7 +300,7 @@ export function ReviewDetailsUpi() {
             variant="unstyled"
             label="Amount"
             mt="md"
-            value={data.amount}
+            value={amount}
             style={{ color: 'grey' }}
             classNames={{
               input: classes.input,
@@ -315,6 +310,18 @@ export function ReviewDetailsUpi() {
             required
             disabled
           />
+          <TextInput
+              label="Description"
+              variant="unstyled"
+              mt="md"
+              classNames={{
+                input: classes.input,
+                label: classes.inputLabel,
+                root: classes.enterAmountContainer,
+              }}
+              // {...form.getInputProps('upi_id')}
+              value={desc}
+            />
         </div>
         {/* <ButtonGroup href1="/UPI/payment-details" href2=`/UPI/enter-pin?name=${data.name}&amount=${form.values.amount}&upi=${form.values.upi_id}` /> */}
         <div className={classes.buttonContainer}>
