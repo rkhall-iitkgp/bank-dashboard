@@ -1,4 +1,4 @@
-import { Card, Text, Group, Stack, HoverCard } from '@mantine/core'
+import { Card, Group, Stack, Text } from '@mantine/core'
 
 const palette = ['#D56EEA', '#26DD76', '#FFAA57', '#4198FF']
 
@@ -34,15 +34,15 @@ const InvestmentsCard = (props: {
     >
       <Group px={8} style={{ justifyContent: 'space-between' }}>
         <Stack>
-              <Text
-                fw={600}
-                fz={11}
-                c="#434343"
-                ff={'Montserrat'}
-                style={{ lineHeight: 0.5, cursor: 'default' }}
-              >
-                {data.name}
-              </Text>
+          <Text
+            fw={600}
+            fz={11}
+            c="#434343"
+            ff={'Montserrat'}
+            style={{ lineHeight: 0.5, cursor: 'default' }}
+          >
+            {data.name}
+          </Text>
         </Stack>
       </Group>
     </Card>
@@ -56,8 +56,10 @@ const RecentInvestments = () => {
         Recent Investments
       </Text>
       <div style={{ maxHeight: '23rem', overflow: 'auto' }}>
-        {investments.map((t) => (
+        {investments.map((t, index) => (
+          <div key={index}>
             <InvestmentsCard data={t} />
+          </div>
         ))}
       </div>
     </div>

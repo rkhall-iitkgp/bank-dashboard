@@ -1,6 +1,5 @@
+import { Card, Flex, Text } from '@mantine/core'
 import TradingViewWidget from 'react-tradingview-widget'
-import { Card, Group, Text, Flex } from '@mantine/core'
-import RecentInvestments from './recentInvestments'
 
 const StockStatistics = () => (
   <Card
