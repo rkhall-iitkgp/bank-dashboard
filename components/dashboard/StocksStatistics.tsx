@@ -3,7 +3,7 @@ import TradingViewWidget from 'react-tradingview-widget'
 
 const StockStatistics = () => (
   <Card
-    radius={'lg'}
+    // radius={'lg'}
     style={{
       boxShadow: '0px 2px 40px rgba(0, 0, 0, 0.1)',
     }}
@@ -16,12 +16,15 @@ const StockStatistics = () => (
       ff="Montserrat"
       fw={800}
       fz={30}
-      style={{ paddingBottom: `1.875rem`, marginTop: `1.5625rem` }}
+      style={{ paddingBottom: `1.875rem`, marginTop: `0.5rem` }}
     >
       Stocks Analysis
     </Text>
     <Flex>
-        <TradingViewWidget />
+        <TradingViewWidget 
+          height={280}
+          width={1010}
+        />
       {/* <RecentInvestments /> */}
     </Flex>
   </Card>

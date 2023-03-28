@@ -125,7 +125,44 @@ export default function Payment({
             </div>
           )}
 
-          {result === 0 ? (
+          {result === 0 && (
+            <div
+              onClick={() => {
+                SetIsKycPermissionPopUpOpen(true)
+              }}
+            >
+              <MakePaymentCard
+                imageAddress="icons/upi.png"
+                cardText="UPI Payment"
+                alt="UPI Payment"
+              />
+            </div>
+          )}
+
+          {result === 1 && accLength !== '[]' && (
+            <Link href="/UPI" style={{ textDecoration: 'none' }}>
+              <MakePaymentCard
+                imageAddress="icons/upi.png"
+                cardText="UPI Payment"
+                alt="UPI Payment"
+              />
+            </Link>
+          )}
+          {result === 1 && accLength === '[]' && (
+            <div
+              onClick={() => {
+                setIsAddAccountPopupOpen(true)
+              }}
+            >
+              <MakePaymentCard
+                imageAddress="icons/upi.png"
+                cardText="UPI Payment"
+                alt="UPI Payment"
+              />
+            </div>
+          )}
+
+          {/* {(result===0) ? (
             <div
               onClick={() => {
                 SetIsKycPermissionPopUpOpen(true)
@@ -145,7 +182,7 @@ export default function Payment({
                 alt="UPI Payment"
               />
             </Link>
-          )}
+          )} */}
           <MakePaymentCard
             imageAddress="icons/payphone.png"
             cardText="Pay Phone Number"
