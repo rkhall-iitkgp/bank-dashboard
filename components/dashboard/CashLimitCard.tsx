@@ -51,6 +51,15 @@ const CashCard = (props: {
         >
           Set Limit
         </Text>
+        <TextInput 
+          radius={'lg'} 
+          h={15}
+          style={{ 
+            visibility: showLimit ? 'visible' : 'hidden',
+            border: 'none',
+            // boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.3)',
+          }} 
+        />
       </Stack>
     </Card>
   )
