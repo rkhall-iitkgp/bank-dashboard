@@ -1,10 +1,17 @@
 import styled from '@emotion/styled'
-import { Button, ButtonProps, Card, createPolymorphicComponent, Group, Text, } from '@mantine/core'
+import {
+  Button,
+  ButtonProps,
+  Card,
+  createPolymorphicComponent,
+  Group,
+  Text
+} from '@mantine/core'
 import Link from 'next/link'
-import MakePaymentCard from './MakePaymentCards'
-import api from '../../datams'
-import useStorage from '../../../hooks/useStorage'
 import { useEffect, useState } from 'react'
+import useStorage from '../../../hooks/useStorage'
+import api from '../../datams'
+import MakePaymentCard from './MakePaymentCards'
 
 const _StyledButton = styled(Button)`
   border-radius: 30px;
@@ -35,7 +42,6 @@ export default function Payment({
   isKycPermissionPopUpOpen,
   setIsAddAccountPopupOpen,
 }: Props) {
-
   const { getItem } = useStorage()
   const [result, setResult] = useState(1)
   const GetKycStatus = () => {
@@ -51,22 +57,19 @@ export default function Payment({
         },
       })
       .then((response) => {
-        (response.data);
-
+        response.data
       })
       .catch((err) => {
-        (err.response.data.message == 'KYC not done') && setResult(0)
+        err.response.data.message == 'KYC not done' && setResult(0)
         // console.log(err.response.data.message)
-      }
-      )
-
+      })
   }
   const [accLength, setAccLength] = useState('[]')
   useEffect(() => {
     GetKycStatus()
     // setResult(0)
     setAccLength(getItem('accounts'))
-    console.log(result);
+    console.log(result)
   }, [])
   return (
     <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '3vh' }}>
@@ -100,18 +103,28 @@ export default function Payment({
             </div>
           )}
 
-          {result === 1 && accLength !== '[]' && <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
-            <MakePaymentCard
-              imageAddress="icons/bank-building-white.png"
-              cardText="Bank Transfer"
-              alt="Bank Transfer"
-            />
-          </Link>}
-          {result === 1 && accLength === '[]' && <div onClick={() => { setIsAddAccountPopupOpen(true) }}><MakePaymentCard
-            imageAddress="icons/bank-building-white.png"
-            cardText="Bank Transfer"
-            alt="Bank Transfer"
-          /></div>}
+          {result === 1 && accLength !== '[]' && (
+            <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
+              <MakePaymentCard
+                imageAddress="icons/bank-building-white.png"
+                cardText="Bank Transfer"
+                alt="Bank Transfer"
+              />
+            </Link>
+          )}
+          {result === 1 && accLength === '[]' && (
+            <div
+              onClick={() => {
+                setIsAddAccountPopupOpen(true)
+              }}
+            >
+              <MakePaymentCard
+                imageAddress="icons/bank-building-white.png"
+                cardText="Bank Transfer"
+                alt="Bank Transfer"
+              />
+            </div>
+          )}
 
           {result === 0 && (
             <div
@@ -127,21 +140,28 @@ export default function Payment({
             </div>
           )}
 
-          {result === 1 && accLength !== '[]' && <Link href="/UPI" style={{ textDecoration: 'none' }}>
-            <MakePaymentCard
-              imageAddress="icons/upi.png"
-              cardText="UPI Payment"
-              alt="UPI Payment"
-            />
-          </Link>}
-          {result === 1 && accLength === '[]' && <div onClick={() => { setIsAddAccountPopupOpen(true) }}>
-            <MakePaymentCard
-              imageAddress="icons/upi.png"
-              cardText="UPI Payment"
-              alt="UPI Payment"
-            />
-          </div>}
-
+          {result === 1 && accLength !== '[]' && (
+            <Link href="/UPI" style={{ textDecoration: 'none' }}>
+              <MakePaymentCard
+                imageAddress="icons/upi.png"
+                cardText="UPI Payment"
+                alt="UPI Payment"
+              />
+            </Link>
+          )}
+          {result === 1 && accLength === '[]' && (
+            <div
+              onClick={() => {
+                setIsAddAccountPopupOpen(true)
+              }}
+            >
+              <MakePaymentCard
+                imageAddress="icons/upi.png"
+                cardText="UPI Payment"
+                alt="UPI Payment"
+              />
+            </div>
+          )}
 
           {/* {(result===0) ? (
             <div

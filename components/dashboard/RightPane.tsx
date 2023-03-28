@@ -1,10 +1,9 @@
-import { Stack, Group, Text, Select, createStyles, Tabs } from '@mantine/core'
-import { useState } from 'react'
+import { createStyles, Group, Stack, Tabs, Text } from '@mantine/core'
+import ExportButton from './ExportButton'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
-import StockStatistics from './stockStats'
+import StockStatistics from './StocksStatistics'
 import { TotalBalance } from './TotalBalance'
-import ExportButton from './ExportButton'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -12,21 +11,37 @@ const useStyles = createStyles((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    width: '30rem',
+    width: '50%',
   },
   tab: {
     color: 'black',
     fontWeight: 600,
     fontSize: '1.5rem',
-    paddingInline: '2rem',
+    paddingInline: '3rem',
     fontFamily: 'Montserrat',
-    background: 'white',
+    backgroundColor: '#f4f4f4',
 
+    '&:first-of-type': {
+      borderTopLeftRadius: '20px',
+    },
+
+    '&:last-of-type': {
+      borderTopRightRadius: '20px',
+    },
+    '&[data-active]': {
+      backgroundColor: '#fff',
+      border: 'none',
+      color: theme.colors.blue[7],
+    },
   },
+
   tabsPanel: {
-    background: 'white',
-    borderTopLeftRadius: '0px',
-  }
+    backgroundColor: '#fff',
+    // borderRadius: '40px',
+    // borderTopLeftRadius: '0px !important',
+    height: '0',
+    border: 'none',
+  },
 }))
 
 const RightPane = () => {
@@ -50,11 +65,8 @@ const RightPane = () => {
           <TotalBalance />
           <FinancialRatios />
         </Group>
-        <Tabs
-          radius="md"
-          defaultValue="financial"
-        >
-          <Tabs.List>
+        <Tabs defaultValue="financial">
+          <Tabs.List style={{ border: 'none' }}>
             <Tabs.Tab value="financial" className={classes.tab}>
               Finances
             </Tabs.Tab>
@@ -76,4 +88,4 @@ const RightPane = () => {
   )
 }
 
-export default RightPane;
+export default RightPane
