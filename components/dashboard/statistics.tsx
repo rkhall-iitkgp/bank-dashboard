@@ -174,7 +174,7 @@ const FinancialStatistics = () => {
 
   return (
     <Card
-      radius={'lg'}
+      // radius={'lg'}
       style={{
         boxShadow: '0px 2px 40px rgba(0, 0, 0, 0.1)',
       }}

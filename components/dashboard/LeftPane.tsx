@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Stack, Group, Card, Select, Image, Modal, Text } from '@mantine/core'
+import { Group, Image, Modal, Select } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useState } from 'react'
 import Filter from '../filter'
