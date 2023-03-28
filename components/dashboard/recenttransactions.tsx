@@ -153,15 +153,17 @@ const TransactionCard = (props: {
     </Card>
   )
 }
-
-const RecentTransactions = () => {
+interface props {
+  transaction: any[]
+}
+const RecentTransactions = ({ transaction }: props) => {
   return (
     <div>
       <Text ff={'Montserrat'} c="#0062D6" fw={700} fz={22} mt={4} ml={8}>
         Recent Transactions
       </Text>
       <div style={{ maxHeight: '18rem', overflow: 'auto' }}>
-        {transactions.map((t) => (
+        {transaction.map((t) => (
           <div key={t.date}>
             <TransactionCard data={t} />
           </div>

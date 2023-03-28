@@ -17,6 +17,9 @@ import useStorage from '../../hooks/useStorage'
 import api from '../api'
 import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
 import dayjs from 'dayjs'
+import { useRouter } from 'next/router'
+import useAccountStore from '../Store/Account'
+import { useDisclosure } from '@mantine/hooks'
 
 const _PeriodButton = styled(Button)`
   width: 213px;
@@ -87,9 +90,9 @@ const AccountSelect = (prop: {
         backgroundColor: '#E6EFF9',
         color: '#000000',
         border: '2px solid #E6EFF9',
-        borderColor: curSelection ? curSelection.account_no === account.account_no ? '#0062D6' : '' : '',
+        borderColor: curSelection ? curSelection === account ? '#0062D6' : '' : '',
         boxShadow:
-          curSelection ? curSelection.account_no === account.account_no
+          curSelection ? curSelection === account
             ? 'inset 0px 4px 18px rgba(0, 0, 0, 0.2)'
             : '' : '',
         margin: '0.2rem',
@@ -101,21 +104,24 @@ const AccountSelect = (prop: {
       size="xl"
     >
       <Image src={'icons/sbi.png'} height={25} mr={25} alt="sbi" />
-      {"****" + account.account_no.slice(8, 12)}
+      {"****" + account.slice(8, 12)}
     </Button>
   )
 }
 interface props {
-  todashboard: any
+  todashboard: any,
+  close: Function
 }
-const Filter = ({ todashboard }: props) => {
+const Filter = ({ todashboard, close }: props) => {
+  const useAccount = useAccountStore()
   const [id, setId] = useState(1)
   const { getItem } = useStorage()
   const accounts = JSON.parse(getItem("accounts"))
-  const [account, setAccount] = useState<any>(null)
-  const [mpin, setMpin] = useState<string | null>(null)
+  const [account, setAccount] = useState<any>(useAccount.account_no)
+  const [mpin, setMpin] = useState<string | null>(useAccount.mpin)
   const [haveConsent, setHaveConsent] = useState(false)
   const { classes } = useStyles()
+
   const form = useForm({
     initialValues: {
       Datefrom: dayjs(new Date()).subtract(1, 'month').toDate(),
@@ -128,6 +134,7 @@ const Filter = ({ todashboard }: props) => {
 
     // },
   });
+  const router = useRouter()
   return (
     <div style={{ width: '585px', padding: 20 }}>
 
@@ -170,7 +177,7 @@ const Filter = ({ todashboard }: props) => {
           {accounts.map((it: { account_no: Key | null | undefined }) => (
             <AccountSelect
               key={it.account_no}
-              account={it}
+              account={it.account_no}
               setAccount={setAccount}
               curSelection={account}
             />
@@ -212,19 +219,38 @@ const Filter = ({ todashboard }: props) => {
           size="lg"
           className={classes.control}
           onClick={() => {
-            if (!mpin) {
-              setMpin(getItem('mpin'))
-            }
-            if (mpin && id && account) {
+            if (mpin && id && account && todashboard) {
               api.post("/user/gettrxn/", {
-                "account_no": account.account_no,
+                "account_no": account,
                 "mpin": mpin,
-                "startDate": form.values.Datefrom,
-                "endDate": form.values.Dateto
+                "startDate": form.values.Datefrom.getUTCFullYear() + "-" + (form.values.Datefrom.getMonth() + 1) + "-" + form.values.Datefrom.getDate(),
+                "endDate": form.values.Dateto.getUTCFullYear() + "-" + (form.values.Dateto.getMonth() + 1) + "-" + form.values.Dateto.getDate()
 
               }, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } }).then((res) => {
                 console.log('res', res)
+                useAccount.Transaction = res.data
+                useAccount.account_no = account;
+                useAccount.mpin = mpin;
+                useAccount.startDate = form.values.Datefrom;
+                useAccount.endDate = form.values.Dateto;
+                router.push("/dashboard")
+              }).catch(err => console.log('err', err))
+            } else if (mpin && id && account && !todashboard) {
+              api.post("/user/gettrxn/", {
+                "account_no": account,
+                "mpin": mpin,
+                "startDate": form.values.Datefrom.getUTCFullYear() + "-" + (form.values.Datefrom.getMonth() + 1) + "-" + form.values.Datefrom.getDate(),
+                "endDate": form.values.Dateto.getUTCFullYear() + "-" + (form.values.Dateto.getMonth() + 1) + "-" + form.values.Dateto.getDate()
 
+              }, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } }).then((res) => {
+                console.log('res', res)
+                useAccount.Transaction = res.data
+                useAccount.account_no = account;
+                useAccount.mpin = mpin;
+                useAccount.startDate = form.values.Datefrom;
+                useAccount.endDate = form.values.Dateto;
+                console.log('hello')
+                close()
               }).catch(err => console.log('err', err))
             }
           }}

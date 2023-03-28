@@ -45,7 +45,6 @@ const Dashboard = () => {
   `
   useEffect(() => {
   }, [])
-
   return (
     <div style={{ backgroundColor: '#F4F4F4' }}>
       <Navbar />

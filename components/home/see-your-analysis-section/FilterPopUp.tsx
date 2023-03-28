@@ -19,7 +19,7 @@ const FilterPopUp = ({ isfilteropen, setIsfilteropen }: props) => {
             size="auto"
             padding={0}
         >
-            <Filter todashboard={true} />
+            <Filter todashboard={true} close={close} />
         </Modal>
         </>
     )

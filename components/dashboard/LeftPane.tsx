@@ -3,6 +3,7 @@ import { Stack, Group, Card, Select, Image, Modal, Text, Avatar } from '@mantine
 import { useDisclosure } from '@mantine/hooks'
 import { forwardRef, useEffect, useState } from 'react'
 import Filter from '../filter'
+import useAccountStore from '../Store/Account'
 import CashCard from './CashLimitCard'
 import EodBalance from './EODBalanceCard'
 import RecentTransactions from './recenttransactions'
@@ -74,18 +75,16 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 interface Props {
   accountsList: any[]
 }
-
 const LeftPane = ({ accountsList }: Props) => {
+  const useAccount = useAccountStore()
   const [depositLimit, setDepositLimit] = useState(1000)
   const [withdrawlLimit, setWithdrawlLimit] = useState(1000)
-  const [selectedBankAccount, SetSelectedBankAccount] = useState<string | null>(
-    '1256',
-  )
+  const selectedBankAccount = useAccountStore((state) => state.account_no)
   const [opened, { open, close }] = useDisclosure(false)
   useEffect(() => {
 
     accountsList.forEach(e => {
-      e.value = e
+      e.value = e.account_no
       e.label = "****" + e.account_no.slice(8, 12)
       e.image = 'icons/sbilogo.png'
       e.name = e.account_no
@@ -94,7 +93,7 @@ const LeftPane = ({ accountsList }: Props) => {
 
   }, [])
   useEffect(() => {
-
+    console.log('useAccount.Transaction', useAccount.Transaction)
     console.log('selectedBankAccount', selectedBankAccount)
   }, [selectedBankAccount])
 
@@ -108,7 +107,7 @@ const LeftPane = ({ accountsList }: Props) => {
         onClose={close}
         centered
       >
-        <Filter todashboard={false} />
+        <Filter todashboard={false} close={close} />
       </Modal>
       <ContainerLeft>
         <FilterRow style={{ justifyContent: 'space-between' }}>
@@ -136,7 +135,12 @@ const LeftPane = ({ accountsList }: Props) => {
               radius="lg"
               placeholder="Bank Account"
               value={selectedBankAccount}
-              onChange={SetSelectedBankAccount}
+              onChange={(e) => {
+                if (e) {
+                  useAccount.account_no = e.toString()
+                  useAccount.setTransaction()
+                }
+              }}
               data={accountsList}
 
 
@@ -161,7 +165,7 @@ const LeftPane = ({ accountsList }: Props) => {
 
         <EodBalance balance="$1,23,456" comparision={4.6} />
 
-        <RecentTransactions />
+        <RecentTransactions transaction={useAccount.Transaction} />
       </ContainerLeft>
     </>
   )
