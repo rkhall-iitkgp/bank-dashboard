@@ -18,7 +18,7 @@ const BalanceChart = (props: {
     <ReactApexChart
       type="area"
       height={340}
-      width={width}
+      width={550}
       margin={'auto'}
       options={{
         fill: { colors: [color] },
