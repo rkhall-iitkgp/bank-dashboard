@@ -3,29 +3,29 @@ import { useState } from 'react'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
 import StockStatistics from './stockStats'
+import EodBalance from './EODBalanceCard'
 import { TotalBalance } from './TotalBalance'
 import ExportButton from './ExportButton'
 
 const useStyles = createStyles((theme) => ({
   header: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    width: '50%',
+    justifyContent: 'space-between',
+    width: '95%',
   },
-  tab : {
-    color : 'black',
+  tab: {
+    color: 'black',
     fontWeight: 600,
     fontSize: '1.5rem',
     paddingInline: '3rem',
     fontFamily: 'Montserrat',
     backgroundColor: '#f4f4f4',
-    
+
     '&:first-of-type': {
       borderTopLeftRadius: '20px',
     },
-  
+
     '&:last-of-type': {
       borderTopRightRadius: '20px',
     },
@@ -35,14 +35,14 @@ const useStyles = createStyles((theme) => ({
       color: theme.colors.blue[7],
     },
   },
-  
+
   tabsPanel: {
     backgroundColor: '#fff',
     // borderRadius: '40px',
     // borderTopLeftRadius: '0px !important',
     height: '0',
     border: 'none',
-  }
+  },
 }))
 
 const RightPane = () => {
@@ -50,25 +50,26 @@ const RightPane = () => {
 
   return (
     <>
-      <Stack className="right-side" style={{ flex: 2.5 }} >
-        <Group mx={10}>
-          <Text fz={35} fw={700} ff="Montserrat">
-            Welcome Back,
-          </Text>
-          <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
-            Bill Gates!
-          </Text>
-          <div className={classes.header}>
+      <Stack className="right-side" style={{ flex: 2.5 }}>
+        <Group mx={10} className={classes.header}>
+          <div style={{ display: 'flex' }}>
+            <Text fz={35} fw={700} ff="Montserrat">
+              Welcome Back,&nbsp;
+            </Text>
+            <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
+              Bill Gates!
+            </Text>
+          </div>
+          <div style={{ justifyContent: 'flex-end' }}>
             <ExportButton />
           </div>
         </Group>
         <Group>
           <TotalBalance />
+          <EodBalance balance="$1,23,456" comparision={4.6} />
           <FinancialRatios />
         </Group>
-        <Tabs 
-          defaultValue="financial"
-        >
+        <Tabs defaultValue="financial">
           <Tabs.List style={{ border: 'none' }}>
             <Tabs.Tab value="financial" className={classes.tab}>
               Finances
@@ -79,11 +80,11 @@ const RightPane = () => {
           </Tabs.List>
 
           <Tabs.Panel value="financial" className={classes.tabsPanel}>
-            <FinancialStatistics/>
+            <FinancialStatistics />
           </Tabs.Panel>
 
           <Tabs.Panel value="stocks" className={classes.tabsPanel}>
-            <StockStatistics/>
+            <StockStatistics />
           </Tabs.Panel>
         </Tabs>
       </Stack>

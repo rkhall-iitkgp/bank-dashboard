@@ -13,7 +13,6 @@ const InsightCard = (props: { insights: string[] }) => {
             key={v}
             ff={'Montserrat'}
             c="#4D4B4B"
-            w={400}
             my={10}
             fw={700}
           >
