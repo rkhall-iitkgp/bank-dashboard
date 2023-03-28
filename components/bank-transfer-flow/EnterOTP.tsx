@@ -1,8 +1,8 @@
-import {createStyles, TextInput} from '@mantine/core'
+import { createStyles, TextInput } from '@mantine/core'
 // import ButtonGroup from './SmallComponents/ButtonGroup'
-import {SetStateAction, useState} from 'react'
+import { SetStateAction, useState } from 'react'
 // import { isNotEmpty, useForm } from '@mantine/form'
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 import Heading from '../reusable-components/Heading'
 import useStorage from '../../hooks/useStorage'
 import transms from '../transms'
@@ -215,8 +215,14 @@ export function EnterOTP() {
       return res.data
     }).catch(err => console.log(err))
 
-    response.then(v => console.log(v));
-    router.replace({ pathname: '/bank-transfer/payment-success', query: { id: data.id, amount: data.amount } })
+    response.then(v => {
+      if (v) {
+        console.log(v)
+        router.replace({ pathname: '/bank-transfer/payment-success', query: { id: data.id, amount: data.amount } })
+      } else {
+        alert("wrong otp");
+      }
+    });
   };
 
   return (
