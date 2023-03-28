@@ -22,7 +22,10 @@ const StockStatistics = () => (
       Stocks Analysis
     </Text>
     <Flex>
-        <TradingViewWidget />
+        <TradingViewWidget 
+          height={300}
+          width={1000}
+        />
       {/* <RecentInvestments /> */}
     </Flex>
   </Card>

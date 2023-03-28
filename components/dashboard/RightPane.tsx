@@ -20,11 +20,11 @@ const useStyles = createStyles((theme) => ({
     fontSize: '1.5rem',
     paddingInline: '2rem',
     fontFamily: 'Montserrat',
-    background: 'white',
+    backgroundColor: '#fff',
     
   },
   tabsPanel: {
-    background: 'white',
+    backgroundColor: '#fff',
     borderTopLeftRadius: '0px',
   }
 }))
