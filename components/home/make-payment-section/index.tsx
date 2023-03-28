@@ -64,8 +64,9 @@ export default function Payment({
   const [accLength, setAccLength] = useState('[]')
   useEffect(() => {
     GetKycStatus()
-    // setResult(1)
+    // setResult(0)
     setAccLength(getItem('accounts'))
+    console.log(result);
   }, [])
   return (
     <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '3vh' }}>
@@ -99,7 +100,6 @@ export default function Payment({
             </div>
           )}
 
-
           {result === 1 && accLength !== '[]' && <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
             <MakePaymentCard
               imageAddress="icons/bank-building-white.png"
@@ -113,8 +113,37 @@ export default function Payment({
             alt="Bank Transfer"
           /></div>}
 
+          {result === 0 && (
+            <div
+              onClick={() => {
+                SetIsKycPermissionPopUpOpen(true)
+              }}
+            >
+              <MakePaymentCard
+                imageAddress="icons/upi.png"
+                cardText="UPI Payment"
+                alt="UPI Payment"
+              />
+            </div>
+          )}
 
-          {(result === 0) ? (
+          {result === 1 && accLength !== '[]' && <Link href="/UPI" style={{ textDecoration: 'none' }}>
+            <MakePaymentCard
+              imageAddress="icons/upi.png"
+              cardText="UPI Payment"
+              alt="UPI Payment"
+            />
+          </Link>}
+          {result === 1 && accLength === '[]' && <div onClick={() => { setIsAddAccountPopupOpen(true) }}>
+            <MakePaymentCard
+              imageAddress="icons/upi.png"
+              cardText="UPI Payment"
+              alt="UPI Payment"
+            />
+          </div>}
+
+
+          {/* {(result===0) ? (
             <div
               onClick={() => {
                 SetIsKycPermissionPopUpOpen(true)
@@ -134,7 +163,7 @@ export default function Payment({
                 alt="UPI Payment"
               />
             </Link>
-          )}
+          )} */}
           <MakePaymentCard
             imageAddress="icons/payphone.png"
             cardText="Pay Phone Number"
