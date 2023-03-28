@@ -1,7 +1,7 @@
-import {createStyles} from '@mantine/core'
+import { createStyles } from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
-import {useState} from 'react'
+import { useState } from 'react'
 import Heading from '../reusable-components/Heading'
 
 const useStyles = createStyles((theme) => ({
@@ -169,8 +169,7 @@ function Account(props: {
           accountlist.forEach((e) => {
             e.classList.remove(classes.active)
           })
-          document
-            .getElementById(props.accountdata.id)
+          document.getElementById(props.accountdata.id)
             ?.classList.add(classes.active)
         }}
       >

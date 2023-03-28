@@ -106,7 +106,7 @@
 import { Button } from '@mantine/core'
 import { ButtonProps, createPolymorphicComponent } from '@mantine/core'
 import styled from '@emotion/styled'
-import api from '../../api'
+import api from '../../datams'
 import useStorage from '../../../hooks/useStorage'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -229,4 +229,4 @@ export default function SeeYourAnalysis({ SetIsPermissionPopUpOpen, SetIsKycPerm
   )
 }
 
-export default SeeYourAnalysis
+// export default SeeYourAnalysis

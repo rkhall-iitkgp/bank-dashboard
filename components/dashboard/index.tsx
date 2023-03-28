@@ -1,6 +1,6 @@
-import {Group, Image, Text} from '@mantine/core'
-import {useDisclosure} from '@mantine/hooks'
-import {useEffect, useState} from 'react'
+import { Group, Image, Text } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { useEffect, useState } from 'react'
 import Navbar from '../home/navbar/navbar'
 import styled from '@emotion/styled'
 import LeftPane from './LeftPane'
@@ -70,6 +70,7 @@ const Dashboard = () => {
   return (
     <div style={{ backgroundColor: '#F4F4F4' }}>
       <Navbar />
+
       <Container>
         <LeftPane accountsList={ACCOUNTFAKEDATA} />
         <RightPane />
