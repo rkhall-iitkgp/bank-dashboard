@@ -81,7 +81,10 @@ const Home: NextPage = () => {
         SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
       />
       <Navbar />
-      <SeeYourAnalysis SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen} />
+      <SeeYourAnalysis 
+      SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen} 
+      SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
+        setIsAddAccountPopupOpen={setIsAddAccountPopupOpen} />
       <Payment
         isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
         SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
