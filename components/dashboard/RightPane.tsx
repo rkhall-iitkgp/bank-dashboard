@@ -2,14 +2,8 @@ import { Stack, Group, Text, Select, createStyles, Tabs } from '@mantine/core'
 import { useState } from 'react'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
-<<<<<<< HEAD
-import StockStatistics from './stockStats'
 import EodBalance from './EODBalanceCard'
-||||||| 19f6dd9
-import StockStatistics from './stockStats'
-=======
 import StockStatistics from './StocksStatistics'
->>>>>>> dd625dc55116d77b8d00de1c5cb83fde98fd5617
 import { TotalBalance } from './TotalBalance'
 import ExportButton from './ExportButton'
 
