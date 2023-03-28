@@ -1,10 +1,11 @@
-import { Card, Stack, Group, Text, Button } from '@mantine/core'
+import { Button, Card, Group, Stack, Text } from '@mantine/core'
 import dynamic from 'next/dynamic'
-const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 import { useState } from 'react'
 import ArticlesCard from './articlesCard'
 import InsightCard from './insightCard'
 import RecentTransactionsRightPane from './recenttransactionsRightPane'
+
+const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const BalanceChart = (props: {
   balanceData: { x: string; y: number }[]
@@ -118,6 +119,64 @@ const MontlySpendingChart = (props: { data: { x: string; y: number }[] }) => {
     />
   )
 }
+var transactions = [
+  {
+    description: 'Jesse Pinkman Johnson',
+    date: '19 March, 2023, 17:10',
+    credit: 100,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Entertainment',
+  },
+  {
+    description: 'Jesse Pinkman Johnson',
+    date: '19 March, 2023, 17:10',
+    credit: 0,
+    debit: 200,
+    mode: 'UPI',
+    category: 'Food',
+  },
+  {
+    description: 'Heisenberg',
+    date: '19 March, 2023, 18:10',
+    credit: 0,
+    debit: 1000,
+    mode: 'Bank',
+    category: 'Travel',
+  },
+  {
+    description: 'Spotify',
+    date: '19 March, 2023, 17:20',
+    credit: 59,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Travel',
+  },
+  {
+    description: 'Spotify',
+    date: '19 March, 2023, 17:30',
+    credit: 59,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Travel',
+  },
+  {
+    description: 'Spotify',
+    date: '19 March, 2023, 15:10',
+    credit: 59,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Travel',
+  },
+  {
+    description: 'Spotify',
+    date: '19 March, 2023, 17:50',
+    credit: 59,
+    debit: 0,
+    mode: 'UPI',
+    category: 'Travel',
+  },
+]
 const PieCategoryData = [
   { value: 25.6, mode: 'Entertainment' },
   { value: 32, mode: 'Food' },
@@ -252,7 +311,7 @@ const FinancialStatistics = () => {
         </Stack>
 
         {categoryIndex != -1 && (
-          <Stack mx={10} style={{ flex: 3 }} styles={{maxHeight: '25rem'}}>
+          <Stack mx={10} style={{ flex: 3 }} styles={{ maxHeight: '25rem' }}>
             <div
               style={{
                 // border: "1px solid rgb(131 131 131 / 30%)",

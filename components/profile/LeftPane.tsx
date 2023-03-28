@@ -1,4 +1,4 @@
-import { Button, createStyles, Image } from '@mantine/core'
+import {Button, createStyles, Image} from '@mantine/core'
 import React from 'react'
 
 const useStyles = createStyles((theme) => ({

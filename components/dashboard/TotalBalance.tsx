@@ -1,9 +1,7 @@
-import { createStyles } from '@mantine/core'
-import Heading from '../reusable-components/Heading'
-import styled from '@emotion/styled'
-import { Group, Stack, Text } from '@mantine/core'
+import {createStyles} from '@mantine/core'
 import Image from 'next/image'
-const useStyles = createStyles((theme) => ({
+
+const useStyles = createStyles(() => ({
   container: {
     backgroundColor: `#ffffff`,
     borderRadius: `30px`,
@@ -83,7 +81,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export function TotalBalance() {
-  const { classes } = useStyles()
+  const { classes } = useStyles();
   let data = {
     totalBalance: '₹1,23,456',
     increment: '4.74%',

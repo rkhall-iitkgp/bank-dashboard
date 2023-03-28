@@ -8,7 +8,7 @@ import {
 import { hasLength, isNotEmpty, useForm } from '@mantine/form'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Heading from '../reusable-components/Heading'
 
 const useStyles = createStyles((theme) => ({
@@ -306,22 +306,6 @@ export function PaymentForm() {
               }}
             />
 
-            <Select
-              label="UPI ID"
-              variant="unstyled"
-              placeholder="Enter UPI ID"
-              data={[
-                { value: 'acc1', label: 'a1' },
-                { value: 'acc2', label: 'a2' },
-                { value: 'acc3', label: 'a3' },
-                { value: 'acc4', label: 'a4' },
-              ]}
-              classNames={{
-                input: classes.input,
-                label: classes.inputLabel,
-                root: classes.inputcontainer,
-              }}
-            />
             <div className={classes.payingtext}>Paying</div>
             <TextInput
               placeholder="Name*"

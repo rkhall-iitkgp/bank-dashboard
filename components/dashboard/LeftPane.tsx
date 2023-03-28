@@ -60,6 +60,7 @@ const LeftPane = ({ accountsList }: Props) => {
     '1256',
   )
   const [opened, { open, close }] = useDisclosure(false)
+  const [account, setaccount] = useState(0);
 
   return (
     <>
@@ -71,7 +72,7 @@ const LeftPane = ({ accountsList }: Props) => {
         onClose={close}
         centered
       >
-        <Filter />
+        <Filter account={account} setAccount={setaccount} />
       </Modal>
       <ContainerLeft>
         <FilterRow style={{ justifyContent: 'space-between' }}>
@@ -98,7 +99,7 @@ const LeftPane = ({ accountsList }: Props) => {
               placeholder="Bank Account"
               value={selectedBankAccount}
               onChange={SetSelectedBankAccount}
-              data={accountsList}
+              data={accountsList??[]}
             />
           </SelectBankAccount>
         </FilterRow>
@@ -120,7 +121,7 @@ const LeftPane = ({ accountsList }: Props) => {
 
         {/* <EodBalance balance="$1,23,456" comparision={4.6} /> */}
 
-        <RecentTransactions />
+        <RecentTransactions transactions={[]} />
       </ContainerLeft>
     </>
   )

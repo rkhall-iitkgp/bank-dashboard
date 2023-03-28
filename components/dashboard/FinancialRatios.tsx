@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Group, Stack, Text, Card } from '@mantine/core'
+import {Card, Group, Stack, Text} from '@mantine/core'
 
 const StyledStack = styled(Stack)`
   cursor: pointer;
@@ -96,7 +96,7 @@ export function FinancialRatios() {
         align="center"
         style={{ flexWrap: 'wrap', overflow: 'auto', flex: 1, height: '110px' }}
       >
-        {financialRatios.map((ele) => {
+        {financialRatios?.map((ele) => {
           return (
             <Span key={ele.id}>
               <RatioCard ratioName={ele.ratioName} value={ele.value} />

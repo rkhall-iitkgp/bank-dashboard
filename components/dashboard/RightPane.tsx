@@ -1,11 +1,10 @@
-import { Stack, Group, Text, Select, createStyles, Tabs } from '@mantine/core'
-import { useState } from 'react'
+import { createStyles, Group, Stack, Tabs, Text } from '@mantine/core'
+import ExportButton from './ExportButton'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
 import EodBalance from './EODBalanceCard'
 import StockStatistics from './StocksStatistics'
 import { TotalBalance } from './TotalBalance'
-import ExportButton from './ExportButton'
 
 const useStyles = createStyles((theme) => ({
   header: {

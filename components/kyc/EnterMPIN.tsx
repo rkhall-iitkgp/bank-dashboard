@@ -1,13 +1,13 @@
-import { createStyles, Group, PinInput, Box } from '@mantine/core'
+import {Box, createStyles, Group, PinInput} from '@mantine/core'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import ButtonGroup from '../reusable-components/ButtonGroup'
+import {useRouter} from 'next/router'
 import Heading from '../reusable-components/Heading'
-import { useForm, hasLength } from '@mantine/form'
-import api from '../api'
-import { IconCheck, IconX } from '@tabler/icons-react';
-import { notifications } from '@mantine/notifications';
+import {hasLength, useForm} from '@mantine/form'
+import api from '../datams'
+import {IconCheck, IconX} from '@tabler/icons-react';
+import {notifications} from '@mantine/notifications';
 import useStorage from '../../hooks/useStorage'
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: `100vh`,
@@ -139,9 +139,8 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export function EnterMPIN() {
-  const { classes } = useStyles()
+  const { classes } = useStyles();
   const router = useRouter()
-  const data = router.query
   const { getItem } = useStorage()
   const form = useForm({
     initialValues: {

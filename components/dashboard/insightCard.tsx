@@ -1,4 +1,4 @@
-import { Card, Text, List } from '@mantine/core'
+import {Card, List, Text} from '@mantine/core'
 
 const InsightCard = (props: { insights: string[] }) => {
   const { insights } = props
@@ -8,7 +8,7 @@ const InsightCard = (props: { insights: string[] }) => {
         Insights
       </Text>
       <List ml={30}>
-        {insights.map((v) => (
+        {insights?.map((v) => (
           <List.Item
             key={v}
             ff={'Montserrat'}

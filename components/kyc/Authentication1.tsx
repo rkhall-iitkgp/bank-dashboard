@@ -1,22 +1,25 @@
-
-import { createStyles } from '@mantine/core'
-import { useState, useRef } from 'react'
-import { FileButton, Button, Group, Text } from '@mantine/core'
-import { ButtonProps, createPolymorphicComponent } from '@mantine/core'
+import {
+    Button,
+    ButtonProps,
+    createPolymorphicComponent,
+    createStyles,
+    FileButton,
+    Group,
+    NumberInput
+} from '@mantine/core'
+import {useRef, useState} from 'react'
 import styled from '@emotion/styled'
-import { NumberInput } from '@mantine/core'
-import { Input } from '@mantine/core'
-import { TextInput } from '@mantine/core'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import { Router, useRouter } from 'next/router'
-import { hasLength, isInRange, isNotEmpty, useForm } from '@mantine/form'
+import {useRouter} from 'next/router'
+import {hasLength, isInRange, useForm} from '@mantine/form'
 import Link from 'next/link'
 import Heading from '../reusable-components/Heading'
-import { IconCheck, IconX } from '@tabler/icons-react';
-import api from '../api'
-import { notifications } from '@mantine/notifications';
+import {IconCheck, IconX} from '@tabler/icons-react';
+import api from '../datams'
+import {notifications} from '@mantine/notifications';
 import useStorage from '../../hooks/useStorage'
+
 const _StyledButton = styled(Button)`
   border-width: 0.125rem;
   &:hover {

@@ -1,26 +1,14 @@
-import {
-  Button,
-  createStyles,
-  Group,
-  PinInput,
-  Stack,
-  Text,
-  TextInput,
-  Title,
-  Box,
-  Checkbox,
-} from '@mantine/core'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
+import {Box, Button, Checkbox, createStyles, Group, PinInput, Stack, Text, TextInput, Title,} from '@mantine/core'
+import {useRouter} from 'next/router'
+import {useState} from 'react'
 
-import { IconCheck, IconX } from '@tabler/icons-react'
+import {IconCheck, IconX} from '@tabler/icons-react'
 import PhoneInput from 'react-phone-input-2'
-import { notifications } from '@mantine/notifications'
-import Image from 'next/image'
+import {notifications} from '@mantine/notifications'
 import 'react-phone-input-2/lib/style.css'
 import useStorage from '../../hooks/useStorage'
-import { useForm, isEmail, hasLength } from '@mantine/form'
-import api from '../api'
+import {hasLength, isEmail, useForm} from '@mantine/form';
+import datams from '../datams'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -199,7 +187,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export function LoginSignupPage() {
-  const { classes } = useStyles()
+  const { classes } = useStyles();
   const [mobile, setMobile] = useState('')
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
@@ -209,6 +197,7 @@ export function LoginSignupPage() {
   const [signUpLoading, setSignUpLoading] = useState(false)
   const [buttonClicked, setButtonClicked] = useState(false)
   const [enterOtp, setEnterOtp] = useState(false)
+  const [isSignUp, setIsSignUp] = useState(0);
   const router = useRouter()
   const [isSignIn, setIsSignIn] = useState(true)
   const [checked, setChecked] = useState(false)
@@ -220,7 +209,8 @@ export function LoginSignupPage() {
     consent: boolean,
   ) => {
     const { getItem, setItem } = useStorage()
-    let res = api
+    setIsSignUp(si);
+    let res = datams
       .post('/user/sendotp/', {
         contact_no: '+' + contact_no,
         email: email,
@@ -279,12 +269,13 @@ export function LoginSignupPage() {
   ) => {
     const { setItem } = useStorage()
 
-    let res = api
+    let res = datams
       .post('user/validateotp/', {
         contact_no: '+' + contact_no,
         otp: otp,
         email: email,
         isaccount: 0,
+        signup: isSignUp,
         name: name,
         consent: consent,
       })
@@ -479,7 +470,7 @@ export function LoginSignupPage() {
                         Sign In
                       </Button>
                       <div className={classes.togglesignin}>
-                        Don't have an account?{' '}
+                        Don&apos;t have an account?{' '}
                         <span
                           style={{
                             color: `black`,

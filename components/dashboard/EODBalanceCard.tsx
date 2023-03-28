@@ -1,4 +1,4 @@
-import { Card, Text, Group, Stack, HoverCard } from '@mantine/core'
+import {Group, Stack, Text} from '@mantine/core'
 
 const EodBalance = (props: { balance: string; comparision: number }) => {
   return (
