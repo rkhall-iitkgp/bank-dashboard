@@ -12,7 +12,7 @@ const useStyles = createStyles((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '95%',
+    width: '97.5%',
   },
   tab: {
     color: 'black',
@@ -33,6 +33,8 @@ const useStyles = createStyles((theme) => ({
       backgroundColor: '#fff',
       border: 'none',
       color: theme.colors.blue[7],
+      borderTopLeftRadius: '20px',
+      borderTopRightRadius: '20px',
     },
   },
 
@@ -55,10 +57,10 @@ const RightPane = () => {
         <Group mx={10} className={classes.header}>
           <div style={{ display: 'flex' }}>
             <Text fz={35} fw={700} ff="Montserrat">
-              Welcome Back!&nbsp;
+              Welcome Back,&nbsp;
             </Text>
             <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
-              {getItem('name')}
+              {getItem('name')+'!'}
             </Text>
           </div>
           <div style={{ justifyContent: 'flex-end' }}>

@@ -301,7 +301,7 @@ const FinancialStatistics = () => {
         align={'flex-end'}
         style={{
           flex: 1,
-          maxHeight: '14rem',
+          maxHeight: '44vh',
           overflow: 'auto',
           margin: 'auto',
         }}
