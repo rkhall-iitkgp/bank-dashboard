@@ -110,6 +110,7 @@ const AccountCard = ({ bankName, value }: Props) => {
     </div>
   )
 }
+
 export function ProfileCard() {
   const { classes } = useStyles()
   const { getItem } = useStorage()
@@ -124,9 +125,9 @@ export function ProfileCard() {
   //   { id: 3, bankName: 'sbi', value: '****8090' },
   // ]
   let data = {
-    PersonName: 'Bill Gates',
-    Email: 'bgiamrich@gmail.com',
-    PhoneNumber: '8675645300',
+    PersonName: getItem('name'),
+    Email: getItem('email'),
+    PhoneNumber: getItem('contact_no'),
   }
   return (
     <div className={classes.container}>
@@ -155,7 +156,7 @@ export function ProfileCard() {
             color: '#000000',
           }}
         >
-          {data.PersonName}
+          {getItem("name")}
         </span>
         <span
           style={{
@@ -167,7 +168,7 @@ export function ProfileCard() {
             color: '#4D4B4B',
           }}
         >
-          {data.Email}
+          {getItem("email")}
         </span>
       </div>
       <div
@@ -201,7 +202,7 @@ export function ProfileCard() {
             color: '#000000',
           }}
         >
-          {data.PhoneNumber}
+          {getItem("contact_no").slice(0, 3) + " " + getItem("contact_no").slice(3)}
         </span>
       </div>
       <div
@@ -225,7 +226,7 @@ export function ProfileCard() {
           Bank Accounts
         </span>
         <div className={classes.accountCollection}>
-          {BankAccount.map((ele: { id: Key | null | undefined; bankName: string | undefined; account_no: string | undefined }, key: any) => {
+          {BankAccount?.map((ele: { id: Key | null | undefined; bankName: string | undefined; account_no: string | undefined }, key: any) => {
             return (
               <span key={ele.id}>
                 <AccountCard
@@ -239,26 +240,26 @@ export function ProfileCard() {
       </div>
 
       <Link href="/profile">
-      <Button size="xs" className={classes.button1}>
-        <span 
-          style={{
-            fontFamily: 'Montserrat',
-            fontStyle: `normal`,
-            fontWeight: `500`,
-            fontSize: `16px`,
-            lineHeight: `27px`,
-          }}
-        >
-          Settings
-        </span>{' '}
-        &nbsp;{' '}
-        <Image
-          src={'/../public/icons/settings.png'}
-          width={18}
-          height={18}
-          alt={''}
-        ></Image>
-      </Button>
+        <Button size="xs" className={classes.button1}>
+          <span
+            style={{
+              fontFamily: 'Montserrat',
+              fontStyle: `normal`,
+              fontWeight: `500`,
+              fontSize: `16px`,
+              lineHeight: `27px`,
+            }}
+          >
+            Settings
+          </span>{' '}
+          &nbsp;{' '}
+          <Image
+            src={'/../public/icons/settings.png'}
+            width={18}
+            height={18}
+            alt={''}
+          ></Image>
+        </Button>
       </Link>
       <Button size="xs" className={classes.button2}>
         <span

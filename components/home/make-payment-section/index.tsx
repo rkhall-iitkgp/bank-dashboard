@@ -31,7 +31,6 @@ const _StyledButton = styled(Button)`
 const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
   _StyledButton,
 )
-
 interface Props {
   SetIsKycPermissionPopUpOpen: Function
   isKycPermissionPopUpOpen: any

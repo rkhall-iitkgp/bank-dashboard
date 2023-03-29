@@ -1,3 +1,4 @@
+import useStorage from '../../hooks/useStorage'
 import { createStyles, Group, Stack, Tabs, Text } from '@mantine/core'
 import ExportButton from './ExportButton'
 import { FinancialRatios } from './FinancialRatios'
@@ -45,6 +46,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 const RightPane = () => {
+  const { getItem } = useStorage()
   const { classes } = useStyles()
 
   return (
@@ -53,10 +55,10 @@ const RightPane = () => {
         <Group mx={10} className={classes.header}>
           <div style={{ display: 'flex' }}>
             <Text fz={35} fw={700} ff="Montserrat">
-              Welcome Back,&nbsp;
+              Welcome Back!&nbsp;
             </Text>
             <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
-              Bill Gates!
+              {getItem('name')}
             </Text>
           </div>
           <div style={{ justifyContent: 'flex-end' }}>

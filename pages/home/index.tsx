@@ -10,6 +10,8 @@ import SeeYourAnalysis from '../../components/home/see-your-analysis-section/See
 import { PermissionFormPopup } from '../../components/reusable-components/Permissionprompt'
 import useStorage from '../../hooks/useStorage'
 import { KycPermissionFormPopup } from '../../components/reusable-components/Kycprompt'
+import Filter from '../../components/filter'
+import FilterPopUp from '../../components/home/see-your-analysis-section/FilterPopUp'
 const Home: NextPage = () => {
   const { getItem, setItem } = useStorage()
   const [bankAccountList, setBankAccountList] = useState<any[]>([])
@@ -17,9 +19,10 @@ const Home: NextPage = () => {
     useState<boolean>(false)
 
   const GetAccounts = () => {
+
     const accessToken = getItem('access_token')
-    console.log(accessToken)
     const user_id = getItem('user_id')
+
 
     const response = api
       .get(`/user/accounts/${user_id}`, {
@@ -31,7 +34,7 @@ const Home: NextPage = () => {
       .then((response) => {
         console.log(response.data.accounts)
         const responseArray = response.data
-        responseArray.map((acc: any) => {
+        responseArray?.map((acc: any) => {
           let temp = bankAccountList
           temp.push(acc)
           setBankAccountList(temp)
@@ -45,27 +48,25 @@ const Home: NextPage = () => {
   }
 
   useEffect(() => {
-    return () => {
-      setLoading(true)
-      api
-        .get(`/user/accounts/${getItem('user_id')}/`, {
-          headers: { Authorization: `Bearer ${getItem('access_token')}` },
-        })
-        .then((response) => {
-          console.log(response.data.accounts)
-          const responseArray = response.data
-          setBankAccountList(responseArray)
-          console.log(bankAccountList)
+    setLoading(true)
+    api
+      .get(`/user/accounts/${getItem('user_id')}/`, {
+        headers: { Authorization: `Bearer ${getItem('access_token')}` },
+      })
+      .then((response) => {
+        console.log(response.data.accounts)
+        const responseArray = response.data
+        setBankAccountList(responseArray)
+        console.log(bankAccountList)
 
-          setItem('accounts', response.request.responseText)
-          setLoading(false)
-          return response
-        })
-        .catch((err) => {
-          console.log('error', err)
-          setLoading(false)
-        })
-    }
+        setItem('accounts', response.request.responseText)
+        setLoading(false)
+        return response
+      })
+      .catch((err) => {
+        console.log('error', err)
+        setLoading(false)
+      })
   }, [])
   const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] =
     useState<boolean>(false)
@@ -74,6 +75,7 @@ const Home: NextPage = () => {
     useState<boolean>(false)
 
   const [loading, setLoading] = useState(false)
+  const [isfilteropen, setIsfilteropen] = useState(false)
   return (
     <>
       <PermissionFormPopup
@@ -81,10 +83,7 @@ const Home: NextPage = () => {
         SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
       />
       <Navbar />
-      <SeeYourAnalysis 
-        SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen} 
-        SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
-        SetIsAddAccountPopupOpen={setIsAddAccountPopupOpen} />
+      <SeeYourAnalysis setIsAddAccountPopupOpen={setIsAddAccountPopupOpen} SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen} SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen} setIsfilteropen={setIsfilteropen} />
       <Payment
         isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
         SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
@@ -114,6 +113,15 @@ const Home: NextPage = () => {
       ) : (
         <></>
       )}
+      {isfilteropen ? (
+        <FilterPopUp
+          isfilteropen={isfilteropen}
+          setIsfilteropen={setIsfilteropen}
+        />
+      ) : (
+        <></>
+      )}
+
     </>
   )
 }

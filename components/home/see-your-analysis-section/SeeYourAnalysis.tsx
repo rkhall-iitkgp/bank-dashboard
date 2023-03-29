@@ -44,15 +44,16 @@ const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
   _StyledButton,
 )
 interface Props {
-  SetIsKycPermissionPopUpOpen: Function
   SetIsPermissionPopUpOpen: Function
-  // isKycPermissionPopUpOpen: any
-  SetIsAddAccountPopupOpen: Function
+  setIsfilteropen: Function
+  SetIsKycPermissionPopUpOpen: Function,
+  setIsAddAccountPopupOpen: Function
 }
 export default function SeeYourAnalysis({
   SetIsPermissionPopUpOpen,
   SetIsKycPermissionPopUpOpen,
-  SetIsAddAccountPopupOpen,
+  setIsAddAccountPopupOpen,
+  setIsfilteropen
 }: Props) {
   const { getItem } = useStorage()
   const [result, setResult] = useState(1)
@@ -96,6 +97,7 @@ export default function SeeYourAnalysis({
           variant="default"
           onClick={() => {
             SetIsKycPermissionPopUpOpen(true)
+            // setIsfilteropen(true)
           }}
         >
           See your analysis
@@ -106,7 +108,8 @@ export default function SeeYourAnalysis({
         <StyledButton
           variant="default"
           onClick={() => {
-            SetIsPermissionPopUpOpen(true)
+            // SetIsPermissionPopUpOpen(true)
+            setIsfilteropen(true);
           }}
         >
           See your analysis
@@ -116,7 +119,7 @@ export default function SeeYourAnalysis({
         <StyledButton
           variant="default"
           onClick={() => {
-            SetIsAddAccountPopupOpen(true)
+            setIsAddAccountPopupOpen(true)
           }}
         >
           See your analysis
