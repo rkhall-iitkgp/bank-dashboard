@@ -80,8 +80,8 @@ const LeftPane = ({ accountsList }: Props) => {
   const [withdrawlLimit, setWithdrawlLimit] = useState(1000)
   const selectedBankAccount = useAccountStore((state) => state.account_no)
   const [opened, { open, close }] = useDisclosure(false)
-  useEffect(() => {
 
+  useEffect(() => {
     accountsList.forEach(e => {
       e.value = e.account_no
       e.label = "****" + e.account_no.slice(8, 12)
