@@ -298,7 +298,7 @@ const FinancialStatistics = () => {
       </Card.Section>
 
       <Group
-        align={'flex-end'}
+        align={'flex-start'}
         style={{
           flex: 1,
           maxHeight: '44vh',
