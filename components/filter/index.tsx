@@ -81,7 +81,7 @@ const PeriodItem = (prop: {
 const AccountSelect = (prop: {
   account: { account_no: string, id: number }
   setAccount: Function
-  curSelection: number, key: Key | null | undefined
+  curSelection: string, key: Key | null | undefined
 }) => {
   const { account, setAccount, curSelection, key } = prop
   console.log(prop);
@@ -91,15 +91,15 @@ const AccountSelect = (prop: {
         backgroundColor: '#E6EFF9',
         color: '#000000',
         border: '2px solid #E6EFF9',
-        borderColor: curSelection === account.id ? '#0062D6' : '',
+        borderColor: curSelection === account.account_no ? '#0062D6' : '',
         boxShadow:
-          curSelection === account.id
+          curSelection === account.account_no
             ? 'inset 0px 4px 18px rgba(0, 0, 0, 0.2)'
             : '',
         margin: '0.2rem',
       }}
       radius="xl"
-      onClick={() => setAccount(account.id)}
+      onClick={() => setAccount(account.account_no)}
       fw="bold"
       fz={'lg'}
       size="xl"
