@@ -18,10 +18,12 @@ const useAccountStore = create(
             debit: 0,
             mode: '',
             category: '',
-        }]
+        }],
+        Loading: false
     },
         (set, get) => ({
             setTransaction: () => {
+                useAccountStore.setState({ Loading: true })
                 api.post("/user/gettrxn/", {
                     "account_no": get().account_no,
                     "mpin": get().mpin,
@@ -31,7 +33,7 @@ const useAccountStore = create(
                 }, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } }).then((res) => {
                     console.log('res', res)
 
-                    useAccountStore.setState({ Transaction: res.data })
+                    useAccountStore.setState({ Transaction: res.data, Loading: false })
 
                 }).catch(err => console.log('err', err))
 
