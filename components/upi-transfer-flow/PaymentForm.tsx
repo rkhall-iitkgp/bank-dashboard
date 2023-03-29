@@ -1,4 +1,10 @@
-import { createStyles, getStylesRef, Text, TextInput, Select } from '@mantine/core'
+import {
+  createStyles,
+  getStylesRef,
+  Text,
+  TextInput,
+  Select,
+} from '@mantine/core'
 import { hasLength, isNotEmpty, useForm } from '@mantine/form'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -232,7 +238,7 @@ export function PaymentForm() {
       setButtonText('Verified')
     }
   }
-  function handleClick2() { }
+  function handleClick2() {}
 
   useEffect(() => {
     if (form.values.upi_id === '') {
@@ -255,7 +261,7 @@ export function PaymentForm() {
       })
       setButtonText('Verify')
     }
-    return () => { }
+    return () => {}
   }, [form.values.upi_id])
 
   return (
@@ -300,22 +306,6 @@ export function PaymentForm() {
               }}
             />
 
-            <Select
-              label="UPI ID"
-              variant="unstyled"
-              placeholder="Enter UPI ID"
-              data={[
-                { value: 'acc1', label: 'a1' },
-                { value: 'acc2', label: 'a2' },
-                { value: 'acc3', label: 'a3' },
-                { value: 'acc4', label: 'a4' },
-              ]}
-              classNames={{
-                input: classes.input,
-                label: classes.inputLabel,
-                root: classes.inputcontainer,
-              }}
-            />
             <div className={classes.payingtext}>Paying</div>
             <TextInput
               placeholder="Name*"

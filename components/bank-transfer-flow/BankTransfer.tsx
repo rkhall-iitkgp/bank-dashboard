@@ -206,11 +206,7 @@ export function BankTransfer() {
   let fetchedAccount = JSON.parse(accounts ? accounts : "[]");
   console.log(fetchedAccount);
 
-  // const icons = social.map((Icon, index) => (
-  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-  //     <Icon size="1.4rem" stroke={1.5} />
-  //   </ActionIcon>
-  // ));
+
   const handleClick = () => {
     setClick(true)
   }
@@ -225,7 +221,7 @@ export function BankTransfer() {
             </div>
           </div>
           <div className={classes.accountContainer}>
-            {fetchedAccount.map((ele: { id: number, account_no: string, ifsc: string }) => {
+            {fetchedAccount?.map((ele: { id: number, account_no: string, ifsc: string }) => {
               return (
                 <span key={ele.account_no.slice(8, 12)} onClick={handleClick}>
                   <Account setAccount={setAccount} accountdata={ele} />

@@ -12,7 +12,7 @@ const ArticlesCard = (props: { articles: string[] }) => {
         </Text>
       </Card.Section>
       <List mx={10}>
-        {props.articles.map((v) => (
+        {props.articles?.map((v) => (
           <List.Item
             key={v}
             c={'#006BD2'}

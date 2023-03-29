@@ -1,10 +1,17 @@
 import styled from '@emotion/styled'
-import { Button, ButtonProps, Card, createPolymorphicComponent, Group, Text, } from '@mantine/core'
+import {
+  Button,
+  ButtonProps,
+  Card,
+  createPolymorphicComponent,
+  Group,
+  Text
+} from '@mantine/core'
 import Link from 'next/link'
-import MakePaymentCard from './MakePaymentCards'
-import api from '../../datams'
-import useStorage from '../../../hooks/useStorage'
 import { useEffect, useState } from 'react'
+import useStorage from '../../../hooks/useStorage'
+import api from '../../datams'
+import MakePaymentCard from './MakePaymentCards'
 
 const _StyledButton = styled(Button)`
   border-radius: 30px;
@@ -60,8 +67,9 @@ export default function Payment({
   const [accLength, setAccLength] = useState('[]')
   useEffect(() => {
     GetKycStatus()
-    // setResult(1)
+    // setResult(0)
     setAccLength(getItem('accounts'))
+    console.log(result)
   }, [])
   return (
     <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '3vh' }}>

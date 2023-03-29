@@ -1,8 +1,9 @@
 import styled from '@emotion/styled'
-import { Group, Image, Modal, Select } from '@mantine/core'
+import { Stack, Group, Card, Select, Image, Modal, Text, Avatar } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import Filter from '../filter'
+import useAccountStore from '../Store/Account'
 import CashCard from './CashLimitCard'
 import EodBalance from './EODBalanceCard'
 import RecentTransactions from './recenttransactions'
@@ -35,7 +36,6 @@ const SelectBankAccount = styled.div`
   border-radius: 50px;
   display: flex;
   gap: 8px;
-  background-color: #0062d6;
   cursor: pointer;
   color: white;
   flex: 3;
@@ -50,17 +50,51 @@ const ContainerLeft = styled(Container)`
   }
 `
 
+interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
+  image: string;
+  label: string;
+  description: string;
+}
+const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
+  ({ image, label, description, ...others }: ItemProps, ref) => (
+    <div ref={ref} {...others}>
+      <Group noWrap>
+        <Avatar src={image} size={20} />
+
+        <div>
+          <Text size="sm">{label}</Text>
+          <Text size="xs" opacity={0.65}>
+            {description}
+          </Text>
+        </div>
+      </Group>
+    </div>
+  )
+);
 interface Props {
   accountsList: any[]
 }
-
 const LeftPane = ({ accountsList }: Props) => {
+  const useAccount = useAccountStore();
   const [depositLimit, setDepositLimit] = useState(1000)
   const [withdrawlLimit, setWithdrawlLimit] = useState(1000)
-  const [selectedBankAccount, SetSelectedBankAccount] = useState<string | null>(
-    '1256',
-  )
+  const selectedBankAccount = useAccountStore((state) => state.account_no)
   const [opened, { open, close }] = useDisclosure(false)
+  useEffect(() => {
+
+    accountsList.forEach(e => {
+      e.value = e.account_no
+      e.label = "****" + e.account_no.slice(8, 12)
+      e.image = 'icons/sbilogo.png'
+      e.name = e.account_no
+      e.description = e.account_no
+    })
+
+  }, [])
+  useEffect(() => {
+    console.log('useAccount.Transaction', useAccount.Transaction)
+    console.log('selectedBankAccount', selectedBankAccount)
+  }, [selectedBankAccount])
   const [account, setaccount] = useState(0);
 
   return (
@@ -73,7 +107,8 @@ const LeftPane = ({ accountsList }: Props) => {
         onClose={close}
         centered
       >
-        <Filter account={account} setAccount={setaccount} />
+        <Filter todashboard={false} close={close} />
+        {/* <Filter account={account} setAccount={setaccount} /> */}
       </Modal>
       <ContainerLeft>
         <FilterRow style={{ justifyContent: 'space-between' }}>
@@ -96,10 +131,17 @@ const LeftPane = ({ accountsList }: Props) => {
                   alt="sbi-logo"
                 />
               }
+              itemComponent={SelectItem}
+              // searchable
               radius="lg"
               placeholder="Bank Account"
               value={selectedBankAccount}
-              onChange={SetSelectedBankAccount}
+              onChange={(e) => {
+                if (e) {
+                  useAccount.account_no = e.toString()
+                  useAccount.setTransaction()
+                }
+              }}
               data={accountsList}
             />
           </SelectBankAccount>
@@ -120,9 +162,9 @@ const LeftPane = ({ accountsList }: Props) => {
           />
         </Group>
 
-        <EodBalance balance="$1,23,456" comparision={4.6} />
+        {/* <EodBalance balance="$1,23,456" comparision={4.6} /> */}
 
-        <RecentTransactions transactions={[]} />
+        <RecentTransactions transactions={useAccount.Transaction} />
       </ContainerLeft>
     </>
   )
