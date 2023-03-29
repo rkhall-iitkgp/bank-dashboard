@@ -149,13 +149,13 @@ const LeftPane = ({ accountsList }: Props) => {
 
         <Group style={{ justifyContent: 'space-between' }}>
           <CashCard
-            num={5}
+            num={[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]}
             type={'deposit'}
             limit={depositLimit}
             setLimit={setDepositLimit}
           />
           <CashCard
-            num={10}
+            num={[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]}
             type={'withdrawl'}
             limit={withdrawlLimit}
             setLimit={setWithdrawlLimit}
