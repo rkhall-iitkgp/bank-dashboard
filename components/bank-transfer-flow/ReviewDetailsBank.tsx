@@ -191,9 +191,14 @@ export function ReviewDetailsBank(props: { sbi: any }) {
   const { getItem } = useStorage()
   const accessToken = getItem('access_token')
   const contact_no = getItem('contact_no')
-  const account = JSON.parse(getItem('accounts')).filter(
-    (v: { id: number }) => v.id + '' == data.id,
-  )[0]
+  let account
+  try {
+    account = JSON.parse(getItem('accounts') ?? '[]')?.filter(
+      (v: { id: number }) => v.id + '' == data.id,
+    )[0]
+  } catch {
+    console.log('JSON parsing error')
+  }
 
   const handleContinue = () => {
     const response = transms

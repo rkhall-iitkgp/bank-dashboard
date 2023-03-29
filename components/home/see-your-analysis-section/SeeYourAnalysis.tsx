@@ -1,11 +1,9 @@
-import { Button } from '@mantine/core'
-import { ButtonProps, createPolymorphicComponent } from '@mantine/core'
+import React from 'react'
 import styled from '@emotion/styled'
-import api from '../../datams'
+import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core'
+import { useEffect, useState } from 'react'
 import useStorage from '../../../hooks/useStorage'
-import { useState } from 'react'
-import { useEffect } from 'react'
-
+import api from '../../datams'
 const Container = styled.div`
   margin-left: 3vw;
   margin-right: 3vw;
