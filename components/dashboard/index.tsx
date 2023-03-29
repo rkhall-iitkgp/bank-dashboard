@@ -1,12 +1,19 @@
+import { Card, Group, Image, Modal, Select, Stack, Text } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { useEffect, useState } from 'react'
+import Filter from '../filter'
+import CashCard from './CashLimitCard'
+import EodBalance from './EODBalanceCard'
+import { FinancialRatios } from './FinancialRatios'
+import FinancialStatistics from './statistics'
+import { TotalBalance } from './TotalBalance'
+import RecentTransactions from './recenttransactions'
 import styled from '@emotion/styled'
-import { Group, Image, Text } from '@mantine/core'
 import Navbar from '../home/navbar/navbar'
 import LeftPane from './LeftPane'
 import RightPane from './RightPane'
 import useStorage from '../../hooks/useStorage'
 import transms from '../transms'
-import { useDisclosure } from '@mantine/hooks'
-import { useState, useEffect } from 'react'
 
 const Dashboard = () => {
   const [depositLimit, setDepositLimit] = useState(1000)
@@ -39,7 +46,7 @@ const Dashboard = () => {
     response.then((v) => {
       console.log('response = ', v)
       setTransactionData(v.transactions)
-    }).catch((e)=>console.log(e))
+    }).catch((e) => console.log(e))
   }
 
   useEffect(GetTransactions, [])
@@ -64,6 +71,7 @@ const Dashboard = () => {
       </Group>
     )
   }
+
   const accounts = getItem('accounts')
   let ACCOUNTFAKEDATA
   try {
@@ -80,6 +88,8 @@ const Dashboard = () => {
     height: 100vh;
     margin-top: 16px;
   `
+  useEffect(() => {
+  }, [])
   return (
     <div style={{ backgroundColor: '#F4F4F4' }}>
       <Navbar />

@@ -1,4 +1,4 @@
-import {Button, createStyles, Image} from '@mantine/core'
+import { Button, createStyles, Image } from '@mantine/core'
 import React from 'react'
 import useStorage from '../../hooks/useStorage'
 
@@ -130,23 +130,19 @@ const AccountSelect = ({ account_no }: Props) => {
         height={20}
         src="/icons/sbi.png"
       ></Image>
-      <div className={classes.content}>{'**** ' + account_no.toString().slice(8, 12)}</div>
+      <div className={classes.content}>
+        {'**** ' + account_no.toString().slice(8, 12)}
+      </div>
     </div>
   )
 }
 
 interface Props2 {
-    accounts: any[]
+  accounts: any[]
 }
 const LeftPane = ({ accounts }: Props2) => {
   const { classes } = useStyles()
   const { getItem } = useStorage()
-  let data = {
-    name: getItem('name'),
-    email: getItem('email'),
-    phone: getItem('contact_no'),
-  }
-
   return (
     <>
       <div>
@@ -158,14 +154,18 @@ const LeftPane = ({ accounts }: Props2) => {
           radius={1000}
         ></Image>
       </div>
-      <div className={classes.name}>{data.name}</div>
+      <div className={classes.name}>{getItem('name')}</div>
       <div className={classes.email}>
         <div className={classes.title}>Email</div>
-        <div className={classes.content}>{data.email}</div>
+        <div className={classes.content}>{getItem('email')}</div>
       </div>
       <div className={classes.phone}>
         <div className={classes.title}>Phone Number</div>
-        <div className={classes.content}>{data.phone}</div>
+        <div className={classes.content}>
+          {getItem('contact_no').slice(0, 3) +
+            ' ' +
+            getItem('contact_no').slice(3)}
+        </div>
       </div>
       <div>
         <div className={classes.title}>Bank Accounts</div>

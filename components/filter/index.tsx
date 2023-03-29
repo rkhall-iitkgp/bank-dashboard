@@ -1,18 +1,25 @@
 import {
-    Button,
-    ButtonProps,
-    Checkbox,
-    createPolymorphicComponent,
-    Group,
-    Image,
-    PinInput,
-    Stack,
-    Text,
+  createStyles,
+  Button,
+  ButtonProps,
+  Checkbox,
+  createPolymorphicComponent,
+  Group,
+  Image,
+  PinInput,
+  Stack,
+  Text,
 } from '@mantine/core'
-import {DateInput} from '@mantine/dates'
+import { DateInput } from '@mantine/dates'
 import styled from '@emotion/styled'
-import {Key, useState} from 'react'
+import { Key, useState } from 'react'
 import useStorage from '../../hooks/useStorage'
+import api from '../datams'
+import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
+import dayjs from 'dayjs'
+import { useRouter } from 'next/router'
+import useAccountStore from '../Store/Account'
+import { useDisclosure } from '@mantine/hooks'
 
 const _PeriodButton = styled(Button)`
   width: 213px;
@@ -27,21 +34,44 @@ const _PeriodButton = styled(Button)`
 const PeriodButton = createPolymorphicComponent<'button', ButtonProps>(
   _PeriodButton,
 )
+const useStyles = createStyles(() => ({
+  control: {
+    fontFamily: 'Montserrat, sans-serif',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: '20px',
+    lineHeight: '26px',
+    backgroundColor: `#006AE4`,
+    borderRadius: `20px`,
+    width: `300px`,
+    marginLeft: `auto`,
+    marginRight: 0,
+    display: `block`
+  },
+}))
 
 const PeriodItem = (prop: {
   id: Number
   curId: number
   text: string
   setId: Function
+  form: any
 }) => {
-  const { id, text, setId, curId } = prop
+  const { id, text, setId, curId, form } = prop
+  const text1: any = text.split(" ")
   return (
     <PeriodButton
       style={{
         backgroundColor: id === curId ? '#0062D6' : '#FFFFFF',
         color: id === curId ? '#FFFFFF' : '#0062D6',
       }}
-      onClick={() => setId(id)}
+      onClick={() => {
+        setId(id)
+        if (id !== 5) {
+          form.values.Datefrom = dayjs(new Date()).subtract(parseInt(text1[0]), text1[1]).toDate()
+
+        }
+      }}
     >
       {text}
     </PeriodButton>
@@ -66,7 +96,7 @@ const AccountSelect = (prop: {
           curSelection === account.id
             ? 'inset 0px 4px 18px rgba(0, 0, 0, 0.2)'
             : '',
-        margin: '0.5rem',
+        margin: '0.2rem',
       }}
       radius="xl"
       onClick={() => setAccount(account.id)}
@@ -79,33 +109,36 @@ const AccountSelect = (prop: {
     </Button>
   )
 }
+interface props {
+  todashboard: any,
+  close: Function
+}
+const Filter = ({ todashboard, close }: props) => {
+  const useAccount = useAccountStore()
+  const [id, setId] = useState(1)
+  const { getItem } = useStorage()
+  const accounts = JSON.parse(getItem("accounts"))
+  const [account, setAccount] = useState<any>(useAccount.account_no)
+  const [mpin, setMpin] = useState<string | null>(useAccount.mpin)
+  const [haveConsent, setHaveConsent] = useState(false)
+  const { classes } = useStyles()
 
-const Filter = (props: { account: number, setAccount: Function }) => {
-  const [id, setId] = useState(1);
-  const { getItem } = useStorage();
-  const accounts = JSON.parse(getItem('accounts'));
-  const { account, setAccount } = props;
-  const [haveConsent, setHaveConsent] = useState(false);
-  const filterHandler = () => {
+  const form = useForm({
+    initialValues: {
+      Datefrom: dayjs(new Date()).subtract(1, 'month').toDate(),
+      Dateto: new Date(),
+    },
 
-  }
+    // validate: {
+    //   Datefrom: matches(/^[A-Z]{4}0[A-Z0-9]{6}$/, "Enter A Valid IFSC Code"),
+    //   Dateto: matches(/^[A-Z]{4}0[A-Z0-9]{6}$/, "Enter A Valid IFSC Code")
 
+    // },
+  });
+  const router = useRouter()
   return (
-    <div style={{ width: '585px', paddingLeft: 50 }}>
-      <Group mb={20}>
-        <Stack mr={40}>
-          <Text c={'#656565'} fz={'lg'} style={{ letterSpacing: '0.1em' }}>
-            From
-          </Text>
-          <DateInput valueFormat="YYYY MMM DD" placeholder="" />
-        </Stack>
-        <Stack ml={40}>
-          <Text c={'#656565'} fz={'lg'} style={{ letterSpacing: '0.1em' }}>
-            To
-          </Text>
-          <DateInput valueFormat="YYYY MMM DD" placeholder="" />
-        </Stack>
-      </Group>
+    <div style={{ width: '585px', padding: 20 }}>
+
 
       <div className="filter-period">
         <Text c={'#656565'} fz={'lg'} style={{ letterSpacing: '0.1em' }}>
@@ -113,14 +146,28 @@ const Filter = (props: { account: number, setAccount: Function }) => {
         </Text>
 
         <div style={{ marginBottom: '1.5rem' }}>
-          <PeriodItem id={0} text={'1 week'} setId={setId} curId={id} />
-          <PeriodItem id={1} text={'1 month'} setId={setId} curId={id} />
-          <PeriodItem id={2} text={'3 months'} setId={setId} curId={id} />
-          <PeriodItem id={3} text={'6 months'} setId={setId} curId={id} />
-          <PeriodItem id={4} text={'1 year'} setId={setId} curId={id} />
-          <PeriodItem id={5} text={'5 year'} setId={setId} curId={id} />
+          <PeriodItem form={form} id={0} text={'1 week'} setId={setId} curId={id} />
+          <PeriodItem form={form} id={1} text={'1 month'} setId={setId} curId={id} />
+          <PeriodItem form={form} id={2} text={'3 months'} setId={setId} curId={id} />
+          <PeriodItem form={form} id={3} text={'6 months'} setId={setId} curId={id} />
+          <PeriodItem form={form} id={4} text={'1 year'} setId={setId} curId={id} />
+          <PeriodItem form={form} id={5} text={'Custom'} setId={setId} curId={id} />
         </div>
       </div>
+      {id === 5 ? <Group mb={20}>
+        <Stack mr={40}>
+          <Text c={'#656565'} fz={'lg'} style={{ letterSpacing: '0.1em' }} >
+            From
+          </Text>
+          <DateInput valueFormat="YYYY MMM DD" placeholder="Date Input" maxDate={form.values.Dateto} {...form.getInputProps('Datefrom')} />
+        </Stack>
+        <Stack ml={40}>
+          <Text c={'#656565'} fz={'lg'} style={{ letterSpacing: '0.1em' }}>
+            To
+          </Text>
+          <DateInput valueFormat="YYYY MMM DD" placeholder="Date Input" maxDate={new Date()}  {...form.getInputProps('Dateto')} />
+        </Stack>
+      </Group> : <></>}
 
       <div style={{ marginBottom: '1.5rem' }}>
         <Text c={'#656565'} fz={'lg'} style={{ letterSpacing: '0.1em' }}>
@@ -139,15 +186,15 @@ const Filter = (props: { account: number, setAccount: Function }) => {
         </Group>
       </div>
 
-      {!haveConsent && (
+      {/* {!haveConsent && (
         <Checkbox
           label="By clicking this, I provide my consent to allow the bank to process my transaction data."
           mb={10}
         />
-      )}
+      )} */}
 
       <div>
-        {account !== 0 && (
+        {account && todashboard && (
           <>
             <div>
               <Text c={'#656565'} fz={'lg'} style={{ letterSpacing: '0.1em' }}>
@@ -160,24 +207,58 @@ const Filter = (props: { account: number, setAccount: Function }) => {
                 style={{ margin: '0.5rem' }}
                 radius="md"
                 size={'lg'}
+                oneTimeCode
+                value={mpin ? mpin : ''}
+                onChange={(e) => setMpin(e)}
               />
             </div>
           </>
         )}
       </div>
+      <div>
+        <Button
+          size="lg"
+          className={classes.control}
+          onClick={() => {
+            if (mpin && id && account && todashboard) {
+              api.post("/user/gettrxn/", {
+                "account_no": account,
+                "mpin": mpin,
+                "startDate": form.values.Datefrom.getUTCFullYear() + "-" + (form.values.Datefrom.getMonth() + 1) + "-" + form.values.Datefrom.getDate(),
+                "endDate": form.values.Dateto.getUTCFullYear() + "-" + (form.values.Dateto.getMonth() + 1) + "-" + form.values.Dateto.getDate()
 
-      <Button
-        radius={'xl'}
-        variant="gradient"
-        gradient={{ from: '#0062D6', to: '#0062D6' }}
-        onClick={() => filterHandler()}
-        px={55}
-        ff="Montserrat"
-        fw={500}
-        ml="23rem"
-      >
-        Filter
-      </Button>
+              }, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } }).then((res) => {
+                console.log('res', res)
+                useAccount.Transaction = res.data
+                useAccount.account_no = account;
+                useAccount.mpin = mpin;
+                useAccount.startDate = form.values.Datefrom;
+                useAccount.endDate = form.values.Dateto;
+                router.push("/dashboard")
+              }).catch(err => console.log('err', err))
+            } else if (mpin && id && account && !todashboard) {
+              api.post("/user/gettrxn/", {
+                "account_no": account,
+                "mpin": mpin,
+                "startDate": form.values.Datefrom.getUTCFullYear() + "-" + (form.values.Datefrom.getMonth() + 1) + "-" + form.values.Datefrom.getDate(),
+                "endDate": form.values.Dateto.getUTCFullYear() + "-" + (form.values.Dateto.getMonth() + 1) + "-" + form.values.Dateto.getDate()
+
+              }, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } }).then((res) => {
+                console.log('res', res)
+                useAccount.Transaction = res.data
+                useAccount.account_no = account;
+                useAccount.mpin = mpin;
+                useAccount.startDate = form.values.Datefrom;
+                useAccount.endDate = form.values.Dateto;
+                console.log('hello')
+                close()
+              }).catch(err => console.log('err', err))
+            }
+          }}
+        >
+          {todashboard ? "Continue" : "Filter"}
+        </Button>
+      </div>
     </div>
   )
 }

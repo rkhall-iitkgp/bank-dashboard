@@ -1,4 +1,4 @@
-import {Card, Group, HoverCard, Stack, Text} from '@mantine/core'
+import { Card, Group, HoverCard, Stack, Text } from '@mantine/core'
 
 const palette = ['#D56EEA', '#26DD76', '#FFAA57', '#4198FF']
 
@@ -153,7 +153,9 @@ const TransactionCard = (props: {
     </Card>
   )
 }
-
+interface props {
+  transaction: any[]
+}
 const RecentTransactions = (prop: {
   transactions: {
     date: string
