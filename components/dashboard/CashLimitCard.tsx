@@ -1,4 +1,4 @@
-import {Card, Stack, Text} from '@mantine/core'
+import {Card, Stack, Text, TextInput} from '@mantine/core'
 import {useState} from 'react'
 
 const CashCard = (props: {
