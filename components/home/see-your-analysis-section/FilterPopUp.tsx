@@ -13,7 +13,7 @@ const FilterPopUp = ({ isfilteropen, setIsfilteropen }: props) => {
         <> <Modal
             withCloseButton={false}
             opened={isfilteropen}
-            onClose={close}
+            onClose={() => setIsfilteropen(false)}
             centered
             radius="lg"
             size="auto"

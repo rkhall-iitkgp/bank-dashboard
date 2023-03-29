@@ -2,7 +2,7 @@
 import dayjs from 'dayjs'
 import { create } from 'zustand'
 import useStorage from '../../hooks/useStorage'
-import api from '../api'
+import api from '../datams'
 import { combine } from 'zustand/middleware'
 const { getItem } = useStorage()
 const useAccountStore = create(
