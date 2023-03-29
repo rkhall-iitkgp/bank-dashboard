@@ -237,43 +237,43 @@ export function PaymentForm() {
   })
   const [buttonText, setButtonText] = useState('Verify')
 
-  function handleClick1() {
-    if (form.values.upi_id !== '') {
-      setStyle2({
-        color: '#00AD30',
-        fontFamily: 'Montserrat',
-        fontWeight: 600,
-        fontSize: '18px',
-        cursor: 'pointer',
-      })
-      setButtonText('Verified')
-    }
-  }
-  function handleClick2() { }
+  // function handleClick1() {
+  //   if (form.values.upi_id !== '') {
+  //     setStyle2({
+  //       color: '#00AD30',
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: 600,
+  //       fontSize: '18px',
+  //       cursor: 'pointer',
+  //     })
+  //     setButtonText('Verified')
+  //   }
+  // }
+  // function handleClick2() { }
 
-  useEffect(() => {
-    if (form.values.upi_id === '') {
-      setButtonText('Verify')
-      setStyle2({
-        color: '#0062D6',
-        fontFamily: 'Montserrat',
-        fontWeight: 400,
-        fontSize: '18px',
-        cursor: 'no-drop',
-      })
-      setButtonText('Verify')
-    } else {
-      setStyle2({
-        color: '#0062D6',
-        fontFamily: 'Montserrat',
-        fontWeight: 400,
-        fontSize: '18px',
-        cursor: 'pointer',
-      })
-      setButtonText('Verify')
-    }
-    return () => { }
-  }, [form.values.upi_id])
+  // useEffect(() => {
+  //   if (form.values.upi_id === '') {
+  //     setButtonText('Verify')
+  //     setStyle2({
+  //       color: '#0062D6',
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: 400,
+  //       fontSize: '18px',
+  //       cursor: 'no-drop',
+  //     })
+  //     setButtonText('Verify')
+  //   } else {
+  //     setStyle2({
+  //       color: '#0062D6',
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: 400,
+  //       fontSize: '18px',
+  //       cursor: 'pointer',
+  //     })
+  //     setButtonText('Verify')
+  //   }
+  //   return () => { }
+  // }, [form.values.upi_id])
 
   return (
     <div className={classes.wrapper}>

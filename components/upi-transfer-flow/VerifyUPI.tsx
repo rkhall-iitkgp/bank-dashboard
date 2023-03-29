@@ -177,7 +177,7 @@ function Demo() {
 export function VerifyUPI() {
   const [buttonText, setButtonText] = useState('Verify')
   const [upiValue, setUpiValue] = useState('');
-  const [data, setData] = useState([{ value: [], label: [] }]);
+  const [data, setData] = useState<{ value: string, label: string }[]>([]);
   const { getItem, setItem } = useStorage()
 
   
@@ -189,11 +189,12 @@ export function VerifyUPI() {
       const upis = accounts.map((account: { upi: string | null }) => account.upi);
       console.log(upis);
       
-      let upi = []
-      let ele;
-      upis.map((ele)=>{
-        upi.push({value: ele, label: ele})
-      })
+      // let upi = []
+      // let ele;
+      // upis.map((ele)=>{
+      //   upi.push({value: ele, label: ele})
+      // })
+      const upi = upis.map((ele) => ({ value: ele, label: ele}))
       setData(upi)
       console.log(data);
       

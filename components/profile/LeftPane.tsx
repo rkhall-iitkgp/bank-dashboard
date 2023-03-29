@@ -1,5 +1,6 @@
 import {Button, createStyles, Image} from '@mantine/core'
 import React from 'react'
+import useStorage from '../../hooks/useStorage'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -139,6 +140,12 @@ interface Props2 {
 }
 const LeftPane = ({ accounts }: Props2) => {
   const { classes } = useStyles()
+  const { getItem } = useStorage()
+  let data = {
+    name: getItem('name'),
+    email: getItem('email'),
+    phone: getItem('contact_no'),
+  }
 
   return (
     <>
@@ -151,14 +158,14 @@ const LeftPane = ({ accounts }: Props2) => {
           radius={1000}
         ></Image>
       </div>
-      <div className={classes.name}>Bill Gates</div>
+      <div className={classes.name}>{data.name}</div>
       <div className={classes.email}>
         <div className={classes.title}>Email</div>
-        <div className={classes.content}>Rraj@1369</div>
+        <div className={classes.content}>{data.email}</div>
       </div>
       <div className={classes.phone}>
         <div className={classes.title}>Phone Number</div>
-        <div className={classes.content}>9001175253</div>
+        <div className={classes.content}>{data.phone}</div>
       </div>
       <div>
         <div className={classes.title}>Bank Accounts</div>

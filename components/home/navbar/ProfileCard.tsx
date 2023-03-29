@@ -75,7 +75,6 @@ const useStyles = createStyles((theme) => ({
 interface Props {
   bankName?: string
   value?: string
-  bankAccountList: any[]
 }
 
 const AccountCard = ({ bankName, value }: Props) => {
@@ -112,7 +111,7 @@ const AccountCard = ({ bankName, value }: Props) => {
   )
 }
 
-export function ProfileCard({bankAccountList}:Props) {
+export function ProfileCard() {
   const { classes } = useStyles()
   const { getItem } = useStorage()
 
@@ -126,9 +125,9 @@ export function ProfileCard({bankAccountList}:Props) {
   //   { id: 3, bankName: 'sbi', value: '****8090' },
   // ]
   let data = {
-    PersonName: 'Bill Gates',
-    Email: 'bgiamrich@gmail.com',
-    PhoneNumber: '8675645300',
+    PersonName: getItem('name'),
+    Email: getItem('email'),
+    PhoneNumber: getItem('contact_no'),
   }
   return (
     <div className={classes.container}>
