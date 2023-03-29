@@ -2,7 +2,7 @@ import {Card, Stack, Text, TextInput} from '@mantine/core'
 import {useState} from 'react'
 
 const CashCard = (props: {
-  num: number
+  num: number[]
   type: string
   limit: number
   setLimit: Function
@@ -14,6 +14,14 @@ const CashCard = (props: {
   const ffc = type === 'withdrawl' ? '#D73331' : '#2CC578'
   const text =
     type === 'withdrawl' ? 'Large Cash Withdrawls' : 'Large Cash Deposits'
+
+  const [filteredNum, setFilteredNum] = useState(num.filter((n) => n <= limit))
+
+  const handleFilterChange = (e) => {
+    const newLimit = e.target.value
+    setLimit(newLimit)
+    setFilteredNum(num.filter((n) => n <= newLimit))
+  }
 
   return (
     <Card
@@ -39,7 +47,7 @@ const CashCard = (props: {
       </Card.Section>
       <Stack align="center" my={15}>
         <Text fz={24} c={ffc} fw={700} style={{ lineHeight: 0.8 }}>
-          {num}
+          {filteredNum.length}
         </Text>
         <Text
           c={'#4D4B4B'}
@@ -59,10 +67,11 @@ const CashCard = (props: {
             border: 'none',
             // boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.3)',
           }} 
+          onChange={handleFilterChange}
         />
       </Stack>
     </Card>
   )
 }
 
-export default CashCard
+export default CashCard;
