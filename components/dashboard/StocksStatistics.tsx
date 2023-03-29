@@ -1,8 +1,13 @@
+import React from 'react'
 import { Card, Flex, Text } from '@mantine/core'
 import dynamic from 'next/dynamic'
-const TradingViewWidget = dynamic(() => import('react-tradingview-widget'), {
-  ssr: false,
-})
+const AdvancedRealTimeChart = dynamic(
+  () =>
+    import('react-ts-tradingview-widgets').then((w) => w.AdvancedRealTimeChart),
+  {
+    ssr: false,
+  },
+)
 
 // import TradingViewWidget from 'react-tradingview-widget'
 
@@ -26,7 +31,13 @@ const StockStatistics = () => (
       Stocks Analysis
     </Text>
     <Flex>
-      <TradingViewWidget height={280} width={1010} />
+      <AdvancedRealTimeChart
+        theme="dark"
+        height={280}
+        width={1010}
+      ></AdvancedRealTimeChart>
+
+      {/* <SymbolOverviewNoSSR height={280} width={1010} /> */}
       {/* <RecentInvestments /> */}
     </Flex>
   </Card>

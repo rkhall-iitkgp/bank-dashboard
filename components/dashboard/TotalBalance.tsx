@@ -1,3 +1,4 @@
+import React from 'react';
 import {createStyles} from '@mantine/core'
 import Image from 'next/image'
 
@@ -82,7 +83,7 @@ const useStyles = createStyles(() => ({
 
 export function TotalBalance() {
   const { classes } = useStyles();
-  let data = {
+  const data = {
     totalBalance: '₹1,23,456',
     increment: '4.74%',
     timePeriod: '1',
