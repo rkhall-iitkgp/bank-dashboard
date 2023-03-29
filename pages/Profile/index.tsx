@@ -25,7 +25,7 @@ const ProfilePage = () => {
       .then((response) => {
         console.log(response.data)
         // const responseArray = response.data
-        // responseArray.map((acc: any) => {
+        // responseArray?.map((acc: any) => {
         //   let temp = bankAccountList
         //   temp.push(acc)
         //   setBankAccountList(temp)

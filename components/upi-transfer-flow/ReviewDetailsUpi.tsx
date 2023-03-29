@@ -239,7 +239,7 @@ export function ReviewDetailsUpi() {
   const amount = getItem('payingamount')
   const desc = getItem('description')
 
-  // const icons = social.map((Icon, index) => (
+  // const icons = social?.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
   //     <Icon size="1.4rem" stroke={1.5} />
   //   </ActionIcon>

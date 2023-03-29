@@ -175,7 +175,7 @@ const Filter = ({ todashboard, close }: props) => {
         </Text>
 
         <Group>
-          {accounts.map((it: { account_no: string, id: number }, v: Key | null | undefined) => (
+          {accounts?.map((it: { account_no: string, id: number }, v: Key | null | undefined) => (
             <AccountSelect
               key={v}
               account={it}

@@ -170,7 +170,7 @@ const LeftPane = ({ accounts }: Props2) => {
       <div>
         <div className={classes.title}>Bank Accounts</div>
         <div className={classes.accountCollection}>
-          {accounts.map((account_no, index) => {
+          {accounts?.map((account_no, index) => {
             return (
               <div key={index}>
                 <AccountSelect account_no={account_no.account_no} />

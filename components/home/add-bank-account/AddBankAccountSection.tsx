@@ -139,7 +139,7 @@ export default function BankAccount({
         {loading ?
           <Loader size={40} m={30} />
           : <></>}
-        {bankAccountList.map((bankAccount) => {
+        {bankAccountList?.map((bankAccount) => {
           return (
             <div key={bankAccount.account_no}>
               <StyledCard>

@@ -316,15 +316,15 @@ const FinancialStatistics = () => {
         <Stack style={{ flex: 1 }} align="center">
           <SpendingDonut
             setSelection={setCategoryIndex}
-            values={PieCategoryData.map((v) => v.value)}
-            legends={PieCategoryData.map((v) => v.mode)}
+            values={PieCategoryData?.map((v) => v.value)}
+            legends={PieCategoryData?.map((v) => v.mode)}
             setValue={setCatValue}
           />
           {categoryIndex == -1 && (
             <SpendingDonut
               setSelection={setModeIndex}
-              values={PieModeData.map((v) => v.value)}
-              legends={PieModeData.map((v) => v.mode)}
+              values={PieModeData?.map((v) => v.value)}
+              legends={PieModeData?.map((v) => v.mode)}
               setValue={(v: number) => { }}
             />
           )}

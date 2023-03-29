@@ -186,15 +186,15 @@ export function VerifyUPI() {
     // console.log(storedAccounts)
     if (storedAccounts !== null) {
       const accounts = JSON.parse(storedAccounts);
-      const upis = accounts.map((account: { upi: string | null }) => account.upi);
+      const upis = accounts?.map((account: { upi: string | null }) => account.upi);
       console.log(upis);
       
       // let upi = []
       // let ele;
-      // upis.map((ele)=>{
+      // upis?.map((ele)=>{
       //   upi.push({value: ele, label: ele})
       // })
-      const upi = upis.map((ele) => ({ value: ele, label: ele}))
+      const upi = upis?.map((ele) => ({ value: ele, label: ele}))
       setData(upi)
       console.log(data);
       

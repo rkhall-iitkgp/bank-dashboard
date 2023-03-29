@@ -226,7 +226,7 @@ export function ProfileCard() {
           Bank Accounts
         </span>
         <div className={classes.accountCollection}>
-          {BankAccount.map((ele: { id: Key | null | undefined; bankName: string | undefined; account_no: string | undefined }, key: any) => {
+          {BankAccount?.map((ele: { id: Key | null | undefined; bankName: string | undefined; account_no: string | undefined }, key: any) => {
             return (
               <span key={ele.id}>
                 <AccountCard

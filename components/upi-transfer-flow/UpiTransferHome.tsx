@@ -212,7 +212,7 @@ export function UpiTransferHome() {
             </div>
           </div>
           <div className={classes.accountContainer}>
-            {fetchedAccount.map((ele) => {
+            {fetchedAccount?.map((ele) => {
               return (
                 <span key={ele.id} onClick={handleClick}>
                   <Account setAccount={setAccount} accountdata={ele} />
