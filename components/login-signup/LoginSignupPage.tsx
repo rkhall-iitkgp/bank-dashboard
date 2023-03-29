@@ -246,7 +246,7 @@ export function LoginSignupPage() {
           withCloseButton: true,
           autoClose: 5000,
           title: 'Unsuccessful',
-          message: err.response.data?.message,
+          message: err?.response?.data?.message,
           color: 'red',
           icon: <IconX size={'1.1rem'} />,
           loading: false,
