@@ -58,7 +58,7 @@ const RightPane = () => {
               Welcome Back!&nbsp;
             </Text>
             <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
-              {getItem('name') + '!'}
+              {getItem('name')}
             </Text>
           </div>
           <div style={{ justifyContent: 'flex-end' }}>
