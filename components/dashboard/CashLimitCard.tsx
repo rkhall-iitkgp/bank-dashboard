@@ -23,6 +23,14 @@ const CashCard = (props: {
     setFilteredNum(num.filter((n) => n <= newLimit))
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      setShowLimit(false)
+      setLimit(e.target.value)
+      setFilteredNum(num.filter((n) => n <= e.target.value))
+    }
+  }
+
   return (
     <Card
       radius={'lg'}
@@ -68,6 +76,7 @@ const CashCard = (props: {
             // boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.3)',
           }} 
           onChange={handleFilterChange}
+          onKeyDown={handleKeyDown}
         />
       </Stack>
     </Card>
