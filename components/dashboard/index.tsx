@@ -66,7 +66,7 @@ const Dashboard = () => {
   // }
 
   const accounts = getItem('accounts')
-  let ACCOUNTSDATA;
+  let ACCOUNTSDATA = [];
   try {
     ACCOUNTSDATA = JSON.parse(accounts ?? JSON.stringify({}))?.map(
       (v: { account_no: string }) => { return { account_no: v.account_no } },
