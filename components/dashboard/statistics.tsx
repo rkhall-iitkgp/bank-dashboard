@@ -1,12 +1,12 @@
 import { Button, Card, Group, Stack, Text } from '@mantine/core'
 import dynamic from 'next/dynamic'
-const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 import { useEffect, useState } from 'react'
 import useAccountStore from '../Store/Account'
 import ArticlesCard from './articlesCard'
 import InsightCard from './insightCard'
 import RecentTransactions from './recenttransactions'
 import RecentTransactionsRightPane from './recenttransactionsRightPane'
+const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const BalanceChart = (props: {
   balanceData: { x: string; y: number }[]
