@@ -76,8 +76,8 @@ interface Props {
 }
 const LeftPane = ({ accountsList }: Props) => {
   const useAccount = useAccountStore();
-  const [depositLimit, setDepositLimit] = useState(1000)
-  const [withdrawlLimit, setWithdrawlLimit] = useState(1000)
+  const [depositLimit, setDepositLimit] = useState(5000)
+  const [withdrawlLimit, setWithdrawlLimit] = useState(5000)
   const selectedBankAccount = useAccountStore((state) => state.account_no)
   const [opened, { open, close }] = useDisclosure(false)
 
@@ -149,13 +149,13 @@ const LeftPane = ({ accountsList }: Props) => {
 
         <Group style={{ justifyContent: 'space-between' }}>
           <CashCard
-            num={[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]}
+            num={ useAccount.Transaction.filter(v => v.credit > 0).map(v => v.credit)}
             type={'deposit'}
             limit={depositLimit}
             setLimit={setDepositLimit}
           />
           <CashCard
-            num={[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]}
+            num={ useAccount.Transaction.filter(v => v.debit > 0).map(v => v.debit)}
             type={'withdrawl'}
             limit={withdrawlLimit}
             setLimit={setWithdrawlLimit}
