@@ -1,8 +1,8 @@
-import {Button, ButtonProps, createPolymorphicComponent, Popover} from '@mantine/core'
+import { Button, ButtonProps, createPolymorphicComponent, Popover } from '@mantine/core'
 import styled from '@emotion/styled'
-import {useRouter} from 'next/router'
-import {ProfileCard} from './ProfileCard'
-import {useState} from 'react'
+import { useRouter } from 'next/router'
+import { ProfileCard } from './ProfileCard'
+import { useState } from 'react'
 import Link from 'next/link'
 
 const StyledNavbar = styled.nav`
@@ -131,6 +131,7 @@ function Navbar() {
             <NavbarIcons src="/images/FAQs.png"></NavbarIcons>FAQs
           </StyledButton>
           {/* <StyledUserImage src="/images/dp.png"></StyledUserImage> */}
+
           <Demo />
         </StyledButtonBar>
       </StyledNavbar>

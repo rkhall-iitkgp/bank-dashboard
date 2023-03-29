@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Heading from '../reusable-components/Heading'
+import useStorage from '../../hooks/useStorage'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -197,6 +198,15 @@ export function PaymentForm() {
 
   const router = useRouter()
 
+  const { getItem, setItem } = useStorage()
+  const upiid = getItem('upi')
+  // console.log(upiid)
+
+  const [name, setName] = useState('')
+  const [upi_id, setUpi] = useState('')
+  const [amount, setAmount] = useState('')
+  const [desc, setDesc] = useState('')
+
   const form = useForm({
     initialValues: {
       name: '',
@@ -204,12 +214,13 @@ export function PaymentForm() {
       amount: '',
     },
 
-    validate: {
-      name: hasLength({ min: 2, max: 16 }, 'Name must be 2-16 characters long'),
-      upi_id: isNotEmpty('Enter your upi id'),
-      amount: isNotEmpty('Enter amount'),
-    },
+    // validate: {
+    //   upi_id: isNotEmpty('Enter your upi id'),
+    //   amount: isNotEmpty('Enter amount'),
+    // },
   })
+
+
 
   // const icons = social.map((Icon, index) => (
   //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
@@ -226,43 +237,43 @@ export function PaymentForm() {
   })
   const [buttonText, setButtonText] = useState('Verify')
 
-  function handleClick1() {
-    if (form.values.upi_id !== '') {
-      setStyle2({
-        color: '#00AD30',
-        fontFamily: 'Montserrat',
-        fontWeight: 600,
-        fontSize: '18px',
-        cursor: 'pointer',
-      })
-      setButtonText('Verified')
-    }
-  }
-  function handleClick2() {}
+  // function handleClick1() {
+  //   if (form.values.upi_id !== '') {
+  //     setStyle2({
+  //       color: '#00AD30',
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: 600,
+  //       fontSize: '18px',
+  //       cursor: 'pointer',
+  //     })
+  //     setButtonText('Verified')
+  //   }
+  // }
+  // function handleClick2() { }
 
-  useEffect(() => {
-    if (form.values.upi_id === '') {
-      setButtonText('Verify')
-      setStyle2({
-        color: '#0062D6',
-        fontFamily: 'Montserrat',
-        fontWeight: 400,
-        fontSize: '18px',
-        cursor: 'no-drop',
-      })
-      setButtonText('Verify')
-    } else {
-      setStyle2({
-        color: '#0062D6',
-        fontFamily: 'Montserrat',
-        fontWeight: 400,
-        fontSize: '18px',
-        cursor: 'pointer',
-      })
-      setButtonText('Verify')
-    }
-    return () => {}
-  }, [form.values.upi_id])
+  // useEffect(() => {
+  //   if (form.values.upi_id === '') {
+  //     setButtonText('Verify')
+  //     setStyle2({
+  //       color: '#0062D6',
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: 400,
+  //       fontSize: '18px',
+  //       cursor: 'no-drop',
+  //     })
+  //     setButtonText('Verify')
+  //   } else {
+  //     setStyle2({
+  //       color: '#0062D6',
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: 400,
+  //       fontSize: '18px',
+  //       cursor: 'pointer',
+  //     })
+  //     setButtonText('Verify')
+  //   }
+  //   return () => { }
+  // }, [form.values.upi_id])
 
   return (
     <div className={classes.wrapper}>
@@ -275,30 +286,12 @@ export function PaymentForm() {
             </div>
           </div>
           <div className={classes.beficiaryformcontainer}>
-            {/* <TextInput
-              label="Paying From"
+
+            <TextInput
+              label="UPI ID"
               variant="unstyled"
-              type={'number'}
-              mt="md"
-              classNames={{
-                input: classes.input,
-                label: classes.inputLabel,
-                root: classes.enterAmountContainer,
-              }}
-              value={`197288882222`}
               disabled
-            /> */}
-            <Select
-              label="Paying From"
-              variant="unstyled"
-              placeholder="Enter Account Number"
-              mt="md"
-              data={[
-                { value: 'acc1', label: 'a1' },
-                { value: 'acc2', label: 'a2' },
-                { value: 'acc3', label: 'a3' },
-                { value: 'acc4', label: 'a4' },
-              ]}
+              value={upiid}
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
@@ -317,6 +310,8 @@ export function PaymentForm() {
               }}
               required
               {...form.getInputProps('name')}
+              value={name}
+              onChange={(e) => { setName(e.target.value); setItem('payingname', e.target.value) }}
             />
             <TextInput
               placeholder="UPI ID*"
@@ -328,17 +323,8 @@ export function PaymentForm() {
                 root: classes.enterAmountContainer,
               }}
               {...form.getInputProps('upi_id')}
-              rightSection={
-                <Text
-                  className={classes.buttonVerify}
-                  style={style2}
-                  onClick={
-                    form.values.upi_id !== '' ? handleClick1 : handleClick2
-                  }
-                >
-                  {buttonText}
-                </Text>
-              }
+              value={upi_id}
+              onChange={(e) => { setUpi(e.target.value); setItem('payingupiid', e.target.value) }}
               required
             />
             <TextInput
@@ -353,6 +339,23 @@ export function PaymentForm() {
               }}
               required
               {...form.getInputProps('amount')}
+              value={amount}
+              onChange={(e) => { setAmount(e.target.value); setItem('payingamount', e.target.value) }}
+
+            />
+
+            <TextInput
+              placeholder="Description"
+              variant="unstyled"
+              mt="md"
+              classNames={{
+                input: classes.input,
+                label: classes.inputLabel,
+                root: classes.enterAmountContainer,
+              }}
+              // {...form.getInputProps('upi_id')}
+              value={desc}
+              onChange={(e) => { setDesc(e.target.value); setItem('description', e.target.value) }}
             />
           </div>
 
@@ -360,33 +363,21 @@ export function PaymentForm() {
             <Link href="/UPI/verify-upi-id">
               <div className={classes.button1}>Back</div>
             </Link>
-            {buttonText !== 'Verify' ? (
-              <div
-                className={classes.button1}
-                onClick={() => {
-                  form.validate()
-                  if (form.isValid()) {
-                    router.push(
-                      `/UPI/payment-details-review?name=${form.values.name}&amount=${form.values.amount}&upi=${form.values.upi_id}`,
-                    )
-                  }
-                }}
-              >
-                Continue
-              </div>
-            ) : (
-              <div
-                className={classes.button1}
-                style={{ cursor: 'no-drop' }}
-                onClick={() => {
-                  form.validate()
-                }}
-              >
-                Continue
-              </div>
-            )}
+            {/* {buttonText !== 'Verify' ? ( */}
+            <div
+              className={classes.button1}
+              onClick={() => {
+                // form.validate()
+                if (form.isValid()) {
+                  router.push(
+                    `/UPI/payment-details-review?name=${form.values.name}&amount=${form.values.amount}&upi=${form.values.upi_id}`,
+                  )
+                }
+              }}
+            >
+              Continue
+            </div>
           </div>
-          {/* <ButtonGroup href1="/UPI/Verify" href2="/UPI/Review" /> */}
         </div>
       </div>
     </div>

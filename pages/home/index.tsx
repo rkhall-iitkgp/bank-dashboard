@@ -17,9 +17,10 @@ const Home: NextPage = () => {
     useState<boolean>(false)
 
   const GetAccounts = () => {
+
     const accessToken = getItem('access_token')
-    console.log(accessToken)
     const user_id = getItem('user_id')
+
 
     const response = api
       .get(`/user/accounts/${user_id}`, {
@@ -81,9 +82,9 @@ const Home: NextPage = () => {
         SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
       />
       <Navbar />
-      <SeeYourAnalysis 
-      SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen} 
-      SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
+      <SeeYourAnalysis
+        SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
+        SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
         setIsAddAccountPopupOpen={setIsAddAccountPopupOpen} />
       <Payment
         isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
