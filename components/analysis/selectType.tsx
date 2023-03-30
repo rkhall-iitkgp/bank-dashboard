@@ -189,6 +189,7 @@ function Account(props: {
 export function AnalysisType() {
   const { classes } = useStyles()
   const [click, setClick] = useState(false)
+  const [type, setType] = useState<number | undefined>(undefined)
   const [account, setAccount] = useState({
     id: 1,
   })
@@ -199,6 +200,33 @@ export function AnalysisType() {
   const handleClick = () => {
     setClick(true)
   }
+
+  const handleContinue = () => {
+    if (type === 1) {
+      return (
+        <Link href="/dashboard">
+          <div className={classes.button1}>Continue</div>
+        </Link>
+      );
+    } else if (type === 2) {
+      return (
+        <Link
+          href={{
+            pathname: '/UPI/verify-upi-id',
+            query: account,
+          }}
+        >
+          <div className={classes.button1}>Continue</div>
+        </Link>
+      );
+    } else {
+      return (
+        <div className={classes.button1} style={{ cursor: 'no-drop' }}>
+          Continue
+        </div>
+      );
+    }
+  };
 
   return (
     <div className={classes.wrapper}>
@@ -213,7 +241,7 @@ export function AnalysisType() {
           <div className={classes.accountContainer}>
             {fetchedAccount?.map((ele) => {
               return (
-                <span key={ele.id} onClick={handleClick}>
+                <span key={ele.id} onClick={() => {handleClick(), setType(ele.id), console.log(ele.id)}}  >
                   <Account setAccount={setAccount} accountdata={ele} />
                 </span>
               )
@@ -224,16 +252,7 @@ export function AnalysisType() {
             <Link href="/home">
               <div className={classes.button1}>Back</div>
             </Link>
-            {click ? (
-              <Link
-                href={{
-                  pathname: '/UPI/verify-upi-id',
-                  query: account,
-                }}
-              >
-                <div className={classes.button1}>Continue</div>
-              </Link>
-            ) : (
+            {click ? handleContinue() : (
               <div className={classes.button1} style={{ cursor: 'no-drop' }}>
                 Continue
               </div>
