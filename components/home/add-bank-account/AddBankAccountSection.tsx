@@ -1,5 +1,11 @@
 import styled from '@emotion/styled'
-import {Button, ButtonProps, createPolymorphicComponent, Image, Loader,} from '@mantine/core'
+import {
+  Button,
+  ButtonProps,
+  createPolymorphicComponent,
+  Image,
+  Loader,
+} from '@mantine/core'
 
 const Oflex = styled.div`
   display: flex;
@@ -125,7 +131,7 @@ interface Props {
 export default function BankAccount({
   bankAccountList,
   setIsAddAccountPopupOpen,
-  loading
+  loading,
 }: Props) {
   return (
     <Container>
@@ -136,9 +142,7 @@ export default function BankAccount({
         </AddAccountButton>
       </Iflex>
       <Oflex>
-        {loading ?
-          <Loader size={40} m={30} />
-          : <></>}
+        {loading ? <Loader size={40} m={30} /> : <></>}
         {bankAccountList?.map((bankAccount) => {
           return (
             <div key={bankAccount.account_no}>
@@ -146,11 +150,14 @@ export default function BankAccount({
                 <BankImage>
                   <Image src="images/sbi1.png" alt="sbi" />
                 </BankImage>
-                <AccountNumber>****{bankAccount.account_no.slice(8, 12)}</AccountNumber>
+                <AccountNumber>
+                  ****{bankAccount.account_no.slice(8, 12)}
+                </AccountNumber>
               </StyledCard>
             </div>
           )
         })}
+
         <AddAnotherBox>
           <PlusImageContainer onClick={() => setIsAddAccountPopupOpen(true)}>
             <Image src="images/frame.png" alt="add" />

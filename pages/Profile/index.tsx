@@ -46,7 +46,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar dashClickHandler={() => {}}/>
       <Profile loading={loading} bankAccountList={bankAccountList} />
     </>
   )

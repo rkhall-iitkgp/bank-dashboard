@@ -1,8 +1,8 @@
-import {createStyles} from '@mantine/core'
+import { createStyles } from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
-import {useRouter} from 'next/router'
-import {useState} from 'react'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 import useStorage from '../../hooks/useStorage'
 import Heading from '../reusable-components/Heading'
 //   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
@@ -57,7 +57,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   forminside: {
-    maxWidth: `90%`,
+    // maxWidth: `90%`,
     width: `40vw`,
     minWidth: `500px`,
     padding: theme.spacing.xl,
@@ -91,6 +91,8 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `center`,
     alignItems: `center`,
     minWidth: `400px`,
+    // maxWidth: '40vw',
+    overflowX: 'auto',
   },
   account: {
     width: `120px`,
@@ -157,7 +159,7 @@ const useStyles = createStyles((theme) => ({
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 function Account(props: {
-  accountdata: { id: any, account_no: string }
+  accountdata: { id: any; account_no: string }
   setAccount: (arg0: any) => void
 }) {
   const { classes } = useStyles()
@@ -187,25 +189,26 @@ function Account(props: {
         style={{ paddingBottom: '6px' }}
       ></Image>
       <div className={classes.bankname}>State Bank Of India</div>
-      <div className={classes.accountnumber}>{"****" + props.accountdata.account_no.slice(8, 12)}</div>
+      <div className={classes.accountnumber}>
+        {'****' + props.accountdata.account_no.slice(8, 12)}
+      </div>
     </div>
   )
 }
 export function BankTransfer() {
-  const { getItem } = useStorage();
+  const { getItem } = useStorage()
   // console.log("user_id = ", getItem("user_id"));
   // console.log("accounts = ", getItem("accounts"))
 
   const { classes } = useStyles()
   const [click, setClick] = useState(false)
-  const router = useRouter();
+  const router = useRouter()
   const [account, setAccount] = useState({
     id: 1,
   })
-  let accounts = getItem("accounts");
-  let fetchedAccount = JSON.parse(accounts ? accounts : "[]");
-  console.log(fetchedAccount);
-
+  let accounts = getItem('accounts')
+  let fetchedAccount = JSON.parse(accounts ? accounts : '[]')
+  console.log(fetchedAccount)
 
   const handleClick = () => {
     setClick(true)
@@ -221,16 +224,20 @@ export function BankTransfer() {
             </div>
           </div>
           <div className={classes.accountContainer}>
-            {fetchedAccount?.map((ele: { id: number, account_no: string, ifsc: string }) => {
-              return (
-                <span key={ele.account_no.slice(8, 12)} onClick={handleClick}>
-                  <Account setAccount={setAccount} accountdata={ele} />
-                </span>
-              )
-            })}
+            {fetchedAccount?.map(
+              (ele: { id: number; account_no: string; ifsc: string }) => {
+                return (
+                  <span key={ele.account_no.slice(8, 12)} onClick={handleClick}>
+                    <Account setAccount={setAccount} accountdata={ele} />
+                  </span>
+                )
+              },
+            )}
           </div>
           <div className={classes.buttonContainer}>
-            <div className={classes.button1} onClick={router.back}>Back</div>
+            <div className={classes.button1} onClick={router.back}>
+              Back
+            </div>
             {click ? (
               <Link
                 href={{
