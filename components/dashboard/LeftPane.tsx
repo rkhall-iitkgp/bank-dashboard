@@ -12,6 +12,7 @@ const FilterRow = styled.div`
   display: flex;
   gap: 12px;
   justify-content: space-between;
+  height: 60px;
 `
 const Container = styled.div`
   margin: 0px 12px;
@@ -147,7 +148,7 @@ const LeftPane = ({ accountsList }: Props) => {
           </SelectBankAccount>
         </FilterRow>
 
-        <Group style={{ justifyContent: 'space-between' }}>
+        <Group style={{ justifyContent: 'space-evenly' }}>
           <CashCard
             num={ useAccount.Transaction?.filter(v => v.credit > 0)?.map(v => v.credit)}
             type={'deposit'}

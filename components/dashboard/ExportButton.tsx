@@ -1,6 +1,9 @@
 import { Button, Select, Menu, createStyles } from '@mantine/core'
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
+import useAccountStore from '../Store/Account'
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
 
 const useStyles = createStyles((theme) => ({
     button: {
@@ -18,6 +21,27 @@ const useStyles = createStyles((theme) => ({
 export default function ExportButton() {
     const { classes } = useStyles();
     const [selected, setSelected] = useState()
+    const accounts = useAccountStore()
+
+    const handleExportJSON = () => {
+      const jsonStr = JSON.stringify(accounts)
+      const dataUri = "data:text/json;charset=utf-8," + encodeURIComponent(jsonStr);
+      const link = document.createElement("a");
+      link.setAttribute("href", dataUri);
+      link.setAttribute("download", "accounts.json");
+      document.body.appendChild(link); 
+      link.click();
+    }
+
+    const handleExportPDF = () => {
+      html2canvas(document.body).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF();
+        pdf.addHTML(canvas, 0, 0, () => {
+          pdf.save("webpage.pdf");
+        });
+      });
+    }
     
     return (
         <Menu shadow="md" width={200}>
@@ -29,9 +53,10 @@ export default function ExportButton() {
           </Menu.Target>
     
           <Menu.Dropdown>
-            <Menu.Item >Export as PDF</Menu.Item>
-            <Menu.Item >Export as CSV</Menu.Item>
-            <Menu.Item >Export as JSON</Menu.Item>
+            <Menu.Item>Export as PDF</Menu.Item>
+            {/* <Menu.Item onClick={handleExportCSV}>Export as CSV</Menu.Item> */}
+            <Menu.Item onClick={handleExportJSON}>Export as JSON</Menu.Item>
+            <Menu.Item onClick={handleExportPDF}>Export as PDF</Menu.Item>
             <Menu.Item >Send an Email</Menu.Item>
           </Menu.Dropdown>
         </Menu>

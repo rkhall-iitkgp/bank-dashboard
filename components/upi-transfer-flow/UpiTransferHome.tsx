@@ -187,19 +187,23 @@ function Account(props: {
 }
 
 export function UpiTransferHome() {
-  const { classes } = useStyles()
-  const [click, setClick] = useState(false)
-  const [account, setAccount] = useState({
-    id: 1,
-  })
+  const { classes } = useStyles();
+  const [click, setClick] = useState(false);
+  const [account, setAccount] = useState({ id: 1 });
+
   let fetchedAccount = [
-    { id: 1, name: 'UPI Payment', src: `upi1` },
-    { id: 2, name: 'Bank Transfer', src: `bank-building-white` },
-    { id: 3, name: 'Pay Phone Number', src: `payphone1` },
-  ]
-  const handleClick = () => {
-    setClick(true)
-  }
+    { id: 1, name: "UPI Payment", src: `upi1` },
+    { id: 2, name: "Bank Transfer", src: `bank-building-white` },
+    { id: 3, name: "Pay Phone Number", src: `payphone1` },
+  ];
+
+  const handleClick = (id) => {
+    if (id === 1) {
+      setClick(true);
+    } else {
+      setClick(false);
+    }
+  };
 
   return (
     <div className={classes.wrapper}>
@@ -214,10 +218,14 @@ export function UpiTransferHome() {
           <div className={classes.accountContainer}>
             {fetchedAccount?.map((ele) => {
               return (
-                <span key={ele.id} onClick={handleClick}>
+                <span
+                  key={ele.id}
+                  onClick={() => handleClick(ele.id)}
+                  style={{ cursor: ele.id === 1 ? "pointer" : "not-allowed !important" }}
+                >
                   <Account setAccount={setAccount} accountdata={ele} />
                 </span>
-              )
+              );
             })}
           </div>
           {/* <ButtonGroup href1="/home" href2="/UPI/verify-upi-id" /> */}
@@ -228,14 +236,17 @@ export function UpiTransferHome() {
             {click ? (
               <Link
                 href={{
-                  pathname: '/UPI/verify-upi-id',
+                  pathname: "/UPI/verify-upi-id",
                   query: account,
                 }}
               >
                 <div className={classes.button1}>Continue</div>
               </Link>
             ) : (
-              <div className={classes.button1} style={{ cursor: 'no-drop' }}>
+              <div
+                className={classes.button1}
+                style={{ cursor: "not-allowed" }}
+              >
                 Continue
               </div>
             )}
@@ -243,5 +254,5 @@ export function UpiTransferHome() {
         </div>
       </div>
     </div>
-  )
+  );
 }

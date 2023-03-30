@@ -298,10 +298,10 @@ const FinancialStatistics = () => {
       </Card.Section>
 
       <Group
-        align={'flex-start'}
+        align={'center'}
         style={{
           flex: 1,
-          maxHeight: '44vh',
+          maxHeight: '53vh',
           overflow: 'auto',
           margin: 'auto',
         }}
