@@ -193,6 +193,7 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 400,
     '&:hover': {
       background: '#558ac9',
+      cursor: `pointer`,
     },
   },
 

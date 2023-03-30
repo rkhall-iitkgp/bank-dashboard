@@ -17,6 +17,7 @@ const useStyles = createStyles((theme) => ({
     // cursor: 'no-drop',
     '&:hover': {
       background: '#558ac9',
+      cursor: `pointer`,
     },
   },
 

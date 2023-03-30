@@ -31,8 +31,8 @@ const StockStatistics = () => (
     </Text>
     <Flex>
       <AdvancedRealTimeChart
-        theme="dark"
-        height={280}
+        theme="light"
+        height={418}
         width={1010}
       ></AdvancedRealTimeChart>
 

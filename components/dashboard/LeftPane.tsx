@@ -12,6 +12,7 @@ const FilterRow = styled.div`
   display: flex;
   gap: 12px;
   justify-content: space-between;
+  height: 60px;
 `
 const Container = styled.div`
   margin: 0px 12px;
@@ -72,13 +73,14 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
   )
 );
 interface Props {
-  accountsList: any[]
+  accountsList: any[],
+  useAccount: any
 }
-const LeftPane = ({ accountsList }: Props) => {
-  const useAccount = useAccountStore();
+const LeftPane = ({ accountsList, useAccount }: Props) => {
+  // const useAccount = useAccountStore();
   const [depositLimit, setDepositLimit] = useState(1000)
   const [withdrawlLimit, setWithdrawlLimit] = useState(1000)
-  const selectedBankAccount = useAccountStore((state) => state.account_no)
+  const selectedBankAccount = useAccount.account_no
   const [opened, { open, close }] = useDisclosure(false)
 
   useEffect(() => {
@@ -147,15 +149,15 @@ const LeftPane = ({ accountsList }: Props) => {
           </SelectBankAccount>
         </FilterRow>
 
-        <Group style={{ justifyContent: 'space-between' }}>
+        <Group style={{ justifyContent: 'space-evenly' }}>
           <CashCard
-            num={[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]}
+            num={ useAccount.Transaction?.filter(v => v.credit > 0)?.map(v => v.credit)}
             type={'deposit'}
             limit={depositLimit}
             setLimit={setDepositLimit}
           />
           <CashCard
-            num={[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]}
+            num={ useAccount.Transaction?.filter(v => v.debit > 0)?.map(v => v.debit)}
             type={'withdrawl'}
             limit={withdrawlLimit}
             setLimit={setWithdrawlLimit}

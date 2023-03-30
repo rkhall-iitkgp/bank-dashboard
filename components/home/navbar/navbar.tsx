@@ -91,7 +91,7 @@ const NavbarIcons = styled.img`
   height: 36px;
   padding: 6px 8px 10px 8px;
 `
-function Navbar() {
+function Navbar({ dashClickHandler }) {
   const router = useRouter()
 
   const [show, setShow] = useState(false)
@@ -108,7 +108,7 @@ function Navbar() {
           <StyledButton
             variant="gradient"
             gradient={{ from: 'white', to: 'white' }}
-            onClick={() => router.push('/dashboard')}
+            onClick={() => dashClickHandler()}
           >
             <NavbarIcons src="/images/dashboard.png"></NavbarIcons>Dashboard
           </StyledButton>

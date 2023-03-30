@@ -1,5 +1,4 @@
 import { Modal } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
 import React from 'react'
 import Filter from '../../filter'
 interface props {
@@ -7,10 +6,8 @@ interface props {
     setIsfilteropen: Function
 }
 const FilterPopUp = ({ isfilteropen, setIsfilteropen }: props) => {
-    const [opened, { open, close }] = useDisclosure(false)
-
     return (
-        <> <Modal
+        <Modal
             withCloseButton={false}
             opened={isfilteropen}
             onClose={() => setIsfilteropen(false)}
@@ -19,9 +16,8 @@ const FilterPopUp = ({ isfilteropen, setIsfilteropen }: props) => {
             size="auto"
             padding={0}
         >
-            <Filter todashboard={true} close={close} />
+            <Filter todashboard={true} close={() => setIsfilteropen(false)} />
         </Modal>
-        </>
     )
 }
 
