@@ -14,14 +14,15 @@ import Filter from '../../components/filter'
 import FilterPopUp from '../../components/home/see-your-analysis-section/FilterPopUp'
 
 const Home: NextPage = () => {
-  const { getItem, setItem } = useStorage()
-  const [bankAccountList, setBankAccountList] = useState<any[]>([])
-  const [isAddAccountPopupOpen, setIsAddAccountPopupOpen] = useState<boolean>(false)
-  const [loading, setLoading] = useState(false)
-  const [isfilteropen, setIsfilteropen] = useState(false)
-  const [accLength, setAccLength] = useState('[]')
-  const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] = useState<boolean>(false)
-  const [isKycPermissionPopUpOpen, setIsKycPermissionPopUpOpen] = useState<boolean>(false)
+  const { getItem, setItem } = useStorage();
+  const [bankAccountList, setBankAccountList] = useState<any[]>([]);
+  const [isAddAccountPopupOpen, setIsAddAccountPopupOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [isfilteropen, setIsfilteropen] = useState(false);
+  const [accLength, setAccLength] = useState('[]');
+  const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] = useState<boolean>(false);
+  const [isKycPermissionPopUpOpen, setIsKycPermissionPopUpOpen] = useState<boolean>(false);
+  const [kycStatus, setKycStatus] = useState(1);
 
   const GetAccounts = () => {
     setItem('accounts', '[]')
@@ -46,7 +47,6 @@ const Home: NextPage = () => {
       })
   }
 
-  const [kycStatus, setKycStatus] = useState(1)
   const GetKycStatus = () => {
     const accessToken = getItem('access_token', 'session')
     console.log(accessToken)
@@ -67,7 +67,8 @@ const Home: NextPage = () => {
       })
   }
 
-  const dashClickHandler = () => {
+  const dashClickHandler = (accLength, kycStatus) => {
+    console.log(`acclength = `, accLength)
     if (kycStatus === 0) {
       setIsKycPermissionPopUpOpen(true)
     } else if (kycStatus === 1 && accLength !== '[]') {
@@ -89,7 +90,7 @@ const Home: NextPage = () => {
         isPermissionPopUpOpen={isPermissionPopUpOpen}
         SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
       />
-      <Navbar dashClickHandler={dashClickHandler} />
+      <Navbar dashClickHandler={() => dashClickHandler(accLength, kycStatus)} />
       <SeeYourAnalysis dashClickHandler={dashClickHandler} />
       <Payment
         isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
