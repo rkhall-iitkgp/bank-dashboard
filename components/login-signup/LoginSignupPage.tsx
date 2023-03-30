@@ -304,7 +304,6 @@ export function LoginSignupPage() {
           setItem('consent', res.data.consent)
           setItem('accounts', "[]")
         }
-
         return res
       })
       .catch((err) => {
