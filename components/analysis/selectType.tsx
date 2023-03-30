@@ -72,7 +72,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
     // paddingBottom: '5px',
-    width: `40vw`,
+    width: `30vw`,
     color: `#0052B3`,
   },
 
@@ -186,58 +186,37 @@ function Account(props: {
   )
 }
 
-export function UpiTransferHome() {
-  const { classes } = useStyles();
-  const [click, setClick] = useState(false);
-  const [account, setAccount] = useState({ id: 1 });
-
+export function AnalysisType() {
+  const { classes } = useStyles()
+  const [click, setClick] = useState(false)
+  const [account, setAccount] = useState({
+    id: 1,
+  })
   let fetchedAccount = [
-    { id: 1, name: "UPI Payment", src: `upi1` },
-    { id: 2, name: "Bank Transfer", src: `bank-building-white` },
-    { id: 3, name: "Pay Phone Number", src: `payphone1` },
-  ];
-
-  const handleClick = (id) => {
-    if (id === 1) {
-      setClick(true);
-    } else {
-      setClick(false);
-    }
-  };
-
-  // const display = fetchedAccount.filter((ele) => {
-  //   return ele.show == 0
-  // })
-
-  // if(display == 1) {
-
-  // }
-
-  
-
-  if (fetchedAccount)
+    { id: 1, name: 'Upload', src: `upi1` },
+    { id: 2, name: 'Track', src: `bank-building-white` },
+  ]
+  const handleClick = () => {
+    setClick(true)
+  }
 
   return (
     <div className={classes.wrapper}>
       <div className={classes.form}>
-        <Heading title="UPI Transfer" />
+        <Heading title="Analyze your Transactions" />
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
             <div className={classes.titlebold}>
-              <span>Make Payment</span>
+              <span>Mode of analysis</span>
             </div>
           </div>
           <div className={classes.accountContainer}>
             {fetchedAccount?.map((ele) => {
               return (
-                <span
-                  key={ele.id}
-                  onClick={() => handleClick(ele.id)}
-                  style={{ cursor: ele.id === 1 ? "pointer" : "not-allowed !important" }}
-                >
+                <span key={ele.id} onClick={handleClick}>
                   <Account setAccount={setAccount} accountdata={ele} />
                 </span>
-              );
+              )
             })}
           </div>
           {/* <ButtonGroup href1="/home" href2="/UPI/verify-upi-id" /> */}
@@ -248,17 +227,14 @@ export function UpiTransferHome() {
             {click ? (
               <Link
                 href={{
-                  pathname: "/UPI/verify-upi-id",
+                  pathname: '/UPI/verify-upi-id',
                   query: account,
                 }}
               >
                 <div className={classes.button1}>Continue</div>
               </Link>
             ) : (
-              <div
-                className={classes.button1}
-                style={{ cursor: "not-allowed" }}
-              >
+              <div className={classes.button1} style={{ cursor: 'no-drop' }}>
                 Continue
               </div>
             )}
@@ -266,5 +242,5 @@ export function UpiTransferHome() {
         </div>
       </div>
     </div>
-  );
+  )
 }

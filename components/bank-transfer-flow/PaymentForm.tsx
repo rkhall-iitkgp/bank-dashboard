@@ -224,6 +224,7 @@ export function PaymentForm(props: { sbi: any }) {
       amount: '',
       ifsc: '',
       account_id: '',
+      description: '',
     },
 
     validate: {
@@ -397,6 +398,17 @@ export function PaymentForm(props: { sbi: any }) {
                   root: classes.inputcontainer,
                 }}
                 {...form.getInputProps('amount')}
+              />
+              <TextInput
+                placeholder="Description"
+                mt="md"
+                withAsterisk
+                classNames={{
+                  input: classes.input,
+                  label: classes.inputLabel,
+                  root: classes.inputcontainer,
+                }}
+                {...form.getInputProps('description')}
               />
               {data.selfOrOther !== '1' ? (
                 <>

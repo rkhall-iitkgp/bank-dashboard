@@ -197,12 +197,11 @@ export function EnterOTP() {
     otp: otp,
     debit_account_id: data.id,
     amount: data.amount,
-    date: '2023-03-26',
     mode: 0,
     user_id: user_id,
     credit_account_id: data.acc_no,
     contact_no: contact_no,
-    description: 'this is the description',
+    description: data.description,
   }
 
   const handlePayment = () => {
@@ -218,7 +217,7 @@ export function EnterOTP() {
         return res.data
       })
       .catch((err) => console.log(err))
-
+      
     response
       .then((v) => {
         if (v) {
