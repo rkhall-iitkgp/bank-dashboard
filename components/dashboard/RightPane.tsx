@@ -81,7 +81,7 @@ const RightPane = () => {
               Welcome Back,&nbsp;
             </Text>
             <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
-              {getItem('name')+'!'}
+              {getItem('name') + '!'}
             </Text>
           </div>
           <div style={{ justifyContent: 'flex-end' }}>
@@ -90,7 +90,7 @@ const RightPane = () => {
         </Group>
         <Group>
           <TotalBalance accountNumber={"****" + useAccount.account_no.slice(8, 12)} increment={5} timePeriod={2} totalBalance={"$" + total} />
-          <EodBalance balance={"$" + sum / (dateslist.length)} comparision={4.6} />
+          <EodBalance balance={"$" + Math.round(sum / (dateslist.length))} comparision={4.6} />
           <FinancialRatios />
         </Group>
         <Tabs defaultValue="financial">
