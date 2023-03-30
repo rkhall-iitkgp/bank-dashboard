@@ -52,7 +52,7 @@ export default function SeeYourAnalysis({
   const { getItem } = useStorage()
   const [result, setResult] = useState(1)
   const GetKycStatus = () => {
-    const accessToken = getItem('access_token', 'session')
+    const accessToken = getItem('access_token','session')
     console.log(accessToken)
     const user_id = getItem('user_id')
     const accLength = JSON.stringify(getItem('accounts'))?.length
