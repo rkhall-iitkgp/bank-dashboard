@@ -216,6 +216,7 @@ const Filter = ({ todashboard, close }: props) => {
       </div>
       <div>
         <Button
+          disabled={!(mpin && id && account && todashboard)}
           size="lg"
           className={classes.control}
           onClick={() => {
