@@ -1,7 +1,9 @@
-import { Button } from '@mantine/core'
-import { ButtonProps, createPolymorphicComponent } from '@mantine/core'
+import React from 'react'
 import styled from '@emotion/styled'
-
+import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core'
+import { useEffect, useState } from 'react'
+import useStorage from '../../../hooks/useStorage'
+import api from '../../datams'
 const Container = styled.div`
   margin-left: 3vw;
   margin-right: 3vw;
@@ -44,8 +46,44 @@ const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
 interface Props {
   SetIsPermissionPopUpOpen: Function
   setIsfilteropen: Function
+  SetIsKycPermissionPopUpOpen: Function,
+  setIsAddAccountPopupOpen: Function
 }
-function SeeYourAnalysis({ SetIsPermissionPopUpOpen, setIsfilteropen }: Props) {
+export default function SeeYourAnalysis({
+  SetIsPermissionPopUpOpen,
+  SetIsKycPermissionPopUpOpen,
+  setIsAddAccountPopupOpen,
+  setIsfilteropen
+}: Props) {
+  const { getItem } = useStorage()
+  const [result, setResult] = useState(1)
+  const GetKycStatus = () => {
+    const accessToken = getItem('access_token', 'session')
+    console.log(accessToken)
+    const user_id = getItem('user_id')
+    const accLength = JSON.stringify(getItem('accounts'))?.length
+    const response = api
+      .get(`/user/getkyc/`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        response.data
+      })
+      .catch((err) => {
+        err.response.data.message == 'KYC not done' && setResult(0)
+        // console.log(err.response.data.message)
+      })
+  }
+  const [accLength, setAccLength] = useState('[]')
+  useEffect(() => {
+    GetKycStatus()
+    // setResult(0)
+    setAccLength(getItem('accounts'))
+    console.log(result)
+  }, [])
   return (
     <Container>
       <TextDiv>
@@ -54,16 +92,41 @@ function SeeYourAnalysis({ SetIsPermissionPopUpOpen, setIsfilteropen }: Props) {
         transactions and offer insights to help you <br /> make informed
         financial decisions.
       </TextDiv>
-      <StyledButton
-        variant="default"
-        onClick={() => {
-          // SetIsPermissionPopUpOpen(true)
-          setIsfilteropen(true)
-        }}
-      >
-        See your analysis
-      </StyledButton>
+      {result === 0 && (
+        <StyledButton
+          variant="default"
+          onClick={() => {
+            SetIsKycPermissionPopUpOpen(true)
+            // setIsfilteropen(true)
+          }}
+        >
+          See your analysis
+        </StyledButton>
+      )}
+
+      {result === 1 && accLength !== '[]' && (
+        <StyledButton
+          variant="default"
+          onClick={() => {
+            // SetIsPermissionPopUpOpen(true)
+            setIsfilteropen(true);
+          }}
+        >
+          See your analysis
+        </StyledButton>
+      )}
+      {result === 1 && accLength === '[]' && (
+        <StyledButton
+          variant="default"
+          onClick={() => {
+            setIsAddAccountPopupOpen(true)
+          }}
+        >
+          See your analysis
+        </StyledButton>
+      )}
     </Container>
   )
 }
-export default SeeYourAnalysis
+
+// export default SeeYourAnalysis

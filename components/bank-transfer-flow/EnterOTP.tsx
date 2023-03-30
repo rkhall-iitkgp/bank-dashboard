@@ -1,11 +1,11 @@
 import { createStyles, TextInput } from '@mantine/core'
 // import ButtonGroup from './SmallComponents/ButtonGroup'
-
 import { SetStateAction, useState } from 'react'
 // import { isNotEmpty, useForm } from '@mantine/form'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Heading from '../reusable-components/Heading'
+import useStorage from '../../hooks/useStorage'
+import transms from '../transms'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -68,7 +68,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     color: theme.black,
-    fontFamily: "Montserrat",
+    fontFamily: 'Montserrat',
 
     '&::placeholder': {
       color: theme.colors.gray[5],
@@ -181,28 +181,57 @@ export function EnterOTP() {
   const [otp, setOtp] = useState('')
   const router = useRouter()
   const data = router.query
+  const { getItem } = useStorage()
+  const contact_no = getItem('contact_no')
+  const user_id = getItem('user_id')
+  const accessToken = getItem('access_token')
+
   const handleChange = (event: {
     target: { value: SetStateAction<string> }
   }) => {
     setOtp(event.target.value)
   }
-  // const icons = social.map((Icon, index) => (
-  //   <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-  //     <Icon size="1.4rem" stroke={1.5} />
-  //   </ActionIcon>
-  // ));
 
-  // const router = useRouter()
+  const sendingData = {
+    otp: otp,
+    debit_account_id: data.id,
+    amount: data.amount,
+    date: '2023-03-26',
+    mode: 0,
+    user_id: user_id,
+    credit_account_id: data.acc_no,
+    contact_no: contact_no,
+    description: 'this is the description',
+  }
 
-  // const form = useForm({
-  //   initialValues: {
-  //     otp: '',
-  //   },
+  const handlePayment = () => {
+    console.log('data = ', sendingData)
+    let response = transms
+      .post('/makepayment/', sendingData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
 
-  //   validate: {
-  //     otp: isNotEmpty('Enter OTP'),
-  //   },
-  // })
+    response
+      .then((v) => {
+        if (v) {
+          console.log(v)
+          router.replace({
+            pathname: '/bank-transfer/payment-success',
+            query: { id: data.id, amount: data.amount },
+          })
+        } else {
+          alert('wrong otp')
+        }
+      })
+      .catch((err) => console.log(err))
+  }
 
   return (
     <div className={classes.wrapper}>
@@ -215,8 +244,8 @@ export function EnterOTP() {
             </div>
           </div>
           <div className={classes.description}>
-            We have sent an OTP to your mobile number XXXXXX5728 registered with
-            your bank account. Please enter OTP and proceed
+            We have sent an OTP to your mobile number {} registered with your
+            bank account. Please enter OTP and proceed
           </div>
 
           <TextInput
@@ -233,36 +262,21 @@ export function EnterOTP() {
             }}
           />
           <div className={classes.resndotp}>Resend OTP</div>
-
-          {/* <ButtonGroup
-            href1="/BankTransfer/Review"
-            href2="/BankTransfer/Success"
-          /> */}
           <div className={classes.buttonContainer}>
-            <Link href="/bank-transfer/review-payment-details">
-              <div className={classes.button1}>Back</div>
-            </Link>
+            <div className={classes.button1} onClick={router.back}>
+              Back
+            </div>
 
             {otp !== '' ? (
-              <Link
-                href={{
-                  pathname: '/bank-transfer/payment-success',
-                  query: data,
-                }}
-              >
-                <div className={classes.button1}>Continue</div>
-              </Link>
+              <div className={classes.button1} onClick={handlePayment}>
+                Continue
+              </div>
             ) : (
               <div className={classes.button1} style={{ cursor: 'no-drop' }}>
                 Continue
               </div>
             )}
           </div>
-
-          {/* <ButtonGroup
-            href1="/bank-transfer/review-payment-details"
-            href2="/bank-transfer/payment-success"
-          /> */}
         </div>
       </div>
     </div>

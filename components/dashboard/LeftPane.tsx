@@ -36,7 +36,6 @@ const SelectBankAccount = styled.div`
   border-radius: 50px;
   display: flex;
   gap: 8px;
-  background-color: #0062d6;
   cursor: pointer;
   color: white;
   flex: 3;
@@ -76,13 +75,13 @@ interface Props {
   accountsList: any[]
 }
 const LeftPane = ({ accountsList }: Props) => {
-  const useAccount = useAccountStore()
+  const useAccount = useAccountStore();
   const [depositLimit, setDepositLimit] = useState(1000)
   const [withdrawlLimit, setWithdrawlLimit] = useState(1000)
   const selectedBankAccount = useAccountStore((state) => state.account_no)
   const [opened, { open, close }] = useDisclosure(false)
-  useEffect(() => {
 
+  useEffect(() => {
     accountsList.forEach(e => {
       e.value = e.account_no
       e.label = "****" + e.account_no.slice(8, 12)
@@ -96,6 +95,7 @@ const LeftPane = ({ accountsList }: Props) => {
     console.log('useAccount.Transaction', useAccount.Transaction)
     console.log('selectedBankAccount', selectedBankAccount)
   }, [selectedBankAccount])
+  const [account, setaccount] = useState(0);
 
   return (
     <>
@@ -108,6 +108,7 @@ const LeftPane = ({ accountsList }: Props) => {
         centered
       >
         <Filter todashboard={false} close={close} />
+        {/* <Filter account={account} setAccount={setaccount} /> */}
       </Modal>
       <ContainerLeft>
         <FilterRow style={{ justifyContent: 'space-between' }}>
@@ -142,8 +143,6 @@ const LeftPane = ({ accountsList }: Props) => {
                 }
               }}
               data={accountsList}
-
-
             />
           </SelectBankAccount>
         </FilterRow>
@@ -163,9 +162,9 @@ const LeftPane = ({ accountsList }: Props) => {
           />
         </Group>
 
-        <EodBalance balance="$1,23,456" comparision={4.6} />
+        {/* <EodBalance balance="$1,23,456" comparision={4.6} /> */}
 
-        <RecentTransactions transaction={useAccount.Transaction} />
+        <RecentTransactions transactions={useAccount.Transaction} />
       </ContainerLeft>
     </>
   )

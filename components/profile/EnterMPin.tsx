@@ -1,6 +1,7 @@
-import { createStyles, Group, PinInput } from '@mantine/core'
+import {createStyles, Group, PinInput} from '@mantine/core'
 import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
+
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: `100vh`,

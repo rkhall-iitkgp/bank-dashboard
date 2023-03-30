@@ -1,20 +1,20 @@
 import {
+  createStyles,
   Button,
-  Text,
+  ButtonProps,
+  Checkbox,
+  createPolymorphicComponent,
   Group,
-  Stack,
   Image,
   PinInput,
-  ButtonProps,
-  createPolymorphicComponent,
-  Checkbox,
-  createStyles,
+  Stack,
+  Text,
 } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
 import styled from '@emotion/styled'
 import { Key, useState } from 'react'
 import useStorage from '../../hooks/useStorage'
-import api from '../api'
+import api from '../datams'
 import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
@@ -79,32 +79,33 @@ const PeriodItem = (prop: {
 }
 
 const AccountSelect = (prop: {
-  account: any
+  account: { account_no: string, id: number }
   setAccount: Function
-  curSelection: any
+  curSelection: string, key: Key | null | undefined
 }) => {
-  const { account, setAccount, curSelection } = prop
+  const { account, setAccount, curSelection, key } = prop
+  console.log(prop);
   return (
-    <Button
+    <Button key={key}
       style={{
         backgroundColor: '#E6EFF9',
         color: '#000000',
         border: '2px solid #E6EFF9',
-        borderColor: curSelection ? curSelection === account ? '#0062D6' : '' : '',
+        borderColor: curSelection === account.account_no ? '#0062D6' : '',
         boxShadow:
-          curSelection ? curSelection === account
+          curSelection === account.account_no
             ? 'inset 0px 4px 18px rgba(0, 0, 0, 0.2)'
-            : '' : '',
+            : '',
         margin: '0.2rem',
       }}
       radius="xl"
-      onClick={() => setAccount(account)}
+      onClick={() => setAccount(account.account_no)}
       fw="bold"
       fz={'lg'}
       size="xl"
     >
       <Image src={'icons/sbi.png'} height={25} mr={25} alt="sbi" />
-      {"****" + account.slice(8, 12)}
+      {"****" + account.account_no.slice(8, 12)}
     </Button>
   )
 }
@@ -174,10 +175,10 @@ const Filter = ({ todashboard, close }: props) => {
         </Text>
 
         <Group>
-          {accounts.map((it: { account_no: Key | null | undefined }) => (
+          {accounts.map((it: { account_no: string, id: number }, v: Key | null | undefined) => (
             <AccountSelect
-              key={it.account_no}
-              account={it.account_no}
+              key={v}
+              account={it}
               setAccount={setAccount}
               curSelection={account}
             />

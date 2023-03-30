@@ -1,13 +1,6 @@
-import {
-  createStyles,
-  TextInput,
-  Button,
-  Group,
-  PinInput,
-  Text,
-} from '@mantine/core'
+import {createStyles, Group, PinInput, Text, TextInput,} from '@mantine/core'
 import Link from 'next/link'
-import { SetStateAction, useEffect, useState } from 'react'
+import {SetStateAction, useEffect, useState} from 'react'
 // import ButtonGroup from '../reusable-components/ButtonGroup'
 import Heading from '../reusable-components/Heading'
 

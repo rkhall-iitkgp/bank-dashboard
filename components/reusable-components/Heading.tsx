@@ -1,14 +1,10 @@
 import styled from '@emotion/styled'
-import {
-  ReactElement,
-  JSXElementConstructor,
-  ReactFragment,
-  ReactPortal,
-} from 'react'
+import {JSXElementConstructor, ReactElement, ReactFragment, ReactPortal,} from 'react'
 import Link from 'next/link'
-import { Button } from '@mantine/core'
-import { useRouter } from 'next/router'
-import { relative } from 'path'
+import {Button} from '@mantine/core'
+import {useRouter} from 'next/router'
+import {relative} from 'path'
+
 const StyledText = styled.div`
   font-weight: 500;
   font-size: 1.2rem;
