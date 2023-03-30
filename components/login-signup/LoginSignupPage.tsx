@@ -307,7 +307,6 @@ export function LoginSignupPage() {
           setItem('accounts', "[]")
           useAccount.token = res.data.access_token
         }
-
         return res
       })
       .catch((err) => {

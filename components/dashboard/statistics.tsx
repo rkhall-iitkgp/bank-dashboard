@@ -6,6 +6,7 @@ import ArticlesCard from './articlesCard'
 import InsightCard from './insightCard'
 import RecentTransactions from './recenttransactions'
 import RecentTransactionsRightPane from './recenttransactionsRightPane'
+import CashCard from './setLimitCategory'
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const BalanceChart = (props: {
@@ -310,10 +311,10 @@ const FinancialStatistics = () => {
       </Card.Section>
 
       <Group
-        align={'flex-end'}
+        align={'center'}
         style={{
           flex: 1,
-          maxHeight: '14rem',
+          maxHeight: '53vh',
           overflow: 'auto',
           margin: 'auto',
         }}
@@ -342,6 +343,7 @@ const FinancialStatistics = () => {
           )}
           {categoryIndex != -1 && (
             <>
+              {/* <CashCard /> */}
               <BalanceChart
                 balanceData={filteredBalanceData}
                 color={balanceColor}

@@ -14,15 +14,15 @@ import Filter from '../../components/filter'
 import FilterPopUp from '../../components/home/see-your-analysis-section/FilterPopUp'
 
 const Home: NextPage = () => {
-  const { getItem, setItem } = useStorage();
-  const [bankAccountList, setBankAccountList] = useState<any[]>([]);
-  const [isAddAccountPopupOpen, setIsAddAccountPopupOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState(false);
-  const [isfilteropen, setIsfilteropen] = useState(false);
-  const [accLength, setAccLength] = useState('[]');
-  const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] = useState<boolean>(false);
-  const [isKycPermissionPopUpOpen, setIsKycPermissionPopUpOpen] = useState<boolean>(false);
-  const [kycStatus, setKycStatus] = useState(1);
+  const { getItem, setItem } = useStorage()
+  const [bankAccountList, setBankAccountList] = useState<any[]>([])
+  const [isAddAccountPopupOpen, setIsAddAccountPopupOpen] = useState<boolean>(false)
+  const [loading, setLoading] = useState(false)
+  const [isfilteropen, setIsfilteropen] = useState(false)
+  const [accLength, setAccLength] = useState('[]')
+  const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] = useState<boolean>(false)
+  const [isKycPermissionPopUpOpen, setIsKycPermissionPopUpOpen] = useState<boolean>(false)
+  const [kycStatus, setKycStatus] = useState(1)
 
   const GetAccounts = () => {
     // setItem('accounts', '[]')
@@ -38,6 +38,7 @@ const Home: NextPage = () => {
         console.log(bankAccountList)
 
         setItem('accounts', response.request.responseText)
+        setAccLength(response.request.responseText)
         setLoading(false)
         return response
       })
@@ -50,14 +51,13 @@ const Home: NextPage = () => {
   const GetKycStatus = () => {
     const accessToken = getItem('access_token', 'session')
     console.log(accessToken)
-    const user_id = getItem('user_id')
-    const accLength = JSON.stringify(getItem('accounts'))?.length
-    api.get(`/user/getkyc/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    api
+      .get(`/user/getkyc/`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
         response.data
       })
@@ -72,8 +72,8 @@ const Home: NextPage = () => {
     if (kycStatus === 0) {
       setIsKycPermissionPopUpOpen(true)
     } else if (kycStatus === 1 && accLength !== '[]') {
-      setIsfilteropen(true);
-    } else if (kycStatus === 1 && accLength === '[]') {
+      setIsfilteropen(true)
+    } else if (kycStatus === 1 && accLength === '[]' && accLength) {
       setIsAddAccountPopupOpen(true)
     }
   }
@@ -81,7 +81,6 @@ const Home: NextPage = () => {
   useEffect(() => {
     GetAccounts()
     GetKycStatus()
-    setAccLength(getItem('accounts'))
   }, [])
 
   return (
@@ -91,9 +90,9 @@ const Home: NextPage = () => {
         SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
       />
       <Navbar dashClickHandler={() => dashClickHandler(accLength, kycStatus)} />
-      <SeeYourAnalysis dashClickHandler={() => {
-        dashClickHandler(accLength, kycStatus)
-      }} />
+      <SeeYourAnalysis
+        dashClickHandler={() => dashClickHandler(accLength, kycStatus)}
+      />
       <Payment
         isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
         SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
@@ -105,33 +104,20 @@ const Home: NextPage = () => {
         loading={loading}
       />
       <OfferCardsRow />
-      {isAddAccountPopupOpen ? (
-        <AddAccountFormPopup
-          bankAccountList={bankAccountList}
-          isAddAccountPopupOpen={isAddAccountPopupOpen}
-          setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
-          setBankAccountList={setBankAccountList}
-        />
-      ) : (
-        <></>
-      )}
-      {isKycPermissionPopUpOpen ? (
-        <KycPermissionFormPopup
-          isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
-          SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
-        />
-      ) : (
-        <></>
-      )}
-      {isfilteropen ? (
-        <FilterPopUp
-          isfilteropen={isfilteropen}
-          setIsfilteropen={setIsfilteropen}
-        />
-      ) : (
-        <></>
-      )}
-
+      <AddAccountFormPopup
+        bankAccountList={bankAccountList}
+        isAddAccountPopupOpen={isAddAccountPopupOpen}
+        setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
+        setBankAccountList={setBankAccountList}
+      />
+      <KycPermissionFormPopup
+        isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
+        SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
+      />
+      <FilterPopUp
+        isfilteropen={isfilteropen}
+        setIsfilteropen={setIsfilteropen}
+      />
     </>
   )
 }

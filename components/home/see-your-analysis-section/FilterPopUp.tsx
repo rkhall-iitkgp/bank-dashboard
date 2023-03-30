@@ -7,7 +7,7 @@ interface props {
 }
 const FilterPopUp = ({ isfilteropen, setIsfilteropen }: props) => {
     return (
-        <> <Modal
+        <Modal
             withCloseButton={false}
             opened={isfilteropen}
             onClose={() => setIsfilteropen(false)}
@@ -18,7 +18,6 @@ const FilterPopUp = ({ isfilteropen, setIsfilteropen }: props) => {
         >
             <Filter todashboard={true} close={() => setIsfilteropen(false)} />
         </Modal>
-        </>
     )
 }
 

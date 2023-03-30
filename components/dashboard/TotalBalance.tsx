@@ -12,7 +12,7 @@ const useStyles = createStyles(() => ({
     height: `155px`,
     width: `1000px`,
     display: `flex`,
-    flex: 1.25,
+    flex: 1.5,
   },
   subcontainer1: {
     color: `#737373`,
