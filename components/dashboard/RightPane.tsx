@@ -4,10 +4,11 @@ import ExportButton from './ExportButton'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
 import EodBalance from './EODBalanceCard'
-import StockStatistics from './StocksStatistics'
+import StockStatisticsx from './StocksStatistics'
+import StockStatistics from './stockStats'
 import { TotalBalance } from './TotalBalance'
 import useAccountStore from '../Store/Account'
-
+ 
 const useStyles = createStyles((theme) => ({
   header: {
     flexDirection: 'row',
@@ -108,8 +109,10 @@ const RightPane = () => {
           </Tabs.Panel>
 
           <Tabs.Panel value="stocks" className={classes.tabsPanel}>
-            <StockStatistics />
+            {/* <StockStatisticsx /> */}
+            <StockStatistics/>
           </Tabs.Panel>
+          {/* {    console.log('rendered6846')} */}
         </Tabs>
       </Stack>
     </>

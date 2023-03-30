@@ -2,7 +2,7 @@ import { Button, Select, Menu, createStyles } from '@mantine/core'
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import useAccountStore from '../Store/Account'
-// import { Document, Page } from 'react-pdf'
+import { Document, Page } from 'react-pdf'
 
 const useStyles = createStyles((theme) => ({
   button: {
@@ -33,25 +33,25 @@ export default function ExportButton() {
     link.click()
   }
 
-  // const handleExportPDF = () => {
-  //   const element = document.getElementById('exportToPDF')
-  //   if (!element) {
-  //     console.error('Element not found')
-  //     return
-  //   }
+  const handleExportPDF = () => {
+    const element = document.getElementById('exportToPDF')
+    if (!element) {
+      console.error('Element not found')
+      return
+    }
 
-  //   const pdfWidth = element.offsetWidth
-  //   const pdfHeight = element.offsetHeight
-  //   const pdf = (
-  //     <Document>
-  //       <Page size={[pdfWidth, pdfHeight]}>
-  //         <div id="exportToPDF">{element.innerHTML}</div>
-  //       </Page>
-  //     </Document>
-  //   ) as any
+    const pdfWidth = element.offsetWidth
+    const pdfHeight = element.offsetHeight
+    const pdf = (
+      <Document>
+        <Page size={[pdfWidth, pdfHeight]}>
+          <div id="exportToPDF">{element.innerHTML}</div>
+        </Page>
+      </Document>
+    ) as any
 
-  //   (pdf as any).save('webpage.pdf')
-  // }
+    (pdf as any).save('webpage.pdf')
+  }
 
   return (
     <Menu shadow="md" width={200}>
@@ -69,7 +69,7 @@ export default function ExportButton() {
       </Menu.Target>
 
       <Menu.Dropdown>
-        {/* <Menu.Item onClick={handleExportPDF}>Export as PDF</Menu.Item> */}
+        <Menu.Item onClick={handleExportPDF}>Export as PDF</Menu.Item>
         {/* <Menu.Item onClick={handleExportCSV}>Export as CSV</Menu.Item> */}
         <Menu.Item onClick={handleExportJSON}>Export as JSON</Menu.Item>
         <Menu.Item>Send an Email</Menu.Item>
