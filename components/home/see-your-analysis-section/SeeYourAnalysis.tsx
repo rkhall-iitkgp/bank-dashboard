@@ -49,7 +49,36 @@ interface Props {
 export default function SeeYourAnalysis({
   dashClickHandler
 }: Props) {
-
+  const { getItem } = useStorage()
+  const [result, setResult] = useState(1)
+  const GetKycStatus = () => {
+    const accessToken = getItem('access_token','session')
+    console.log(accessToken)
+    const user_id = getItem('user_id')
+    const accLength = JSON.stringify(getItem('accounts'))?.length
+    const response = api
+      .get(`/user/getkyc/`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        response.data.message === 'KYC done' && setResult(1)
+        console.log(response.data.message)
+      })
+      .catch((err) => {
+        err.response.data.message === 'KYC not done' && setResult(0)
+        console.log(err.response.data.message)
+      })
+  }
+  const [accLength, setAccLength] = useState('[]')
+  useEffect(() => {
+    GetKycStatus()
+    // setResult(0)
+    setAccLength(getItem('accounts'))
+    console.log(result)
+  }, [])
   return (
     <Container>
       <TextDiv>

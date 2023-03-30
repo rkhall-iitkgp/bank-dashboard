@@ -189,7 +189,7 @@ export function PermissionFormPopup({
                 where you can provide your consent.
               </div>
               <Group mt="lg">
-                <Link href="/Profile" style={{ margin: 'auto' }}>
+                <Link href="/profile" style={{ margin: 'auto' }}>
                   <Button size="lg" className={classes.control}>
                     Provide Consent
                   </Button>
