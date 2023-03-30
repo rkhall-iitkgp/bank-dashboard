@@ -7,7 +7,8 @@ import EodBalance from './EODBalanceCard'
 import StockStatistics from './StocksStatistics'
 import { TotalBalance } from './TotalBalance'
 import useAccountStore from '../Store/Account'
-
+import { useState } from 'react'
+import { useEffect } from 'react'
 const useStyles = createStyles((theme) => ({
   header: {
     flexDirection: 'row',
@@ -71,7 +72,15 @@ const RightPane = () => {
     transactions.filter(x => x.date === k).forEach(x => { total += x.credit - x.debit })
     sum += total;
   })
-
+  
+  const [name,setName]=useState('');
+  const [email,setEmail]=useState('');
+  const [contact_no,setContact_no]=useState('');
+  useEffect(() => {
+   setName(getItem('name'));
+   setEmail(getItem('email'))
+   setContact_no(getItem('contact_no').slice(0, 3) +' ' +getItem('contact_no').slice(3))
+  }, [])
   return (
     <>
       <Stack className="right-side" style={{ flex: 2.5 }}>
@@ -81,7 +90,7 @@ const RightPane = () => {
               Welcome Back,&nbsp;
             </Text>
             <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
-              {getItem('name')+'!'}
+              {name}
             </Text>
           </div>
           <div style={{ justifyContent: 'flex-end' }}>

@@ -20,6 +20,7 @@ const ProfilePage = () => {
   <>
       <Navbar dashClickHandler={() => {}}/>
     <div >
+      
       <Profile loading={loading} bankAccountList={bankAccountList} />
     </div>
   </>

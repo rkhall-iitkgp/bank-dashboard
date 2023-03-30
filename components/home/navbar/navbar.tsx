@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { ProfileCard } from './ProfileCard'
 import { useState } from 'react'
 import Link from 'next/link'
-
 const StyledNavbar = styled.nav`
   display: flex;
   justify-content: space-between;
