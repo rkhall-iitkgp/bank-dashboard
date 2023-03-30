@@ -6,6 +6,7 @@ import FinancialStatistics from './statistics'
 import EodBalance from './EODBalanceCard'
 import StockStatistics from './StocksStatistics'
 import { TotalBalance } from './TotalBalance'
+import useAccountStore from '../Store/Account'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -48,6 +49,26 @@ const useStyles = createStyles((theme) => ({
 const RightPane = () => {
   const { getItem } = useStorage()
   const { classes } = useStyles()
+  const useAccount = useAccountStore();
+  const transactions = useAccount.Transaction;
+  let datelegends = new Set<string>();
+  transactions.forEach(v => datelegends.add(v.date))
+
+  let dateslist = Array.from(datelegends);
+
+  dateslist.sort((a, b) => {
+    let A = new Date(a);
+    let B = new Date(b);
+    return A > B ? 1 : -1
+  })
+
+  let total = 0;
+  let sum = 0;
+  dateslist.forEach(k => {
+    console.log(k)
+    transactions.filter(x => x.date === k).forEach(x => { total += x.credit - x.debit })
+    sum += total;
+  })
 
   return (
     <>
@@ -66,8 +87,8 @@ const RightPane = () => {
           </div>
         </Group>
         <Group>
-          <TotalBalance />
-          <EodBalance balance="$1,23,456" comparision={4.6} />
+          <TotalBalance accountNumber={"****" + useAccount.account_no.slice(8, 12)} increment={5} timePeriod={2} totalBalance={"$" + total} />
+          <EodBalance balance={"$" + sum / (dateslist.length)} comparision={4.6} />
           <FinancialRatios />
         </Group>
         <Tabs defaultValue="financial">

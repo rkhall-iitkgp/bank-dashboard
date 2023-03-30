@@ -72,13 +72,14 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
   )
 );
 interface Props {
-  accountsList: any[]
+  accountsList: any[],
+  useAccount: any
 }
-const LeftPane = ({ accountsList }: Props) => {
-  const useAccount = useAccountStore();
+const LeftPane = ({ accountsList, useAccount }: Props) => {
+  // const useAccount = useAccountStore();
   const [depositLimit, setDepositLimit] = useState(1000)
   const [withdrawlLimit, setWithdrawlLimit] = useState(1000)
-  const selectedBankAccount = useAccountStore((state) => state.account_no)
+  const selectedBankAccount = useAccount.account_no
   const [opened, { open, close }] = useDisclosure(false)
 
   useEffect(() => {
