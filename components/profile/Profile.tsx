@@ -3,13 +3,15 @@ import useStorage from '../../hooks/useStorage'
 import LeftPane from './LeftPane'
 import RightPane from './RightPane'
 import {useState} from 'react'
+import api from '../datams'
 import {KycAuthentication} from '../kyc/KycAuthentication'
-
+// import api from
+import { useEffect } from 'react'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
     boxSizing: 'border-box',
-    minHeight: `calc(100vh - 4rem)`,
+    // minHeight: `calc(100vh - 4rem)`,
     padding: `20px`,
     // padding: `calc(${theme.spacing.xl} * 2.5)`,
     [theme.fn.smallerThan('sm')]: {
@@ -18,6 +20,7 @@ const useStyles = createStyles((theme) => ({
     display: `grid`,
     gridTemplateColumns: `40% 60%`,
     background: `white`,
+    height:'100vh',
   },
   account: {
     width: `150px`,
@@ -55,44 +58,16 @@ const Profile = ({ bankAccountList, loading }: props) => {
   const { classes } = useStyles()
   const { getItem } = useStorage()
   const { setItem } = useStorage()
-  const [result, setResult] = useState('1')
-  // const GetKycStatus = () => {
-  //   const accessToken = getItem('access_token','session')
-  //   console.log(accessToken)
-  //   const user_id = getItem('user_id')
-
-  //   const response = api
-  //     .get(`/user/getkyc/`, {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //         'Content-Type': 'application/json',
-  //       },
-  //     })
-  //     .then((response) => {
-  //       (response.data);
-
-  //     })
-  //     .catch((err) =>((err.response.data.message=='KYC not done') && setResult('0')))
-
-  // }
-
-
-  const bankAccountList1 = [2353]
-
-  // useEffect(() => {
-
-  //   GetKycStatus()
-
-  // }, [])
+    const accessToken = getItem('access_token','session')
+    console.log(accessToken)
+    const user_id = getItem('user_id')
+   
   return (
     <div className={classes.wrapper}>
-      {result == '0' &&
-        <KycAuthentication />}
       <div className={classes.container1}>
         <LeftPane accounts={bankAccountList} />
       </div>
       <div className={classes.container2}>
-        <KycAuthentication />
         <RightPane />
       </div>
     </div>
