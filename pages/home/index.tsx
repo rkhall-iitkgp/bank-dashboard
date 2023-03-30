@@ -104,32 +104,20 @@ const Home: NextPage = () => {
         loading={loading}
       />
       <OfferCardsRow />
-      {isAddAccountPopupOpen ? (
-        <AddAccountFormPopup
-          bankAccountList={bankAccountList}
-          isAddAccountPopupOpen={isAddAccountPopupOpen}
-          setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
-          setBankAccountList={setBankAccountList}
-        />
-      ) : (
-        <></>
-      )}
-      {isKycPermissionPopUpOpen ? (
-        <KycPermissionFormPopup
-          isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
-          SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
-        />
-      ) : (
-        <></>
-      )}
-      {isfilteropen ? (
-        <FilterPopUp
-          isfilteropen={isfilteropen}
-          setIsfilteropen={setIsfilteropen}
-        />
-      ) : (
-        <></>
-      )}
+      <AddAccountFormPopup
+        bankAccountList={bankAccountList}
+        isAddAccountPopupOpen={isAddAccountPopupOpen}
+        setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
+        setBankAccountList={setBankAccountList}
+      />
+      <KycPermissionFormPopup
+        isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
+        SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
+      />
+      <FilterPopUp
+        isfilteropen={isfilteropen}
+        setIsfilteropen={setIsfilteropen}
+      />
     </>
   )
 }
