@@ -35,23 +35,23 @@ export default function ExportButton() {
 
   const handleExportPDF = () => {
     const element = document.getElementById('exportToPDF')
-    if (!element) {
-      console.error('Element not found')
-      return
-    }
-
-    const pdfWidth = element.offsetWidth
-    const pdfHeight = element.offsetHeight
-    const pdf = (
-      <Document>
-        <Page size={[pdfWidth, pdfHeight]}>
-          <div id="exportToPDF">{element.innerHTML}</div>
-        </Page>
-      </Document>
-    )
-
-    pdf.save('webpage.pdf')
+  if (!element) {
+    console.error('Element not found')
+    return
   }
+
+  const pdfWidth = element.offsetWidth
+  const pdfHeight = element.offsetHeight
+  const pdf = (
+    <Document>
+      <Page size={[pdfWidth, pdfHeight]}>
+        <div id="exportToPDF">{element.innerHTML}</div>
+      </Page>
+    </Document>
+  ) as any
+
+  (pdf as any).save('webpage.pdf')
+}
 
   return (
     <Menu shadow="md" width={200}>
