@@ -1,21 +1,9 @@
-import {Button, createStyles, Image} from '@mantine/core'
-import React from 'react'
+import { Button, createStyles, Image } from '@mantine/core'
+import React, { useState } from 'react'
 import useStorage from '../../hooks/useStorage'
-
-const useStyles = createStyles((theme) => ({
-  wrapper: {
-    backgroundColor: `#EEEEEE`,
-    boxSizing: 'border-box',
-    minHeight: `calc(100vh - 4rem)`,
-    padding: `20px`,
-    // padding: `calc(${theme.spacing.xl} * 2.5)`,
-    [theme.fn.smallerThan('sm')]: {
-      padding: `calc(${theme.spacing.xl} * 1.5)`,
-    },
-    display: `grid`,
-    gridTemplateColumns: `40% 60%`,
-    background: `white`,
-  },
+import { useEffect } from 'react'
+const useStyles = createStyles(() => ({
+ 
   container1: {
     display: `flex`,
     flexDirection: `column`,
@@ -130,7 +118,9 @@ const AccountSelect = ({ account_no }: Props) => {
         height={20}
         src="/icons/sbi.png"
       ></Image>
-      <div className={classes.content}>{'**** ' + account_no.toString().slice(8, 12)}</div>
+      <div className={classes.content}>
+        {'**** ' + account_no.toString().slice(8, 12)}
+      </div>
     </div>
   )
 }
@@ -141,6 +131,14 @@ interface Props2 {
 const LeftPane = ({ accounts }: Props2) => {
   const { classes } = useStyles()
   const { getItem } = useStorage()
+  const [name,setName]=useState('');
+  const [email,setEmail]=useState('');
+  const [contact_no,setContact_no]=useState('');
+  useEffect(() => {
+   setName(getItem('name'));
+   setEmail(getItem('email'))
+   setContact_no(getItem('contact_no').slice(0, 3) +' ' +getItem('contact_no').slice(3))
+  }, [])
   return (
     <>
       <div>
@@ -152,19 +150,22 @@ const LeftPane = ({ accounts }: Props2) => {
           radius={1000}
         ></Image>
       </div>
-      <div className={classes.name}>{getItem("name")}</div>
+      <div className={classes.name}>{name}</div>
+      <div className={classes.name}></div>
       <div className={classes.email}>
         <div className={classes.title}>Email</div>
-        <div className={classes.content}>{getItem("email")}</div>
+        <div className={classes.content}>{email}</div>
       </div>
       <div className={classes.phone}>
         <div className={classes.title}>Phone Number</div>
-        <div className={classes.content}>{getItem("contact_no").slice(0, 3) + " " + getItem("contact_no").slice(3)}</div>
+        <div className={classes.content}>
+          {contact_no}
+        </div>
       </div>
       <div>
         <div className={classes.title}>Bank Accounts</div>
         <div className={classes.accountCollection}>
-          {accounts.map((account_no, index) => {
+          {accounts?.map((account_no, index) => {
             return (
               <div key={index}>
                 <AccountSelect account_no={account_no.account_no} />

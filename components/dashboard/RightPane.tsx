@@ -6,6 +6,7 @@ import FinancialStatistics from './statistics'
 import EodBalance from './EODBalanceCard'
 import StockStatistics from './StocksStatistics'
 import { TotalBalance } from './TotalBalance'
+import useAccountStore from '../Store/Account'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -48,45 +49,67 @@ const useStyles = createStyles((theme) => ({
 const RightPane = () => {
   const { getItem } = useStorage()
   const { classes } = useStyles()
+  const useAccount = useAccountStore();
+  const transactions = useAccount.Transaction;
+  let datelegends = new Set<string>();
+  transactions.forEach(v => datelegends.add(v.date))
+
+  let dateslist = Array.from(datelegends);
+
+  dateslist.sort((a, b) => {
+    let A = new Date(a);
+    let B = new Date(b);
+    return A > B ? 1 : -1
+  })
+
+  let total = 0;
+  let sum = 0;
+  dateslist.forEach(k => {
+    console.log(k)
+    transactions.filter(x => x.date === k).forEach(x => { total += x.credit - x.debit })
+    sum += total;
+  })
 
   return (
     <>
-      <Group mx={10} className={classes.header}>
-        <div style={{ display: 'flex' }}>
-          <Text fz={35} fw={700} ff="Montserrat">
-            {getItem('name') + "!"}
-          </Text>
-          <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
-            Bill Gates!
-          </Text>
-        </div>
-        <div style={{ justifyContent: 'flex-end' }}>
-          <ExportButton />
-        </div>
-      </Group>
-      <Group>
-        <TotalBalance />
-        <EodBalance balance="$1,23,456" comparision={4.6} />
-        <FinancialRatios />
-      </Group>
-      <Tabs defaultValue="financial">
-        <Tabs.List style={{ border: 'none' }}>
-          <Tabs.Tab value="financial" className={classes.tab}>
-            Finances
-          </Tabs.Tab>
-          <Tabs.Tab value="stocks" className={classes.tab}>
-            Stocks
-          </Tabs.Tab>
-        </Tabs.List>
+      <Stack className="right-side" style={{ flex: 2.5 }}>
+        <Group mx={10} className={classes.header}>
+          <div style={{ display: 'flex' }}>
+            <Text fz={35} fw={700} ff="Montserrat">
+              Welcome Back!&nbsp;
+            </Text>
+            <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
+              {getItem('name')}
+            </Text>
+          </div>
+          <div style={{ justifyContent: 'flex-end' }}>
+            <ExportButton />
+          </div>
+        </Group>
+        <Group>
+          <TotalBalance accountNumber={"****" + useAccount.account_no.slice(8, 12)} increment={5} timePeriod={2} totalBalance={"$" + total} />
+          <EodBalance balance={"$" + sum / (dateslist.length)} comparision={4.6} />
+          <FinancialRatios />
+        </Group>
+        <Tabs defaultValue="financial">
+          <Tabs.List style={{ border: 'none' }}>
+            <Tabs.Tab value="financial" className={classes.tab}>
+              Finances
+            </Tabs.Tab>
+            <Tabs.Tab value="stocks" className={classes.tab}>
+              Stocks
+            </Tabs.Tab>
+          </Tabs.List>
 
-        <Tabs.Panel value="financial" className={classes.tabsPanel}>
-          <FinancialStatistics />
-        </Tabs.Panel>
+          <Tabs.Panel value="financial" className={classes.tabsPanel}>
+            <FinancialStatistics />
+          </Tabs.Panel>
 
-        <Tabs.Panel value="stocks" className={classes.tabsPanel}>
-          <StockStatistics />
-        </Tabs.Panel>
-      </Tabs>
+          <Tabs.Panel value="stocks" className={classes.tabsPanel}>
+            <StockStatistics />
+          </Tabs.Panel>
+        </Tabs>
+      </Stack>
     </>
   )
 }

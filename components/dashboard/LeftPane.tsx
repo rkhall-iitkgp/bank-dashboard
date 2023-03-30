@@ -72,13 +72,14 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
   )
 );
 interface Props {
-  accountsList: any[]
+  accountsList: any[],
+  useAccount: any
 }
-const LeftPane = ({ accountsList }: Props) => {
-  const useAccount = useAccountStore();
+const LeftPane = ({ accountsList, useAccount }: Props) => {
+  // const useAccount = useAccountStore();
   const [depositLimit, setDepositLimit] = useState(1000)
   const [withdrawlLimit, setWithdrawlLimit] = useState(1000)
-  const selectedBankAccount = useAccountStore((state) => state.account_no)
+  const selectedBankAccount = useAccount.account_no
   const [opened, { open, close }] = useDisclosure(false)
 
   useEffect(() => {
@@ -149,13 +150,13 @@ const LeftPane = ({ accountsList }: Props) => {
 
         <Group style={{ justifyContent: 'space-between' }}>
           <CashCard
-            num={5}
+            num={[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]}
             type={'deposit'}
             limit={depositLimit}
             setLimit={setDepositLimit}
           />
           <CashCard
-            num={10}
+            num={[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]}
             type={'withdrawl'}
             limit={withdrawlLimit}
             setLimit={setWithdrawlLimit}

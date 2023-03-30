@@ -175,7 +175,7 @@ const Filter = ({ todashboard, close }: props) => {
         </Text>
 
         <Group>
-          {accounts.map((it: { account_no: string, id: number }, v: Key | null | undefined) => (
+          {accounts?.map((it: { account_no: string, id: number }, v: Key | null | undefined) => (
             <AccountSelect
               key={v}
               account={it}
@@ -222,38 +222,19 @@ const Filter = ({ todashboard, close }: props) => {
           className={classes.control}
           onClick={() => {
             if (mpin && id && account && todashboard) {
-              api.post("/user/gettrxn/", {
-                "account_no": account,
-                "mpin": mpin,
-                "startDate": form.values.Datefrom.getUTCFullYear() + "-" + (form.values.Datefrom.getMonth() + 1) + "-" + form.values.Datefrom.getDate(),
-                "endDate": form.values.Dateto.getUTCFullYear() + "-" + (form.values.Dateto.getMonth() + 1) + "-" + form.values.Dateto.getDate()
-
-              }, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } }).then((res) => {
-                console.log('res', res)
-                useAccount.Transaction = res.data
-                useAccount.account_no = account;
-                useAccount.mpin = mpin;
-                useAccount.startDate = form.values.Datefrom;
-                useAccount.endDate = form.values.Dateto;
-                router.push("/dashboard")
-              }).catch(err => console.log('err', err))
+              useAccount.account_no = account;
+              useAccount.mpin = mpin;
+              useAccount.startDate = form.values.Datefrom;
+              useAccount.endDate = form.values.Dateto;
+              useAccount.setTransaction();
+              router.push("/dashboard")
             } else if (mpin && id && account && !todashboard) {
-              api.post("/user/gettrxn/", {
-                "account_no": account,
-                "mpin": mpin,
-                "startDate": form.values.Datefrom.getUTCFullYear() + "-" + (form.values.Datefrom.getMonth() + 1) + "-" + form.values.Datefrom.getDate(),
-                "endDate": form.values.Dateto.getUTCFullYear() + "-" + (form.values.Dateto.getMonth() + 1) + "-" + form.values.Dateto.getDate()
-
-              }, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } }).then((res) => {
-                console.log('res', res)
-                useAccount.Transaction = res.data
-                useAccount.account_no = account;
-                useAccount.mpin = mpin;
-                useAccount.startDate = form.values.Datefrom;
-                useAccount.endDate = form.values.Dateto;
-                console.log('hello')
-                close()
-              }).catch(err => console.log('err', err))
+              useAccount.account_no = account;
+              useAccount.mpin = mpin;
+              useAccount.startDate = form.values.Datefrom;
+              useAccount.endDate = form.values.Dateto;
+              useAccount.setTransaction();
+              close()
             }
           }}
         >

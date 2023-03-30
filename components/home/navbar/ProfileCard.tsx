@@ -110,6 +110,7 @@ const AccountCard = ({ bankName, value }: Props) => {
     </div>
   )
 }
+
 export function ProfileCard() {
   const { classes } = useStyles()
   const { getItem } = useStorage()
@@ -124,9 +125,9 @@ export function ProfileCard() {
   //   { id: 3, bankName: 'sbi', value: '****8090' },
   // ]
   let data = {
-    PersonName: 'Bill Gates',
-    Email: 'bgiamrich@gmail.com',
-    PhoneNumber: '8675645300',
+    PersonName: getItem('name'),
+    Email: getItem('email'),
+    PhoneNumber: getItem('contact_no'),
   }
   return (
     <div className={classes.container}>
@@ -225,7 +226,7 @@ export function ProfileCard() {
           Bank Accounts
         </span>
         <div className={classes.accountCollection}>
-          {BankAccount.map((ele: { id: Key | null | undefined; bankName: string | undefined; account_no: string | undefined }, key: any) => {
+          {BankAccount?.map((ele: { id: Key | null | undefined; bankName: string | undefined; account_no: string | undefined }, key: any) => {
             return (
               <span key={ele.id}>
                 <AccountCard

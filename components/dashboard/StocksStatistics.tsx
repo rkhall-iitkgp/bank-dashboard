@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, Flex, Text } from '@mantine/core'
+
 import dynamic from 'next/dynamic'
 const AdvancedRealTimeChart = dynamic(
   () =>
@@ -8,8 +9,6 @@ const AdvancedRealTimeChart = dynamic(
     ssr: false,
   },
 )
-
-// import TradingViewWidget from 'react-tradingview-widget'
 
 const StockStatistics = () => (
   <Card

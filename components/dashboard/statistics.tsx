@@ -1,12 +1,12 @@
 import { Button, Card, Group, Stack, Text } from '@mantine/core'
 import dynamic from 'next/dynamic'
-const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 import { useEffect, useState } from 'react'
 import useAccountStore from '../Store/Account'
 import ArticlesCard from './articlesCard'
 import InsightCard from './insightCard'
 import RecentTransactions from './recenttransactions'
 import RecentTransactionsRightPane from './recenttransactionsRightPane'
+const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const BalanceChart = (props: {
   balanceData: { x: string; y: number }[]
@@ -20,7 +20,7 @@ const BalanceChart = (props: {
     <ReactApexChart
       type="area"
       height={340}
-      width={width}
+      width={550}
       margin={'auto'}
       options={{
         fill: { colors: [color] },
@@ -75,6 +75,7 @@ const SpendingDonut = (props: {
   legends: string[]
   setSelection: Function
   setValue: Function
+  setColor: Function
 }) => {
   return (
     <ReactApexChart
@@ -87,6 +88,7 @@ const SpendingDonut = (props: {
             dataPointSelection(e, chart, options) {
               props.setSelection(parseInt(e?.target?.getAttribute('j')))
               props.setValue(parseInt(e?.target?.getAttribute('data:value')))
+              props.setColor(e?.target?.getAttribute('fill'))
             },
           },
         },
@@ -174,6 +176,7 @@ const FinancialStatistics = () => {
   const [categoryIndex, setCategoryIndex] = useState(-1)
   const [modeIndex, setModeIndex] = useState(-1)
   const [catValue, setCatValue] = useState(-1)
+  const [balanceColor, setBalanceColor] = useState('#00A76D');
   const useAccount = useAccountStore();
   const [PieCategoryData, setpiecategorydata] = useState([{ mode: 'Entertainment', value: 50 }]);
   const [PieModeData, setpiemodedata] = useState([{ mode: 'UPI', value: 100 }]);
@@ -207,6 +210,7 @@ const FinancialStatistics = () => {
       modedata.push({ mode: k, value: total });
     })
 
+    // console.log(`modedata = ${modedata[0].value}`)
     setpiemodedata(modedata);
   }, [useAccount.Transaction])
 
@@ -216,18 +220,26 @@ const FinancialStatistics = () => {
     let datedata: { x: string, y: number }[] = [];
     transactions.forEach(v => datelegends.add(v.date))
 
+    let dateslist = Array.from(datelegends);
+
+    dateslist.sort((a, b) => {
+      let A = new Date(a);
+      let B = new Date(b);
+      return A > B ? 1 : -1
+    })
+
     let total = 0;
-    datelegends.forEach(k => {
+    dateslist.forEach(k => {
       console.log(k)
       transactions.filter(x => x.date === k).forEach(x => { total += x.credit - x.debit })
       datedata.push({ x: k, y: total });
     })
 
-    datedata.sort((a, b) => {
-      let A = new Date(a.x);
-      let B = new Date(b.x);
-      return A > B ? 1 : -1
-    })
+    // datedata.sort((a, b) => {
+    //   let A = new Date(a.x);
+    //   let B = new Date(b.x);
+    //   return A > B ? 1 : -1
+    // })
 
     settotalbalancedata(datedata);
     // console.log(`date data = ${datedata[0].y}`)
@@ -314,17 +326,17 @@ const FinancialStatistics = () => {
           />
         )}
         <Stack style={{ flex: 1 }} align="center">
-          <SpendingDonut
+          <SpendingDonut setColor={setBalanceColor}
             setSelection={setCategoryIndex}
-            values={PieCategoryData.map((v) => v.value)}
-            legends={PieCategoryData.map((v) => v.mode)}
+            values={PieCategoryData?.map((v) => v.value)}
+            legends={PieCategoryData?.map((v) => v.mode)}
             setValue={setCatValue}
           />
           {categoryIndex == -1 && (
-            <SpendingDonut
+            <SpendingDonut setColor={() => { }}
               setSelection={setModeIndex}
-              values={PieModeData.map((v) => v.value)}
-              legends={PieModeData.map((v) => v.mode)}
+              values={PieModeData?.map((v) => v.value)}
+              legends={PieModeData?.map((v) => v.mode)}
               setValue={(v: number) => { }}
             />
           )}
@@ -332,7 +344,7 @@ const FinancialStatistics = () => {
             <>
               <BalanceChart
                 balanceData={filteredBalanceData}
-                color="#00A76D"
+                color={balanceColor}
                 width={450}
               />
               <MontlySpendingChart data={MontlySpendingData} />

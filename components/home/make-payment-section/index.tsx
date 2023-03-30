@@ -31,7 +31,6 @@ const _StyledButton = styled(Button)`
 const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
   _StyledButton,
 )
-
 interface Props {
   SetIsKycPermissionPopUpOpen: Function
   isKycPermissionPopUpOpen: any
@@ -57,11 +56,12 @@ export default function Payment({
         },
       })
       .then((response) => {
-        response.data
+        response.data.message === 'KYC done' && setResult(1)
+        console.log(response.data.message)
       })
       .catch((err) => {
-        err.response.data.message == 'KYC not done' && setResult(0)
-        // console.log(err.response.data.message)
+        err.response.data.message === 'KYC not done' && setResult(0)
+        console.log(err.response.data.message)
       })
   }
   const [accLength, setAccLength] = useState('[]')
