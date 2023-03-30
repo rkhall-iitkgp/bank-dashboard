@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import useStorage from '../../hooks/useStorage'
 import { useEffect } from 'react'
 const useStyles = createStyles(() => ({
- 
+
   container1: {
     display: `flex`,
     flexDirection: `column`,
@@ -131,13 +131,14 @@ interface Props2 {
 const LeftPane = ({ accounts }: Props2) => {
   const { classes } = useStyles()
   const { getItem } = useStorage()
-  const [name,setName]=useState('');
-  const [email,setEmail]=useState('');
-  const [contact_no,setContact_no]=useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [contact_no, setContact_no] = useState('');
   useEffect(() => {
-   setName(getItem('name'));
-   setEmail(getItem('email'))
-   setContact_no(getItem('contact_no').slice(0, 3) +' ' +getItem('contact_no').slice(3))
+    setName(getItem('name'));
+    setEmail(getItem('email'))
+    setContact_no(getItem('contact_no').slice(0, 3) + ' ' + getItem('contact_no').slice(3))
+
   }, [])
   return (
     <>
@@ -165,7 +166,8 @@ const LeftPane = ({ accounts }: Props2) => {
       <div>
         <div className={classes.title}>Bank Accounts</div>
         <div className={classes.accountCollection}>
-          {accounts?.map((account_no, index) => {
+
+          {accounts.map((account_no, index) => {
             return (
               <div key={index}>
                 <AccountSelect account_no={account_no.account_no} />
