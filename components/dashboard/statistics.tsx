@@ -343,7 +343,7 @@ const FinancialStatistics = () => {
           )}
           {categoryIndex != -1 && (
             <>
-              <CashCard />
+              {/* <CashCard /> */}
               <BalanceChart
                 balanceData={filteredBalanceData}
                 color={balanceColor}

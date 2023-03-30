@@ -14,18 +14,21 @@ import Filter from '../../components/filter'
 import FilterPopUp from '../../components/home/see-your-analysis-section/FilterPopUp'
 
 const Home: NextPage = () => {
-  const { getItem, setItem } = useStorage();
-  const [bankAccountList, setBankAccountList] = useState<any[]>([]);
-  const [isAddAccountPopupOpen, setIsAddAccountPopupOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState(false);
-  const [isfilteropen, setIsfilteropen] = useState(false);
-  const [accLength, setAccLength] = useState('[]');
-  const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] = useState<boolean>(false);
-  const [isKycPermissionPopUpOpen, setIsKycPermissionPopUpOpen] = useState<boolean>(false);
-  const [kycStatus, setKycStatus] = useState(1);
+  const { getItem, setItem } = useStorage()
+  const [bankAccountList, setBankAccountList] = useState<any[]>([])
+  const [isAddAccountPopupOpen, setIsAddAccountPopupOpen] =
+    useState<boolean>(false)
+  const [loading, setLoading] = useState(false)
+  const [isfilteropen, setIsfilteropen] = useState(false)
+  const [accLength, setAccLength] = useState('[]')
+  const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] =
+    useState<boolean>(false)
+  const [isKycPermissionPopUpOpen, setIsKycPermissionPopUpOpen] =
+    useState<boolean>(false)
+  const [kycStatus, setKycStatus] = useState(1)
 
   const GetAccounts = () => {
-    setItem('accounts', '[]')
+    // setItem('accounts', '[]')
     setLoading(true)
     api
       .get(`/user/accounts/${getItem('user_id')}/`, {
@@ -50,14 +53,13 @@ const Home: NextPage = () => {
   const GetKycStatus = () => {
     const accessToken = getItem('access_token', 'session')
     console.log(accessToken)
-    const user_id = getItem('user_id')
-    const accLength = JSON.stringify(getItem('accounts'))?.length
-    api.get(`/user/getkyc/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    api
+      .get(`/user/getkyc/`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
       .then((response) => {
         response.data
       })
@@ -72,8 +74,8 @@ const Home: NextPage = () => {
     if (kycStatus === 0) {
       setIsKycPermissionPopUpOpen(true)
     } else if (kycStatus === 1 && accLength !== '[]') {
-      setIsfilteropen(true);
-    } else if (kycStatus === 1 && accLength === '[]') {
+      setIsfilteropen(true)
+    } else if (kycStatus === 1 && accLength === '[]' && accLength) {
       setIsAddAccountPopupOpen(true)
     }
   }
@@ -91,7 +93,9 @@ const Home: NextPage = () => {
         SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
       />
       <Navbar dashClickHandler={() => dashClickHandler(accLength, kycStatus)} />
-      <SeeYourAnalysis dashClickHandler={dashClickHandler} />
+      <SeeYourAnalysis
+        dashClickHandler={() => dashClickHandler(accLength, kycStatus)}
+      />
       <Payment
         isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
         SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
@@ -129,7 +133,6 @@ const Home: NextPage = () => {
       ) : (
         <></>
       )}
-
     </>
   )
 }
