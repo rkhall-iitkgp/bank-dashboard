@@ -20,6 +20,7 @@ import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import useAccountStore from '../Store/Account'
 import { useDisclosure } from '@mantine/hooks'
+import { it } from 'node:test'
 
 const _PeriodButton = styled(Button)`
   width: 213px;
@@ -81,12 +82,12 @@ const PeriodItem = (prop: {
 const AccountSelect = (prop: {
   account: { account_no: string, id: number }
   setAccount: Function
-  curSelection: string, key: Key | null | undefined
+  curSelection: string
 }) => {
-  const { account, setAccount, curSelection, key } = prop
+  const { account, setAccount, curSelection } = prop
   // console.log(prop);
   return (
-    <Button key={key}
+    <Button key={account.id}
       style={{
         backgroundColor: '#E6EFF9',
         color: '#000000',
