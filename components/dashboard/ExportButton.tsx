@@ -53,10 +53,10 @@ export default function ExportButton() {
           </Menu.Target>
     
           <Menu.Dropdown>
-            <Menu.Item>Export as PDF</Menu.Item>
+            <Menu.Item onClick={handleExportPDF}>Export as PDF</Menu.Item>
             {/* <Menu.Item onClick={handleExportCSV}>Export as CSV</Menu.Item> */}
             <Menu.Item onClick={handleExportJSON}>Export as JSON</Menu.Item>
-            <Menu.Item onClick={handleExportPDF}>Export as PDF</Menu.Item>
+            <Menu.Item>Export as PDF</Menu.Item>
             <Menu.Item >Send an Email</Menu.Item>
           </Menu.Dropdown>
         </Menu>
