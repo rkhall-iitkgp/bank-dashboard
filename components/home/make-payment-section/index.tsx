@@ -35,20 +35,20 @@ interface Props {
   SetIsKycPermissionPopUpOpen: Function
   isKycPermissionPopUpOpen: any
   setIsAddAccountPopupOpen: Function
+  bankAccountList: any[]
 }
 export default function Payment({
   SetIsKycPermissionPopUpOpen,
   isKycPermissionPopUpOpen,
   setIsAddAccountPopupOpen,
+  bankAccountList
 }: Props) {
   const { getItem } = useStorage()
   const [result, setResult] = useState(1)
   const GetKycStatus = () => {
     const accessToken = getItem('access_token', 'session')
     console.log(accessToken)
-    const user_id = getItem('user_id')
-    const accLength = JSON.stringify(getItem('accounts'))?.length
-    const response = api
+    api
       .get(`/user/getkyc/`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -56,21 +56,20 @@ export default function Payment({
         },
       })
       .then((response) => {
-        response.data.message === 'KYC done' && setResult(1)
-        console.log(response.data.message)
+        response.data
       })
       .catch((err) => {
-        err.response.data.message === 'KYC not done' && setResult(0)
-        console.log(err.response.data.message)
+        err.response.data.message == 'KYC not done' && setResult(0)
+        // console.log(err.response.data.message)
       })
   }
-  const [accLength, setAccLength] = useState('[]')
-  useEffect(() => {
-    GetKycStatus()
-    // setResult(0)
-    setAccLength(getItem('accounts'))
-    console.log(result)
-  }, [])
+  // const [accLength, setAccLength] = useState('[]')
+  // useEffect(() => {
+  //   GetKycStatus()
+  //   // setResult(0)
+  //   setAccLength(getItem('accounts'))
+  //   console.log(result)
+  // }, [])
   return (
     <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '3vh' }}>
       <Card shadow="sm" padding="xs" radius="lg" withBorder bg={'#E0EEFF'}>
@@ -103,7 +102,7 @@ export default function Payment({
             </div>
           )}
 
-          {result === 1 && accLength !== '[]' && (
+          {result === 1 && bankAccountList.length !== 0 && (
             <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
               <MakePaymentCard
                 imageAddress="icons/bank-building-white.png"
@@ -112,7 +111,7 @@ export default function Payment({
               />
             </Link>
           )}
-          {result === 1 && accLength === '[]' && (
+          {result === 1 && bankAccountList.length === 0 && (
             <div
               onClick={() => {
                 setIsAddAccountPopupOpen(true)
@@ -140,7 +139,7 @@ export default function Payment({
             </div>
           )}
 
-          {result === 1 && accLength !== '[]' && (
+          {result === 1 && bankAccountList.length !== 0 && (
             <Link href="/UPI" style={{ textDecoration: 'none' }}>
               <MakePaymentCard
                 imageAddress="icons/upi.png"
@@ -149,7 +148,7 @@ export default function Payment({
               />
             </Link>
           )}
-          {result === 1 && accLength === '[]' && (
+          {result === 1 && bankAccountList.length === 0 && (
             <div
               onClick={() => {
                 setIsAddAccountPopupOpen(true)
