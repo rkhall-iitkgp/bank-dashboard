@@ -25,7 +25,7 @@ const Home: NextPage = () => {
   const [kycStatus, setKycStatus] = useState(1);
 
   const GetAccounts = () => {
-    setItem('accounts', '[]')
+    // setItem('accounts', '[]')
     setLoading(true)
     api
       .get(`/user/accounts/${getItem('user_id')}/`, {
@@ -91,7 +91,9 @@ const Home: NextPage = () => {
         SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
       />
       <Navbar dashClickHandler={() => dashClickHandler(accLength, kycStatus)} />
-      <SeeYourAnalysis dashClickHandler={dashClickHandler} />
+      <SeeYourAnalysis dashClickHandler={() => {
+        dashClickHandler(accLength, kycStatus)
+      }} />
       <Payment
         isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
         SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}

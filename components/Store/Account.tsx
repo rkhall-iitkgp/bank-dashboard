@@ -7,6 +7,7 @@ import { combine } from 'zustand/middleware'
 const { getItem } = useStorage()
 const useAccountStore = create(
     combine({
+        token: '',
         account_no: '',
         mpin: '',
         startDate: dayjs(new Date()).subtract(1, 'month').toDate(),
@@ -20,7 +21,8 @@ const useAccountStore = create(
             category: '',
             id: ''
         }],
-        Loading: false
+        Loading: false,
+        flag: false
     },
         (set, get) => ({
             setTransaction: () => {
@@ -38,6 +40,18 @@ const useAccountStore = create(
 
                 }).catch(err => console.log('err', err))
 
+            },
+            isAuthenticated: (): any => {
+                get().flag = false
+                api.post("https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user/api/token/verify/", { token: get().token }).then((res) => {
+                    // useAccountStore.setState({ Loading: true })
+                    get().flag = true
+                    console.log('heelo')
+                }).catch((err) => {
+                    get().flag = false
+                })
+
+                return get().flag
             }
         }))
 

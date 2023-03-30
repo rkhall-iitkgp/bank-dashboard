@@ -3,9 +3,17 @@ import Head from 'next/head'
 import './../styles/globals.css'
 import { MantineProvider } from '@mantine/core'
 import { Notifications } from '@mantine/notifications';
+import { useEffect } from 'react';
+import useAccountStore from '../components/Store/Account';
+import { useRouter } from 'next/router';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props
+  const useAccount = useAccountStore()
+  const router = useRouter()
+  useEffect(() => {
+    console.log(router, router.pathname, useAccount.isAuthenticated())
+  }, [router.pathname, useAccount.flag])
 
   return (
     <>
