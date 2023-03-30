@@ -33,7 +33,7 @@ const Dashboard = () => {
 
   return (
     <div style={{ backgroundColor: '#F4F4F4' }}>
-      <Navbar />
+      <Navbar dashClickHandler={() => { }} />
 
       <Container>
         <LoadingOverlay visible={useAccount.Loading} overlayBlur={2} />
