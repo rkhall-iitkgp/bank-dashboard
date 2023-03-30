@@ -1,5 +1,11 @@
 import React from 'react'
-import { Box, createStyles, Text, TextInput } from '@mantine/core'
+import {
+  Box,
+  createStyles,
+  PasswordInput,
+  Text,
+  TextInput,
+} from '@mantine/core'
 import { hasLength, isNotEmpty, useForm } from '@mantine/form'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -353,7 +359,24 @@ export function PaymentForm(props: { sbi: any }) {
                   label: classes.inputLabel,
                   root: classes.inputcontainer,
                 }}
+                // value={form.values.account_no}
+                onCopy={(e) => {
+                  e.preventDefault()
+                }}
+                onPaste={(e) => {
+                  e.preventDefault()
+                }}
+                onCut={(e) => {
+                  e.preventDefault()
+                }}
+                onDrag={(e) => {
+                  e.preventDefault()
+                }}
+                onDrop={(e) => {
+                  e.preventDefault()
+                }}
                 {...form.getInputProps('account_no')}
+                // value={form.values.account_no.hiddenInput}
                 rightSection={
                   <Text
                     className={classes.buttonVerify}
@@ -371,19 +394,36 @@ export function PaymentForm(props: { sbi: any }) {
                   </Text>
                 }
               />
+              {buttonText === 'Verified' ? (
+                <TextInput
+                  placeholder="Re-enter Account Number*"
+                  type={'number'}
+                  required
+                  withAsterisk
+                  classNames={{
+                    input: classes.input,
+                    label: classes.inputLabel,
+                    root: classes.inputcontainer,
+                  }}
+                  onCopy={(e) => {
+                    e.preventDefault()
+                  }}
+                  onPaste={(e) => {
+                    e.preventDefault()
+                  }}
+                  onCut={(e) => {
+                    e.preventDefault()
+                  }}
+                  onDrag={(e) => {
+                    e.preventDefault()
+                  }}
+                  onDrop={(e) => {
+                    e.preventDefault()
+                  }}
+                  {...form.getInputProps('reaccountno')}
+                />
+              ) : null}
 
-              <TextInput
-                placeholder="Re-enter Account Number*"
-                type={'number'}
-                required
-                withAsterisk
-                classNames={{
-                  input: classes.input,
-                  label: classes.inputLabel,
-                  root: classes.inputcontainer,
-                }}
-                {...form.getInputProps('reaccountno')}
-              />
               <TextInput
                 placeholder="Enter Amount*"
                 type={'number'}
