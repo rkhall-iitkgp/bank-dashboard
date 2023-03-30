@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStyles} from '@mantine/core'
+import { createStyles } from '@mantine/core'
 import Image from 'next/image'
 
 const useStyles = createStyles(() => ({
@@ -12,7 +12,7 @@ const useStyles = createStyles(() => ({
     height: `155px`,
     width: `1000px`,
     display: `flex`,
-    flex: 2,
+    flex: 1.5,
   },
   subcontainer1: {
     color: `#737373`,
@@ -81,13 +81,13 @@ const useStyles = createStyles(() => ({
   },
 }))
 
-export function TotalBalance() {
+export function TotalBalance({ totalBalance, increment, timePeriod, accountNumber }) {
   const { classes } = useStyles();
   const data = {
-    totalBalance: '₹1,23,456',
-    increment: '4.74%',
-    timePeriod: '1',
-    number: '****3241',
+    totalBalance: totalBalance,
+    increment: increment,
+    timePeriod: timePeriod,
+    number: accountNumber,
   }
   return (
     <div className={classes.container}>
@@ -102,32 +102,6 @@ export function TotalBalance() {
           }}
         >
           Total Balance
-        </span>
-      </div>
-
-      <div className={classes.subcontainer5}>
-        <span
-          style={{
-            fontFamily: 'Montserrat',
-            fontStyle: `normal`,
-            fontWeight: `500`,
-            fontSize: `12px`,
-            lineHeight: `18px`,
-          }}
-        >
-          <Image
-            src={'/../public/icons/sbi.png'}
-            width={10}
-            height={10}
-            alt={''}
-          ></Image>
-          {data.number}
-          <Image
-            src={'/../public/icons/polygon.png'}
-            width={8}
-            height={8}
-            alt={''}
-          ></Image>
         </span>
       </div>
 

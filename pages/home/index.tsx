@@ -12,42 +12,20 @@ import useStorage from '../../hooks/useStorage'
 import { KycPermissionFormPopup } from '../../components/reusable-components/Kycprompt'
 import Filter from '../../components/filter'
 import FilterPopUp from '../../components/home/see-your-analysis-section/FilterPopUp'
+
 const Home: NextPage = () => {
   const { getItem, setItem } = useStorage()
   const [bankAccountList, setBankAccountList] = useState<any[]>([])
-  const [isAddAccountPopupOpen, setIsAddAccountPopupOpen] =
-    useState<boolean>(false)
+  const [isAddAccountPopupOpen, setIsAddAccountPopupOpen] = useState<boolean>(false)
+  const [loading, setLoading] = useState(false)
+  const [isfilteropen, setIsfilteropen] = useState(false)
+  const [accLength, setAccLength] = useState('[]')
+  const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] = useState<boolean>(false)
+  const [isKycPermissionPopUpOpen, setIsKycPermissionPopUpOpen] = useState<boolean>(false)
+  const [kycStatus, setKycStatus] = useState(1)
 
   const GetAccounts = () => {
-
-    const accessToken = getItem('access_token')
-    const user_id = getItem('user_id')
-
-
-    const response = api
-      .get(`/user/accounts/${user_id}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        console.log(response.data.accounts)
-        const responseArray = response.data
-        responseArray?.map((acc: any) => {
-          let temp = bankAccountList
-          temp.push(acc)
-          setBankAccountList(temp)
-        })
-        console.log(bankAccountList)
-
-        setItem('accounts', response.request.responseText)
-        return response
-      })
-      .catch((err) => console.log(err))
-  }
-
-  useEffect(() => {
+    // setItem('accounts', '[]')
     setLoading(true)
     api
       .get(`/user/accounts/${getItem('user_id')}/`, {
@@ -60,6 +38,7 @@ const Home: NextPage = () => {
         console.log(bankAccountList)
 
         setItem('accounts', response.request.responseText)
+        setAccLength(response.request.responseText)
         setLoading(false)
         return response
       })
@@ -67,23 +46,53 @@ const Home: NextPage = () => {
         console.log('error', err)
         setLoading(false)
       })
+  }
+
+  const GetKycStatus = () => {
+    const accessToken = getItem('access_token', 'session')
+    console.log(accessToken)
+    api
+      .get(`/user/getkyc/`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        response.data
+      })
+      .catch((err) => {
+        err.response.data.message == 'KYC not done' && setKycStatus(0)
+        // console.log(err.response.data.message)
+      })
+  }
+
+  const dashClickHandler = (accLength, kycStatus) => {
+    console.log(`acclength = `, accLength)
+    if (kycStatus === 0) {
+      setIsKycPermissionPopUpOpen(true)
+    } else if (kycStatus === 1 && accLength !== '[]') {
+      setIsfilteropen(true)
+    } else if (kycStatus === 1 && accLength === '[]' && accLength) {
+      setIsAddAccountPopupOpen(true)
+    }
+  }
+
+  useEffect(() => {
+    GetAccounts()
+    GetKycStatus()
   }, [])
-  const [isPermissionPopUpOpen, setIsPermissionPopUpOpen] =
-    useState<boolean>(false)
 
-  const [isKycPermissionPopUpOpen, setIsKycPermissionPopUpOpen] =
-    useState<boolean>(false)
-
-  const [loading, setLoading] = useState(false)
-  const [isfilteropen, setIsfilteropen] = useState(false)
   return (
     <>
       <PermissionFormPopup
         isPermissionPopUpOpen={isPermissionPopUpOpen}
         SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen}
       />
-      <Navbar />
-      <SeeYourAnalysis setIsAddAccountPopupOpen={setIsAddAccountPopupOpen} SetIsPermissionPopUpOpen={setIsPermissionPopUpOpen} SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen} setIsfilteropen={setIsfilteropen} />
+      <Navbar dashClickHandler={() => dashClickHandler(accLength, kycStatus)} />
+      <SeeYourAnalysis
+        dashClickHandler={() => dashClickHandler(accLength, kycStatus)}
+      />
       <Payment
         isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
         SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
@@ -95,33 +104,20 @@ const Home: NextPage = () => {
         loading={loading}
       />
       <OfferCardsRow />
-      {isAddAccountPopupOpen ? (
-        <AddAccountFormPopup
-          bankAccountList={bankAccountList}
-          isAddAccountPopupOpen={isAddAccountPopupOpen}
-          setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
-          setBankAccountList={setBankAccountList}
-        />
-      ) : (
-        <></>
-      )}
-      {isKycPermissionPopUpOpen ? (
-        <KycPermissionFormPopup
-          isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
-          SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
-        />
-      ) : (
-        <></>
-      )}
-      {isfilteropen ? (
-        <FilterPopUp
-          isfilteropen={isfilteropen}
-          setIsfilteropen={setIsfilteropen}
-        />
-      ) : (
-        <></>
-      )}
-
+      <AddAccountFormPopup
+        bankAccountList={bankAccountList}
+        isAddAccountPopupOpen={isAddAccountPopupOpen}
+        setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
+        setBankAccountList={setBankAccountList}
+      />
+      <KycPermissionFormPopup
+        isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
+        SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
+      />
+      <FilterPopUp
+        isfilteropen={isfilteropen}
+        setIsfilteropen={setIsfilteropen}
+      />
     </>
   )
 }
