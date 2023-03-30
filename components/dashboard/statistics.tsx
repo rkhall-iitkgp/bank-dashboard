@@ -7,6 +7,7 @@ import ArticlesCard from './articlesCard'
 import InsightCard from './insightCard'
 import RecentTransactions from './recenttransactions'
 import RecentTransactionsRightPane from './recenttransactionsRightPane'
+import CashCard from './setLimitCategory'
 
 const BalanceChart = (props: {
   balanceData: { x: string; y: number }[]
@@ -330,6 +331,7 @@ const FinancialStatistics = () => {
           )}
           {categoryIndex != -1 && (
             <>
+              <CashCard />
               <BalanceChart
                 balanceData={filteredBalanceData}
                 color="#00A76D"
