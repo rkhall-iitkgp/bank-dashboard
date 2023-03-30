@@ -22,7 +22,7 @@ const useAccountStore = create(
             id: ''
         }],
         Loading: false,
-        flag: false
+        flag: true
     },
         (set, get) => ({
             setTransaction: () => {
@@ -41,22 +41,22 @@ const useAccountStore = create(
                 }).catch(err => console.log('err', err))
 
             },
-            isAuthenticated: (): any => {
-                get().flag = false
+            isAuthenticated: async () => {
                 api.post("https://neobank-backend-aryasaksham-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/user/api/token/verify/", { token: get().token }).then((res) => {
                     // useAccountStore.setState({ Loading: true })
-                    get().flag = true
+                    useAccountStore.setState({ flag: true })
+
                     console.log('heelo')
                 }).catch((err) => {
-                    get().flag = false
+                    useAccountStore.setState({ flag: false })
+                    console.log('hell')
                 })
 
-                return get().flag
             }
         }))
 
 )
-useAccountStore.subscribe(console.log)
+// useAccountStore.subscribe(console.log)
 
 
 export default useAccountStore

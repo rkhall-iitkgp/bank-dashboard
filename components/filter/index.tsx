@@ -84,7 +84,7 @@ const AccountSelect = (prop: {
   curSelection: string, key: Key | null | undefined
 }) => {
   const { account, setAccount, curSelection, key } = prop
-  console.log(prop);
+  // console.log(prop);
   return (
     <Button key={key}
       style={{
@@ -177,7 +177,7 @@ const Filter = ({ todashboard, close }: props) => {
         <Group>
           {accounts?.map((it: { account_no: string, id: number }, v: Key | null | undefined) => (
             <AccountSelect
-              key={v}
+              key={it.id}
               account={it}
               setAccount={setAccount}
               curSelection={account}
