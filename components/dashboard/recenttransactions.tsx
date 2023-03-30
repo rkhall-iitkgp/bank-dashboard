@@ -6,65 +6,6 @@ import useAccountStore from '../Store/Account'
 
 const palette = ['#D56EEA', '#26DD76', '#FFAA57', '#4198FF']
 
-var transactions = [
-  {
-    description: 'Jesse Pinkman Johnson',
-    date: '19 March, 2023, 17:10',
-    credit: 100,
-    debit: 0,
-    mode: 'UPI',
-    category: 'Entertainment',
-  },
-  {
-    description: 'Jesse Pinkman Johnson',
-    date: '19 March, 2023, 17:10',
-    credit: 0,
-    debit: 200,
-    mode: 'UPI',
-    category: 'Food',
-  },
-  {
-    description: 'Heisenberg',
-    date: '19 March, 2023, 18:10',
-    credit: 0,
-    debit: 1000,
-    mode: 'Bank',
-    category: 'Travel',
-  },
-  {
-    description: 'Spotify',
-    date: '19 March, 2023, 17:20',
-    credit: 59,
-    debit: 0,
-    mode: 'UPI',
-    category: 'Travel',
-  },
-  {
-    description: 'Spotify',
-    date: '19 March, 2023, 17:30',
-    credit: 59,
-    debit: 0,
-    mode: 'UPI',
-    category: 'Travel',
-  },
-  {
-    description: 'Spotify',
-    date: '19 March, 2023, 15:10',
-    credit: 59,
-    debit: 0,
-    mode: 'UPI',
-    category: 'Travel',
-  },
-  {
-    description: 'Spotify',
-    date: '19 March, 2023, 17:50',
-    credit: 59,
-    debit: 0,
-    mode: 'UPI',
-    category: 'Travel',
-  },
-]
-
 const TransactionCard = (props: {
   data: {
     description: string
@@ -78,12 +19,13 @@ const TransactionCard = (props: {
 }) => {
   const { data } = props
   var dict =
-    data.credit != null
+    (data.credit &&
+      data.credit != 0)
       ? { color: '#0062D6', amount: data.credit, sign: '+' }
       : { color: '#4D4B4B', amount: data.debit, sign: '-' }
 
   var paletteIndex = Math.floor(Math.random() * 4)
-  var descriptionShort = data.description.substring(0, 12)
+  var descriptionShort = (data.description.split('/').at(-1) || '').substring(0, 12)
   if (data.description.length > 12) descriptionShort += '...'
   const [editing, setEditing] = useState(false);
   const [category, setCategory] = useState(data.category);
@@ -202,7 +144,7 @@ const RecentTransactions = (prop: {
       </Text>
       <div style={{ maxHeight: '64vh', overflow: 'auto' }}>
         {transactions?.map((t) => (
-          <div key={t.date}>
+          <div key={t.id}>
             <TransactionCard data={t} />
           </div>
         ))}

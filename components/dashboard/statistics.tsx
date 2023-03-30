@@ -175,32 +175,37 @@ const ArticlesData = [
 
 const FinancialStatistics = () => {
   const [categoryIndex, setCategoryIndex] = useState(-1)
-  const [modeIndex, setModeIndex] = useState(-1)
   const [catValue, setCatValue] = useState(-1)
   const [balanceColor, setBalanceColor] = useState('#00A76D');
   const useAccount = useAccountStore();
-  const [PieCategoryData, setpiecategorydata] = useState([{ mode: 'Entertainment', value: 50 }]);
-  const [PieModeData, setpiemodedata] = useState([{ mode: 'UPI', value: 100 }]);
-  const [TotalBalanceData, settotalbalancedata] = useState([{ x: '05/15/2014', y: 5500.0 }]);
-  const [filteredBalanceData, setFilterBalanceData] = useState([{ x: '05/15/2014', y: 5500.0 }]);
+  const [PieCategoryData, setpiecategorydata] = useState<{ mode: string, value: number }[]>([]);
+  const [PieModeData, setpiemodedata] = useState<{ mode: string, value: number }[]>([]);
+  const [TotalBalanceData, settotalbalancedata] = useState<{ x: string, y: number }[]>([]);
+  const [filteredBalanceData, setFilterBalanceData] = useState<{ x: string, y: number }[]>([]);
+  const transactions = useAccount.Transaction;
+  const [filteredTransactions, setFilteredTransaction] = useState(transactions);
+  const [modTotal, setModTotal] = useState(0);
+  const [filterTotal, setFilterTotal] = useState(0);
+  const [montlyData, setMontlyData] = useState(MontlySpendingData);
 
   useEffect(() => {
-    const transactions = useAccount.Transaction;
     let catlegends = new Set<string>();
     let catdata: { mode: string, value: number }[] = [];
     transactions.forEach(v => catlegends.add(v.category))
-
+    let modt = 0;
     catlegends.forEach(k => {
-      let total = 0;
-      transactions.filter(x => x.category === k).forEach(x => { total += x.credit - x.debit })
-      catdata.push({ mode: k, value: total });
+      if (k) {
+        let total = 0;
+        transactions.filter(x => x.category === k).forEach(x => { total += x.credit - x.debit })
+        modt += Math.abs(total);
+        catdata.push({ mode: k, value: Math.abs(total) });
+      }
     })
-
+    setModTotal(modt);
     setpiecategorydata(catdata);
   }, [useAccount.Transaction])
 
   useEffect(() => {
-    const transactions = useAccount.Transaction;
     let modelegends = new Set<string>();
     let modedata: { mode: string, value: number }[] = [];
     transactions.forEach(v => modelegends.add(v.mode))
@@ -216,7 +221,6 @@ const FinancialStatistics = () => {
   }, [useAccount.Transaction])
 
   useEffect(() => {
-    const transactions = useAccount.Transaction;
     let datelegends = new Set<string>();
     let datedata: { x: string, y: number }[] = [];
     transactions.forEach(v => datelegends.add(v.date))
@@ -247,31 +251,61 @@ const FinancialStatistics = () => {
   }, [useAccount.Transaction])
 
   useEffect(() => {
-    const transactions = useAccount
-      .Transaction
-      .filter(v => PieCategoryData[categoryIndex !== -1 ? categoryIndex : 0].mode == v.category);
+    const filteredTransactions = transactions
+      .filter(v => PieCategoryData[categoryIndex !== -1 ? categoryIndex : 0]?.mode === v.category).filter(v => v.debit > 0);
+    setFilteredTransaction(filteredTransactions);
     let datelegends = new Set<string>();
     let datedata: { x: string, y: number }[] = [];
-    transactions.forEach(v => datelegends.add(v.date))
+    filteredTransactions.forEach(v => datelegends.add(v.date))
+    let dateslist = Array.from(datelegends);
 
-    let total = 0;
-    datelegends.forEach(k => {
-      console.log(k)
-      transactions.filter(x => x.date === k).forEach(x => {
-        // console.log(`credi = ${x.credit} debit ${x.debit}`)
-        total += x.credit - x.debit
-      })
-      datedata.push({ x: k, y: total });
-    })
-
-    datedata.sort((a, b) => {
-      let A = new Date(a.x);
-      let B = new Date(b.x);
+    dateslist.sort((a, b) => {
+      let A = new Date(a);
+      let B = new Date(b);
       return A > B ? 1 : -1
     })
 
+    let totaltal = 0
+    dateslist.forEach(k => {
+      let total = 0;
+      console.log(k)
+      filteredTransactions.filter(x => x.date === k).forEach(x => {
+        // console.log(`credi = ${x.credit} debit ${x.debit}`)
+        total += x.debit
+      })
+      datedata.push({ x: k, y: total });
+      totaltal += total
+    })
+
+    setFilterTotal(Math.abs(totaltal));
     setFilterBalanceData(datedata);
     // console.log(`date data = ${datedata[0].y}`)
+  }, [categoryIndex])
+
+  useEffect(() => {
+    const montNames = {
+      1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec"
+    }
+    const filteredTransactions = transactions
+      .filter(v => PieCategoryData[categoryIndex !== -1 ? categoryIndex : 0]?.mode === v.category).filter(v => v.debit > 0);
+    const Months = new Set<number>();
+    let MonthData: { x: string, y: number }[] = [];
+    filteredTransactions.forEach(v => {
+      let A = new Date(v.date);
+      Months.add(A.getMonth());
+    })
+
+    Months.forEach(v => {
+      let total = 0;
+      filteredTransactions.filter(x => {
+        let a = new Date(x.date);
+        return a.getMonth() === v
+      }).forEach(v => total += v.debit)
+      MonthData.push({ x: montNames[v], y: Math.abs(total) })
+    })
+
+    setMontlyData(MonthData);
+
   }, [categoryIndex])
 
   return (
@@ -298,7 +332,7 @@ const FinancialStatistics = () => {
             </Button>
             <Text mx={20} c={'#4D4B4B'} ff="Montserrat" fz={28} fw={800}>
               Category:{' '}
-              {`${PieCategoryData[categoryIndex].mode}` + ` (${catValue}%) `}
+              {`${PieCategoryData[categoryIndex].mode}` + ` (${Math.round((filterTotal / modTotal) * 100)}%) `}
             </Text>
           </Group>
         )}
@@ -335,7 +369,7 @@ const FinancialStatistics = () => {
           />
           {categoryIndex == -1 && (
             <SpendingDonut setColor={() => { }}
-              setSelection={setModeIndex}
+              setSelection={() => { }}
               values={PieModeData?.map((v) => v.value)}
               legends={PieModeData?.map((v) => v.mode)}
               setValue={(v: number) => { }}
@@ -349,7 +383,7 @@ const FinancialStatistics = () => {
                 color={balanceColor}
                 width={450}
               />
-              <MontlySpendingChart data={MontlySpendingData} />
+              <MontlySpendingChart data={montlyData} />
             </>
           )}
         </Stack>
@@ -364,8 +398,7 @@ const FinancialStatistics = () => {
                 boxShadow: '0px 1px 10px rgba(0, 0, 0, 0.1)',
               }}
             >
-              <RecentTransactions transactions={
-                useAccount.Transaction.filter(v => PieCategoryData[categoryIndex !== -1 ? categoryIndex : 0].mode == v.category)} />
+              <RecentTransactions transactions={filteredTransactions} />
             </div>
 
             <InsightCard insights={InsightList} />

@@ -64,9 +64,9 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 
         <div>
           <Text size="sm">{label}</Text>
-          <Text size="xs" opacity={0.65}>
+          {/* <Text size="xs" opacity={0.65}>
             {description}
-          </Text>
+          </Text> */}
         </div>
       </Group>
     </div>
@@ -171,5 +171,6 @@ const LeftPane = ({ accountsList, useAccount }: Props) => {
     </>
   )
 }
+
 
 export default LeftPane
