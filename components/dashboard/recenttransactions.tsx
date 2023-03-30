@@ -1,4 +1,8 @@
-import { Card, Group, HoverCard, Stack, Text } from '@mantine/core'
+import { Card, Group, HoverCard, Stack, Text, TextInput } from '@mantine/core'
+import { useState } from 'react'
+import useStorage from '../../hooks/useStorage'
+import datams from '../datams'
+import useAccountStore from '../Store/Account'
 
 const palette = ['#D56EEA', '#26DD76', '#FFAA57', '#4198FF']
 
@@ -69,6 +73,7 @@ const TransactionCard = (props: {
     debit: number
     mode: string
     category: string
+    id: string
   }
 }) => {
   const { data } = props
@@ -80,6 +85,24 @@ const TransactionCard = (props: {
   var paletteIndex = Math.floor(Math.random() * 4)
   var descriptionShort = data.description.substring(0, 12)
   if (data.description.length > 12) descriptionShort += '...'
+  const [editing, setEditing] = useState(false);
+  const [category, setCategory] = useState(data.category);
+  const [categoryInput, setCategoryInput] = useState(data.category);
+  const { getItem } = useStorage();
+  const useAccount = useAccountStore();
+
+  const categorySubmit = () => {
+    setEditing(false);
+    datams.post("/user/changecat/", {
+      category: categoryInput,
+      account_no: useAccount.account_no,
+      id: data.id
+    }, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } }).then((res) => {
+      console.log('res', res)
+      setCategory(categoryInput);
+    }).catch(err => console.log('err', err))
+  }
+  // console.log(`id = ${data.id}`)
 
   return (
     <Card
@@ -140,14 +163,18 @@ const TransactionCard = (props: {
           >
             {data.mode}
           </Text>
-          <Text
-            ff={'Montserrat'}
-            style={{ lineHeight: 0.5 }}
-            c={palette[paletteIndex]}
-            fz={14}
-          >
-            {data.category}
-          </Text>
+          {!editing &&
+            <Text
+              ff={'Montserrat'}
+              style={{ lineHeight: 0.5 }}
+              c={palette[paletteIndex]}
+              fz={14}
+              onClick={() => setEditing(true)}
+            >
+              {category}
+            </Text>}
+          {editing && <TextInput value={categoryInput} placeholder={"set category"}
+            onKeyUp={(e) => { if (e.key == 'Enter') { categorySubmit() } }} onChange={(e) => setCategoryInput(e.currentTarget.value)} />}
         </Stack>
       </Group>
     </Card>
@@ -164,6 +191,7 @@ const RecentTransactions = (prop: {
     debit: number
     mode: string
     category: string
+    id: string
   }[]
 }) => {
   const { transactions } = prop;

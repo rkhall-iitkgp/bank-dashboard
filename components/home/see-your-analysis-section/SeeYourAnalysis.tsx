@@ -44,16 +44,10 @@ const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
   _StyledButton,
 )
 interface Props {
-  SetIsPermissionPopUpOpen: Function
-  setIsfilteropen: Function
-  SetIsKycPermissionPopUpOpen: Function,
-  setIsAddAccountPopupOpen: Function
+  dashClickHandler: Function
 }
 export default function SeeYourAnalysis({
-  SetIsPermissionPopUpOpen,
-  SetIsKycPermissionPopUpOpen,
-  setIsAddAccountPopupOpen,
-  setIsfilteropen
+  dashClickHandler
 }: Props) {
   const { getItem } = useStorage()
   const [result, setResult] = useState(1)
@@ -93,39 +87,13 @@ export default function SeeYourAnalysis({
         transactions and offer insights to help you <br /> make informed
         financial decisions.
       </TextDiv>
-      {result === 0 && (
-        <StyledButton
-          variant="default"
-          onClick={() => {
-            SetIsKycPermissionPopUpOpen(true)
-            // setIsfilteropen(true)
-          }}
-        >
-          See your analysis
-        </StyledButton>
-      )}
+      <StyledButton
+        variant="default"
+        onClick={() => dashClickHandler()}
+      >
+        See your analysis
+      </StyledButton>
 
-      {result === 1 && accLength !== '[]' && (
-        <StyledButton
-          variant="default"
-          onClick={() => {
-            // SetIsPermissionPopUpOpen(true)
-            setIsfilteropen(true);
-          }}
-        >
-          See your analysis
-        </StyledButton>
-      )}
-      {result === 1 && accLength === '[]' && (
-        <StyledButton
-          variant="default"
-          onClick={() => {
-            setIsAddAccountPopupOpen(true)
-          }}
-        >
-          See your analysis
-        </StyledButton>
-      )}
     </Container>
   )
 }
