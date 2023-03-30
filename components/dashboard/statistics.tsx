@@ -183,24 +183,26 @@ const FinancialStatistics = () => {
   const [PieModeData, setpiemodedata] = useState([{ mode: 'UPI', value: 100 }]);
   const [TotalBalanceData, settotalbalancedata] = useState([{ x: '05/15/2014', y: 5500.0 }]);
   const [filteredBalanceData, setFilterBalanceData] = useState([{ x: '05/15/2014', y: 5500.0 }]);
+  const transactions = useAccount.Transaction;
+  const [filteredTransactions, setFilteredTransaction] = useState(transactions);
 
   useEffect(() => {
-    const transactions = useAccount.Transaction;
     let catlegends = new Set<string>();
     let catdata: { mode: string, value: number }[] = [];
     transactions.forEach(v => catlegends.add(v.category))
 
     catlegends.forEach(k => {
-      let total = 0;
-      transactions.filter(x => x.category === k).forEach(x => { total += x.credit - x.debit })
-      catdata.push({ mode: k, value: total });
+      if (k) {
+        let total = 0;
+        transactions.filter(x => x.category === k).forEach(x => { total += x.credit - x.debit })
+        catdata.push({ mode: k, value: Math.abs(total) });
+      }
     })
 
     setpiecategorydata(catdata);
   }, [useAccount.Transaction])
 
   useEffect(() => {
-    const transactions = useAccount.Transaction;
     let modelegends = new Set<string>();
     let modedata: { mode: string, value: number }[] = [];
     transactions.forEach(v => modelegends.add(v.mode))
@@ -216,7 +218,6 @@ const FinancialStatistics = () => {
   }, [useAccount.Transaction])
 
   useEffect(() => {
-    const transactions = useAccount.Transaction;
     let datelegends = new Set<string>();
     let datedata: { x: string, y: number }[] = [];
     transactions.forEach(v => datelegends.add(v.date))
@@ -247,17 +248,17 @@ const FinancialStatistics = () => {
   }, [useAccount.Transaction])
 
   useEffect(() => {
-    const transactions = useAccount
-      .Transaction
+    const filteredTransactions = transactions
       .filter(v => PieCategoryData[categoryIndex !== -1 ? categoryIndex : 0].mode == v.category);
+    setFilteredTransaction(filteredTransactions);
     let datelegends = new Set<string>();
     let datedata: { x: string, y: number }[] = [];
-    transactions.forEach(v => datelegends.add(v.date))
+    filteredTransactions.forEach(v => datelegends.add(v.date))
 
     let total = 0;
     datelegends.forEach(k => {
       console.log(k)
-      transactions.filter(x => x.date === k).forEach(x => {
+      filteredTransactions.filter(x => x.date === k).forEach(x => {
         // console.log(`credi = ${x.credit} debit ${x.debit}`)
         total += x.credit - x.debit
       })
@@ -364,8 +365,7 @@ const FinancialStatistics = () => {
                 boxShadow: '0px 1px 10px rgba(0, 0, 0, 0.1)',
               }}
             >
-              <RecentTransactions transactions={
-                useAccount.Transaction.filter(v => PieCategoryData[categoryIndex !== -1 ? categoryIndex : 0].mode == v.category)} />
+              <RecentTransactions transactions={filteredTransactions} />
             </div>
 
             <InsightCard insights={InsightList} />
