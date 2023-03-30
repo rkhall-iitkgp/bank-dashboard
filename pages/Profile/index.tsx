@@ -17,10 +17,12 @@ const ProfilePage = () => {
   }, [])
 
   return (
+  <>
+      <Navbar dashClickHandler={() => {}}/>
     <div >
-      <Navbar />
       <Profile loading={loading} bankAccountList={bankAccountList} />
     </div>
+  </>
   )
 }
 
