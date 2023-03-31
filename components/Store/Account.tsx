@@ -22,7 +22,8 @@ const useAccountStore = create(
             id: ''
         }],
         Loading: false,
-        flag: true
+        flag: true,
+        uploaded: true,
     },
         (set, get) => ({
             setTransaction: () => {

@@ -4,8 +4,9 @@ import Filter from '../../filter'
 interface props {
     isfilteropen: boolean
     setIsfilteropen: Function
+    setIsanalysisopen: Function
 }
-const FilterPopUp = ({ isfilteropen, setIsfilteropen }: props) => {
+const FilterPopUp = ({ isfilteropen, setIsfilteropen, setIsanalysisopen }: props) => {
     return (
         <Modal
             withCloseButton={false}
@@ -16,7 +17,7 @@ const FilterPopUp = ({ isfilteropen, setIsfilteropen }: props) => {
             size="auto"
             padding={0}
         >
-            <Filter todashboard={true} close={() => setIsfilteropen(false)} />
+            <Filter todashboard={true} setIsanalysisopen={setIsanalysisopen} close={() => setIsfilteropen(false)} />
         </Modal>
     )
 }
