@@ -8,7 +8,8 @@ import StockStatisticsx from './StocksStatistics'
 import StockStatistics from './stockStats'
 import { TotalBalance } from './TotalBalance'
 import useAccountStore from '../Store/Account'
- 
+import { useState } from 'react'
+import { useEffect } from 'react' 
 const useStyles = createStyles((theme) => ({
   header: {
     flexDirection: 'row',
@@ -72,7 +73,11 @@ const RightPane = () => {
     transactions.filter(x => x.date === k).forEach(x => { total += x.credit - x.debit })
     sum += total;
   })
-
+  
+  const [name,setName]=useState('');
+  useEffect(() => {
+   setName(getItem('name'));
+  }, [])
   return (
     <>
       <Stack className="right-side" style={{ flex: 2.5 }}>
@@ -82,7 +87,8 @@ const RightPane = () => {
               Welcome Back,&nbsp;
             </Text>
             <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
-              {getItem('name') + '!'}
+              {name+ ' !'}
+              {/* {name} */}
             </Text>
           </div>
           <div style={{ justifyContent: 'flex-end' }}>
