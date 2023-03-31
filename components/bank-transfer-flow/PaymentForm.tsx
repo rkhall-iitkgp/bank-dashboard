@@ -491,6 +491,7 @@ export function PaymentForm(props: { sbi: any }) {
                           name: form.values.name,
                           acc_no: ben_account_id,
                           amount: form.values.amount,
+                          description: form.values.description,
                           ifsc: form.values.ifsc,
                           ...router.query,
                           account_no: form.values.account_no,
