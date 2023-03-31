@@ -53,6 +53,7 @@ const TransactionCard = (props: {
       my={12}
       p={20}
       mx={8}
+      w={400}
     >
       <Group px={8} style={{ justifyContent: 'space-between' }}>
         <Stack>
@@ -63,6 +64,7 @@ const TransactionCard = (props: {
                 fz={17}
                 c="#4D4B4B"
                 ff={'Montserrat'}
+                w={140}
                 style={{ lineHeight: 0.5, cursor: 'default' }}
               >
                 {descriptionShort}
@@ -91,7 +93,7 @@ const TransactionCard = (props: {
           </Text>
         </Stack>
 
-        <Text c={dict.color} fw={600} fz={16} mx={13} ff={'Montserrat'}>
+        <Text c={dict.color} fw={600} fz={16} mx={13} ff={'Montserrat'} >
           {dict.sign}&#8377;{dict.amount}
         </Text>
 
