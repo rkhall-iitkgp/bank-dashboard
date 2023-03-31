@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
+import { useRouter } from 'next/router';
 
 const useStyles = createStyles(() => ({
   container: {
@@ -131,7 +132,7 @@ export function TotalBalance({ totalBalance, increment, timePeriod, accountNumbe
         >
           {' '}
           <Image
-            src={data.increment > 0 ? '/../public/icons/increment.png' : '/../public/icons/decrement.png'}
+            src={data.increment > 0 ? `/icons/increment.png` : `/icons/decrement.png`}
             width={14}
             height={14}
             alt={''}

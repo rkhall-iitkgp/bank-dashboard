@@ -351,7 +351,7 @@ const FinancialStatistics = () => {
     let weekData = { Jan: [], Feb: [], Mar: [], Apr: [], May: [], Jun: [], Jul: [], Aug: [], Sep: [], Oct: [], Nov: [], Dec: [] };
     for (let i = 0; i < 12; i++) {
       let data: { x: string, y: number }[] = [];
-      let thismonthtr = transactions.filter(v => {
+      let thismonthtr = filteredTransactions.filter(v => {
         let A = new Date(v.date);
         return A.getMonth() == i;
       })
