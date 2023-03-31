@@ -241,7 +241,7 @@ export function SelectBeneficiaryBank() {
           </div>
           <div className={classes.accountContainer}>
             <AccountType
-              src="/../public/icons/sbi.png"
+              src={`/icons/sbi.png`}
               id={1}
               setAccount={setAccount}
               handleClick={handleClick}
@@ -249,7 +249,7 @@ export function SelectBeneficiaryBank() {
               bankdesc="(Beneficiary is a SBI account holder)"
             />
             <AccountType
-              src="/../public/icons/bank-building.png"
+              src={`/icons/bank-building.png`}
               id={2}
               handleClick={handleClick}
               setAccount={setAccount}

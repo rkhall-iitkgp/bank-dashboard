@@ -23,6 +23,13 @@ const Dashboard = () => {
   }
 
   const useAccount = useAccountStore();
+  // useEffect(() => {
+
+
+  //   return () => {
+  //     useAccountStore.setState({ uploaded: true })
+  //   }
+  // }, [])
 
   const Container = styled.div`
     display: flex;

@@ -1,6 +1,7 @@
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Heading from '../reusable-components/Heading'
 
@@ -176,7 +177,7 @@ function Account(props: {
         }}
       >
         <Image
-          src={'/../public/icons/' + props.accountdata.src + '.png'}
+          src={`/icons/` + props.accountdata.src + '.png'}
           width={50}
           height={50}
           alt={''}
@@ -215,58 +216,58 @@ export function UpiTransferHome() {
 
   // }
 
-  
+
 
   if (fetchedAccount)
 
-  return (
-    <div className={classes.wrapper}>
-      <div className={classes.form}>
-        <Heading title="UPI Transfer" />
-        <div className={classes.forminside}>
-          <div className={classes.titlebox}>
-            <div className={classes.titlebold}>
-              <span>Make Payment</span>
-            </div>
-          </div>
-          <div className={classes.accountContainer}>
-            {fetchedAccount?.map((ele) => {
-              return (
-                <span
-                  key={ele.id}
-                  onClick={() => handleClick(ele.id)}
-                  style={{ cursor: ele.id === 1 ? "pointer" : "not-allowed !important" }}
-                >
-                  <Account setAccount={setAccount} accountdata={ele} />
-                </span>
-              );
-            })}
-          </div>
-          {/* <ButtonGroup href1="/home" href2="/UPI/verify-upi-id" /> */}
-          <div className={classes.buttonContainer}>
-            <Link href="/home">
-              <div className={classes.button1}>Back</div>
-            </Link>
-            {click ? (
-              <Link
-                href={{
-                  pathname: "/UPI/verify-upi-id",
-                  query: account,
-                }}
-              >
-                <div className={classes.button1}>Continue</div>
-              </Link>
-            ) : (
-              <div
-                className={classes.button1}
-                style={{ cursor: "not-allowed" }}
-              >
-                Continue
+    return (
+      <div className={classes.wrapper}>
+        <div className={classes.form}>
+          <Heading title="UPI Transfer" />
+          <div className={classes.forminside}>
+            <div className={classes.titlebox}>
+              <div className={classes.titlebold}>
+                <span>Make Payment</span>
               </div>
-            )}
+            </div>
+            <div className={classes.accountContainer}>
+              {fetchedAccount?.map((ele) => {
+                return (
+                  <span
+                    key={ele.id}
+                    onClick={() => handleClick(ele.id)}
+                    style={{ cursor: ele.id === 1 ? "pointer" : "not-allowed !important" }}
+                  >
+                    <Account setAccount={setAccount} accountdata={ele} />
+                  </span>
+                );
+              })}
+            </div>
+            {/* <ButtonGroup href1="/home" href2="/UPI/verify-upi-id" /> */}
+            <div className={classes.buttonContainer}>
+              <Link href="/home">
+                <div className={classes.button1}>Back</div>
+              </Link>
+              {click ? (
+                <Link
+                  href={{
+                    pathname: "/UPI/verify-upi-id",
+                    query: account,
+                  }}
+                >
+                  <div className={classes.button1}>Continue</div>
+                </Link>
+              ) : (
+                <div
+                  className={classes.button1}
+                  style={{ cursor: "not-allowed" }}
+                >
+                  Continue
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
 }

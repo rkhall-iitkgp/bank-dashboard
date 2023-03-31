@@ -25,7 +25,7 @@ const TransactionCard = (props: {
       : { color: '#4D4B4B', amount: data.debit, sign: '-' }
 
   var paletteIndex = Math.floor(Math.random() * 4)
-  var descriptionShort = (data.description.split('/').at(-1) || '').substring(0, 12)
+  var descriptionShort = (data.description.split('/').at(-1) || '').substring(0, 10)
   if (data.description.length > 12) descriptionShort += '...'
   const [editing, setEditing] = useState(false);
   const [category, setCategory] = useState(data.category);
@@ -63,6 +63,7 @@ const TransactionCard = (props: {
                 fz={17}
                 c="#4D4B4B"
                 ff={'Montserrat'}
+                w={140}
                 style={{ lineHeight: 0.5, cursor: 'default' }}
               >
                 {descriptionShort}
@@ -91,7 +92,7 @@ const TransactionCard = (props: {
           </Text>
         </Stack>
 
-        <Text c={dict.color} fw={600} fz={16} mx={13} ff={'Montserrat'}>
+        <Text c={dict.color} fw={600} fz={16} mx={13} ff={'Montserrat'} >
           {dict.sign}&#8377;{dict.amount}
         </Text>
 

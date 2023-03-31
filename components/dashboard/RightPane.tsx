@@ -8,8 +8,9 @@ import StockStatisticsx from './StocksStatistics'
 import StockStatistics from './stockStats'
 import { TotalBalance } from './TotalBalance'
 import useAccountStore from '../Store/Account'
-import { useEffect, useState } from 'react'
-
+import dayjs from 'dayjs'
+import { useState } from 'react'
+import { useEffect } from 'react'
 const useStyles = createStyles((theme) => ({
   header: {
     flexDirection: 'row',
@@ -58,30 +59,57 @@ const RightPane = () => {
   let datelegends = new Set<string>()
   transactions.forEach((v) => datelegends.add(v.date))
 
-  let dateslist = Array.from(datelegends)
+  // let dateslist = Array.from(datelegends)
+  // const useAccount = useAccountStore();
+  // const transactions = useAccount.Transaction;
+  // let datelegends = new Set<string>();
+  // transactions.forEach(v => datelegends.add(v.date))
+  let curr = dayjs(new Date()).subtract(1, 'week');
+  console.log(curr.toDate());
 
+  transactions.sort((a, b) => {
+    let A = new Date(a.date);
+    let B = new Date(b.date);
+    return A > B ? 1 : -1
+  })
+  let thisbalance = transactions.at(-1)?.balance || 0
+  // console.log(`this balance = ${thisbalance}`)
+
+  let accounts = getItem('accounts')
+  let fetchedAccount = JSON.parse(accounts ? accounts : '[]').filter(v => v.account_no === useAccount.account_no)[0];
+
+  let dateslist = Array.from(datelegends);
   dateslist.sort((a, b) => {
     let A = new Date(a)
     let B = new Date(b)
     return A > B ? 1 : -1
   })
 
-  let total = 0
-  let sum = 0
-  dateslist.forEach((k) => {
-    console.log(k)
-    transactions
-      .filter((x) => x.date === k)
-      .forEach((x) => {
-        total += x.credit - x.debit
-      })
-    sum += total
+  let sum = 0;
+
+  dateslist.forEach(k => {
+    let datefiltered = transactions.filter(x => x.date === k)
+    datefiltered.sort((a, b) => {
+      let A = new Date(a.date);
+      let B = new Date(b.date);
+      return A > B ? 1 : -1
+    })
+    sum += datefiltered.at(-1)?.balance || 0;
   })
 
-  const [name, setName] = useState('')
+  let lastWeekFiltered = transactions.filter(x => dayjs(x.date) < curr);
+  lastWeekFiltered.sort((a, b) => {
+    let A = new Date(a.date);
+    let B = new Date(b.date);
+    return A > B ? 1 : -1
+  })
+  let lastWeekBalance = lastWeekFiltered.at(-1)?.balance || 0
+
+  const [name, setName] = useState('');
   useEffect(() => {
-    setName(getItem('name'))
+    setName(getItem('name'));
   }, [])
+
   return (
     <>
       <Stack className="right-side" style={{ flex: 2.5 }}>
@@ -91,8 +119,8 @@ const RightPane = () => {
               Welcome Back,&nbsp;
             </Text>
             <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
-              {name + '!'}
-              {/* {getItem('name') + '!'} */}
+              {name + ' !'}
+              {/* {name} */}
             </Text>
           </div>
           <div style={{ justifyContent: 'flex-end' }}>
@@ -100,16 +128,9 @@ const RightPane = () => {
           </div>
         </Group>
         <Group>
-          <TotalBalance
-            accountNumber={'****' + useAccount.account_no.slice(8, 12)}
-            increment={5}
-            timePeriod={2}
-            totalBalance={'₹' + total}
-          />
-          <EodBalance
-            balance={'₹' + Math.round(sum / dateslist.length)}
-            comparision={4.6}
-          />
+          <TotalBalance accountNumber={"****" + useAccount.account_no.slice(8, 12)} increment={
+            Math.round((fetchedAccount?.balance - (lastWeekBalance || 0)) * 100 / (lastWeekBalance || 1))} timePeriod={1} totalBalance={"$" + thisbalance} />
+          <EodBalance balance={dateslist.length != 0 ? "$" + Math.round(sum / (dateslist.length)) : 'No Data'} comparision={4.6} />
           <FinancialRatios />
         </Group>
         <Tabs defaultValue="financial">

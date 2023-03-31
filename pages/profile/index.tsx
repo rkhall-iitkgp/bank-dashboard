@@ -15,6 +15,7 @@ const ProfilePage = () => {
     const [kycStatus, setKycStatus] = useState(1)
     const [loading, setLoading] = useState(false)
     const [bankAccountList, setBankAccountList] = useState<any[]>([])
+    const [isanalysisopen, setIsanalysisOpen] = useState(false);
 
     const GetAccounts = () => {
         // setItem('accounts', '[]')
@@ -91,6 +92,7 @@ const ProfilePage = () => {
                 SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
             />
             <FilterPopUp
+                setIsanalysisopen={setIsanalysisOpen}
                 isfilteropen={isfilteropen}
                 setIsfilteropen={setIsfilteropen}
             />

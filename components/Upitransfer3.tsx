@@ -3,8 +3,8 @@ import {
   TextInput,
   getStylesRef,
 } from '@mantine/core'
-import ButtonGroup from './SmallComponents/ButtonGroup'
 import Heading from './SmallComponents/Heading'
+import ButtonGroup from './reusable-components/ButtonGroup'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,

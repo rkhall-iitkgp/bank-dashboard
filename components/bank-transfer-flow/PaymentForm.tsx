@@ -291,7 +291,7 @@ export function PaymentForm(props: { sbi: any }) {
       }
     }
   }
-  function handleClick2() {}
+  function handleClick2() { }
 
   useEffect(() => {
     if (form.values.account_no === '') {
@@ -314,11 +314,11 @@ export function PaymentForm(props: { sbi: any }) {
       })
       setButtonText('Verify')
     }
-    return () => {}
+    return () => { }
   }, [form.values.account_no])
 
   return (
-    <Box component="form" mx="auto" onSubmit={form.onSubmit(() => {})}>
+    <Box component="form" mx="auto" onSubmit={form.onSubmit(() => { })}>
       {/* <form onSubmit={form.onSubmit(console.log)}> */}
       <div className={classes.wrapper}>
         <div className={classes.form}>
@@ -491,6 +491,7 @@ export function PaymentForm(props: { sbi: any }) {
                           name: form.values.name,
                           acc_no: ben_account_id,
                           amount: form.values.amount,
+                          description: form.values.description,
                           ifsc: form.values.ifsc,
                           ...router.query,
                           account_no: form.values.account_no,

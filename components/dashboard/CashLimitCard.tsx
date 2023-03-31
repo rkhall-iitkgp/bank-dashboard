@@ -9,25 +9,23 @@ const CashCard = (props: {
 }) => {
   const { num, type, limit, setLimit } = props
   const [showLimit, setShowLimit] = useState(false)
+  const [newLimit, setNewLimit] = useState(limit)
+  const [filteredNum, setFilteredNum] = useState(num.filter((n) => n <= limit))
 
   const bgc = type === 'withdrawl' ? '#FFE5E4' : '#E8F6F0'
   const ffc = type === 'withdrawl' ? '#D73331' : '#2CC578'
   const text =
     type === 'withdrawl' ? 'Large Cash Withdrawls' : 'Large Cash Deposits'
 
-  const [filteredNum, setFilteredNum] = useState(num.filter((n) => n <= limit))
-
   const handleFilterChange = (e) => {
-    const newLimit = e.target.value
-    setLimit(newLimit)
-    setFilteredNum(num.filter((n) => n <= newLimit))
+    setNewLimit(e.target.value)
   }
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       setShowLimit(false)
-      setLimit(e.target.value)
-      setFilteredNum(num.filter((n) => n <= e.target.value))
+      setLimit(newLimit)
+      setFilteredNum(num.filter((n) => n <= newLimit))
     }
   }
 

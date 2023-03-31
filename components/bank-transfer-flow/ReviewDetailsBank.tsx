@@ -201,7 +201,7 @@ const useStyles = createStyles((theme) => ({
     paddingTop: `0.25rem`,
     fontWeight: 600,
   },
-}))
+}}))
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
@@ -322,13 +322,13 @@ export function ReviewDetailsBank(props: { sbi: any }) {
             <TextInput
               label="Description"
               variant="unstyled"
+              value={data.description}
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
                 root: classes.inputcontainer,
               }}
               disabled
-              value={data.description}
             />
             {data.ifscReq === 'true' ? (
               <TextInput

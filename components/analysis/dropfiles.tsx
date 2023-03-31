@@ -7,7 +7,9 @@ import { Group, Text, useMantineTheme, rem } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { Dropzone, DropzoneProps, MIME_TYPES } from '@mantine/dropzone';
 import useStorage from '../../hooks/useStorage'
-import analyzerms  from '../analyzerms'
+import analyzerms from '../analyzerms'
+import { useRouter } from 'next/router'
+import useAccountStore from '../Store/Account'
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -160,6 +162,7 @@ function Account(props: {
     setAccount: (arg0: any) => void
 }) {
     const { classes } = useStyles()
+    const origin = useRouter().pathname;
 
     return (
         <div>
@@ -179,7 +182,7 @@ function Account(props: {
                 }}
             >
                 <Image
-                    src={'/../public/icons/' + props.accountdata.src + '.png'}
+                    src={`/icons/` + props.accountdata.src + '.png'}
                     width={50}
                     height={50}
                     alt={''}
@@ -190,10 +193,14 @@ function Account(props: {
         </div>
     )
 }
-
-export function DropFiles(props: Partial<DropzoneProps>) {
+interface props {
+    setdropfiles: Function
+    setIsanalysisOpen: Function
+}
+export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
     const { classes } = useStyles()
     const [click, setClick] = useState(false)
+    const router = useRouter()
     const [account, setAccount] = useState({
         id: 1,
     })
@@ -206,101 +213,97 @@ export function DropFiles(props: Partial<DropzoneProps>) {
     const { getItem } = useStorage()
     const authToken = getItem('access_token')
     const userId = getItem('user_id')
-
+    const [dropedfiles, setDropedfiles] = useState<any[]>()
     const onDrop = (files) => {
         const formData = new FormData();
         formData.append('user_id', userId);
         formData.append('file', files[0]);
-        
-        analyzerms.post('/transaction/upload/', formData, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-      }
 
+        analyzerms.post('/transaction/upload/', formData, {
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
 
     return (
-        <div className={classes.wrapper}>
-            <div className={classes.form}>
-                <Heading title="Analyze your Transactions" />
-                <div className={classes.forminside}>
-                    <div className={classes.titlebox}>
-                        <div className={classes.titlebold}>
-                            <span>Upload your Transactions</span>
-                        </div>
+        // <div className={classes.wrapper}>
+        <div className={classes.form}>
+            <Heading title="Analyze your Transactions" />
+            <div className={classes.forminside}>
+                <div className={classes.titlebox}>
+                    <div className={classes.titlebold}>
+                        <span>Upload your Transactions</span>
                     </div>
-                    <div className={classes.accountContainer}>
-                        {/* {fetchedAccount?.map((ele) => {
+                </div>
+                <div className={classes.accountContainer}>
+                    {/* {fetchedAccount?.map((ele) => {
               return (
                 <span key={ele.id} onClick={handleClick}>
                   <Account setAccount={setAccount} accountdata={ele} />
                 </span>
               )
             })} */}
-                        <Dropzone
-                            onDrop={onDrop}
-                            onReject={(files) => console.log('rejected files', files)}
-                            maxSize={3 * 1024 ** 2}
-                            accept={[MIME_TYPES.csv, MIME_TYPES.xls, MIME_TYPES.xlsx]}
-                            {...props}
-                            onClick={handleClick}
-                        >
-                            <Group position="center" spacing="xl" style={{ minHeight: rem(220), pointerEvents: 'none' }}>
-                                <Dropzone.Accept>
-                                    <IconUpload
-                                        size="3.2rem"
-                                        stroke={1.5}
-                                        color={theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]}
-                                    />
-                                </Dropzone.Accept>
-                                <Dropzone.Reject>
-                                    <IconX
-                                        size="3.2rem"
-                                        stroke={1.5}
-                                        color={theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]}
-                                    />
-                                </Dropzone.Reject>
-                                <Dropzone.Idle>
-                                    <IconPhoto size="3.2rem" stroke={1.5} />
-                                </Dropzone.Idle>
+                    <Dropzone
+                        onDrop={(files) => { setDropedfiles(files) }}
+                        onReject={(files) => console.log('rejected files', files)}
+                        maxSize={3 * 1024 ** 2}
+                        accept={[MIME_TYPES.csv, MIME_TYPES.xls, MIME_TYPES.xlsx]}
+                        onClick={handleClick}
+                    >
+                        <Group position="center" spacing="xl" style={{ minHeight: rem(220), pointerEvents: 'none' }}>
+                            <Dropzone.Accept>
+                                <IconUpload
+                                    size="3.2rem"
+                                    stroke={1.5}
+                                    color={theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]}
+                                />
+                            </Dropzone.Accept>
+                            <Dropzone.Reject>
+                                <IconX
+                                    size="3.2rem"
+                                    stroke={1.5}
+                                    color={theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]}
+                                />
+                            </Dropzone.Reject>
+                            <Dropzone.Idle>
+                                <IconPhoto size="3.2rem" stroke={1.5} />
+                            </Dropzone.Idle>
 
-                                <div>
-                                    <Text size="xl" inline>
-                                        Drag csv here or click to select files
-                                    </Text>
-                                    <Text size="sm" color="dimmed" inline mt={7}>
-                                        File size should not exceed 5mb
-                                    </Text>
-                                </div>
-                            </Group>
-                        </Dropzone>
-                    </div>
-                    {/* <ButtonGroup href1="/home" href2="/UPI/verify-upi-id" /> */}
-                    <div className={classes.buttonContainer}>
-                        <Link href="/home">
-                            <div className={classes.button1}>Back</div>
-                        </Link>
-                        
-                            <Link
-                                href={{
-                                    pathname: '/dashboard',
-                                    query: account,
-                                }}
-                            >
-                                <div className={classes.button1}>Continue</div>
-                            </Link>
-                    </div>
+                            <div>
+                                <Text size="xl" inline>
+                                    Drag csv here or click to select files
+                                </Text>
+                                <Text size="sm" color="dimmed" inline mt={7}>
+                                    File size should not exceed 5mb
+                                </Text>
+                            </div>
+                        </Group>
+                    </Dropzone>
+                </div>
+                {/* <ButtonGroup href1="/home" href2="/UPI/verify-upi-id" /> */}
+                <div className={classes.buttonContainer}>
+                    <div className={classes.button1} onClick={() => {
+                        setdropfiles(true)
+                    }}>Back</div>
+
+                    <div className={classes.button1} onClick={() => {
+                        setdropfiles(true)
+                        setIsanalysisOpen(false)
+                        useAccountStore.setState({ uploaded: true })
+                        onDrop(dropedfiles)
+                    }}>Continue</div>
                 </div>
             </div>
         </div>
+        // </div>
     )
 }
