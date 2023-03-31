@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import {Card, Group, Stack, Text} from '@mantine/core'
+import { Card, Group, Stack, Text } from '@mantine/core'
 
 const StyledStack = styled(Stack)`
   cursor: pointer;
@@ -66,12 +66,12 @@ const RatioCard = ({ ratioName, value }: Props) => {
 
 export function FinancialRatios() {
   let financialRatios = [
-    { id: 1, ratioName: 'Liquidity Ratio', value: `4.74` },
-    { id: 2, ratioName: 'Debt to Asset Ratio', value: `0.1` },
-    { id: 3, ratioName: 'Data Service Ratio', value: `0.3` },
-    { id: 4, ratioName: 'Savings Ratio', value: `4.0` },
-    { id: 5, ratioName: 'Solvency Ratio', value: `-0.42` },
-    { id: 6, ratioName: 'Life Insurance Coverage Ratio', value: `1.2` },
+    { id: 1, ratioName: 'Liquidity Ratio', value: `NA` },
+    { id: 2, ratioName: 'Debt to Asset Ratio', value: `NA` },
+    { id: 3, ratioName: 'Data Service Ratio', value: `NA` },
+    { id: 4, ratioName: 'Savings Ratio', value: `NA` },
+    { id: 5, ratioName: 'Solvency Ratio', value: `NA` },
+    { id: 6, ratioName: 'Life Insurance Coverage Ratio', value: `NA` },
   ]
 
   return (
