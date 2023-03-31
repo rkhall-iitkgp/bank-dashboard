@@ -204,6 +204,9 @@ export function EnterOTP() {
     description: data.description,
   }
 
+  console.log(sendingData);
+  
+
   const handlePayment = () => {
     console.log('data = ', sendingData)
     let response = transms
