@@ -195,11 +195,11 @@ export function EnterOTP() {
 
   const sendingData = {
     otp: otp,
-    debit_account_id: data.id,
+    debit_account_no: data.dacno,
     amount: data.amount,
     mode: 0,
     user_id: user_id,
-    credit_account_id: data.acc_no,
+    credit_account_no: data.account_no,
     contact_no: contact_no,
     description: data.description,
   }
@@ -227,7 +227,7 @@ export function EnterOTP() {
           console.log(v)
           router.replace({
             pathname: '/bank-transfer/payment-success',
-            query: { id: data.id, amount: data.amount },
+            query: { dacno: data.dacno, amount: data.amount },
           })
         } else {
           alert('wrong otp')
