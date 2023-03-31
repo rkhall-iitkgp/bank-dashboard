@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
 
@@ -22,7 +22,6 @@ const useStyles = createStyles(() => ({
     width: `144px`,
     height: `18px`,
     textAlign: `center`,
-    marginTop: `15px`,
     display: `flex`,
     justifyContent: `space`,
     padding: `2px`,
@@ -42,7 +41,7 @@ const useStyles = createStyles(() => ({
   subcontainer2: {
     color: `#000000`,
     position: 'absolute',
-    top: `62px`,
+    top: `47px`,
     left: `1rem`,
     width: `240px`,
     height: `20px`,
@@ -54,7 +53,7 @@ const useStyles = createStyles(() => ({
     color: `#737373`,
     fontSize: `1rem`,
     position: 'absolute',
-    top: `90px`,
+    top: `75px`,
     left: `1rem`,
     width: `58px`,
     height: `16px`,
@@ -69,7 +68,7 @@ const useStyles = createStyles(() => ({
   subcontainer4: {
     color: `#737373`,
     position: 'absolute',
-    top: `110px`,
+    top: `95px`,
     left: `1rem`,
     width: `178px`,
     height: `18px`,
@@ -81,8 +80,13 @@ const useStyles = createStyles(() => ({
   },
 }))
 
-export function TotalBalance({ totalBalance, increment, timePeriod, accountNumber }) {
-  const { classes } = useStyles();
+export function TotalBalance({
+  totalBalance,
+  increment,
+  timePeriod,
+  accountNumber,
+}) {
+  const { classes } = useStyles()
   const data = {
     totalBalance: totalBalance,
     increment: increment,
