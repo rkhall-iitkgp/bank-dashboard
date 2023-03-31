@@ -122,25 +122,32 @@ export function TotalBalance({
           {data.totalBalance}{' '}
         </span>
       </div>
-      <div className={classes.subcontainer3}>
+      <div
+        className={classes.subcontainer3}
+        style={{ backgroundColor: data.increment > 0 ? '#737373' : '#FFE5E4' }}
+      >
         <span
           style={{
             fontFamily: 'Montserrat',
             fontStyle: `normal`,
             fontWeight: `600`,
             fontSize: `12px`,
-            color: `#2CC578`,
+            color: data.increment > 0 ? `#2CC578` : '#D73331',
             lineHeight: `15px`,
           }}
         >
           {' '}
           <Image
-            src={'/../public/icons/increment.png'}
+            src={
+              data.increment > 0
+                ? `/icons/increment.png`
+                : `/icons/decrement.png`
+            }
             width={14}
             height={14}
             alt={''}
           ></Image>
-          {data.increment}
+          {data.increment}%
         </span>
       </div>
       <div className={classes.subcontainer4}>
