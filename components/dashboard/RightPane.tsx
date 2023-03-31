@@ -11,6 +11,8 @@ import useAccountStore from '../Store/Account'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import Image from 'next/image'
+import { Card } from '@mantine/core'
 const useStyles = createStyles((theme) => ({
   header: {
     flexDirection: 'row',
@@ -50,7 +52,36 @@ const useStyles = createStyles((theme) => ({
     border: 'none',
   },
 }))
+const Empty=()=>{
+  return (
+    <Card
+    // radius={'lg'}
 
+    style={{
+      boxShadow: '0px 2px 40px rgba(0, 0, 0, 0.1)',
+    }}
+    mr={15}
+  >
+    <Group
+      align={'center'}
+      style={{
+        flex: 1,
+        maxHeight: '53vh',
+        overflow: 'auto',
+        margin: 'auto',
+        alignItems: 'center'
+      }}
+    >
+       <Image
+              src={'/icons/empty.png'}
+              alt="filter-icon"
+              height={300}
+              width={300}
+            />
+    </Group>
+  </Card>
+)
+}
 const RightPane = () => {
   const { getItem } = useStorage()
   const { classes } = useStyles()
@@ -138,12 +169,14 @@ const RightPane = () => {
           </Tabs.List>
 
           <Tabs.Panel value="financial" className={classes.tabsPanel}>
-            <FinancialStatistics />
+            {transactions[0].description==='' && <Empty/>}
+          {transactions[0].description!=='' && <FinancialStatistics />}
           </Tabs.Panel>
 
           <Tabs.Panel value="stocks" className={classes.tabsPanel}>
             {/* <StockStatisticsx /> */}
             <StockStatistics />
+          
           </Tabs.Panel>
           {/* {    console.log('rendered6846')} */}
         </Tabs>

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import useStorage from '../../hooks/useStorage'
 import datams from '../datams'
 import useAccountStore from '../Store/Account'
+import { useEffect } from 'react'
 
 const palette = ['#D56EEA', '#26DD76', '#FFAA57', '#4198FF']
 
@@ -124,7 +125,7 @@ const TransactionCard = (props: {
   )
 }
 interface props {
-  transaction: any[]
+  transactions: any[]
 }
 const RecentTransactions = (prop: {
   transactions: {
@@ -138,13 +139,33 @@ const RecentTransactions = (prop: {
   }[]
 }) => {
   const { transactions } = prop;
+  useEffect(() => {
+   console.log('transactions.length',transactions.length);
+   console.log('transactions',transactions);
+  }, [])
+  
   return (
     <div>
       <Text ff={'Montserrat'} c="#0062D6" fw={700} fz={22} mt={4} ml={8}>
         Recent Transactions
       </Text>
       <div style={{ maxHeight: '64vh', overflow: 'auto' }}>
-        {transactions?.map((t) => (
+      { transactions[0].description==='' &&  <Card
+      radius={'lg'}
+      shadow="0px 4px 20px rgba(0, 0, 0, 0.1)"
+      my={12}
+      p={20}
+      mx={8}
+    >
+       <Text
+            ff={'Montserrat'}
+            c={'#4D4B4B'}
+            fw={600}
+            fz={20}
+            style={{ lineHeight: 0.5 }}
+          >No New Transactions</Text>
+      </Card>}
+        {transactions[0].description!==''&& transactions?.map((t) => (
           <div key={t.id}>
             <TransactionCard data={t} />
           </div>

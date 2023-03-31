@@ -7,8 +7,8 @@ import useAccountStore from '../Store/Account'
 import CashCard from './CashLimitCard'
 import EodBalance from './EODBalanceCard'
 import RecentTransactions from './recenttransactions'
-
 const FilterRow = styled.div`
+
   display: flex;
   gap: 12px;
   justify-content: space-between;
@@ -95,15 +95,16 @@ const LeftPane = ({ accountsList, useAccount }: Props) => {
   }, [])
   useEffect(() => {
     console.log('useAccount.Transaction', useAccount.Transaction)
+    
     console.log('selectedBankAccount', selectedBankAccount)
   }, [selectedBankAccount])
+  console.log('useAccount',useAccount)
   const [account, setaccount] = useState(0);
   const uploaded = useAccountStore(state => state.uploaded)
   useEffect(() => {
     console.log('uploaded', uploaded)
-
   }, [uploaded])
-
+  
   return (
     <>
       <Modal

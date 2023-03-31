@@ -1,5 +1,5 @@
 import { Card, Text, Group, Stack, HoverCard } from '@mantine/core'
-
+import { useEffect } from 'react'
 const palette = ['#D56EEA', '#26DD76', '#FFAA57', '#4198FF']
 
 var transactions = [
@@ -155,13 +155,19 @@ const TransactionCard = (props: {
 }
 
 const RecentTransactions = () => {
+  useEffect(() => {
+    console.log(transactions.length)
+  
+  }, [])
+  
   return (
     <div>
       <Text ff={'Montserrat'} c="#0062D6" fw={700} fz={22} mt={4} ml={8}>
         Recent Transactions
       </Text>
       <div style={{ maxHeight: '30vh', overflow: 'auto' }}>
-        {transactions?.map((t) => (
+        {transactions.length===0 && <h1>No new transactions</h1>}
+        {transactions.length!==0 && transactions?.map((t) => (
           <div key={t.date}>
             <TransactionCard data={t} />
           </div>
