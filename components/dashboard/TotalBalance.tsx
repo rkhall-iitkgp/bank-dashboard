@@ -1,7 +1,6 @@
-import React from 'react';
+import React from 'react'
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
-import { useRouter } from 'next/router';
 
 const useStyles = createStyles(() => ({
   container: {
@@ -23,7 +22,6 @@ const useStyles = createStyles(() => ({
     width: `144px`,
     height: `18px`,
     textAlign: `center`,
-    marginTop: `15px`,
     display: `flex`,
     justifyContent: `space`,
     padding: `2px`,
@@ -43,7 +41,7 @@ const useStyles = createStyles(() => ({
   subcontainer2: {
     color: `#000000`,
     position: 'absolute',
-    top: `62px`,
+    top: `47px`,
     left: `1rem`,
     width: `240px`,
     height: `20px`,
@@ -55,7 +53,7 @@ const useStyles = createStyles(() => ({
     color: `#737373`,
     fontSize: `1rem`,
     position: 'absolute',
-    top: `90px`,
+    top: `75px`,
     left: `1rem`,
     width: `58px`,
     height: `16px`,
@@ -70,7 +68,7 @@ const useStyles = createStyles(() => ({
   subcontainer4: {
     color: `#737373`,
     position: 'absolute',
-    top: `110px`,
+    top: `95px`,
     left: `1rem`,
     width: `178px`,
     height: `18px`,
@@ -82,8 +80,13 @@ const useStyles = createStyles(() => ({
   },
 }))
 
-export function TotalBalance({ totalBalance, increment, timePeriod, accountNumber }) {
-  const { classes } = useStyles();
+export function TotalBalance({
+  totalBalance,
+  increment,
+  timePeriod,
+  accountNumber,
+}) {
+  const { classes } = useStyles()
   const data = {
     totalBalance: totalBalance,
     increment: increment,
@@ -119,25 +122,25 @@ export function TotalBalance({ totalBalance, increment, timePeriod, accountNumbe
           {data.totalBalance}{' '}
         </span>
       </div>
-      <div className={classes.subcontainer3} style={{ backgroundColor: data.increment > 0 ? '#737373' : '#FFE5E4' }}>
+      <div className={classes.subcontainer3}>
         <span
           style={{
             fontFamily: 'Montserrat',
             fontStyle: `normal`,
             fontWeight: `600`,
             fontSize: `12px`,
-            color: data.increment > 0 ? `#2CC578` : '#D73331',
+            color: `#2CC578`,
             lineHeight: `15px`,
           }}
         >
           {' '}
           <Image
-            src={data.increment > 0 ? `/icons/increment.png` : `/icons/decrement.png`}
+            src={'/../public/icons/increment.png'}
             width={14}
             height={14}
             alt={''}
           ></Image>
-          {data.increment}%
+          {data.increment}
         </span>
       </div>
       <div className={classes.subcontainer4}>
