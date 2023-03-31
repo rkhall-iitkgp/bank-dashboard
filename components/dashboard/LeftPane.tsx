@@ -151,13 +151,13 @@ const LeftPane = ({ accountsList, useAccount }: Props) => {
 
         <Group style={{ justifyContent: 'space-evenly' }}>
           <CashCard
-            num={ useAccount.Transaction?.filter(v => v.credit > 0)?.map(v => v.credit)}
+            num={useAccount.Transaction?.filter(v => v.credit > 0)?.map(v => v.credit)}
             type={'deposit'}
             limit={depositLimit}
             setLimit={setDepositLimit}
           />
           <CashCard
-            num={ useAccount.Transaction?.filter(v => v.debit > 0)?.map(v => v.debit)}
+            num={useAccount.Transaction?.filter(v => v.debit > 0)?.map(v => v.debit)}
             type={'withdrawl'}
             limit={withdrawlLimit}
             setLimit={setWithdrawlLimit}

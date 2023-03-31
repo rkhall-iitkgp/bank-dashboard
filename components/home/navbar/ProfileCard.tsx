@@ -1,9 +1,9 @@
-import {Button, createStyles, Text} from '@mantine/core'
+import { Button, createStyles, Text } from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import useStorage from '../../../hooks/useStorage'
-import {Key} from 'react'
+import { Key } from 'react'
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -79,11 +79,13 @@ interface Props {
 
 const AccountCard = ({ bankName, value }: Props) => {
   const { classes } = useStyles()
+  const { origin } = window.location;
+
   return (
     <div>
       <div className={classes.accountContainer}>
         <Image
-          src={'/../public/icons/sbi.png'}
+          src={`${origin}/icons/sbi.png`}
           width={20}
           height={20}
           alt={''}
@@ -140,7 +142,7 @@ export function ProfileCard() {
         }}
       >
         <Image
-          src={'/../public/icons/profilePhoto.png'}
+          src={`/icons/profilePhoto.png`}
           width={80}
           height={80}
           alt={''}
@@ -254,7 +256,7 @@ export function ProfileCard() {
           </span>{' '}
           &nbsp;{' '}
           <Image
-            src={'/../public/icons/settings.png'}
+            src={`/icons/settings.png`}
             width={18}
             height={18}
             alt={''}
@@ -278,7 +280,7 @@ export function ProfileCard() {
         </span>{' '}
         &nbsp;{' '}
         <Image
-          src={'/../public/icons/logout.png'}
+          src={`/icons/logout.png`}
           width={18}
           height={18}
           alt={''}

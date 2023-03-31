@@ -1,4 +1,4 @@
-import { Button, Card, Group, Stack, Text } from '@mantine/core'
+import { Button, Card, Group, Select, Stack, Text } from '@mantine/core'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import useAccountStore from '../Store/Account'
@@ -97,15 +97,15 @@ const SpendingDonut = (props: {
         dataLabels: { style: { fontSize: '0.3rem' } },
         legend: { fontFamily: 'Montserrat', fontWeight: 500 },
       }}
-      width={350}
+      width={400}
     />
   )
 }
 
-const MontlySpendingChart = (props: { data: { x: string; y: number }[] }) => {
+const MontlySpendingChart = (props: { data: { x: string; y: number }[], name: string }) => {
   return (
     <ReactApexChart
-      series={[{ data: props.data }]}
+      series={[{ data: props.data, name: props.name }]}
       width={500}
       height={250}
       type="bar"
@@ -123,6 +123,29 @@ const MontlySpendingChart = (props: { data: { x: string; y: number }[] }) => {
     />
   )
 }
+
+const WeeklySpendingChart = (props: { data: { x: string; y: number }[], name: string }) => {
+  return (
+    <ReactApexChart
+      series={[{ data: props.data, name: props.name }]}
+      width={500}
+      height={250}
+      type="bar"
+      options={{
+        chart: {
+          type: 'bar',
+          zoom: { enabled: false },
+          toolbar: { show: false },
+        },
+        title: {
+          text: 'Weekly Spendings',
+          style: { fontFamily: 'Montserrat', fontWeight: 700 },
+        },
+      }}
+    />
+  )
+}
+
 // const PieCategoryData = [
 //   { value: 25.6, mode: 'Entertainment' },
 //   { value: 32, mode: 'Food' },
@@ -160,6 +183,21 @@ const MontlySpendingData = [
   { x: 'Nov', y: 690 },
 ]
 
+const WeeklySpendingData = {
+  Jan: [{ y: 50, x: '1' }],
+  Feb: [{ y: 50, x: '1' }],
+  Mar: [{ y: 50, x: '1' }],
+  Apr: [{ y: 50, x: '1' }],
+  May: [{ y: 50, x: '1' }],
+  Jun: [{ y: 50, x: '1' }],
+  Jul: [{ y: 50, x: '1' }],
+  Aug: [{ y: 50, x: '1' }],
+  Sep: [{ y: 50, x: '1' }],
+  Oct: [{ y: 50, x: '1' }],
+  Nov: [{ y: 50, x: '1' }],
+  Dec: [{ y: 50, x: '1' }],
+}
+
 const InsightList = [
   'Your food spending increased by 15% last week.',
   'Cutting ₹20 per week on takeout can save ₹80 monthly.',
@@ -187,18 +225,22 @@ const FinancialStatistics = () => {
   const [modTotal, setModTotal] = useState(0);
   const [filterTotal, setFilterTotal] = useState(0);
   const [montlyData, setMontlyData] = useState(MontlySpendingData);
+  const [isWeekly, setIsWeekly] = useState(false);
+  const [weeklyData, setWeeklyData] = useState(WeeklySpendingData);
+  const [selectedMonth, setSelectedMonth] = useState<string | null>('Jan');
 
   useEffect(() => {
     let catlegends = new Set<string>();
     let catdata: { mode: string, value: number }[] = [];
     transactions.forEach(v => catlegends.add(v.category))
     let modt = 0;
+    // transactions.filter(v => v.debit > 0).forEach(v => modt += v.debit)
     catlegends.forEach(k => {
       if (k) {
         let total = 0;
-        transactions.filter(x => x.category === k).forEach(x => { total += x.credit - x.debit })
-        modt += Math.abs(total);
-        catdata.push({ mode: k, value: Math.abs(total) });
+        transactions.filter(x => x.category === k).filter(v => v.debit > 0).forEach(x => { total += x.debit })
+        catdata.push({ mode: k, value: total });
+        modt += total
       }
     })
     setModTotal(modt);
@@ -233,18 +275,16 @@ const FinancialStatistics = () => {
       return A > B ? 1 : -1
     })
 
-    let total = 0;
     dateslist.forEach(k => {
-      console.log(k)
-      transactions.filter(x => x.date === k).forEach(x => { total += x.credit - x.debit })
-      datedata.push({ x: k, y: total });
+      let datefiltered = transactions.filter(x => x.date === k)
+      datefiltered.sort((a, b) => {
+        let A = new Date(a.date);
+        let B = new Date(b.date);
+        return A > B ? 1 : -1
+      })
+      // .forEach(x => { total += x.credit - x.debit })
+      datedata.push({ x: k, y: datefiltered.at(-1)?.balance || 0 });
     })
-
-    // datedata.sort((a, b) => {
-    //   let A = new Date(a.x);
-    //   let B = new Date(b.x);
-    //   return A > B ? 1 : -1
-    // })
 
     settotalbalancedata(datedata);
     // console.log(`date data = ${datedata[0].y}`)
@@ -270,7 +310,6 @@ const FinancialStatistics = () => {
       let total = 0;
       console.log(k)
       filteredTransactions.filter(x => x.date === k).forEach(x => {
-        // console.log(`credi = ${x.credit} debit ${x.debit}`)
         total += x.debit
       })
       datedata.push({ x: k, y: total });
@@ -279,13 +318,10 @@ const FinancialStatistics = () => {
 
     setFilterTotal(Math.abs(totaltal));
     setFilterBalanceData(datedata);
-    // console.log(`date data = ${datedata[0].y}`)
   }, [categoryIndex])
 
   useEffect(() => {
-    const montNames = {
-      1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec"
-    }
+    const montNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     const filteredTransactions = transactions
       .filter(v => PieCategoryData[categoryIndex !== -1 ? categoryIndex : 0]?.mode === v.category).filter(v => v.debit > 0);
     const Months = new Set<number>();
@@ -306,6 +342,32 @@ const FinancialStatistics = () => {
 
     setMontlyData(MonthData);
 
+  }, [categoryIndex])
+
+  useEffect(() => {
+    const montNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    const filteredTransactions = transactions
+      .filter(v => PieCategoryData[categoryIndex !== -1 ? categoryIndex : 0]?.mode === v.category).filter(v => v.debit > 0);
+    let weekData = { Jan: [], Feb: [], Mar: [], Apr: [], May: [], Jun: [], Jul: [], Aug: [], Sep: [], Oct: [], Nov: [], Dec: [] };
+    for (let i = 0; i < 12; i++) {
+      let data: { x: string, y: number }[] = [];
+      let thismonthtr = filteredTransactions.filter(v => {
+        let A = new Date(v.date);
+        return A.getMonth() == i;
+      })
+      for (let j = 0; j < 5; j++) {
+        let total = 0;
+        thismonthtr.filter(v => {
+          let A = new Date(v.date);
+          return Math.floor(A.getDate() / 7) == j;
+        }).forEach(v => total += v.debit)
+        data.push({ x: (j + 1).toString(), y: total })
+      }
+      weekData[montNames[i]] = data;
+    }
+
+    setWeeklyData(weekData);
+    console.log(weekData);
   }, [categoryIndex])
 
   return (
@@ -360,7 +422,7 @@ const FinancialStatistics = () => {
             width={450}
           />
         )}
-        <Stack style={{ flex: 1 }} align="center">
+        <Stack style={{ flex: 2 }} align="center">
           <SpendingDonut setColor={setBalanceColor}
             setSelection={setCategoryIndex}
             values={PieCategoryData?.map((v) => v.value)}
@@ -381,15 +443,49 @@ const FinancialStatistics = () => {
               <BalanceChart
                 balanceData={filteredBalanceData}
                 color={balanceColor}
-                width={450}
+                width={550}
               />
-              <MontlySpendingChart data={montlyData} />
+              <Group>
+                {!isWeekly && <MontlySpendingChart data={montlyData} name={PieCategoryData[categoryIndex].mode} />}
+                {isWeekly && <WeeklySpendingChart data={weeklyData[selectedMonth || 'Feb']} name={PieCategoryData[categoryIndex].mode} />}
+
+                <Stack style={{ flex: 1, justifyContent: 'flex-start' }}>
+                  {isWeekly && <Stack>
+                    <Text fz={13} c={"#636363"} ff="Montserrat">Select Month</Text>
+                    <Select data={[
+                      { value: 'Jan', label: 'January' },
+                      { value: 'Feb', label: 'February' },
+                      { value: 'Mar', label: 'March' },
+                      { value: 'Apr', label: 'April' },
+                      { value: 'May', label: 'May' },
+                      { value: 'Jun', label: 'June' },
+                      { value: 'Jul', label: 'July' },
+                      { value: 'Aug', label: 'August' },
+                      { value: 'Sep', label: 'September' },
+                      { value: 'Oct', label: 'October' },
+                      { value: 'Nov', label: 'Noveber' },
+                      { value: 'Dec', label: 'December' },
+                    ]} value={selectedMonth} onChange={setSelectedMonth} unselectable={'off'} />
+                  </Stack>}
+                  <Text fz={13} c={"#636363"} ff="Montserrat">See Spendings By</Text>
+                  <Button size={"xs"} radius={'xl'} w={100} style={{
+                    backgroundColor: isWeekly ? '#0062D6' : '#FFF',
+                    boxShadow: '0px 6px 20px rgba(0, 0, 0, 0.2)',
+                    color: isWeekly ? '#FFF' : '#0062D6'
+                  }} onClick={() => setIsWeekly(true)}>Weekly</Button>
+                  <Button size={'xs'} radius={'xl'} w={100} style={{
+                    backgroundColor: isWeekly ? '#FFF' : '#0062D6',
+                    boxShadow: '0px 6px 20px rgba(0, 0, 0, 0.2)',
+                    color: isWeekly ? '#0062D6' : '#FFF'
+                  }} onClick={() => setIsWeekly(false)}>Montly</Button>
+                </Stack>
+              </Group>
             </>
           )}
         </Stack>
 
         {categoryIndex != -1 && (
-          <Stack mx={10} style={{ flex: 3 }} styles={{ maxHeight: '25rem' }}>
+          <Stack mx={10} style={{ flex: 1.5 }} styles={{ maxHeight: '25rem' }}>
             <div
               style={{
                 // border: "1px solid rgb(131 131 131 / 30%)",

@@ -1,6 +1,7 @@
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Heading from '../reusable-components/Heading'
 
@@ -174,7 +175,7 @@ function Account(props: {
         }}
       >
         <Image
-          src={'/../public/icons/' + props.accountdata.src + '.png'}
+          src={`/icons/` + props.accountdata.src + '.png'}
           width={50}
           height={50}
           alt={''}
@@ -241,7 +242,7 @@ export function AnalysisType() {
           <div className={classes.accountContainer}>
             {fetchedAccount?.map((ele) => {
               return (
-                <span key={ele.id} onClick={() => {handleClick(), setType(ele.id), console.log(ele.id)}}  >
+                <span key={ele.id} onClick={() => { handleClick(), setType(ele.id), console.log(ele.id) }}  >
                   <Account setAccount={setAccount} accountdata={ele} />
                 </span>
               )

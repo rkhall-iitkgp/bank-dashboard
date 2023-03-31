@@ -7,7 +7,8 @@ import { Group, Text, useMantineTheme, rem } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { Dropzone, DropzoneProps, MIME_TYPES } from '@mantine/dropzone';
 import useStorage from '../../hooks/useStorage'
-import analyzerms  from '../analyzerms'
+import analyzerms from '../analyzerms'
+import { useRouter } from 'next/router'
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -160,6 +161,7 @@ function Account(props: {
     setAccount: (arg0: any) => void
 }) {
     const { classes } = useStyles()
+    const origin = useRouter().pathname;
 
     return (
         <div>
@@ -179,7 +181,7 @@ function Account(props: {
                 }}
             >
                 <Image
-                    src={'/../public/icons/' + props.accountdata.src + '.png'}
+                    src={`/icons/` + props.accountdata.src + '.png'}
                     width={50}
                     height={50}
                     alt={''}
@@ -211,20 +213,20 @@ export function DropFiles(props: Partial<DropzoneProps>) {
         const formData = new FormData();
         formData.append('user_id', userId);
         formData.append('file', files[0]);
-        
+
         analyzerms.post('/transaction/upload/', formData, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-            'Content-Type': 'multipart/form-data'
-          }
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+                'Content-Type': 'multipart/form-data'
+            }
         })
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-      }
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
 
 
@@ -289,15 +291,15 @@ export function DropFiles(props: Partial<DropzoneProps>) {
                         <Link href="/home">
                             <div className={classes.button1}>Back</div>
                         </Link>
-                        
-                            <Link
-                                href={{
-                                    pathname: '/dashboard',
-                                    query: account,
-                                }}
-                            >
-                                <div className={classes.button1}>Continue</div>
-                            </Link>
+
+                        <Link
+                            href={{
+                                pathname: '/dashboard',
+                                query: account,
+                            }}
+                        >
+                            <div className={classes.button1}>Continue</div>
+                        </Link>
                     </div>
                 </div>
             </div>
