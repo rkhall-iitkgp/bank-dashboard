@@ -1,4 +1,4 @@
-import { Image } from '@mantine/core'
+import {Image} from '@mantine/core'
 import styled from '@emotion/styled'
 
 const Row = styled('div')`

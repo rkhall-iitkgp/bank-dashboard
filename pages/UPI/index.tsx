@@ -1,10 +1,2 @@
-import React from 'react'
-import { UpiTransferHome } from '../../components/Upitransferhome'
-
-const index = () => {
-    return (
-        <UpiTransferHome />
-    )
-}
-
-export default index
+import { UpiTransferHome } from '../../components/upi-transfer-flow/UpiTransferHome'
+export default UpiTransferHome

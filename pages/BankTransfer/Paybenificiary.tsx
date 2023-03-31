@@ -15,5 +15,3 @@ const Paybenificiary = () => {
         <PayBenficiary sbi={isSbi}/>
     )
 }
-
-export default Paybenificiary

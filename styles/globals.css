@@ -23,3 +23,21 @@ a {
     background: black;
   }
 }
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.2rem;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0062d6;
+  border-radius: 5px;
+}
+
+::placeholder {
+  color: #9d9d9d !important;
+}

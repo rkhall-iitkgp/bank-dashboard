@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Group, Stack, Image, Text } from '@mantine/core'
+import {Group, Image, Stack, Text} from '@mantine/core'
 
 const PaymentImage = styled(Group)`
   background-color: #0062d6;
@@ -37,7 +37,7 @@ const MakePaymentCard = ({ imageAddress, cardText, alt }: Props) => {
           width={60}
           mx={'auto'}
           alt={alt ?? ''}
-          fit = 'contain'
+          fit="contain"
         />
       </PaymentImage>
       <Text

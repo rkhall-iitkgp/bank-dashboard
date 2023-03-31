@@ -5,9 +5,12 @@ import {
   Card,
   createPolymorphicComponent,
   Group,
-  Text,
+  Text
 } from '@mantine/core'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import useStorage from '../../../hooks/useStorage'
+import api from '../../datams'
 import MakePaymentCard from './MakePaymentCards'
 
 const _StyledButton = styled(Button)`
@@ -24,12 +27,49 @@ const _StyledButton = styled(Button)`
     transform: scale(1.02);
   }
 `
-
+// import { AddAccountFormPopup } from '../add-bank-account/AddAccountFormPopup'
 const StyledButton = createPolymorphicComponent<'button', ButtonProps>(
   _StyledButton,
 )
-
-const Payment = () => {
+interface Props {
+  SetIsKycPermissionPopUpOpen: Function
+  isKycPermissionPopUpOpen: any
+  setIsAddAccountPopupOpen: Function
+  bankAccountList: any[]
+}
+export default function Payment({
+  SetIsKycPermissionPopUpOpen,
+  isKycPermissionPopUpOpen,
+  setIsAddAccountPopupOpen,
+  bankAccountList
+}: Props) {
+  const { getItem } = useStorage()
+  const [result, setResult] = useState(1)
+  const GetKycStatus = () => {
+    const accessToken = getItem('access_token', 'session')
+    console.log(accessToken)
+    api
+      .get(`/user/getkyc/`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        response.data
+      })
+      .catch((err) => {
+        err.response.data.message == 'KYC not done' && setResult(0)
+        // console.log(err.response.data.message)
+      })
+  }
+  // const [accLength, setAccLength] = useState('[]')
+  // useEffect(() => {
+  //   GetKycStatus()
+  //   // setResult(0)
+  //   setAccLength(getItem('accounts'))
+  //   console.log(result)
+  // }, [])
   return (
     <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '3vh' }}>
       <Card shadow="sm" padding="xs" radius="lg" withBorder bg={'#E0EEFF'}>
@@ -43,32 +83,106 @@ const Payment = () => {
           >
             Make Payment
           </Text>
-          <StyledButton
-            variant="gradient"
-            gradient={{ from: '#0062D6', to: '#0062D6' }}
-          >
-            Click here to activate
-          </StyledButton>
         </Group>
-
         <Group
           style={{ justifyContent: 'space-evenly', alignItems: 'flex-start' }}
           my={12}
         >
-          <Link href="/BankTransfer" style={{ textDecoration: 'none' }}>
-            <MakePaymentCard
-              imageAddress="icons/bank-building-white.png"
-              cardText="Bank Transfer"
-              alt="Bank Transfer"
-            />
-          </Link>
-          <Link href="/UPI">
-            <MakePaymentCard
-              imageAddress="icons/upi.png"
-              cardText="UPI Payment"
-              alt="UPI Payment"
-            />
-          </Link>
+          {result === 0 && (
+            <div
+              onClick={() => {
+                SetIsKycPermissionPopUpOpen(true)
+              }}
+            >
+              <MakePaymentCard
+                imageAddress="icons/bank-building-white.png"
+                cardText="Bank Transfer"
+                alt="Bank Transfer"
+              />
+            </div>
+          )}
+
+          {result === 1 && bankAccountList.length !== 0 && (
+            <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
+              <MakePaymentCard
+                imageAddress="icons/bank-building-white.png"
+                cardText="Bank Transfer"
+                alt="Bank Transfer"
+              />
+            </Link>
+          )}
+          {result === 1 && bankAccountList.length === 0 && (
+            <div
+              onClick={() => {
+                setIsAddAccountPopupOpen(true)
+              }}
+            >
+              <MakePaymentCard
+                imageAddress="icons/bank-building-white.png"
+                cardText="Bank Transfer"
+                alt="Bank Transfer"
+              />
+            </div>
+          )}
+
+          {result === 0 && (
+            <div
+              onClick={() => {
+                SetIsKycPermissionPopUpOpen(true)
+              }}
+            >
+              <MakePaymentCard
+                imageAddress="icons/upi.png"
+                cardText="UPI Payment"
+                alt="UPI Payment"
+              />
+            </div>
+          )}
+
+          {result === 1 && bankAccountList.length !== 0 && (
+            <Link href="/UPI" style={{ textDecoration: 'none' }}>
+              <MakePaymentCard
+                imageAddress="icons/upi.png"
+                cardText="UPI Payment"
+                alt="UPI Payment"
+              />
+            </Link>
+          )}
+          {result === 1 && bankAccountList.length === 0 && (
+            <div
+              onClick={() => {
+                setIsAddAccountPopupOpen(true)
+              }}
+            >
+              <MakePaymentCard
+                imageAddress="icons/upi.png"
+                cardText="UPI Payment"
+                alt="UPI Payment"
+              />
+            </div>
+          )}
+
+          {/* {(result===0) ? (
+            <div
+              onClick={() => {
+                SetIsKycPermissionPopUpOpen(true)
+              }}
+            >
+              <MakePaymentCard
+                imageAddress="icons/upi.png"
+                cardText="UPI Payment"
+                alt="UPI Payment"
+              />
+            </div>
+          ) : (
+            <Link href="/UPI">
+              <MakePaymentCard
+                imageAddress="icons/upi.png"
+                cardText="UPI Payment"
+                alt="UPI Payment"
+              />
+            </Link>
+          )} */}
           <MakePaymentCard
             imageAddress="icons/payphone.png"
             cardText="Pay Phone Number"
@@ -99,5 +213,3 @@ const Payment = () => {
     </div>
   )
 }
-
-export default Payment

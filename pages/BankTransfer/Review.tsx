@@ -15,5 +15,3 @@ const Review = () => {
         <Reviewdetailsbank sbi={isSbi} />
     )
 }
-
-export default Review
