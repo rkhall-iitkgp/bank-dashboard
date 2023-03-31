@@ -183,7 +183,7 @@ function Account(props: {
       }}
     >
       <Image
-        src={'/../public/icons/SBI-Logo.png'}
+        src={`/icons/SBI-Logo.png`}
         width={60}
         height={28}
         alt={''}
@@ -196,6 +196,7 @@ function Account(props: {
     </div>
   )
 }
+
 export function BankTransfer() {
   const { getItem } = useStorage()
   // console.log("user_id = ", getItem("user_id"));
