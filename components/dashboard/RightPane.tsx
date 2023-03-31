@@ -9,7 +9,8 @@ import StockStatistics from './stockStats'
 import { TotalBalance } from './TotalBalance'
 import useAccountStore from '../Store/Account'
 import dayjs from 'dayjs'
-
+import { useState } from 'react'
+import { useEffect } from 'react' 
 const useStyles = createStyles((theme) => ({
   header: {
     flexDirection: 'row',
@@ -97,6 +98,11 @@ const RightPane = () => {
     return A > B ? 1 : -1
   })
   let lastWeekBalance = lastWeekFiltered.at(-1)?.balance
+  
+  const [name,setName]=useState('');
+  useEffect(() => {
+   setName(getItem('name'));
+  }, [])
 
   return (
     <>
@@ -107,7 +113,8 @@ const RightPane = () => {
               Welcome Back,&nbsp;
             </Text>
             <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
-              {getItem('name') + '!'}
+              {name+ ' !'}
+              {/* {name} */}
             </Text>
           </div>
           <div style={{ justifyContent: 'flex-end' }}>
