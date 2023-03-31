@@ -494,6 +494,7 @@ export function PaymentForm(props: { sbi: any }) {
                           ifsc: form.values.ifsc,
                           ...router.query,
                           account_no: form.values.account_no,
+                          description: form.values.description,
                         },
                       })
                     }
