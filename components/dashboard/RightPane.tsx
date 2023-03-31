@@ -10,7 +10,7 @@ import { TotalBalance } from './TotalBalance'
 import useAccountStore from '../Store/Account'
 import dayjs from 'dayjs'
 import { useState } from 'react'
-import { useEffect } from 'react' 
+import { useEffect } from 'react'
 const useStyles = createStyles((theme) => ({
   header: {
     flexDirection: 'row',
@@ -66,8 +66,8 @@ const RightPane = () => {
     let B = new Date(b.date);
     return A > B ? 1 : -1
   })
-  let thisbalance = transactions.at(-1)?.balance
-  console.log(`this balance = ${thisbalance}`)
+  let thisbalance = transactions.at(-1)?.balance || 0
+  // console.log(`this balance = ${thisbalance}`)
 
   let accounts = getItem('accounts')
   let fetchedAccount = JSON.parse(accounts ? accounts : '[]').filter(v => v.account_no === useAccount.account_no)[0];
@@ -97,11 +97,11 @@ const RightPane = () => {
     let B = new Date(b.date);
     return A > B ? 1 : -1
   })
-  let lastWeekBalance = lastWeekFiltered.at(-1)?.balance
-  
-  const [name,setName]=useState('');
+  let lastWeekBalance = lastWeekFiltered.at(-1)?.balance || 0
+
+  const [name, setName] = useState('');
   useEffect(() => {
-   setName(getItem('name'));
+    setName(getItem('name'));
   }, [])
 
   return (
@@ -113,7 +113,7 @@ const RightPane = () => {
               Welcome Back,&nbsp;
             </Text>
             <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
-              {name+ ' !'}
+              {name + ' !'}
               {/* {name} */}
             </Text>
           </div>
@@ -123,7 +123,7 @@ const RightPane = () => {
         </Group>
         <Group>
           <TotalBalance accountNumber={"****" + useAccount.account_no.slice(8, 12)} increment={
-            Math.round((fetchedAccount.balance - (lastWeekBalance || 0)) * 100 / (lastWeekBalance || 1))} timePeriod={1} totalBalance={"$" + thisbalance} />
+            Math.round((fetchedAccount?.balance - (lastWeekBalance || 0)) * 100 / (lastWeekBalance || 1))} timePeriod={1} totalBalance={"$" + thisbalance} />
           <EodBalance balance={dateslist.length != 0 ? "$" + Math.round(sum / (dateslist.length)) : 'No Data'} comparision={4.6} />
           <FinancialRatios />
         </Group>
