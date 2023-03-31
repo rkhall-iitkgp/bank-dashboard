@@ -2,9 +2,8 @@ import { Button, ButtonProps, createPolymorphicComponent, Popover } from '@manti
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { ProfileCard } from './ProfileCard'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-
 const StyledNavbar = styled.nav`
   display: flex;
   justify-content: space-between;
@@ -42,6 +41,8 @@ const _StyledButton = styled(Button)`
   color: #0052b3;
   font-family: 'Montserrat', sans-serif;
   font-size: 20px;
+  font-weight: 500;
+  height: 4rem;
   background-color: white;
   padding: 0px;
   &:hover {
@@ -52,6 +53,11 @@ const _StyledButton = styled(Button)`
   }
   &:focus {
     background-color: white;
+  }
+  &.selected {
+    border-bottom: 4px solid #0062d6;
+    border-radius: 0px;
+    font-weight: 600;
   }
 `
 
@@ -92,12 +98,16 @@ const NavbarIcons = styled.img`
   padding: 6px 8px 10px 8px;
 `
 function Navbar({ dashClickHandler }) {
-  const router = useRouter()
+  const router = useRouter();
 
-  const [show, setShow] = useState(false)
-  function setting() {
-    setShow(!show)
-  }
+  // Add state to keep track of the selected link
+  const [selectedLink, setSelectedLink] = useState("");
+
+  useEffect(() => {
+    const path = router.pathname;
+    setSelectedLink(path);
+  }, [router.pathname]);
+
   return (
     <>
       <StyledNavbar>
@@ -106,37 +116,39 @@ function Navbar({ dashClickHandler }) {
         </BankName>
         <StyledButtonBar>
           <StyledButton
+            className={selectedLink === "/dashboard" ? "selected" : ""}
             variant="gradient"
-            gradient={{ from: 'white', to: 'white' }}
+            gradient={{ from: "white", to: "white" }}
             onClick={() => dashClickHandler()}
           >
             <NavbarIcons src="/images/dashboard.png"></NavbarIcons>Dashboard
           </StyledButton>
           <StyledButton
+            className={selectedLink === "/about" ? "selected" : ""}
             variant="gradient"
-            gradient={{ from: 'white', to: 'white' }}
+            gradient={{ from: "white", to: "white" }}
           >
             <NavbarIcons src="/images/aboutus.png"></NavbarIcons>About Us
           </StyledButton>
           <StyledButton
+            className={selectedLink === "/support" ? "selected" : ""}
             variant="gradient"
-            gradient={{ from: 'white', to: 'white' }}
+            gradient={{ from: "white", to: "white" }}
           >
             <NavbarIcons src="/images/support.png"></NavbarIcons>Support
           </StyledButton>
           <StyledButton
+            className={selectedLink === "/faqs" ? "selected" : ""}
             variant="gradient"
-            gradient={{ from: 'white', to: 'white' }}
+            gradient={{ from: "white", to: "white" }}
           >
             <NavbarIcons src="/images/FAQs.png"></NavbarIcons>FAQs
           </StyledButton>
-          {/* <StyledUserImage src="/images/dp.png"></StyledUserImage> */}
 
           <Demo />
         </StyledButtonBar>
       </StyledNavbar>
-      {/* <ProfileCard/> */}
     </>
-  )
+  );
 }
 export default Navbar

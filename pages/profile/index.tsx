@@ -15,6 +15,7 @@ const ProfilePage = () => {
     const [kycStatus, setKycStatus] = useState(1)
     const [loading, setLoading] = useState(false)
     const [bankAccountList, setBankAccountList] = useState<any[]>([])
+    const [isanalysisopen, setIsanalysisOpen] = useState(false);
 
     const GetAccounts = () => {
         // setItem('accounts', '[]')
@@ -31,7 +32,6 @@ const ProfilePage = () => {
 
                 setItem('accounts', response.request.responseText)
                 setAccLength(response.request.responseText)
-                setBankAccountList(response.request.responseText)
                 setLoading(false)
                 return response
             })
@@ -64,9 +64,9 @@ const ProfilePage = () => {
         console.log(`acclength = `, accLength)
         if (kycStatus === 0) {
             setIsKycPermissionPopUpOpen(true)
-        } else if (kycStatus === 1 && accLength !== '[]') {
+        } else if (kycStatus === 1 && bankAccountList.length !== 0) {
             setIsfilteropen(true)
-        } else if (kycStatus === 1 && accLength === '[]' && accLength) {
+        } else if (kycStatus === 1 && bankAccountList.length === 0) {
             setIsAddAccountPopupOpen(true)
         }
     }
@@ -92,6 +92,7 @@ const ProfilePage = () => {
                 SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
             />
             <FilterPopUp
+                setIsanalysisopen={setIsanalysisOpen}
                 isfilteropen={isfilteropen}
                 setIsfilteropen={setIsfilteropen}
             />

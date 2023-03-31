@@ -73,7 +73,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.xl,
     boxShadow: theme.shadows.lg,
     // paddingBottom: '5px',
-    width: `40vw`,
+    width: `30vw`,
     color: `#0052B3`,
   },
 
@@ -186,86 +186,89 @@ function Account(props: {
     </div>
   )
 }
-
-export function UpiTransferHome() {
-  const { classes } = useStyles();
-  const [click, setClick] = useState(false);
-  const [account, setAccount] = useState({ id: 1 });
-
+interface props {
+  setdropfiles: Function
+  setIsanalysisopen: Function
+  setIsfilteropen: Function
+  bankAccountList: any[]
+  setIsAddAccountPopupOpen: Function
+}
+export function AnalysisType({ setdropfiles, setIsanalysisopen, setIsfilteropen, bankAccountList, setIsAddAccountPopupOpen }: props) {
+  const { classes } = useStyles()
+  const [click, setClick] = useState(false)
+  const [type, setType] = useState<number | undefined>(undefined)
+  const [account, setAccount] = useState({
+    id: 1,
+  })
   let fetchedAccount = [
-    { id: 1, name: "UPI Payment", src: `upi1` },
-    { id: 2, name: "Bank Transfer", src: `bank-building-white` },
-    { id: 3, name: "Pay Phone Number", src: `payphone1` },
-  ];
+    { id: 1, name: 'Upload', src: `upi1` },
+    { id: 2, name: 'Bank', src: `bank-building-white` },
+  ]
+  const handleClick = () => {
+    setClick(true)
+  }
 
-  const handleClick = (id) => {
-    if (id === 1) {
-      setClick(true);
+  const handleContinue = () => {
+    if (type === 1) {
+      return (
+        <div className={classes.button1} onClick={() => {
+          setdropfiles(false)
+        }}>Continue</div>
+      );
+    } else if (type === 2) {
+      return (
+
+        <div className={classes.button1} onClick={() => {
+          setdropfiles(true)
+          setIsanalysisopen(false)
+          if (bankAccountList.length === 0) {
+            setIsAddAccountPopupOpen(true)
+          } else {
+            setIsfilteropen(true)
+          }
+        }}>Continue</div>
+      );
     } else {
-      setClick(false);
+      return (
+        <div className={classes.button1} style={{ cursor: 'no-drop' }}>
+          Continue
+        </div>
+      );
     }
   };
 
-  // const display = fetchedAccount.filter((ele) => {
-  //   return ele.show == 0
-  // })
-
-  // if(display == 1) {
-
-  // }
-
-
-
-  if (fetchedAccount)
-
-    return (
-      <div className={classes.wrapper}>
-        <div className={classes.form}>
-          <Heading title="UPI Transfer" />
-          <div className={classes.forminside}>
-            <div className={classes.titlebox}>
-              <div className={classes.titlebold}>
-                <span>Make Payment</span>
-              </div>
-            </div>
-            <div className={classes.accountContainer}>
-              {fetchedAccount?.map((ele) => {
-                return (
-                  <span
-                    key={ele.id}
-                    onClick={() => handleClick(ele.id)}
-                    style={{ cursor: ele.id === 1 ? "pointer" : "not-allowed !important" }}
-                  >
-                    <Account setAccount={setAccount} accountdata={ele} />
-                  </span>
-                );
-              })}
-            </div>
-            {/* <ButtonGroup href1="/home" href2="/UPI/verify-upi-id" /> */}
-            <div className={classes.buttonContainer}>
-              <Link href="/home">
-                <div className={classes.button1}>Back</div>
-              </Link>
-              {click ? (
-                <Link
-                  href={{
-                    pathname: "/UPI/verify-upi-id",
-                    query: account,
-                  }}
-                >
-                  <div className={classes.button1}>Continue</div>
-                </Link>
-              ) : (
-                <div
-                  className={classes.button1}
-                  style={{ cursor: "not-allowed" }}
-                >
-                  Continue
-                </div>
-              )}
-            </div>
+  return (
+    // <div className={classes.wrapper}>
+    <div className={classes.form}>
+      <Heading title="Analyze your Transactions" />
+      <div className={classes.forminside}>
+        <div className={classes.titlebox}>
+          <div className={classes.titlebold}>
+            <span>Mode of analysis</span>
           </div>
         </div>
+        <div className={classes.accountContainer}>
+          {fetchedAccount?.map((ele) => {
+            return (
+              <span key={ele.id} onClick={() => { handleClick(), setType(ele.id), console.log(ele.id) }}  >
+                <Account setAccount={setAccount} accountdata={ele} />
+              </span>
+            )
+          })}
+        </div>
+        {/* <ButtonGroup href1="/home" href2="/UPI/verify-upi-id" /> */}
+        <div className={classes.buttonContainer}>
+          <div className={classes.button1} onClick={() => {
+            setIsanalysisopen(false)
+          }}>Back</div>
+          {click ? handleContinue() : (
+            <div className={classes.button1} style={{ cursor: 'no-drop' }}>
+              Continue
+            </div>
+          )}
+        </div>
       </div>
-    );
+    </div>
+    // </div>
+  )
 }

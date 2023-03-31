@@ -3,7 +3,7 @@ import {useRef, useState} from 'react'
 import styled from '@emotion/styled'
 import 'react-phone-input-2/lib/style.css'
 import {hasLength, useForm} from '@mantine/form'
-
+import Link from 'next/link'
 const _StyledButton = styled(Button)`
   border-width: 0.125rem;
   &:hover {
@@ -68,7 +68,7 @@ const useStyles = createStyles((theme) => ({
     display: `flex`,
     alignItems: `center`,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     padding: `2px`,
   },
   input: {
@@ -112,6 +112,14 @@ const useStyles = createStyles((theme) => ({
     borderRadius: `30px`,
     marginTop: '5px',
   },
+  control: {
+    backgroundColor: `#006AE4`,
+    borderRadius: `20px`,
+    display: `block`,
+    margin: `auto 1rem`,
+    width: `300px`,
+    fontFamily: 'Montserrat',
+  },
 }))
 
 export function KycAuthentication() {
@@ -132,17 +140,10 @@ export function KycAuthentication() {
   const [show,setShow]=useState(false);
   const [file, setFile] = useState<File | null>(null)
   const resetRef = useRef<() => void>(null)
-  const clearFile = () => {
-    setFile(null)
-    resetRef.current?.()
-  }
-   function onOTP(){
+  function onOTP(){
        setShow(!show);
    }
   const { classes } = useStyles();
-  let data = {
-    aadharNumber: '1234/12345/12345',
-  }
   return (
 
       <div className={classes.container}>
@@ -171,134 +172,24 @@ export function KycAuthentication() {
                 lineHeight: `20px`,
               }}
             >
-             Aadhar Number
-            </span>
-            <span
-              style={{
-                fontFamily: 'Montserrat',
-                fontStyle: `normal`,
-                fontWeight: `600`,
-                fontSize: `25px`,
-                lineHeight: `20px`,
-              }}
-            >
-              {data.aadharNumber}
+            Please provide your Aadhar Card number for authentication using E-KYC
             </span>
             </div>
-
-         
           <div className={classes.uploadResetContainer}>
-            <Group position="center">
-              <FileButton
-                resetRef={resetRef}
-                onChange={setFile}
-                accept="image/png,image/jpeg"
-              >
-                {(props) => (
-                  <StyledButton style={{ background: '#ffffff' }} {...props}>
-                    {!file && (
-                      <span
-                        style={{
-                          fontFamily: 'Montserrat',
-                          fontStyle: `normal`,
-                          fontWeight: `500`,
-                          fontSize: `20px`,
-                          lineHeight: `34px`,
-                          color: '#006AE4',
-                        }}
-                      >
-                        Upload fingerprint
-                      </span>
-                    )}
-                    {file && (
-                      <span
-                        style={{
-                          fontFamily: 'Montserrat',
-                          fontStyle: `normal`,
-                          fontWeight: `500`,
-                          fontSize: `20px`,
-                          lineHeight: `34px`,
-                          color: '#c0c0c0',
-                        }}
-                      >
-                        Upload fingerprint
-                      </span>
-                    )}
-                  </StyledButton>
-                )}
-              </FileButton>
-              <StyledButton
-                style={{ background: '#ffffff' }}
-                disabled={!file}
-                onClick={clearFile}
-              >
-                {file && (
-                  <span
-                    style={{
-                      fontFamily: 'Montserrat',
-                      fontStyle: `normal`,
-                      fontWeight: `500`,
-                      fontSize: `20px`,
-                      lineHeight: `34px`,
-                      color: ' #DD0000',
-                    }}
-                  >
-                    Reset
-                  </span>
-                )}
-                {!file && (
-                  <span
-                    style={{
-                      fontFamily: 'Montserrat',
-                      fontStyle: `normal`,
-                      fontWeight: `500`,
-                      fontSize: `20px`,
-                      lineHeight: `34px`,
-                      color: ' #c0c0c0',
-                    }}
-                  >
-                    Reset
-                  </span>
-                )}
-              </StyledButton>
-            </Group>
-          </div>
-          {file && (
-            <span
-              style={{
-                fontFamily: 'Montserrat',
-                fontStyle: `normal`,
-                fontWeight: `500`,
-                fontSize: `15px`,
-                lineHeight: `22px`,
-                color: '#4D4B4B',
-              }}
-            >
-              Picked file: <br /> {file.name}
-            </span>
-          )}
-          {!file && (
-            <span
-              style={{
-                fontFamily: 'Montserrat',
-                fontStyle: `normal`,
-                fontWeight: `500`,
-                fontSize: `15px`,
-                lineHeight: `22px`,
-                color: '#4D4B4B',
-              }}
-            >
-              Please upload your fingerprint for E-KYC verification
-            </span>
-          )}
-          
-           
-       
-       
-       
-        </div>
+            <Link href='kyc/authentication1'>
+          <Button
+            size="lg"
+            className={classes.control}
+            onClick={() => {
+              5555555
+            }}
+          >
+            Provide Details
+          </Button>
+          </Link>
+         </div>
 
       </div>
-    
+    </div>
   )
 }

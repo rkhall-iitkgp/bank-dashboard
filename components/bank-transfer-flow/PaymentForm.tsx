@@ -1,5 +1,11 @@
 import React from 'react'
-import { Box, createStyles, Text, TextInput } from '@mantine/core'
+import {
+  Box,
+  createStyles,
+  PasswordInput,
+  Text,
+  TextInput,
+} from '@mantine/core'
 import { hasLength, isNotEmpty, useForm } from '@mantine/form'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -224,6 +230,7 @@ export function PaymentForm(props: { sbi: any }) {
       amount: '',
       ifsc: '',
       account_id: '',
+      description: '',
     },
 
     validate: {
@@ -284,7 +291,7 @@ export function PaymentForm(props: { sbi: any }) {
       }
     }
   }
-  function handleClick2() {}
+  function handleClick2() { }
 
   useEffect(() => {
     if (form.values.account_no === '') {
@@ -307,11 +314,11 @@ export function PaymentForm(props: { sbi: any }) {
       })
       setButtonText('Verify')
     }
-    return () => {}
+    return () => { }
   }, [form.values.account_no])
 
   return (
-    <Box component="form" mx="auto" onSubmit={form.onSubmit(() => {})}>
+    <Box component="form" mx="auto" onSubmit={form.onSubmit(() => { })}>
       {/* <form onSubmit={form.onSubmit(console.log)}> */}
       <div className={classes.wrapper}>
         <div className={classes.form}>
@@ -354,7 +361,24 @@ export function PaymentForm(props: { sbi: any }) {
                   label: classes.inputLabel,
                   root: classes.inputcontainer,
                 }}
+                // value={form.values.account_no}
+                onCopy={(e) => {
+                  e.preventDefault()
+                }}
+                onPaste={(e) => {
+                  e.preventDefault()
+                }}
+                onCut={(e) => {
+                  e.preventDefault()
+                }}
+                onDrag={(e) => {
+                  e.preventDefault()
+                }}
+                onDrop={(e) => {
+                  e.preventDefault()
+                }}
                 {...form.getInputProps('account_no')}
+                // value={form.values.account_no.hiddenInput}
                 rightSection={
                   <Text
                     className={classes.buttonVerify}
@@ -372,19 +396,36 @@ export function PaymentForm(props: { sbi: any }) {
                   </Text>
                 }
               />
+              {buttonText === 'Verified' ? (
+                <TextInput
+                  placeholder="Re-enter Account Number*"
+                  type={'number'}
+                  required
+                  withAsterisk
+                  classNames={{
+                    input: classes.input,
+                    label: classes.inputLabel,
+                    root: classes.inputcontainer,
+                  }}
+                  onCopy={(e) => {
+                    e.preventDefault()
+                  }}
+                  onPaste={(e) => {
+                    e.preventDefault()
+                  }}
+                  onCut={(e) => {
+                    e.preventDefault()
+                  }}
+                  onDrag={(e) => {
+                    e.preventDefault()
+                  }}
+                  onDrop={(e) => {
+                    e.preventDefault()
+                  }}
+                  {...form.getInputProps('reaccountno')}
+                />
+              ) : null}
 
-              <TextInput
-                placeholder="Re-enter Account Number*"
-                type={'number'}
-                required
-                withAsterisk
-                classNames={{
-                  input: classes.input,
-                  label: classes.inputLabel,
-                  root: classes.inputcontainer,
-                }}
-                {...form.getInputProps('reaccountno')}
-              />
               <TextInput
                 placeholder="Enter Amount*"
                 type={'number'}
@@ -397,6 +438,17 @@ export function PaymentForm(props: { sbi: any }) {
                   root: classes.inputcontainer,
                 }}
                 {...form.getInputProps('amount')}
+              />
+              <TextInput
+                placeholder="Description"
+                mt="md"
+                withAsterisk
+                classNames={{
+                  input: classes.input,
+                  label: classes.inputLabel,
+                  root: classes.inputcontainer,
+                }}
+                {...form.getInputProps('description')}
               />
               {data.selfOrOther !== '1' ? (
                 <>
@@ -439,6 +491,7 @@ export function PaymentForm(props: { sbi: any }) {
                           name: form.values.name,
                           acc_no: ben_account_id,
                           amount: form.values.amount,
+                          description: form.values.description,
                           ifsc: form.values.ifsc,
                           ...router.query,
                           account_no: form.values.account_no,
