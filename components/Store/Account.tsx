@@ -19,7 +19,8 @@ const useAccountStore = create(
             debit: 0,
             mode: '',
             category: '',
-            id: ''
+            id: '',
+            balance: 0
         }],
         Loading: false,
         flag: true,

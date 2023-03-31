@@ -1,6 +1,7 @@
 import { createStyles } from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Heading from '../reusable-components/Heading'
 
@@ -174,7 +175,7 @@ function Account(props: {
         }}
       >
         <Image
-          src={'/../public/icons/' + props.accountdata.src + '.png'}
+          src={`/icons/` + props.accountdata.src + '.png'}
           width={50}
           height={50}
           alt={''}

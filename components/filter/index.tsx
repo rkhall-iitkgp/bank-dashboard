@@ -234,7 +234,7 @@ const Filter = ({ todashboard, close, setIsanalysisopen }: props) => {
           Back
         </Button>
         <Button
-          disabled={!(mpin && id && account)}
+          disabled={!(mpin && account)}
           size="lg"
           className={classes.control}
           onClick={() => {

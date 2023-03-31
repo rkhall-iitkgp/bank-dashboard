@@ -162,6 +162,7 @@ function Account(props: {
     setAccount: (arg0: any) => void
 }) {
     const { classes } = useStyles()
+    const origin = useRouter().pathname;
 
     return (
         <div>
@@ -181,7 +182,7 @@ function Account(props: {
                 }}
             >
                 <Image
-                    src={'/../public/icons/' + props.accountdata.src + '.png'}
+                    src={`/icons/` + props.accountdata.src + '.png'}
                     width={50}
                     height={50}
                     alt={''}
@@ -213,29 +214,24 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
     const authToken = getItem('access_token')
     const userId = getItem('user_id')
     const [dropedfiles, setDropedfiles] = useState<any[]>()
-    const onDrop = () => {
-        if (dropedfiles) {
-            const formData = new FormData();
-            formData.append('user_id', userId);
-            formData.append('file', dropedfiles[0]);
-            console.log('dropedfiles', dropedfiles)
-            analyzerms.post('/transaction/upload/', formData, {
-                headers: {
-                    Authorization: `Bearer ${authToken}`,
-                    'Content-Type': 'multipart/form-data'
-                }
+    const onDrop = (files) => {
+        const formData = new FormData();
+        formData.append('user_id', userId);
+        formData.append('file', files[0]);
+
+        analyzerms.post('/transaction/upload/', formData, {
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then(response => {
+                console.log(response);
             })
-                .then(response => {
-                    console.log(response);
-                    router.push("/dashboard")
-
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        }
+            .catch(error => {
+                console.log(error);
+            });
     }
-
 
 
     return (
@@ -303,7 +299,7 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
                         setdropfiles(true)
                         setIsanalysisOpen(false)
                         useAccountStore.setState({ uploaded: true })
-                        onDrop()
+                        onDrop(dropedfiles)
                     }}>Continue</div>
                 </div>
             </div>
