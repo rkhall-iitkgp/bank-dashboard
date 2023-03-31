@@ -298,6 +298,17 @@ export function ReviewDetailsBank(props: { sbi: any }) {
               required
               disabled
             />
+            <TextInput
+              label="Description"
+              variant="unstyled"
+              classNames={{
+                input: classes.input,
+                label: classes.inputLabel,
+                root: classes.inputcontainer,
+              }}
+              disabled
+              value={data.description}
+            />
             {data.ifscReq === 'true' ? (
               <TextInput
                 label="IFSC"

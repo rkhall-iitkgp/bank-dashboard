@@ -4,11 +4,12 @@ import ExportButton from './ExportButton'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
 import EodBalance from './EODBalanceCard'
-import StockStatistics from './StocksStatistics'
+import StockStatisticsx from './StocksStatistics'
+import StockStatistics from './stockStats'
 import { TotalBalance } from './TotalBalance'
 import useAccountStore from '../Store/Account'
 import { useState } from 'react'
-import { useEffect } from 'react'
+import { useEffect } from 'react' 
 const useStyles = createStyles((theme) => ({
   header: {
     flexDirection: 'row',
@@ -74,12 +75,8 @@ const RightPane = () => {
   })
   
   const [name,setName]=useState('');
-  const [email,setEmail]=useState('');
-  const [contact_no,setContact_no]=useState('');
   useEffect(() => {
    setName(getItem('name'));
-   setEmail(getItem('email'))
-   setContact_no(getItem('contact_no').slice(0, 3) +' ' +getItem('contact_no').slice(3))
   }, [])
   return (
     <>
@@ -90,7 +87,8 @@ const RightPane = () => {
               Welcome Back,&nbsp;
             </Text>
             <Text fz={35} fw={700} c={'#0062D6'} ff="Montserrat">
-              {name}
+              {name+ ' !'}
+              {/* {name} */}
             </Text>
           </div>
           <div style={{ justifyContent: 'flex-end' }}>
@@ -99,7 +97,7 @@ const RightPane = () => {
         </Group>
         <Group>
           <TotalBalance accountNumber={"****" + useAccount.account_no.slice(8, 12)} increment={5} timePeriod={2} totalBalance={"$" + total} />
-          <EodBalance balance={"$" + sum / (dateslist.length)} comparision={4.6} />
+          <EodBalance balance={"$" + Math.round(sum / (dateslist.length))} comparision={4.6} />
           <FinancialRatios />
         </Group>
         <Tabs defaultValue="financial">
@@ -117,8 +115,10 @@ const RightPane = () => {
           </Tabs.Panel>
 
           <Tabs.Panel value="stocks" className={classes.tabsPanel}>
-            <StockStatistics />
+            {/* <StockStatisticsx /> */}
+            <StockStatistics/>
           </Tabs.Panel>
+          {/* {    console.log('rendered6846')} */}
         </Tabs>
       </Stack>
     </>

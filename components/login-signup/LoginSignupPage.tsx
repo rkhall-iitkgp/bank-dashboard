@@ -1,14 +1,15 @@
-import {Box, Button, Checkbox, createStyles, Group, PinInput, Stack, Text, TextInput, Title,} from '@mantine/core'
-import {useRouter} from 'next/router'
-import {useState} from 'react'
+import { Box, Button, Checkbox, createStyles, Group, PinInput, Stack, Text, TextInput, Title, } from '@mantine/core'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 
-import {IconCheck, IconX} from '@tabler/icons-react'
+import { IconCheck, IconX } from '@tabler/icons-react'
 import PhoneInput from 'react-phone-input-2'
-import {notifications} from '@mantine/notifications'
+import { notifications } from '@mantine/notifications'
 import 'react-phone-input-2/lib/style.css'
 import useStorage from '../../hooks/useStorage'
-import {hasLength, isEmail, useForm} from '@mantine/form';
+import { hasLength, isEmail, useForm } from '@mantine/form';
 import datams from '../datams'
+import useAccountStore from '../Store/Account'
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -201,6 +202,7 @@ export function LoginSignupPage() {
   const router = useRouter()
   const [isSignIn, setIsSignIn] = useState(true)
   const [checked, setChecked] = useState(false)
+  const useAccount = useAccountStore()
   const SignUp = (
     contact_no: string,
     email: string,
@@ -303,6 +305,7 @@ export function LoginSignupPage() {
           setItem('kyc', res.data.kyc)
           setItem('consent', res.data.consent)
           setItem('accounts', "[]")
+          useAccount.token = res.data.access_token
         }
         return res
       })

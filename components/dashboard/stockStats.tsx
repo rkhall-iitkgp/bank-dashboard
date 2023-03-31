@@ -1,7 +1,16 @@
 
 import { Card, Group, Text, Flex } from '@mantine/core'
 import RecentInvestments from './recentInvestments'
-import TradingViewWidget from 'react-tradingview-widget'
+// import TradingViewWidget from 'react-tradingview-widget'
+import dynamic from 'next/dynamic'
+
+const MarketOverview = dynamic(
+  () => import('react-ts-tradingview-widgets').then((w)=> w.MarketOverview),
+  {
+    ssr: false,
+  },
+)
+
 const StockStatistics = () => (
   <Card
     radius={'lg'}
@@ -22,7 +31,10 @@ const StockStatistics = () => (
       Stocks Analysis
     </Text>
     <Flex>
-        <TradingViewWidget />
+        {/* <TradingViewWidget /> */}
+        <MarketOverview colorTheme="light" height={400} width={1010} showFloatingTooltip></MarketOverview>
+
+        {/* {    console.log('rendered4')} */}
       {/* <RecentInvestments /> */}
     </Flex>
   </Card>
