@@ -1,7 +1,7 @@
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import './../styles/globals.css'
-import { MantineProvider } from '@mantine/core'
+import { Alert, MantineProvider } from '@mantine/core'
 import { Notifications } from '@mantine/notifications';
 import { useEffect } from 'react';
 import useAccountStore from '../components/Store/Account';
@@ -19,27 +19,8 @@ export default function App(props: AppProps) {
   useEffect(() => {
     useAccount.token = getItem("access_token")
     console.log('getItem("token")', getItem("access_token"))
-    // const missionImpossible3 = getItem("hash")
-    // const missionImpossible4 = bcrypt.
-    // useAccountStore.setState()
-    // window.addEventListener('unload', (event) => {
-    //   event.preventDefault()
-    //   // console.log('hello')
-    //   let missionImpossible = {
-    //     token: useAccount.token,
-    //     account_no: useAccount.account_no,
-    //     mpin: useAccount.mpin,
-    //     startDate: useAccount.startDate,
-    //     endDate: useAccount.endDate,
-    //     Transaction: useAccount.Transaction,
-    //     Loading: useAccount.Loading,
-    //     flag: useAccount.flag,
-    //     uploaded: useAccount.uploaded,
-    //     DTI_ratio: useAccount.DTI_ratio,
-    //   }
-    //   let missionImpossible2 = bcrypt.hashSync(missionImpossible, "InstiKaBaapRK!RK!RK!")
-    //   setItem('hash', missionImpossible2)
-    // })
+
+
   }, [])
   useEffect(() => {
 
