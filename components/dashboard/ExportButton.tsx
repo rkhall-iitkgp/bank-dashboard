@@ -2,7 +2,7 @@ import { Button, Select, Menu, createStyles } from '@mantine/core'
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import useAccountStore from '../Store/Account'
-// import { useReactToPrint } from 'react-to-print'
+import { useReactToPrint } from 'react-to-print'
 
 const useStyles = createStyles((theme) => ({
   button: {
@@ -16,6 +16,10 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `space-around`,
   },
 }))
+
+const ExportButtonWrapper = styled.div`
+  display: none;
+`
 
 export default function ExportButton() {
   const { classes } = useStyles()
@@ -33,20 +37,17 @@ export default function ExportButton() {
     link.click()
   }
 
-  // const ComponentToPrint = () => {
-  //   return (
-  //     <div>
-  //       <h1>Hello, World!</h1>
-  //       <p>This is a sample text.</p>
-  //     </div>
-  //   )
-  // }
+  const ComponentToPrint = React.forwardRef((props, ref) => {
+    return (
+      <div ref={componentRef}>My cool content here!</div>
+    );
+  });
 
-  // const componentRef = React.useRef()
+  const componentRef = React.useRef(null)
 
-  // const handleExportPDF = useReactToPrint({
-  //   content: () => componentRef.current,
-  // })
+  const handleExportPDF = useReactToPrint({
+    content: () => componentRef.current,
+  })
 
   return (
     <Menu shadow="md" width={200}>
@@ -64,15 +65,15 @@ export default function ExportButton() {
       </Menu.Target>
 
       <Menu.Dropdown>
-        <Menu.Item>Export as PDF</Menu.Item>
+        <Menu.Item onClick={handleExportPDF}>Export as PDF</Menu.Item>
         {/* <Menu.Item onClick={handleExportCSV}>Export as CSV</Menu.Item> */}
         <Menu.Item onClick={handleExportJSON}>Export as JSON</Menu.Item>
         <Menu.Item>Send an Email</Menu.Item>
       </Menu.Dropdown>
 
-      {/* <div style={{ display: 'none' }}>
+      <div style={{ display: 'none' }}>
         <ComponentToPrint ref={componentRef} />
-      </div> */}
+      </div>
     </Menu>
   )
 }
