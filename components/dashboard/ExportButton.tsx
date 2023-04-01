@@ -20,9 +20,9 @@ const useStyles = createStyles((theme) => ({
 }))
 export const ExportButton = React.forwardRef<HTMLDivElement, InputProps>(
   (props, ref) => {
-  const { classes } = useStyles()
-  const [selected, setSelected] = useState()
-  const accounts = useAccountStore()
+    const { classes } = useStyles()
+    const [selected, setSelected] = useState()
+    const accounts = useAccountStore()
 
     const handleExportJSON = () => {
       const jsonStr = JSON.stringify(accounts)
@@ -37,7 +37,7 @@ export const ExportButton = React.forwardRef<HTMLDivElement, InputProps>(
 
     const handleExportPDF = useReactToPrint({
       content: () => {
-        if (ref == null){
+        if (ref == null) {
           return ref
         }
         else if (typeof ref === 'function') {
@@ -48,44 +48,44 @@ export const ExportButton = React.forwardRef<HTMLDivElement, InputProps>(
       },
     })
 
-  const headers = [
-    { label: "Date", key: "date" },
-    { label: "Description", key: "description" },
-    { label: "Credit", key: "credit" },
-    { label: "Debit", key: "debit" }, {
-      label: "Mode", key: "mode",
-    }, { label: "Category", key: "category" },
-    {
-      label: "Balance", key: "balance"
-    }
-  ];
-  const data = accounts.Transaction
-  const csvReport = {
-    data: data,
-    headers: headers,
-    filename: 'Transaction.csv'
-  };
-  return (
-    <Menu shadow="md" width={200}>
-      <Menu.Target>
-        <Button className={classes.button}>
-          Export
-          <img
-            src="/icons/exportb.png"
-            alt="export"
-            width="18px"
-            height="18px"
-            style={{ marginLeft: `10px` }}
-          />
-        </Button>
-      </Menu.Target>
+    const headers = [
+      { label: "Date", key: "date" },
+      { label: "Description", key: "description" },
+      { label: "Credit", key: "credit" },
+      { label: "Debit", key: "debit" }, {
+        label: "Mode", key: "mode",
+      }, { label: "Category", key: "category" },
+      {
+        label: "Balance", key: "balance"
+      }
+    ];
+    const data = accounts.Transaction
+    const csvReport = {
+      data: data,
+      headers: headers,
+      filename: 'Transaction.csv'
+    };
+    return (
+      <Menu shadow="md" width={200}>
+        <Menu.Target>
+          <Button className={classes.button}>
+            Export
+            <img
+              src="/icons/exportb.png"
+              alt="export"
+              width="18px"
+              height="18px"
+              style={{ marginLeft: `10px` }}
+            />
+          </Button>
+        </Menu.Target>
 
         <Menu.Dropdown>
           <Menu.Item onClick={handleExportPDF}>
             <div>Export as PDF</div>
           </Menu.Item>
-          <Menu.Item ><CSVLink {...csvReport}>Export as CSV</CSVLink></Menu.Item>
-          <Menu.Item onClick={handleExportJSON}>Export as JSON</Menu.Item>
+          <Menu.Item ><CSVLink {...csvReport}>Download as CSV</CSVLink></Menu.Item>
+          <Menu.Item onClick={handleExportJSON}>Download as JSON</Menu.Item>
           <Menu.Item>Send an Email</Menu.Item>
         </Menu.Dropdown>
       </Menu>

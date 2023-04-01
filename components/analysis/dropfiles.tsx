@@ -245,6 +245,7 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
             alert('Error in uploading file')
             return
         }
+        setdropfiles(true)
         const trxn = JSON?.parse(response.data.Transactions)
         const transactions = trxn?.data;
         const columns = trxn?.columns;
@@ -294,7 +295,8 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
                 }
                 if (columns[j] === 'amount') {
                     obj['balance'] = transactions[i][j]
-                    if (i > 1) {
+                    if (i > 0) {
+
                         if ((transactions[i][j] - transactions[i - 1][j]) > 0) {
                             obj['credit'] = Math.abs(parseInt((transactions[i][j] - transactions[i - 1][j]).toFixed(2)))
                             obj['debit'] = 0;
@@ -304,6 +306,7 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
                             obj['credit'] = 0;
                         }
                     }
+
                 }
                 if (columns[j] == 'category') {
                     if (transactions[i][j] !== null)
@@ -314,7 +317,9 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
                 obj['category'] = 'misc'
             }
             if (obj)
-                newTrxn.push(obj)
+                if (i !== 0) {
+                    newTrxn.push(obj)
+                }
         }
         // send to session strage
         setItem('transactions', JSON.stringify(newTrxn))
@@ -322,7 +327,6 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
         useAccountStore.setState({ Transaction: newTrxn })
         console.log('hello')
         router.push('/dashboard')
-
     }
 
 
@@ -375,7 +379,7 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
 
                             <div>
                                 <Text size="xl" inline>
-                                    Drag csv here or click to select files
+                                    Drag your file here or click to select files
                                 </Text>
                                 <Text size="sm" color="dimmed" inline mt={7}>
                                     File size should not exceed 5mb
