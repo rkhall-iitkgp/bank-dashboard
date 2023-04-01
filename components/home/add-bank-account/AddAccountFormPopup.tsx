@@ -120,6 +120,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   topheading: {
+    width: `100%`,
     background: `#DDEDFF`,
     display: `flex`,
     justifyContent: `center`,
