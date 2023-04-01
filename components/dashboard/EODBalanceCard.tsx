@@ -3,8 +3,8 @@ import { Group, Stack, Text } from '@mantine/core'
 const EodBalance = (props: { balance: string; comparision: number }) => {
   return (
     <Group
-      py={12}
-      px={12}
+      // py={12}
+      // px={12}
       bg="#FFF"
       style={{
         boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
@@ -16,7 +16,7 @@ const EodBalance = (props: { balance: string; comparision: number }) => {
       }}
     >
       <Stack
-        ml={20}
+        ml={10}
         style={{
           flex: 2,
         }}
@@ -28,22 +28,22 @@ const EodBalance = (props: { balance: string; comparision: number }) => {
           ff="Montserrat"
           style={{ lineHeight: 0.8 }}
           fz="0.9rem"
-          mt={20}
+          mt={10}
         >
           Average EOD Balance
         </Text>
         <Text
           fw={700}
-          fz="1.5rem"
+          fz="1.54rem"
           ff="Montserrat"
           mt={5}
           style={{ lineHeight: 0.5 }}
         >
-          {props.balance}
+          &#8377;{props.balance}
         </Text>
       </Stack>
       <Stack
-        ml={20}
+        ml={10}
         align="left"
         style={{
           flex: 1,

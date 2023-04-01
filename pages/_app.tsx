@@ -7,18 +7,40 @@ import { useEffect } from 'react';
 import useAccountStore from '../components/Store/Account';
 import { useRouter } from 'next/router';
 import useStorage from '../hooks/useStorage';
+import dayjs from 'dayjs';
+import bcrypt from 'bcryptjs'
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props
   const useAccount = useAccountStore()
   const router = useRouter()
-  const { getItem } = useStorage()
+  const { getItem, setItem } = useStorage()
   let flag = useAccountStore(state => state.flag)
   useEffect(() => {
     useAccount.token = getItem("access_token")
     console.log('getItem("token")', getItem("access_token"))
+    // const missionImpossible3 = getItem("hash")
+    // const missionImpossible4 = bcrypt.
+    // useAccountStore.setState()
+    // window.addEventListener('unload', (event) => {
+    //   event.preventDefault()
+    //   // console.log('hello')
+    //   let missionImpossible = {
+    //     token: useAccount.token,
+    //     account_no: useAccount.account_no,
+    //     mpin: useAccount.mpin,
+    //     startDate: useAccount.startDate,
+    //     endDate: useAccount.endDate,
+    //     Transaction: useAccount.Transaction,
+    //     Loading: useAccount.Loading,
+    //     flag: useAccount.flag,
+    //     uploaded: useAccount.uploaded,
+    //     DTI_ratio: useAccount.DTI_ratio,
+    //   }
+    //   let missionImpossible2 = bcrypt.hashSync(missionImpossible, "InstiKaBaapRK!RK!RK!")
+    //   setItem('hash', missionImpossible2)
+    // })
   }, [])
-
   useEffect(() => {
 
     useAccount.isAuthenticated()

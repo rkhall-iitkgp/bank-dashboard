@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { Card, Group, Stack, Text, Flex } from '@mantine/core'
+import useAccountStore from '../Store/Account'
 
 const StyledStack = styled(Stack)`
   cursor: pointer;
@@ -80,7 +81,8 @@ export function FinancialRatios() {
     { id: 6, ratioName: 'Life Insurance Coverage Ratio', value: `NA` },
   ]
 
-
+  const DTI_ratio = useAccountStore(state => state.DTI_ratio)
+  const uploaded = useAccountStore(state => state.uploaded)
   return (
     <Card radius={'lg'} style={{ flex: 5 }} mr={15} p={0}>
       <Card.Section h={60} bg={'#DDEDFF'} pt={25}>
@@ -95,7 +97,7 @@ export function FinancialRatios() {
           Debt-to-Income Ratio
         </Text>
       </Card.Section>
-      <Group
+      {uploaded ? <Group
         mx="auto"
         py={20}
         h={150}
@@ -105,7 +107,7 @@ export function FinancialRatios() {
       >
         <Flex>
           <RatioCard
-            value={((factors[0] * 100) / factors[1]).toFixed(2) + '%'}
+            value={DTI_ratio.toFixed(2) + '%'}
           />
           <Text pt={24} ml={-70}>
             =
@@ -138,7 +140,18 @@ export function FinancialRatios() {
             </Text>
           </Card>
         </Flex>
-      </Group>
+      </Group> : <Text
+        c={'#0052B3'}
+        fw={500}
+        ff="Montserrat"
+        fz={20}
+        align="center"
+        style={{ lineHeight: '1.3' }}
+        px={20}
+        py={20}
+      >
+        Not Availiable
+      </Text>}
     </Card>
   )
 }

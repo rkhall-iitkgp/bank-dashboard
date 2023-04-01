@@ -123,8 +123,8 @@ const RightPane = () => {
         </Group>
         <Group>
           <TotalBalance accountNumber={"****" + useAccount.account_no.slice(8, 12)} increment={
-            Math.round((fetchedAccount?.balance - (lastWeekBalance || 0)) * 100 / (lastWeekBalance || 1))} timePeriod={1} totalBalance={"$" + thisbalance} />
-          <EodBalance balance={dateslist.length != 0 ? "$" + Math.round(sum / (dateslist.length)) : 'No Data'} comparision={4.6} />
+            Math.round((fetchedAccount?.balance - (lastWeekBalance || 0)) * 100 / (lastWeekBalance || 1))} timePeriod={1} totalBalance={thisbalance} />
+          <EodBalance balance={dateslist.length != 0 ? Math.round(sum / (dateslist.length)).toString() : 'No Data'} comparision={4.6} />
           <FinancialRatios />
         </Group>
         <Tabs defaultValue="financial">

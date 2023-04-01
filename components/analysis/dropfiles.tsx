@@ -249,6 +249,7 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
         const transactions = trxn?.data;
         const columns = trxn?.columns;
         const UserDebtToIncome = response.data.UserDebtToIncome
+        useAccountStore.setState({ DTI_ratio: UserDebtToIncome })
         console.log(transactions);
         console.log(columns);
 
@@ -292,13 +293,16 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
                     }
                 }
                 if (columns[j] === 'amount') {
-                    if (cred === 1) {
-                        obj['credit'] = transactions[i][j]
-                        obj['debit'] = 0;
-                    }
-                    else {
-                        obj['debit'] = transactions[i][j]
-                        obj['credit'] = 0;
+                    obj['balance'] = transactions[i][j]
+                    if (i > 1) {
+                        if ((transactions[i][j] - transactions[i - 1][j]) > 0) {
+                            obj['credit'] = Math.abs(parseInt((transactions[i][j] - transactions[i - 1][j]).toFixed(2)))
+                            obj['debit'] = 0;
+                        }
+                        else {
+                            obj['debit'] = Math.abs(parseInt((transactions[i][j] - transactions[i - 1][j]).toFixed(2)))
+                            obj['credit'] = 0;
+                        }
                     }
                 }
                 if (columns[j] == 'category') {
@@ -315,6 +319,9 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
         // send to session strage
         setItem('transactions', JSON.stringify(newTrxn))
         setItem('UserDebtToIncome', UserDebtToIncome)
+        useAccountStore.setState({ Transaction: newTrxn })
+        console.log('hello')
+        router.push('/dashboard')
 
     }
 
@@ -385,9 +392,9 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
 
                     <div className={classes.button1} onClick={() => {
                         setdropfiles(true)
+                        onDrop(dropedfiles)
                         setIsanalysisOpen(false)
                         useAccountStore.setState({ uploaded: true })
-                        onDrop(dropedfiles)
                         console.log(dropedfiles?.[0])
                     }}>Continue</div>
                 </div>

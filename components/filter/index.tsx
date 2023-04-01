@@ -20,8 +20,7 @@ import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import useAccountStore from '../Store/Account'
 import { useDisclosure } from '@mantine/hooks'
-import { it } from 'node:test'
-
+import { useEffect } from 'react'
 const _PeriodButton = styled(Button)`
   width: 213px;
   height: 48px;
@@ -142,6 +141,7 @@ const Filter = ({ todashboard, close, setIsanalysisopen }: props) => {
 
     // },
   });
+
   const router = useRouter()
   return (
     <div style={{ width: '585px', padding: 20 }}>
