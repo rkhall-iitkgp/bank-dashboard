@@ -32,6 +32,7 @@ const useStyles = createStyles((theme) => ({
     // cursor: 'no-drop',
     '&:hover': {
       background: '#558ac9',
+      cursor: 'pointer',
     },
   },
 
@@ -108,7 +109,7 @@ const useStyles = createStyles((theme) => ({
     margin: `40px 1rem`,
     // padding:`0 1rem`,
     display: `flex`,
-    justifyContent: `center`,
+    justifyContent: `space-between`,
   },
   account: {
     width: `80px`,
@@ -201,8 +202,8 @@ export function AnalysisType({ setdropfiles, setIsanalysisopen, setIsfilteropen,
     id: 1,
   })
   let fetchedAccount = [
-    { id: 1, name: 'Upload', src: `upi1` },
-    { id: 2, name: 'Bank', src: `bank-building-white` },
+    { id: 1, name: 'Upload Transactions', src: `upi1` },
+    { id: 2, name: 'Fetch Transactions', src: `bank-building-white` },
   ]
   const handleClick = () => {
     setClick(true)
@@ -240,11 +241,13 @@ export function AnalysisType({ setdropfiles, setIsanalysisopen, setIsfilteropen,
   return (
     // <div className={classes.wrapper}>
     <div className={classes.form}>
-      <Heading title="Analyze your Transactions" />
+      <div className={classes.topheading}>
+        <div className={classes.title}>Analyze Your Transactions</div>
+      </div>
       <div className={classes.forminside}>
         <div className={classes.titlebox}>
           <div className={classes.titlebold}>
-            <span>Mode of analysis</span>
+            <span>Mode of Analysis</span>
           </div>
         </div>
         <div className={classes.accountContainer}>

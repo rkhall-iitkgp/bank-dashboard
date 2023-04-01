@@ -170,7 +170,7 @@ function Account(props: {
       className={classes.account}
       id={props.accountdata.account_no.slice(8, 12)}
       onClick={(event) => {
-        props.setAccount({ id: props.accountdata.id })
+        props.setAccount({ dacno: props.accountdata.account_no })
         const accountlist = Array.from(
           document.getElementsByClassName(classes.account),
         )
@@ -206,7 +206,7 @@ export function BankTransfer() {
   const [click, setClick] = useState(false)
   const router = useRouter()
   const [account, setAccount] = useState({
-    id: 1,
+    dacno: 1,
   })
   let accounts = getItem('accounts')
   let fetchedAccount = JSON.parse(accounts ? accounts : '[]')
