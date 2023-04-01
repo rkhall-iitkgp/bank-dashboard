@@ -1,0 +1,30 @@
+const Empty=()=>{
+  return (
+    <Card
+    // radius={'lg'}
+
+    style={{
+      boxShadow: '0px 2px 40px rgba(0, 0, 0, 0.1)',
+    }}
+    mr={15}
+  >
+    <Group
+      align={'center'}
+      style={{
+        flex: 1,
+        maxHeight: '53vh',
+        overflow: 'auto',
+        margin: 'auto',
+        alignItems: 'center'
+      }}
+    >
+       <Image
+              src={'/icons/empty.png'}
+              alt="filter-icon"
+              height={300}
+              width={300}
+            />
+    </Group>
+  </Card>
+)
+}
