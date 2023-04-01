@@ -61,50 +61,34 @@ const useStyles = createStyles((theme) => ({
 const RightPane = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
   const { getItem } = useStorage()
   const { classes } = useStyles()
-  const useAccount = useAccountStore();
-  const transactions = useAccount.Transaction;
-  let datelegends = new Set<string>();
-  transactions.forEach(v => datelegends.add(v.date))
-  let curr = dayjs(new Date()).subtract(1, 'week');
-  console.log(curr.toDate());
+  const useAccount = useAccountStore()
+  const transactions = useAccount.Transaction
 
-  transactions.sort((a, b) => {
-    let A = new Date(a.date);
-    let B = new Date(b.date);
-    return A > B ? 1 : -1
-  })
   let thisbalance = transactions.at(-1)?.balance || 0
-  // console.log(`this balance = ${thisbalance}`)
 
   let accounts = getItem('accounts')
   let fetchedAccount = JSON.parse(accounts ? accounts : '[]').filter(v => v.account_no === useAccount.account_no)[0];
 
-  let dateslist = Array.from(datelegends);
-  dateslist.sort((a, b) => {
-    let A = new Date(a)
-    let B = new Date(b)
-    return A > B ? 1 : -1
-  })
+  let currentDay = dayjs(new Date())
+  let currentBalance = 0, sum = 0, numDays = 0;
+  for (let i = dayjs(transactions.at(0)?.date); i < currentDay; i.add(1, 'day')) {
+    currentBalance = transactions.filter(x => i.isSame(x.date, 'date')).at(-1)?.balance || currentBalance;
+    sum += currentBalance
+    numDays++;
+  }
 
-  let sum = 0;
+  let lastweek = dayjs(new Date()).subtract(1, 'week');
+  let lastWeekFiltered = transactions.filter(x => dayjs(x.date) < lastweek);
+  let lastWeekBalance = lastWeekFiltered.at(-1)?.balance
+  let lastweeksum = 0, lastweeknumdays = 0, lastweekcurrentbalance = 0;
+  for (let i = dayjs(transactions.at(0)?.date); i < lastweek; i.add(1, 'day')) {
+    lastweekcurrentbalance = transactions.filter(x => i.isSame(x.date, 'date')).at(-1)?.balance || currentBalance;
+    lastweeksum += lastweekcurrentbalance
+    lastweeknumdays++;
+  }
 
-  dateslist.forEach(k => {
-    let datefiltered = transactions.filter(x => x.date === k)
-    datefiltered.sort((a, b) => {
-      let A = new Date(a.date);
-      let B = new Date(b.date);
-      return A > B ? 1 : -1
-    })
-    sum += datefiltered.at(-1)?.balance || 0;
-  })
+  let EODlastweek = Math.round(lastweeksum / lastweeknumdays)
 
-  let lastWeekFiltered = transactions.filter(x => dayjs(x.date) < curr);
-  lastWeekFiltered.sort((a, b) => {
-    let A = new Date(a.date);
-    let B = new Date(b.date);
-    return A > B ? 1 : -1
-  })
-  let lastWeekBalance = lastWeekFiltered.at(-1)?.balance || 0
 
   const [name, setName] = useState('');
   useEffect(() => {
@@ -131,7 +115,7 @@ const RightPane = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
         <Group>
           <TotalBalance accountNumber={"****" + useAccount.account_no.slice(8, 12)} increment={
             Math.round((fetchedAccount?.balance - (lastWeekBalance || 0)) * 100 / (lastWeekBalance || 1))} timePeriod={1} totalBalance={"$" + thisbalance} />
-          <EodBalance balance={dateslist.length != 0 ? "$" + Math.round(sum / (dateslist.length)) : 'No Data'} comparision={4.6} />
+          <EodBalance balance={numDays != 0 ? "$" + Math.round(sum / (numDays)) : 'No Data'} comparision={4.6} />
           <FinancialRatios />
         </Group>
         <Tabs defaultValue="financial">

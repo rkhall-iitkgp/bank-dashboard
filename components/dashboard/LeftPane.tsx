@@ -20,6 +20,8 @@ import React from 'react'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
 import { TotalBalance } from './TotalBalance'
+import FinancialStatisticsPdf from './statisticsPdf'
+import FoodStatisticsPdf from './foodStatisticsPdf'
 
 const FilterRow = styled.div`
   display: flex;
@@ -65,7 +67,7 @@ const ContainerLeft = styled(Container)`
 `
 
 const Print = styled.div`
-  @media screen{
+  @media screen {
     display: none;
   }
 `
@@ -91,6 +93,27 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
     </div>
   ),
 )
+// const useAccount = useAccountStore();
+// const transactions = useAccount.Transaction;
+// let datelegends = new Set<string>()
+// let dateslist = Array.from(datelegends)
+// dateslist.sort((a, b) => {
+//   let A = new Date(a)
+//   let B = new Date(b)
+//   return A > B ? 1 : -1
+// })
+// let sum = 0;
+
+// dateslist.forEach(k => {
+//   let datefiltered = transactions.filter(x => x.date === k)
+//   datefiltered.sort((a, b) => {
+//     let A = new Date(a.date);
+//     let B = new Date(b.date);
+//     return A > B ? 1 : -1
+//   })
+//   sum += datefiltered.at(-1)?.balance || 0;
+// })
+
 interface Props {
   accountsList: any[]
   useAccount: any
@@ -103,93 +126,99 @@ const LeftPane = React.forwardRef<HTMLDivElement, Props>(
     const selectedBankAccount = useAccount.account_no
     const [opened, { open, close }] = useDisclosure(false)
 
-  useEffect(() => {
-    accountsList.forEach(e => {
-      e.value = e.account_no
-      e.label = "****" + e.account_no.slice(8, 12)
-      e.image = 'icons/sbilogo.png'
-      e.name = e.account_no
-      e.description = e.account_no
-    })
+    useEffect(() => {
+      accountsList.forEach((e) => {
+        e.value = e.account_no
+        e.label = '****' + e.account_no.slice(8, 12)
+        e.image = 'icons/sbilogo.png'
+        e.name = e.account_no
+        e.description = e.account_no
+      })
+    }, [])
+    useEffect(() => {
+      console.log('useAccount.Transaction', useAccount.Transaction)
+      console.log('selectedBankAccount', selectedBankAccount)
+    }, [selectedBankAccount])
+    const [account, setaccount] = useState(0)
+    const uploaded = useAccountStore((state) => state.uploaded)
+    useEffect(() => {
+      console.log('uploaded', uploaded)
+    }, [uploaded])
 
-  }, [])
-  useEffect(() => {
-    console.log('useAccount.Transaction', useAccount.Transaction)
-    console.log('selectedBankAccount', selectedBankAccount)
-  }, [selectedBankAccount])
-  const [account, setaccount] = useState(0);
-  const uploaded = useAccountStore(state => state.uploaded)
-  useEffect(() => {
-    console.log('uploaded', uploaded)
-
-  }, [uploaded])
-
-  return (
-    <>
-      <Modal
-        radius={'lg'}
-        withCloseButton={false}
-        size="lg"
-        opened={opened}
-        onClose={close}
-        centered
-      >
-        <Filter todashboard={false} close={close} setIsanalysisopen={(x) => {
-
-        }} />
-        {/* <Filter account={account} setAccount={setaccount} /> */}
-      </Modal>
-      <ContainerLeft>
-        <FilterRow style={{ justifyContent: 'space-between' }}>
-          {!uploaded && <FilterCard onClick={open}>
-            Apply Filter
-            <Image
-              src={'icons/filter.png'}
-              alt="filter-icon"
-              height={20}
-              width={20}
-            />
-          </FilterCard>}
-          <SelectBankAccount>
-            <Select
-              icon={
+    return (
+      <>
+        <Modal
+          radius={'lg'}
+          withCloseButton={false}
+          size="lg"
+          opened={opened}
+          onClose={close}
+          centered
+        >
+          <Filter
+            todashboard={false}
+            close={close}
+            setIsanalysisopen={(x) => {}}
+          />
+          {/* <Filter account={account} setAccount={setaccount} /> */}
+        </Modal>
+        <ContainerLeft>
+          <FilterRow style={{ justifyContent: 'space-between' }}>
+            {!uploaded && (
+              <FilterCard onClick={open}>
+                Apply Filter
                 <Image
-                  src={'icons/sbilogo.png'}
+                  src={'icons/filter.png'}
+                  alt="filter-icon"
                   height={20}
                   width={20}
-                  alt="sbi-logo"
                 />
-              }
-              itemComponent={SelectItem}
-              // searchable
-              radius="lg"
-              placeholder="Bank Account"
-              value={selectedBankAccount}
-              onChange={(e) => {
-                if (e) {
-                  useAccount.account_no = e.toString()
-                  useAccount.setTransaction()
+              </FilterCard>
+            )}
+            <SelectBankAccount>
+              <Select
+                icon={
+                  <Image
+                    src={'icons/sbilogo.png'}
+                    height={20}
+                    width={20}
+                    alt="sbi-logo"
+                  />
                 }
-              }}
-              data={accountsList}
-            />
-          </SelectBankAccount>
-        </FilterRow>
+                itemComponent={SelectItem}
+                // searchable
+                radius="lg"
+                placeholder="Bank Account"
+                value={selectedBankAccount}
+                onChange={(e) => {
+                  if (e) {
+                    useAccount.account_no = e.toString()
+                    useAccount.setTransaction()
+                  }
+                }}
+                data={accountsList}
+              />
+            </SelectBankAccount>
+          </FilterRow>
 
-        <Group style={{ justifyContent: 'space-evenly' }}>
-          <CashCard
-            num={useAccount.Transaction?.filter(v => v.credit > 0)?.map(v => v.credit)}
-            type={'deposit'}
-            limit={depositLimit}
-            setLimit={setDepositLimit}
-          />
-          <CashCard
-            num={useAccount.Transaction?.filter(v => v.debit > 0)?.map(v => v.debit)}
-            type={'withdrawl'}
-            limit={withdrawlLimit}
-            setLimit={setWithdrawlLimit}
-          />
-        </Group>
+          <Group style={{ justifyContent: 'space-evenly' }}>
+            <CashCard
+              num={useAccount.Transaction?.filter((v) => v.credit > 0)?.map(
+                (v) => v.credit,
+              )}
+              type={'deposit'}
+              limit={depositLimit}
+              setLimit={setDepositLimit}
+            />
+            <CashCard
+              num={useAccount.Transaction?.filter((v) => v.debit > 0)?.map(
+                (v) => v.debit,
+              )}
+              type={'withdrawl'}
+              limit={withdrawlLimit}
+              setLimit={setWithdrawlLimit}
+            />
+          </Group>
 
           {/* <EodBalance balance="$1,23,456" comparision={4.6} /> */}
           <RecentTransactions transactions={useAccount.Transaction} />
@@ -197,14 +226,35 @@ const LeftPane = React.forwardRef<HTMLDivElement, Props>(
 
         <div ref={ref}>
           <Print>
-          <FinancialRatios />
-          <FinancialStatistics />
-          <Group style={{ justifyContent: 'space-evenly' }}>
-          <TotalBalance totalBalance={useAccount.Transaction.at(-1)?.balance || 0} />
-          <CashCard />
-          <CashCard />
-          <RecentTransactions transactions={useAccount.Transaction} />
-          </Group>
+            <h1 style={{ marginLeft: '10px', color: '#0062d6', fontFamily: '' }}>shiftbank</h1>
+            <h3 style={{ textAlign: 'center' }}>
+              You can see your Transaction analysis here.
+            </h3>
+            <Group style={{ justifyContent: 'center', paddingInline: '2px' }}>
+              <TotalBalance
+                totalBalance={useAccount.Transaction.at(-1)?.balance || 0}
+                increment={useAccount.Transaction.at(-1)?.increment || 0}
+              />
+              <FinancialRatios />
+              {/* <EodBalance
+                balance={
+                  dateslist.length != 0
+                    ? '$' + Math.round(sum / dateslist.length)
+                    : 'No Data'
+                }
+                comparision={4.6}
+              /> */}
+            </Group>
+            <br />
+            <br />
+            <FinancialStatisticsPdf />
+            {/* <FoodStatisticsPdf /> */}
+            <br />
+            <br />
+            <p style={{ marginLeft: '20px' }}>
+              Your recent transactions can be seen here.
+            </p>
+            <RecentTransactions transactions={useAccount.Transaction} />
           </Print>
         </div>
       </>
