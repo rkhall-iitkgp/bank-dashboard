@@ -120,7 +120,7 @@ export function TotalBalance({ totalBalance, increment, timePeriod, accountNumbe
             lineHeight: `44px`,
           }}
         >
-          {data.totalBalance}{' '}
+          &#8377;{data.totalBalance}{' '}
         </span>
       </div>
       <div

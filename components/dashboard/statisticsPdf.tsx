@@ -20,7 +20,7 @@ const BalanceChart = (props: {
   ) : (
     <ReactApexChart
       type="area"
-      height={240}
+      height={340}
       width={350}
       margin={'auto'}
       options={{
@@ -95,9 +95,9 @@ const SpendingDonut = (props: {
         },
         labels: props.legends,
         dataLabels: { style: { fontSize: '0.1rem' } },
-        legend: { fontFamily: 'Montserrat', fontWeight: 500, horizontalAlign: 'right' },
+        legend: { fontFamily: 'Montserrat', fontWeight: 500 },
       }}
-      width={200}
+      width={400}
     />
   )
 }

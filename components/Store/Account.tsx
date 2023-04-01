@@ -25,6 +25,7 @@ const useAccountStore = create(
         Loading: false,
         flag: true,
         uploaded: true,
+        DTI_ratio: 0,
     },
         (set, get) => ({
             setTransaction: () => {

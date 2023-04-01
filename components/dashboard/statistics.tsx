@@ -292,9 +292,10 @@ const FinancialStatistics = () => {
   }, [useAccount.Transaction])
 
   useEffect(() => {
-    const filteredTransactions = transactions
+    const newfilteredTransactions = transactions
       .filter(v => PieCategoryData[categoryIndex !== -1 ? categoryIndex : 0]?.mode === v.category).filter(v => v.debit > 0);
-    setFilteredTransaction(filteredTransactions);
+    setFilteredTransaction(JSON.parse(JSON.stringify(newfilteredTransactions)));
+    console.log('filteredTransactions', newfilteredTransactions)
     let datelegends = new Set<string>();
     let datedata: { x: string, y: number }[] = [];
     filteredTransactions.forEach(v => datelegends.add(v.date))
@@ -497,7 +498,6 @@ const FinancialStatistics = () => {
             >
               <RecentTransactions transactions={filteredTransactions} />
             </div>
-
             <InsightCard insights={InsightList} />
             <ArticlesCard articles={ArticlesData} />
           </Stack>

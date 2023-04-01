@@ -79,13 +79,12 @@ interface Props {
 
 const AccountCard = ({ bankName, value }: Props) => {
   const { classes } = useStyles()
-  const { origin } = window.location
 
   return (
     <div>
       <div className={classes.accountContainer}>
         <Image
-          src={`${origin}/icons/sbi.png`}
+          src={`/icons/sbi.png`}
           width={20}
           height={20}
           alt={''}

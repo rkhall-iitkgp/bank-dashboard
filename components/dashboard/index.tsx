@@ -34,7 +34,16 @@ const Dashboard = () => {
     console.log('accounts data: json parsing error')
   }
 
-  const useAccount = useAccountStore()
+  const useAccount = useAccountStore();
+  const { setItem } = useStorage()
+  useEffect(() => {
+
+
+    return () => {
+      // useAccountStore.setState({ uploaded: true })
+      setItem('transactions', '[]')
+    }
+  }, [])
 
   const Container = styled.div`
     display: flex;
