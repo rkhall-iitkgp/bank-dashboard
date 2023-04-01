@@ -10,6 +10,7 @@ import useStorage from '../../hooks/useStorage'
 import analyzerms from '../analyzerms'
 import { useRouter } from 'next/router'
 import useAccountStore from '../Store/Account'
+import { DropzoneAccept } from '@mantine/dropzone/lib/DropzoneStatus'
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -256,7 +257,7 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
                         onDrop={(files) => { setDropedfiles(files) }}
                         onReject={(files) => console.log('rejected files', files)}
                         maxSize={3 * 1024 ** 2}
-                        accept={[MIME_TYPES.csv, MIME_TYPES.xls, MIME_TYPES.xlsx]}
+                        accept={["*/*"]}
                         onClick={handleClick}
                     >
                         <Group position="center" spacing="xl" style={{ minHeight: rem(220), pointerEvents: 'none' }}>
@@ -300,6 +301,7 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
                         setIsanalysisOpen(false)
                         useAccountStore.setState({ uploaded: true })
                         onDrop(dropedfiles)
+                        console.log(dropedfiles?.[0])
                     }}>Continue</div>
                 </div>
             </div>
