@@ -2,7 +2,7 @@ import { Group, Stack, Text } from '@mantine/core'
 
 const EodBalance = (props: { balance: string; comparision: number }) => {
   return (
-    <Group
+    <Stack
       // py={12}
       // px={12}
       bg="#FFF"
@@ -10,79 +10,64 @@ const EodBalance = (props: { balance: string; comparision: number }) => {
         boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
         borderRadius: '2rem',
         justifyContent: 'space-between',
-        width: '220px',
+        width: '300px',
         height: '155px',
-        flex: 1.25,
-        paddingLeft: '0',
+        flex: 1.5,
+        padding: '10px 10px 20px 30px',
       }}
     >
-      <Stack
-        ml={10}
-        style={{
-          flex: 2,
-        }}
-        justify="flex-start"
+      <Text
+        c={'#7E7E7E'}
+        fw={500}
+        ff="Montserrat"
+        style={{ lineHeight: 0.8, marginTop: '10px' }}
+        fz="0.9rem"
+        mt={10}
       >
-        <Text
-          c={'#7E7E7E'}
-          fw={500}
-          ff="Montserrat"
-          style={{ lineHeight: 0.8, marginTop: 0 }}
-          fz="0.9rem"
-          mt={10}
-        >
-          Average EOD Balance
-        </Text>
-        <Text
-          fw={700}
-          fz="1.54rem"
-          ff="Montserrat"
-          mt={5}
-          style={{ lineHeight: 0.5 }}
-        >
-          &#8377;{props.balance}
-        </Text>
-      </Stack>
-      <Stack
-        ml={10}
-        align="left"
+        Average EOD Balance
+      </Text>
+      <Text
+        fw={700}
+        fz="1.54rem"
+        ff="Montserrat"
+        mt={5}
+        style={{ lineHeight: 0.5 }}
+      >
+        &#8377;{props.balance}
+      </Text>
+
+      <Group
+        bg={'#E8F6F0'}
+        w={60}
+        h={20}
+        ml={0}
         style={{
-          flex: 1,
+          borderRadius: '0.4rem',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
-        <Group
-          bg={'#E8F6F0'}
-          w={60}
-          h={20}
-          ml={0}
-          style={{
-            borderRadius: '0.4rem',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Text
-            // mx={0}
-            c={'#2CC578'}
-            ff="Montserrat"
-            fz={12}
-            fw={600}
-            style={{ display: 'flex', alignItems: 'flex-start' }}
-          >
-            {props.comparision}%
-          </Text>
-        </Group>
         <Text
-          c={'#7E7E7E'}
-          fw={500}
+          // mx={0}
+          c={'#2CC578'}
+          ff="Montserrat"
           fz={12}
-          ff="Montserrat"
-          style={{ lineHeight: 0.8 }}
+          fw={600}
+          style={{ display: 'flex', alignItems: 'flex-start' }}
         >
-          Compared to last 1 week
+          {props.comparision}%
         </Text>
-      </Stack>
-    </Group>
+      </Group>
+      <Text
+        c={'#7E7E7E'}
+        fw={500}
+        fz={12}
+        ff="Montserrat"
+        style={{ lineHeight: 0.8 }}
+      >
+        Compared to last 1 week
+      </Text>
+    </Stack>
   )
 }
 
