@@ -16,6 +16,8 @@ import useStorage from '../../hooks/useStorage'
 import { useEffect, useRef, useState } from 'react'
 import useAccountStore from '../Store/Account'
 import React from 'react'
+import { showNotification } from '@mantine/notifications'
+import { useRouter } from 'next/router'
 
 const Dashboard = () => {
   const [depositLimit, setDepositLimit] = useState(1000)
@@ -33,6 +35,15 @@ const Dashboard = () => {
   } catch {
     console.log('accounts data: json parsing error')
   }
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!useAccount.account_no) {
+      router.replace('/home')
+      showNotification({ message: "Please re-enter your details" })
+    }
+  }, [])
 
   const useAccount = useAccountStore();
   const { setItem } = useStorage()

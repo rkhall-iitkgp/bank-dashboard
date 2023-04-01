@@ -269,21 +269,14 @@ const FinancialStatistics = () => {
 
     let dateslist = Array.from(datelegends);
 
-    // dateslist.sort((a, b) => {
-    //   let A = new Date(a);
-    //   let B = new Date(b);
-    //   return A > B ? 1 : -1
-    // })
+    dateslist.sort((a, b) => {
+      let A = new Date(a);
+      let B = new Date(b);
+      return A > B ? 1 : -1
+    })
 
     dateslist.forEach(k => {
       let datefiltered = transactions.filter(x => x.date === k)
-      // datefiltered.sort((a, b) => {
-      //   let A = new Date(a.date);
-      //   let B = new Date(b.date);
-      //   return A > B ? 1 : -1
-      // })
-      // .forEach(x => { total += x.credit - x.debit })
-      console.log(`x = ${k} y = ${datefiltered.at(-1)?.balance}`)
       datedata.push({ x: k, y: datefiltered.at(-1)?.balance || 0 });
     })
 
