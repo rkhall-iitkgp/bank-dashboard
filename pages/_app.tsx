@@ -1,24 +1,27 @@
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import './../styles/globals.css'
-import { MantineProvider } from '@mantine/core'
+import { Alert, MantineProvider } from '@mantine/core'
 import { Notifications } from '@mantine/notifications';
 import { useEffect } from 'react';
 import useAccountStore from '../components/Store/Account';
 import { useRouter } from 'next/router';
 import useStorage from '../hooks/useStorage';
+import dayjs from 'dayjs';
+import bcrypt from 'bcryptjs'
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props
   const useAccount = useAccountStore()
   const router = useRouter()
-  const { getItem } = useStorage()
+  const { getItem, setItem } = useStorage()
   let flag = useAccountStore(state => state.flag)
   useEffect(() => {
     useAccount.token = getItem("access_token")
     console.log('getItem("token")', getItem("access_token"))
-  }, [])
 
+
+  }, [])
   useEffect(() => {
 
     useAccount.isAuthenticated()

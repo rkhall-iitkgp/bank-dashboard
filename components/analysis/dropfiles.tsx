@@ -10,6 +10,7 @@ import useStorage from '../../hooks/useStorage'
 import analyzerms from '../analyzerms'
 import { useRouter } from 'next/router'
 import useAccountStore from '../Store/Account'
+import { DropzoneAccept } from '@mantine/dropzone/lib/DropzoneStatus'
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -201,7 +202,7 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
     const { classes } = useStyles()
     const [click, setClick] = useState(false)
     const router = useRouter()
-    const {setItem} = useStorage()
+    const { setItem } = useStorage()
     const [account, setAccount] = useState({
         id: 1,
     })
@@ -215,7 +216,7 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
     const authToken = getItem('access_token')
     const userId = getItem('user_id')
     const [dropedfiles, setDropedfiles] = useState<any[]>()
-    const onDrop = async(files) => {
+    const onDrop = async (files) => {
         const formData = new FormData();
         formData.append('user_id', userId);
         formData.append('file', files[0]);
@@ -238,7 +239,7 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
                 Authorization: `Bearer ${authToken}`,
                 'Content-Type': 'multipart/form-data'
             }
-        })        
+        })
 
         if (response?.status !== 200) {
             alert('Error in uploading file')
@@ -248,9 +249,10 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
         const transactions = trxn?.data;
         const columns = trxn?.columns;
         const UserDebtToIncome = response.data.UserDebtToIncome
+        useAccountStore.setState({ DTI_ratio: UserDebtToIncome })
         console.log(transactions);
         console.log(columns);
-        
+
         let newTrxn: any[] = []
         for (let i = 0; i < transactions.length; i++) {
             let obj = {};
@@ -264,7 +266,7 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
                     let dt = date.getDate()
                     let dd = dt + '';
                     let mm = month + '';
-                    
+
                     if (dt < 10) {
                         dd = '0' + dt
                     }
@@ -277,43 +279,49 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
                 if (columns[j] === 'payee') {
                     let payee = transactions[i][j].split('/')
                     obj['description'] = payee[payee.length - 1]
-                    if(payee[0].split(' ')[1]==="FROM"){
+                    if (payee[0].split(' ')[1] === "FROM") {
                         cred = 1;
                     }
-                    else{
+                    else {
                         deb = 1;
                     }
-                    if(payee[0].split(' ').includes('-UPI/')){
+                    if (payee[0].split(' ').includes('-UPI/')) {
                         obj['mode'] = 0
                     }
-                    else{
+                    else {
                         obj['mode'] = 1
                     }
                 }
                 if (columns[j] === 'amount') {
-                    if(cred===1){
-                        obj['credit'] = transactions[i][j]
-                        obj['debit'] = 0;
-                    }
-                    else{
-                        obj['debit'] = transactions[i][j]
-                        obj['credit'] = 0;
+                    obj['balance'] = transactions[i][j]
+                    if (i > 1) {
+                        if ((transactions[i][j] - transactions[i - 1][j]) > 0) {
+                            obj['credit'] = Math.abs(parseInt((transactions[i][j] - transactions[i - 1][j]).toFixed(2)))
+                            obj['debit'] = 0;
+                        }
+                        else {
+                            obj['debit'] = Math.abs(parseInt((transactions[i][j] - transactions[i - 1][j]).toFixed(2)))
+                            obj['credit'] = 0;
+                        }
                     }
                 }
-                if(columns[j]=='category'){
-                    if(transactions[i][j]!==null)
-                    obj['category'] = transactions[i][j].name
+                if (columns[j] == 'category') {
+                    if (transactions[i][j] !== null)
+                        obj['category'] = transactions[i][j].name
                 }
             }
-            if(obj['category']===undefined){
+            if (obj['category'] === undefined) {
                 obj['category'] = 'misc'
             }
-            if(obj)
-            newTrxn.push(obj)
+            if (obj)
+                newTrxn.push(obj)
         }
         // send to session strage
         setItem('transactions', JSON.stringify(newTrxn))
         setItem('UserDebtToIncome', UserDebtToIncome)
+        useAccountStore.setState({ Transaction: newTrxn })
+        console.log('hello')
+        router.push('/dashboard')
 
     }
 
@@ -321,7 +329,11 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
     return (
         // <div className={classes.wrapper}>
         <div className={classes.form}>
-            <Heading title="Analyze your Transactions" />
+            {/* <Heading title="Analyze your Transactions" /> */}
+            <div className={classes.topheading}>
+                <div className={classes.title}>Analyze Your Transactions</div>
+            </div>
+
             <div className={classes.forminside}>
                 <div className={classes.titlebox}>
                     <div className={classes.titlebold}>
@@ -380,9 +392,10 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
 
                     <div className={classes.button1} onClick={() => {
                         setdropfiles(true)
+                        onDrop(dropedfiles)
                         setIsanalysisOpen(false)
                         useAccountStore.setState({ uploaded: true })
-                        onDrop(dropedfiles)
+                        console.log(dropedfiles?.[0])
                     }}>Continue</div>
                 </div>
             </div>
