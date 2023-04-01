@@ -102,7 +102,7 @@ export default function Payment({
             </div>
           )}
 
-          {result === 1 && bankAccountList.length !== 0 && (
+          {result === 1 && bankAccountList?.length !== 0 && (
             <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
               <MakePaymentCard
                 imageAddress="icons/bank-building-white.png"
@@ -111,7 +111,7 @@ export default function Payment({
               />
             </Link>
           )}
-          {result === 1 && bankAccountList.length === 0 && (
+          {result === 1 && bankAccountList?.length === 0 && (
             <div
               onClick={() => {
                 setIsAddAccountPopupOpen(true)
@@ -139,7 +139,7 @@ export default function Payment({
             </div>
           )}
 
-          {result === 1 && bankAccountList.length !== 0 && (
+          {result === 1 && bankAccountList?.length !== 0 && (
             <Link href="/UPI" style={{ textDecoration: 'none' }}>
               <MakePaymentCard
                 imageAddress="icons/upi.png"
@@ -148,7 +148,7 @@ export default function Payment({
               />
             </Link>
           )}
-          {result === 1 && bankAccountList.length === 0 && (
+          {result === 1 && bankAccountList?.length === 0 && (
             <div
               onClick={() => {
                 setIsAddAccountPopupOpen(true)

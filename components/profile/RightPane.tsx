@@ -33,7 +33,7 @@ const useStyles = createStyles((theme) => ({
   },
 
 }))
-const KycNotDone=()=>{
+const KycNotDone = () => {
   return (
     <div>
       <KycAuthentication />
@@ -41,7 +41,7 @@ const KycNotDone=()=>{
     </div>
   )
 }
-const KycDone=()=>{
+const KycDone = () => {
   return (
     <div>
       <ConsentFormComponent />
@@ -87,8 +87,8 @@ const RightPane = () => {
   return (
     <div>
       {result === 0 &&
-        <KycNotDone/>}
-      {result === 1 &&  <KycDone/>}
+        <KycNotDone />}
+      {result === 1 && <KycDone />}
 
     </div>
   )

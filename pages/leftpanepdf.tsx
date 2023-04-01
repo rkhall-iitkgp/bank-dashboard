@@ -118,7 +118,7 @@ interface Props {
   accountsList: any[]
   useAccount: any
 }
-const LeftPane = React.forwardRef<HTMLDivElement, Props>(
+const LeftPanepdf = React.forwardRef<HTMLDivElement, Props>(
   ({ accountsList, useAccount }, ref) => {
     // const useAccount = useAccountStore();
     const [depositLimit, setDepositLimit] = useState(1000)
@@ -155,7 +155,7 @@ const LeftPane = React.forwardRef<HTMLDivElement, Props>(
           <Filter
             todashboard={false}
             close={close}
-            setIsanalysisopen={(x) => {}}
+            setIsanalysisopen={(x) => { }}
           />
           {/* <Filter account={account} setAccount={setaccount} /> */}
         </Modal>
@@ -266,4 +266,4 @@ const LeftPane = React.forwardRef<HTMLDivElement, Props>(
   },
 )
 
-export default LeftPane
+export default LeftPanepdf

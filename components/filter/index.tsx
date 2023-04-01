@@ -134,7 +134,7 @@ const Filter = ({ todashboard, close, setIsanalysisopen }: props) => {
   const useAccount = useAccountStore()
   const [id, setId] = useState(1)
   const { getItem } = useStorage()
-  const accounts = JSON.parse(getItem('accounts'))
+  const accounts = JSON.parse(getItem('accounts') ?? "[]")
   const [account, setAccount] = useState<any>(useAccount.account_no)
   const [mpin, setMpin] = useState<string | null>(useAccount.mpin)
   const [haveConsent, setHaveConsent] = useState(false)
