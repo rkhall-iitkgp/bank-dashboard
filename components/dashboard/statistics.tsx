@@ -6,7 +6,7 @@ import ArticlesCard from './articlesCard'
 import InsightCard from './insightCard'
 import RecentTransactions from './recenttransactions'
 import RecentTransactionsRightPane from './recenttransactionsRightPane'
-import CashCard from './setLimitCategory'
+import SetCategoryLimit from './setLimitCategory'
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const BalanceChart = (props: {
@@ -433,13 +433,19 @@ const FinancialStatistics = () => {
             <SpendingDonut setColor={() => { }}
               setSelection={() => { }}
               values={PieModeData?.map((v) => v.value)}
-              legends={PieModeData?.map((v) => v.mode)}
+              legends={PieModeData?.map((v) => v.mode)?.map(v => {
+                if (v === "1") {
+                  return "UPI"
+                } else {
+                  return "Bank Transfer"
+                }
+              })}
               setValue={(v: number) => { }}
             />
           )}
           {categoryIndex != -1 && (
             <>
-              {/* <CashCard /> */}
+              <SetCategoryLimit category={PieCategoryData[categoryIndex]?.mode || ''} />
               <BalanceChart
                 balanceData={filteredBalanceData}
                 color={balanceColor}
