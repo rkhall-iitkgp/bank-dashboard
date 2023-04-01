@@ -1,7 +1,7 @@
 ##  About Software
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-This app can be used to by users to mantain their account using their phone number and link their bank accounts with their accounts on our software and by their consents we can provide them analysis of their transactions. Users can set limit for different types of transaction and can be notified using a mail if they exceed that limit at any point. We are using ML model to classify their transactions which is present in https://github.com/rkhall-iitkgp/Analyser-Module and all the users are managed using https://github.com/rkhall-iitkgp/Neobank-backend and transactions are managed using https://github.com/rkhall-iitkgp/Transaction-backend.
+This app can be used to by users to maintain their account using their phone number and link their bank accounts with their accounts on our software and by their consents we can provide them analysis of their transactions. Users can set limit for different types of transaction and can be notified using a mail if they exceed that limit at any point. We are using ML model to classify their transactions which is present in https://github.com/rkhall-iitkgp/Analyser-Module and all the users are managed using https://github.com/rkhall-iitkgp/Neobank-backend and transactions are managed using https://github.com/rkhall-iitkgp/Transaction-backend.
 
 ##  Instructions to build and run the software
 
