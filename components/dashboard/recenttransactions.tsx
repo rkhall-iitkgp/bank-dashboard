@@ -32,6 +32,11 @@ const TransactionCard = (props: {
   const [categoryInput, setCategoryInput] = useState(data.category);
   const { getItem } = useStorage();
   const useAccount = useAccountStore();
+  useEffect(() => {
+
+    setCategory(data.category)
+    setCategoryInput(data.category)
+  }, [data.category])
 
   const categorySubmit = () => {
     setEditing(false);
@@ -141,21 +146,21 @@ const RecentTransactions = (prop: {
   // const { transactions } = prop;
   const [transactions, setTransactions] = useState(prop.transactions);
   const { getItem } = useStorage();
-  useEffect(() => {
-    console.log('useEffect of recte transactions')
-    console.log('default: ', transactions)
-    if (transactions?.length == 0) {
-      console.log('variable set in useEffect, transactions', transactions)
-      setTransactions(JSON.parse(getItem('transactions') || '[]'))
-    }
-  }, []);
+  // useEffect(() => {
+  //   console.log('useEffect of recte transactions')
+  //   console.log('default: ', transactions)
+  //   if (transactions?.length == 0) {
+  //     console.log('variable set in useEffect, transactions', transactions)
+  //     setTransactions(JSON.parse(getItem('transactions')))
+  //   }
+  // }, []);
   return (
     <div>
       <Text ff={'Montserrat'} c="#0062D6" fw={700} fz={22} mt={4} ml={8}>
         Recent Transactions
       </Text>
       <div style={{ maxHeight: '64vh', overflow: 'auto' }}>
-        {transactions?.map((t) => (
+        {prop.transactions?.map((t) => (
           <div key={t.id}>
             <TransactionCard data={t} />
           </div>

@@ -27,8 +27,7 @@ import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import useAccountStore from '../Store/Account'
 import { useDisclosure } from '@mantine/hooks'
-import { it } from 'node:test'
-
+import { useEffect } from 'react'
 const _PeriodButton = styled(Button)`
   width: 213px;
   height: 48px;
@@ -152,7 +151,8 @@ const Filter = ({ todashboard, close, setIsanalysisopen }: props) => {
     //   Dateto: matches(/^[A-Z]{4}0[A-Z0-9]{6}$/, "Enter A Valid IFSC Code")
 
     // },
-  })
+  });
+
   const router = useRouter()
   return (
     <div style={{ width: '585px', padding: 20 }}>

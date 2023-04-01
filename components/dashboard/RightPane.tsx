@@ -74,7 +74,7 @@ const RightPane = () => {
   let lastWeekBalance = lastWeekFiltered.at(-1)?.balance
   let lastweeksum = 0, lastweeknumdays = 0, lastweekcurrentbalance = 0;
   for (let i = dayjs(transactions.at(0)?.date || new Date()); i < lastweek; i = i.add(1, 'day')) {
-    lastweekcurrentbalance = transactions.filter(x => i.isSame(x.date, 'date')).at(-1)?.balance || currentBalance;
+    lastweekcurrentbalance = transactions.filter(x => i.isSame(x.date, 'date')).at(-1)?.balance || lastweekcurrentbalance;
     lastweeksum += lastweekcurrentbalance
     lastweeknumdays++;
   }
@@ -106,8 +106,8 @@ const RightPane = () => {
         </Group>
         <Group>
           <TotalBalance accountNumber={"****" + useAccount.account_no.slice(8, 12)} increment={
-            Math.round((fetchedAccount?.balance - (lastWeekBalance || 0)) * 100 / (lastWeekBalance || 1))} timePeriod={1} totalBalance={"$" + thisbalance} />
-          <EodBalance balance={numDays != 0 ? "$" + Math.round(sum / (numDays)) : 'No Data'} comparision={4.6} />
+            Math.round((fetchedAccount?.balance - (lastWeekBalance || 0)) * 100 / (lastWeekBalance || 1))} timePeriod={1} totalBalance={thisbalance} />
+          <EodBalance balance={numDays != 0 ? Math.round(sum / (numDays)).toString() : 'No Data'} comparision={4.6} />
           <FinancialRatios />
         </Group>
         <Tabs defaultValue="financial">

@@ -34,13 +34,15 @@ const Dashboard = () => {
   }, [])
 
   const useAccount = useAccountStore();
-  // useEffect(() => {
+  const { setItem } = useStorage()
+  useEffect(() => {
 
 
-  //   return () => {
-  //     useAccountStore.setState({ uploaded: true })
-  //   }
-  // }, [])
+    return () => {
+      // useAccountStore.setState({ uploaded: true })
+      setItem('transactions', '[]')
+    }
+  }, [])
 
   const Container = styled.div`
     display: flex;

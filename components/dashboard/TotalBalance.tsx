@@ -119,7 +119,7 @@ export function TotalBalance({
             lineHeight: `44px`,
           }}
         >
-          {data.totalBalance}{' '}
+          &#8377;{data.totalBalance}{' '}
         </span>
       </div>
       <div
