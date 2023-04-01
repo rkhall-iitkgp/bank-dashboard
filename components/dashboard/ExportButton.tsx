@@ -1,8 +1,9 @@
-import { Button, Select, Menu, createStyles } from '@mantine/core'
+import { Button, Select, Menu, createStyles, InputProps } from '@mantine/core'
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React, { LegacyRef, MutableRefObject, useState } from 'react'
 import useAccountStore from '../Store/Account'
-// import { useReactToPrint } from 'react-to-print'
+import { useReactToPrint } from 'react-to-print'
+import LeftPane from './LeftPane'
 import { CSVLink } from 'react-csv'
 
 const useStyles = createStyles((theme) => ({
@@ -17,38 +18,36 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `space-around`,
   },
 }))
-
-const ExportButtonWrapper = styled.div`
-  display: none;
-`
-
-export default function ExportButton() {
+export const ExportButton = React.forwardRef<HTMLDivElement, InputProps>(
+  (props, ref) => {
   const { classes } = useStyles()
   const [selected, setSelected] = useState()
   const accounts = useAccountStore()
 
-  const handleExportJSON = () => {
-    const jsonStr = JSON.stringify(accounts.Transaction)
-    const dataUri =
-      'data:text/json;charset=utf-8,' + encodeURIComponent(jsonStr)
-    const link = document.createElement('a')
-    link.setAttribute('href', dataUri)
-    link.setAttribute('download', 'accounts.json')
-    document.body.appendChild(link)
-    link.click()
-  }
+    const handleExportJSON = () => {
+      const jsonStr = JSON.stringify(accounts)
+      const dataUri =
+        'data:text/json;charset=utf-8,' + encodeURIComponent(jsonStr)
+      const link = document.createElement('a')
+      link.setAttribute('href', dataUri)
+      link.setAttribute('download', 'accounts.json')
+      document.body.appendChild(link)
+      link.click()
+    }
 
-  const ComponentToPrint = React.forwardRef((props, ref) => {
-    return (
-      <div ref={componentRef}>My cool content here!</div>
-    );
-  });
+    const handleExportPDF = useReactToPrint({
+      content: () => {
+        if (ref == null){
+          return ref
+        }
+        else if (typeof ref === 'function') {
+          return null
+        } else {
+          return ref.current
+        }
+      },
+    })
 
-  const componentRef = React.useRef(null)
-
-  // const handleExportPDF = useReactToPrint({
-  //   content: () => componentRef.current,
-  // })
   const headers = [
     { label: "Date", key: "date" },
     { label: "Description", key: "description" },
@@ -60,7 +59,6 @@ export default function ExportButton() {
       label: "Balance", key: "balance"
     }
   ];
-
   const data = accounts.Transaction
   const csvReport = {
     data: data,
@@ -82,17 +80,15 @@ export default function ExportButton() {
         </Button>
       </Menu.Target>
 
-      <Menu.Dropdown>
-        {/* <Menu.Item onClick={handleExportPDF}>Export as PDF</Menu.Item> */}
-        {/* <Menu.Item onClick={handleExportCSV}>Export as CSV</Menu.Item> */}
-        <Menu.Item onClick={handleExportJSON}>Export as JSON</Menu.Item>
-        <Menu.Item ><CSVLink {...csvReport}>Export as CSV</CSVLink></Menu.Item>
-        <Menu.Item>Send an Email</Menu.Item>
-      </Menu.Dropdown>
-
-      <div style={{ display: 'none' }}>
-        <ComponentToPrint ref={componentRef} />
-      </div>
-    </Menu>
-  )
-}
+        <Menu.Dropdown>
+          <Menu.Item onClick={handleExportPDF}>
+            <div>Export as PDF</div>
+          </Menu.Item>
+          <Menu.Item ><CSVLink {...csvReport}>Export as CSV</CSVLink></Menu.Item>
+          <Menu.Item onClick={handleExportJSON}>Export as JSON</Menu.Item>
+          <Menu.Item>Send an Email</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    )
+  },
+)

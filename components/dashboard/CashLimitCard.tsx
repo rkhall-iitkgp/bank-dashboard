@@ -9,13 +9,14 @@ const CashCard = (props: {
 }) => {
   const { num, type, limit, setLimit } = props
   const [showLimit, setShowLimit] = useState(false)
+  const [newLimit, setNewLimit] = useState(limit)
+  const [filteredNum, setFilteredNum] = useState(num?.filter((n) => n <= limit))
 
   const bgc = type === 'withdrawl' ? '#FFE5E4' : '#E8F6F0'
   const ffc = type === 'withdrawl' ? '#D73331' : '#2CC578'
   const text =
     type === 'withdrawl' ? 'Large Cash Withdrawls' : 'Large Cash Deposits'
 
-  const [filteredNum, setFilteredNum] = useState(num.filter((n) => n <= limit))
 
   const handleFilterChange = (e) => {
     const newLimit = e.target.value
@@ -56,7 +57,7 @@ const CashCard = (props: {
       </Card.Section>
       <Stack align="center" my={15} style={{ marginBottom: '0' }}>
         <Text fz={24} c={ffc} fw={700} style={{ lineHeight: 0.8 }}>
-          {filteredNum.length}
+          {filteredNum?.length}
         </Text>
         <Text
           c={'#4D4B4B'}
