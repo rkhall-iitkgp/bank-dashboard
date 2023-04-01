@@ -106,15 +106,15 @@ const TransactionCard = (props: {
             ff={'Montserrat'}
             c={'#4D4B4B'}
             fw={600}
-            fz={16}
-            style={{ lineHeight: 0.5 }}
+            fz={14}
+            style={{ lineHeight: 1 }}
           >
-            {data.mode}
+            {data.mode === '0' ? 'Bank Transfer' : 'UPI'}
           </Text>
           {!editing &&
             <Text
               ff={'Montserrat'}
-              style={{ lineHeight: 0.5 }}
+              style={{ lineHeight: 0 }}
               c={palette[paletteIndex]}
               fz={14}
               onClick={() => setEditing(true)}

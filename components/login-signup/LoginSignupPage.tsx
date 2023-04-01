@@ -1,4 +1,15 @@
-import { Box, Button, Checkbox, createStyles, Group, PinInput, Stack, Text, TextInput, Title, } from '@mantine/core'
+import {
+  Box,
+  Button,
+  Checkbox,
+  createStyles,
+  Group,
+  PinInput,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
@@ -7,7 +18,7 @@ import PhoneInput from 'react-phone-input-2'
 import { notifications } from '@mantine/notifications'
 import 'react-phone-input-2/lib/style.css'
 import useStorage from '../../hooks/useStorage'
-import { hasLength, isEmail, useForm } from '@mantine/form';
+import { hasLength, isEmail, useForm } from '@mantine/form'
 import datams from '../datams'
 import useAccountStore from '../Store/Account'
 
@@ -188,7 +199,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export function LoginSignupPage() {
-  const { classes } = useStyles();
+  const { classes } = useStyles()
   const [mobile, setMobile] = useState('')
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
@@ -198,7 +209,7 @@ export function LoginSignupPage() {
   const [signUpLoading, setSignUpLoading] = useState(false)
   const [buttonClicked, setButtonClicked] = useState(false)
   const [enterOtp, setEnterOtp] = useState(false)
-  const [isSignUp, setIsSignUp] = useState(0);
+  const [isSignUp, setIsSignUp] = useState(0)
   const router = useRouter()
   const [isSignIn, setIsSignIn] = useState(true)
   const [checked, setChecked] = useState(false)
@@ -211,7 +222,7 @@ export function LoginSignupPage() {
     consent: boolean,
   ) => {
     const { getItem, setItem } = useStorage()
-    setIsSignUp(si);
+    setIsSignUp(si)
     let res = datams
       .post('/user/sendotp/', {
         contact_no: '+' + contact_no,
@@ -288,7 +299,7 @@ export function LoginSignupPage() {
             withCloseButton: true,
             autoClose: 5000,
             title: 'Success',
-            message: `User Succesfull Signed In`,
+            message: `User Successfully Signed In`,
             color: 'green',
             icon: <IconCheck size={'1.1rem'} />,
             loading: false,
@@ -304,7 +315,7 @@ export function LoginSignupPage() {
           setItem('contact_no', res.data.contact_no)
           setItem('kyc', res.data.kyc)
           setItem('consent', res.data.consent)
-          setItem('accounts', "[]")
+          setItem('accounts', '[]')
           useAccount.token = res.data.access_token
         }
         return res
