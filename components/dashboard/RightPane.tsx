@@ -1,6 +1,15 @@
 import useStorage from '../../hooks/useStorage'
-import { Card, createStyles, Group, Image, Stack, Tabs, Text } from '@mantine/core'
-import ExportButton from './ExportButton'
+import {
+  Card,
+  createStyles,
+  Group,
+  Image,
+  InputProps,
+  Stack,
+  Tabs,
+  Text,
+} from '@mantine/core'
+import { ExportButton } from './ExportButton'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
 import EodBalance from './EODBalanceCard'
@@ -8,7 +17,7 @@ import StockStatistics from './stockStats'
 import { TotalBalance } from './TotalBalance'
 import useAccountStore from '../Store/Account'
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useEffect } from 'react'
 const useStyles = createStyles((theme) => ({
   header: {
@@ -80,7 +89,7 @@ const Empty = () => {
   )
 }
 
-const RightPane = () => {
+const RightPane = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
   const { getItem } = useStorage()
   const { classes } = useStyles()
   const useAccount = useAccountStore()
@@ -131,7 +140,7 @@ const RightPane = () => {
             </Text>
           </div>
           <div style={{ justifyContent: 'flex-end' }}>
-            <ExportButton />
+            <ExportButton ref={ref} />
           </div>
         </Group>
         <Group>
@@ -165,6 +174,6 @@ const RightPane = () => {
       </Stack>
     </>
   )
-}
+})
 
 export default RightPane
