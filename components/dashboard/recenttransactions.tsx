@@ -1,5 +1,5 @@
 import { Card, Group, HoverCard, Stack, Text, TextInput } from '@mantine/core'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useStorage from '../../hooks/useStorage'
 import datams from '../datams'
 import useAccountStore from '../Store/Account'
@@ -124,7 +124,7 @@ const TransactionCard = (props: {
   )
 }
 interface props {
-  transaction: any[]
+  transaction?: any[]
 }
 const RecentTransactions = (prop: {
   transactions: {
@@ -136,8 +136,19 @@ const RecentTransactions = (prop: {
     category: string
     id: string
   }[]
+
 }) => {
-  const { transactions } = prop;
+  // const { transactions } = prop;
+  const [transactions, setTransactions] = useState(prop.transactions);
+  const { getItem } = useStorage();
+  useEffect(() => {
+    console.log('useEffect of recte transactions')
+    console.log('default: ', transactions)
+    if(transactions?.length == 0){
+      console.log('variable set in useEffect, transactions', transactions)
+      setTransactions(JSON.parse(getItem('transactions')))
+    }
+  }, []);
   return (
     <div>
       <Text ff={'Montserrat'} c="#0062D6" fw={700} fz={22} mt={4} ml={8}>
