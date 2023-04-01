@@ -1,6 +1,13 @@
 import useStorage from '../../hooks/useStorage'
-import { createStyles, Group, Stack, Tabs, Text } from '@mantine/core'
-import ExportButton from './ExportButton'
+import {
+  createStyles,
+  Group,
+  InputProps,
+  Stack,
+  Tabs,
+  Text,
+} from '@mantine/core'
+import { ExportButton } from './ExportButton'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
 import EodBalance from './EODBalanceCard'
@@ -8,7 +15,8 @@ import StockStatisticsx from './StocksStatistics'
 import StockStatistics from './stockStats'
 import { TotalBalance } from './TotalBalance'
 import useAccountStore from '../Store/Account'
- 
+import React from 'react'
+
 const useStyles = createStyles((theme) => ({
   header: {
     flexDirection: 'row',
@@ -49,28 +57,32 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const RightPane = () => {
+const RightPane = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
   const { getItem } = useStorage()
   const { classes } = useStyles()
-  const useAccount = useAccountStore();
-  const transactions = useAccount.Transaction;
-  let datelegends = new Set<string>();
-  transactions.forEach(v => datelegends.add(v.date))
+  const useAccount = useAccountStore()
+  const transactions = useAccount.Transaction
+  let datelegends = new Set<string>()
+  transactions.forEach((v) => datelegends.add(v.date))
 
-  let dateslist = Array.from(datelegends);
+  let dateslist = Array.from(datelegends)
 
   dateslist.sort((a, b) => {
-    let A = new Date(a);
-    let B = new Date(b);
+    let A = new Date(a)
+    let B = new Date(b)
     return A > B ? 1 : -1
   })
 
-  let total = 0;
-  let sum = 0;
-  dateslist.forEach(k => {
+  let total = 0
+  let sum = 0
+  dateslist.forEach((k) => {
     console.log(k)
-    transactions.filter(x => x.date === k).forEach(x => { total += x.credit - x.debit })
-    sum += total;
+    transactions
+      .filter((x) => x.date === k)
+      .forEach((x) => {
+        total += x.credit - x.debit
+      })
+    sum += total
   })
 
   return (
@@ -86,12 +98,20 @@ const RightPane = () => {
             </Text>
           </div>
           <div style={{ justifyContent: 'flex-end' }}>
-            <ExportButton />
+            <ExportButton ref={ref} />
           </div>
         </Group>
         <Group>
-          <TotalBalance accountNumber={"****" + useAccount.account_no.slice(8, 12)} increment={5} timePeriod={2} totalBalance={"$" + total} />
-          <EodBalance balance={"$" + Math.round(sum / (dateslist.length))} comparision={4.6} />
+          <TotalBalance
+            accountNumber={'****' + useAccount.account_no.slice(8, 12)}
+            increment={5}
+            timePeriod={2}
+            totalBalance={'$' + total}
+          />
+          <EodBalance
+            balance={'$' + Math.round(sum / dateslist.length)}
+            comparision={4.6}
+          />
           <FinancialRatios />
         </Group>
         <Tabs defaultValue="financial">
@@ -110,13 +130,13 @@ const RightPane = () => {
 
           <Tabs.Panel value="stocks" className={classes.tabsPanel}>
             {/* <StockStatisticsx /> */}
-            <StockStatistics/>
+            <StockStatistics />
           </Tabs.Panel>
           {/* {    console.log('rendered6846')} */}
         </Tabs>
       </Stack>
     </>
   )
-}
+})
 
 export default RightPane
