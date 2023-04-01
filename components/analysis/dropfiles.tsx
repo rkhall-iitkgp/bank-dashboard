@@ -228,6 +228,8 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
         })
             .then(response => {
                 console.log(response);
+                console.log('res', JSON.parse(response.data.Transactions))
+                console.log('res', JSON.parse(response.data.Investments))
             })
             .catch(error => {
                 console.log(error);
@@ -238,7 +240,11 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
     return (
         // <div className={classes.wrapper}>
         <div className={classes.form}>
-            <Heading title="Analyze your Transactions" />
+            {/* <Heading title="Analyze your Transactions" /> */}
+            <div className={classes.topheading}>
+                <div className={classes.title}>Analyze Your Transactions</div>
+            </div>
+
             <div className={classes.forminside}>
                 <div className={classes.titlebox}>
                     <div className={classes.titlebold}>
