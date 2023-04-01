@@ -34,7 +34,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-`
+` 
 const FilterCard = styled.div`
   padding: 8px;
   border-radius: 50px;
