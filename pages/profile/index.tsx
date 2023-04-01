@@ -64,9 +64,9 @@ const ProfilePage = () => {
         console.log(`acclength = `, accLength)
         if (kycStatus === 0) {
             setIsKycPermissionPopUpOpen(true)
-        } else if (kycStatus === 1 && bankAccountList.length !== 0) {
+        } else if (kycStatus === 1 && bankAccountList?.length !== 0) {
             setIsfilteropen(true)
-        } else if (kycStatus === 1 && bankAccountList.length === 0) {
+        } else if (kycStatus === 1 && bankAccountList?.length === 0) {
             setIsAddAccountPopupOpen(true)
         }
     }

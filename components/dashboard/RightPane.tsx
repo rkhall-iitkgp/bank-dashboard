@@ -69,13 +69,16 @@ const Empty = () => {
       }}
       mr={15}
     >
-      <Group
-        align={'center'}
+      <div
+        // align={'center'}
         style={{
-          flex: 1,
+          display: `flex`,
+          margin: `auto`,
+          justifyContent: `center`,
           maxHeight: '53vh',
           overflow: 'auto',
-          margin: 'auto',
+          width: `100%`,
+          // margin: 'auto',
           alignItems: 'center'
         }}
       >
@@ -84,7 +87,7 @@ const Empty = () => {
           height={300}
           width={300}
         />
-      </Group>
+      </div>
     </Card>
   )
 }
@@ -167,9 +170,9 @@ const RightPane = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
           </Tabs.List>
 
           <Tabs.Panel value="financial" className={classes.tabsPanel}>
-            {transactions.length != 0 &&
+            {transactions?.length != 0 &&
               <FinancialStatistics />}
-            {transactions.length == 0 && <Empty />}
+            {transactions?.length == 0 && <Empty />}
           </Tabs.Panel>
 
           <Tabs.Panel value="stocks" className={classes.tabsPanel}>

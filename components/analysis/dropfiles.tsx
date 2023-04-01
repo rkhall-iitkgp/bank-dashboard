@@ -255,11 +255,11 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
         console.log(columns);
 
         let newTrxn: any[] = []
-        for (let i = 0; i < transactions.length; i++) {
+        for (let i = 0; i < transactions?.length; i++) {
             let obj = {};
             let cred = -1;
             let deb = -1;
-            for (let j = 0; j < columns.length; j++) {
+            for (let j = 0; j < columns?.length; j++) {
                 if (columns[j] === 'date') {
                     let date = new Date(transactions[i][j])
                     let year = date.getFullYear()
@@ -279,7 +279,7 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
                 }
                 if (columns[j] === 'payee') {
                     let payee = transactions[i][j].split('/')
-                    obj['description'] = payee[payee.length - 1]
+                    obj['description'] = payee[payee?.length - 1]
                     if (payee[0].split(' ')[1] === "FROM") {
                         cred = 1;
                     }

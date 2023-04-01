@@ -222,7 +222,7 @@ export function AnalysisType({ setdropfiles, setIsanalysisopen, setIsfilteropen,
         <div className={classes.button1} onClick={() => {
           setdropfiles(true)
           setIsanalysisopen(false)
-          if (bankAccountList.length === 0) {
+          if (bankAccountList?.length === 0) {
             setIsAddAccountPopupOpen(true)
           } else {
             setIsfilteropen(true)

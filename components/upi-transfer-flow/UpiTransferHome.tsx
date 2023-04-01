@@ -194,7 +194,7 @@ export function UpiTransferHome() {
   const [account, setAccount] = useState({ id: 1 });
 
   let fetchedAccount = [
-    { id: 1, name: "UPI Payment", src: `upi1` },
+    { id: 1, name: "UPI Payment", src: `upi` },
     { id: 2, name: "Bank Transfer", src: `bank-building-white` },
     { id: 3, name: "Pay Phone Number", src: `payphone1` },
   ];

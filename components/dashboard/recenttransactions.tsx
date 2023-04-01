@@ -26,7 +26,7 @@ const TransactionCard = (props: {
 
   var paletteIndex = Math.floor(Math.random() * 4)
   var descriptionShort = (data.description.split('/').at(-1) || '').substring(0, 10)
-  if (data.description.length > 12) descriptionShort += '...'
+  if (data.description?.length > 12) descriptionShort += '...'
   const [editing, setEditing] = useState(false);
   const [category, setCategory] = useState(data.category);
   const [categoryInput, setCategoryInput] = useState(data.category);
@@ -161,9 +161,9 @@ const RecentTransactions = (prop: {
         Recent Transactions
       </Text>
       <div style={{ maxHeight: '64vh', overflow: 'auto' }}>
-        {transactions.length == 0 && <Text>No New Transaction</Text>}
+        {transactions?.length == 0 && <Text fz={20} py={10} px={10}>No New Transaction</Text>}
         {
-          transactions.length != 0 && transactions?.map((t) => (
+          transactions?.length != 0 && transactions?.map((t) => (
             <TransactionCard data={t} />
           ))
         }

@@ -79,7 +79,7 @@ const TransactionCard = (props: {
 
   var paletteIndex = Math.floor(Math.random() * 4)
   var descriptionShort = data.description.substring(0, 12)
-  if (data.description.length > 12) descriptionShort += '...'
+  if (data.description?.length > 12) descriptionShort += '...'
 
   return (
     <Card

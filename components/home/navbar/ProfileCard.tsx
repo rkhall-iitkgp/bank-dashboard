@@ -116,7 +116,7 @@ export function ProfileCard() {
   const { classes } = useStyles()
   const { getItem } = useStorage()
 
-  let BankAccount = JSON.parse(getItem('accounts'))
+  let BankAccount = JSON.parse(getItem('accounts') ?? "[]")
   // let BankAccount = [
   //   { id: 1, bankName: 'sbi', value: '****1234' },
   //   { id: 2, bankName: 'sbi', value: '****4235' },

@@ -1,4 +1,4 @@
-import {createStyles, Group, PinInput, Text, TextInput,} from '@mantine/core'
+import { createStyles, Group, PinInput, Text, TextInput, } from '@mantine/core'
 import Link from 'next/link'
 import { SetStateAction, useEffect, useState, ChangeEvent } from 'react'
 // import ButtonGroup from '../reusable-components/ButtonGroup'
@@ -181,24 +181,26 @@ export function VerifyUPI() {
   const [data, setData] = useState<{ value: string, label: string }[]>([]);
   const { getItem, setItem } = useStorage()
 
-  
+
   useEffect(() => {
     const storedAccounts = getItem('accounts');
     // console.log(storedAccounts)
     if (storedAccounts !== null) {
-      const accounts = JSON.parse(storedAccounts);
-      const upis = accounts?.map((account: { upi: string | null }) => account.upi);
+      const accounts = JSON.parse(storedAccounts ?? '[]');
+      const account = accounts?.filter((account: { upi: string | null }) => account.upi !== null);
+      const upis = account?.map((account: { upi: string | null }) => account.upi);
       console.log(upis);
-      
+      setUpiValue(upis[0])
+
       // let upi = []
       // let ele;
       // upis?.map((ele)=>{
       //   upi.push({value: ele, label: ele})
       // })
-      const upi = upis?.map((ele) => ({ value: ele, label: ele}))
+      const upi = upis?.map((ele) => ({ value: ele, label: ele }))
       setData(upi)
       console.log(data);
-      
+
     } else {
       console.log('No accounts found in session storage.');
     }
@@ -288,7 +290,7 @@ export function VerifyUPI() {
                 </Text>
               }
             /> */}
-            <NativeSelect value={upiValue}  onChange={(event) => {console.log(event.currentTarget.value);setUpiValue(event.currentTarget.value);setItem('upi', event.currentTarget.value) }} data={data} onClick={upiValue !== '' ? handleClick1 : handleClick2} />
+            <NativeSelect value={upiValue} onChange={(event) => { console.log(event.currentTarget.value); setUpiValue(event.currentTarget.value); setItem('upi', event.currentTarget.value) }} data={data} onClick={upiValue !== '' ? handleClick1 : handleClick2} />
           </div>
 
           <div className={classes.buttonContainer}>

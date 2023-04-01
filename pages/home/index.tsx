@@ -69,12 +69,12 @@ const Home: NextPage = () => {
   }
 
   const dashClickHandler = (accLength, kycStatus) => {
-    console.log(`acclength = `, bankAccountList.length)
+    console.log(`acclength = `, bankAccountList?.length)
     if (kycStatus === 0) {
       setIsKycPermissionPopUpOpen(true)
-    } else if (kycStatus === 1 && bankAccountList.length !== 0) {
+    } else if (kycStatus === 1 && bankAccountList?.length !== 0) {
       setIsfilteropen(true)
-    } else if (kycStatus === 1 && bankAccountList.length === 0) {
+    } else if (kycStatus === 1 && bankAccountList?.length === 0) {
       setIsAddAccountPopupOpen(true)
     }
   }
