@@ -21,6 +21,15 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
+![01 04 2023_15 13 33_REC](https://user-images.githubusercontent.com/74675085/229279408-ef5fcd33-646d-4b0a-8eaa-2c18cecb819f.png)
+Landing Page
+
+![01 04 2023_15 23 45_REC](https://user-images.githubusercontent.com/74675085/229279401-f1134da7-6c50-4fdf-86ee-655e572301f0.png)
+Adding Account
+
+<img width="1440" alt="Screenshot 2023-04-01 at 3 23 21 PM" src="https://user-images.githubusercontent.com/74675085/229279272-d8274d22-6cfe-4c3d-b036-66401f3230fe.png">
+Analysis of account
+
 
 
 ## Learn More
