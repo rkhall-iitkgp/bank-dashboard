@@ -235,7 +235,7 @@ export function SelectBeneficiaryBank() {
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
             <div className={classes.titlebold}>
-              <span>Select Beneficiary’s Bank</span>
+              <span>Select Beneficiary's Bank</span>
             </div>
           </div>
           <div className={classes.accountContainer}>
@@ -266,7 +266,7 @@ export function SelectBeneficiaryBank() {
                   pathname: '/bank-transfer/payment-form',
                   query: {
                     selfOrOther: account,
-                    id: data.id,
+                    dacno: data.dacno,
                   },
                 }}
               >

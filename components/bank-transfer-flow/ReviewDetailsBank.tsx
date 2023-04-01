@@ -195,7 +195,7 @@ export function ReviewDetailsBank(props: { sbi: any }) {
   let account
   try {
     account = JSON.parse(getItem('accounts') ?? '[]')?.filter(
-      (v: { id: number }) => v.id + '' == data.id,
+      (v: { account_no: number }) => v.account_no + '' == data.account_no,
     )[0]
   } catch {
     console.log('JSON parsing error')

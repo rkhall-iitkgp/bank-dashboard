@@ -212,8 +212,13 @@ export function PaymentForm(props: { sbi: any }) {
   const { getItem } = useStorage()
   let account
   try {
+    console.log(JSON.parse(getItem('accounts')??'[]'), data.dacno);
+    
     account = JSON.parse(getItem('accounts') ?? '[]')?.filter(
-      (v: { id: number }) => v.id + '' == data.id,
+      (v: { account_no: number }) => {
+        
+        return v.account_no+'' === (data.dacno)
+      }
     )[0]
   } catch {
     console.log('JSON parsing error')
