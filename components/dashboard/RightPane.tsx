@@ -64,7 +64,7 @@ const RightPane = () => {
 
   let currentDay = dayjs(new Date())
   let currentBalance = 0, sum = 0, numDays = 0;
-  for (let i = dayjs(transactions.at(0)?.date); i < currentDay; i.add(1, 'day')) {
+  for (let i = dayjs(transactions.at(0)?.date || new Date()); i < currentDay; i = i.add(1, 'day')) {
     currentBalance = transactions.filter(x => i.isSame(x.date, 'date')).at(-1)?.balance || currentBalance;
     sum += currentBalance
     numDays++;
@@ -74,8 +74,8 @@ const RightPane = () => {
   let lastWeekFiltered = transactions.filter(x => dayjs(x.date) < lastweek);
   let lastWeekBalance = lastWeekFiltered.at(-1)?.balance
   let lastweeksum = 0, lastweeknumdays = 0, lastweekcurrentbalance = 0;
-  for (let i = dayjs(transactions.at(0)?.date); i < lastweek; i.add(1, 'day')) {
-    lastweekcurrentbalance = transactions.filter(x => i.isSame(x.date, 'date')).at(-1)?.balance || currentBalance;
+  for (let i = dayjs(transactions.at(0)?.date || new Date()); i < lastweek; i = i.add(1, 'day')) {
+    lastweekcurrentbalance = transactions.filter(x => i.isSame(x.date, 'date')).at(-1)?.balance || lastweekcurrentbalance;
     lastweeksum += lastweekcurrentbalance
     lastweeknumdays++;
   }

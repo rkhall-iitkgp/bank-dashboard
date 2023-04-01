@@ -2,7 +2,8 @@ import { Button, Select, Menu, createStyles } from '@mantine/core'
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import useAccountStore from '../Store/Account'
-import { useReactToPrint } from 'react-to-print'
+// import { useReactToPrint } from 'react-to-print'
+import { CSVLink } from 'react-csv'
 
 const useStyles = createStyles((theme) => ({
   button: {
@@ -27,7 +28,7 @@ export default function ExportButton() {
   const accounts = useAccountStore()
 
   const handleExportJSON = () => {
-    const jsonStr = JSON.stringify(accounts)
+    const jsonStr = JSON.stringify(accounts.Transaction)
     const dataUri =
       'data:text/json;charset=utf-8,' + encodeURIComponent(jsonStr)
     const link = document.createElement('a')
@@ -45,10 +46,27 @@ export default function ExportButton() {
 
   const componentRef = React.useRef(null)
 
-  const handleExportPDF = useReactToPrint({
-    content: () => componentRef.current,
-  })
+  // const handleExportPDF = useReactToPrint({
+  //   content: () => componentRef.current,
+  // })
+  const headers = [
+    { label: "Date", key: "date" },
+    { label: "Description", key: "description" },
+    { label: "Credit", key: "credit" },
+    { label: "Debit", key: "debit" }, {
+      label: "Mode", key: "mode",
+    }, { label: "Category", key: "category" },
+    {
+      label: "Balance", key: "balance"
+    }
+  ];
 
+  const data = accounts.Transaction
+  const csvReport = {
+    data: data,
+    headers: headers,
+    filename: 'Transaction.csv'
+  };
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
@@ -65,9 +83,10 @@ export default function ExportButton() {
       </Menu.Target>
 
       <Menu.Dropdown>
-        <Menu.Item onClick={handleExportPDF}>Export as PDF</Menu.Item>
+        {/* <Menu.Item onClick={handleExportPDF}>Export as PDF</Menu.Item> */}
         {/* <Menu.Item onClick={handleExportCSV}>Export as CSV</Menu.Item> */}
         <Menu.Item onClick={handleExportJSON}>Export as JSON</Menu.Item>
+        <Menu.Item ><CSVLink {...csvReport}>Export as CSV</CSVLink></Menu.Item>
         <Menu.Item>Send an Email</Menu.Item>
       </Menu.Dropdown>
 
