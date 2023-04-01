@@ -37,7 +37,7 @@ const EodBalance = (props: { balance: string; comparision: number }) => {
       </Text>
 
       <Group
-        bg={'#E8F6F0'}
+        bg={props.comparision >= 0 ? '#EBF7E9' : '#FFE5E4'}
         w={60}
         h={20}
         ml={0}
@@ -53,7 +53,7 @@ const EodBalance = (props: { balance: string; comparision: number }) => {
           ff="Montserrat"
           fz={12}
           fw={600}
-          style={{ display: 'flex', alignItems: 'flex-start' }}
+          style={{ display: 'flex', alignItems: 'flex-start', backgroundColor: props.comparision >= 0 ? '#EBF7E9' : '#FFE5E4', color: props.comparision >= 0 ? '#2CC578' : '#FF4D4D' }}
         >
           {props.comparision}%
         </Text>

@@ -249,14 +249,13 @@ export function ReviewDetailsBank(props: { sbi: any }) {
             <TextInput
               label="Paying From"
               variant="unstyled"
-              type={'number'}
               mt="md"
               classNames={{
                 input: classes.input,
                 label: classes.inputLabel,
                 root: classes.enterAmountContainer,
               }}
-              value={account?.account_no}
+              value={"****" + account?.account_no}
               disabled
             />
 

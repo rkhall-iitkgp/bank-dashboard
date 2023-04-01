@@ -1,6 +1,6 @@
-import {createStyles, Group, PinInput} from '@mantine/core'
+import { createStyles, Group, PinInput } from '@mantine/core'
 import Link from 'next/link'
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 import Heading from '../reusable-components/Heading'
 import useStorage from '../../hooks/useStorage'
 import trxnapi from '../trxnapi'
@@ -162,7 +162,7 @@ export function EnterUPIpin() {
         'Content-Type': 'application/json',
       },
     }).then(res => {
-      router.replace({ pathname: '/UPI/payment-success'})
+      router.replace({ pathname: '/UPI/payment-success' })
       return res.data
     }).catch(err => console.log(err))
   }
@@ -183,6 +183,7 @@ export function EnterUPIpin() {
                 placeholder=""
                 mx="auto"
                 length={4}
+                mask={true}
               />
             </Group>
           </div>
@@ -192,7 +193,7 @@ export function EnterUPIpin() {
             <Link href="/UPI/payment-details-review">
               <div className={classes.button1}>Back</div>
             </Link>
-              <div className={classes.button1} onClick= {upiPay}>Confirm</div>
+            <div className={classes.button1} onClick={upiPay}>Confirm</div>
           </div>
         </div>
       </div>

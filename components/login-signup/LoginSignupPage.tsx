@@ -563,6 +563,7 @@ export function LoginSignupPage() {
                   Enter OTP
                 </Text>
                 <PinInput
+                  mask={true}
                   value={otp}
                   onChange={(e) => setOtp(e)}
                   mx="auto"

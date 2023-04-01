@@ -128,7 +128,8 @@ const RightPane = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     lastweeknumdays++;
   }
 
-  let EODlastweek = Math.round(lastweeksum / lastweeknumdays)
+  let EODlastweek = lastweeknumdays ? Math.round(lastweeksum / lastweeknumdays) : 0
+  let EODthisweek = numDays !== 0 ? (Math.round(sum / numDays)) : 0
 
 
   const [name, setName] = useState('');
@@ -156,7 +157,7 @@ const RightPane = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
         <Group>
           <TotalBalance accountNumber={"****" + useAccount.account_no.slice(8, 12)} increment={
             Math.round((fetchedAccount?.balance - (lastWeekBalance || 0)) * 100 / (lastWeekBalance || 1))} timePeriod={1} totalBalance={thisbalance} />
-          <EodBalance balance={numDays != 0 ? Math.round(sum / (numDays)).toString() : 'No Data'} comparision={4.6} />
+          <EodBalance balance={numDays != 0 ? Math.round(sum / (numDays)).toString() : 'No Data'} comparision={Math.round(((EODthisweek - EODlastweek) / (EODlastweek || 1)) * 100)} />
           <FinancialRatios />
         </Group>
         <Tabs defaultValue="financial">

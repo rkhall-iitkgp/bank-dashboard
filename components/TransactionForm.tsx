@@ -1,7 +1,7 @@
-import {Button, createStyles, Group, NumberInput, rem} from '@mantine/core'
+import { Button, createStyles, Group, NumberInput, rem } from '@mantine/core'
 import Heading from './reusable-components/Heading'
-import {useDisclosure} from '@mantine/hooks'
-import {useState} from 'react'
+import { useDisclosure } from '@mantine/hooks'
+import { useState } from 'react'
 import 'react-phone-input-2/lib/style.css'
 import PhoneInput from 'react-phone-input-2'
 
