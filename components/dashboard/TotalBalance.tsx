@@ -80,13 +80,14 @@ const useStyles = createStyles(() => ({
   },
 }))
 
-export function TotalBalance({
-  totalBalance,
-  increment,
-  timePeriod,
-  accountNumber,
-}) {
-  const { classes } = useStyles()
+interface Props{
+  totalBalance?: any;
+  increment?: any;
+  timePeriod?: any;
+  accountNumber?: any;
+}
+export function TotalBalance({ totalBalance, increment, timePeriod, accountNumber }:Props) {
+  const { classes } = useStyles();
   const data = {
     totalBalance: totalBalance,
     increment: increment,
@@ -124,7 +125,7 @@ export function TotalBalance({
       </div>
       <div
         className={classes.subcontainer3}
-        style={{ backgroundColor: data.increment > 0 ? '#737373' : '#FFE5E4' }}
+        style={{ backgroundColor: data.increment > 0 ? '#ebf7e9' : '#FFE5E4' }}
       >
         <span
           style={{

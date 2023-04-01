@@ -6,7 +6,7 @@ import ArticlesCard from './articlesCard'
 import InsightCard from './insightCard'
 import RecentTransactions from './recenttransactions'
 import RecentTransactionsRightPane from './recenttransactionsRightPane'
-import SetCategoryLimit from './setLimitCategory'
+import CashCard from './setLimitCategory'
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const BalanceChart = (props: {
@@ -20,8 +20,8 @@ const BalanceChart = (props: {
   ) : (
     <ReactApexChart
       type="area"
-      height={340}
-      width={550}
+      height={260}
+      width={350}
       margin={'auto'}
       options={{
         fill: { colors: [color] },
@@ -40,10 +40,12 @@ const BalanceChart = (props: {
               color: '#636363',
               fontFamily: 'Montserrat',
               fontWeight: 500,
-              fontSize: '1rem',
+              fontSize: '6px',
             },
           },
           labels: {
+            show: true,
+            offsetY: -5,
             style: { fontFamily: 'Montserrat', fontWeight: 400 },
           },
         },
@@ -55,7 +57,7 @@ const BalanceChart = (props: {
               color: '#636363',
               fontFamily: 'Montserrat',
               fontWeight: 500,
-              fontSize: '0.9rem',
+              fontSize: '0.4rem',
             },
           },
           labels: {
@@ -94,10 +96,10 @@ const SpendingDonut = (props: {
           },
         },
         labels: props.legends,
-        dataLabels: { style: { fontSize: '0.3rem' } },
-        legend: { fontFamily: 'Montserrat', fontWeight: 500 },
+        dataLabels: { style: { fontSize: '0.1rem' } },
+        legend: { fontFamily: 'Montserrat', fontWeight: 500, offsetX: -120 },
       }}
-      width={400}
+      width={200}
     />
   )
 }
@@ -173,29 +175,29 @@ const WeeklySpendingChart = (props: { data: { x: string; y: number }[], name: st
 //   { x: '05/15/2014', y: 5500.0 },
 // ]
 const MontlySpendingData = [
-  { x: 'Apr', y: 0 },
-  { x: 'May', y: 0 },
-  { x: 'Jun', y: 0 },
-  { x: 'Jul', y: 0 },
-  { x: 'Aug', y: 0 },
-  { x: 'Sep', y: 0 },
-  { x: 'Oct', y: 0 },
-  { x: 'Nov', y: 0 },
+  { x: 'Apr', y: 400 },
+  { x: 'May', y: 420 },
+  { x: 'Jun', y: 440 },
+  { x: 'Jul', y: 480 },
+  { x: 'Aug', y: 530 },
+  { x: 'Sep', y: 590 },
+  { x: 'Oct', y: 690 },
+  { x: 'Nov', y: 690 },
 ]
 
 const WeeklySpendingData = {
-  Jan: [{ y: 0, x: '1' }],
-  Feb: [{ y: 0, x: '1' }],
-  Mar: [{ y: 0, x: '1' }],
-  Apr: [{ y: 0, x: '1' }],
-  May: [{ y: 0, x: '1' }],
-  Jun: [{ y: 0, x: '1' }],
-  Jul: [{ y: 0, x: '1' }],
-  Aug: [{ y: 0, x: '1' }],
-  Sep: [{ y: 0, x: '1' }],
-  Oct: [{ y: 0, x: '1' }],
-  Nov: [{ y: 0, x: '1' }],
-  Dec: [{ y: 0, x: '1' }],
+  Jan: [{ y: 50, x: '1' }],
+  Feb: [{ y: 50, x: '1' }],
+  Mar: [{ y: 50, x: '1' }],
+  Apr: [{ y: 50, x: '1' }],
+  May: [{ y: 50, x: '1' }],
+  Jun: [{ y: 50, x: '1' }],
+  Jul: [{ y: 50, x: '1' }],
+  Aug: [{ y: 50, x: '1' }],
+  Sep: [{ y: 50, x: '1' }],
+  Oct: [{ y: 50, x: '1' }],
+  Nov: [{ y: 50, x: '1' }],
+  Dec: [{ y: 50, x: '1' }],
 }
 
 const InsightList = [
@@ -211,7 +213,7 @@ const ArticlesData = [
   '7 Simple Ways to Save Money on Coffee',
 ]
 
-const FinancialStatistics = () => {
+const FinancialStatisticsPdf = () => {
   const [categoryIndex, setCategoryIndex] = useState(-1)
   const [catValue, setCatValue] = useState(-1)
   const [balanceColor, setBalanceColor] = useState('#00A76D');
@@ -254,7 +256,7 @@ const FinancialStatistics = () => {
 
     modelegends.forEach(k => {
       let total = 0;
-      transactions.filter(x => x.mode === k).filter(v => v.debit > 0).forEach(x => { total += x.debit })
+      transactions.filter(x => x.mode === k).forEach(x => { total += x.credit - x.debit })
       modedata.push({ mode: k, value: total });
     })
 
@@ -277,6 +279,12 @@ const FinancialStatistics = () => {
 
     dateslist.forEach(k => {
       let datefiltered = transactions.filter(x => x.date === k)
+      datefiltered.sort((a, b) => {
+        let A = new Date(a.date);
+        let B = new Date(b.date);
+        return A > B ? 1 : -1
+      })
+      // .forEach(x => { total += x.credit - x.debit })
       datedata.push({ x: k, y: datefiltered.at(-1)?.balance || 0 });
     })
 
@@ -285,20 +293,25 @@ const FinancialStatistics = () => {
   }, [useAccount.Transaction])
 
   useEffect(() => {
-    const newfilteredTransactions = transactions
+    const filteredTransactions = transactions
       .filter(v => PieCategoryData[categoryIndex !== -1 ? categoryIndex : 0]?.mode === v.category).filter(v => v.debit > 0);
-    setFilteredTransaction(newfilteredTransactions || []);
-    console.log('filteredTransactions', newfilteredTransactions)
+    setFilteredTransaction(filteredTransactions);
     let datelegends = new Set<string>();
     let datedata: { x: string, y: number }[] = [];
-    newfilteredTransactions.forEach(v => datelegends.add(v.date))
+    filteredTransactions.forEach(v => datelegends.add(v.date))
     let dateslist = Array.from(datelegends);
+
+    dateslist.sort((a, b) => {
+      let A = new Date(a);
+      let B = new Date(b);
+      return A > B ? 1 : -1
+    })
 
     let totaltal = 0
     dateslist.forEach(k => {
       let total = 0;
       console.log(k)
-      newfilteredTransactions.filter(x => x.date === k).forEach(x => {
+      filteredTransactions.filter(x => x.date === k).forEach(x => {
         total += x.debit
       })
       datedata.push({ x: k, y: total });
@@ -422,19 +435,13 @@ const FinancialStatistics = () => {
             <SpendingDonut setColor={() => { }}
               setSelection={() => { }}
               values={PieModeData?.map((v) => v.value)}
-              legends={PieModeData?.map((v) => v.mode)?.map(v => {
-                if (v === "1") {
-                  return "UPI"
-                } else {
-                  return "Bank Transfer"
-                }
-              })}
+              legends={PieModeData?.map((v) => v.mode)}
               setValue={(v: number) => { }}
             />
           )}
           {categoryIndex != -1 && (
             <>
-              <SetCategoryLimit category={PieCategoryData[categoryIndex]?.mode || ''} />
+              {/* <CashCard /> */}
               <BalanceChart
                 balanceData={filteredBalanceData}
                 color={balanceColor}
@@ -491,6 +498,7 @@ const FinancialStatistics = () => {
             >
               <RecentTransactions transactions={filteredTransactions} />
             </div>
+
             <InsightCard insights={InsightList} />
             <ArticlesCard articles={ArticlesData} />
           </Stack>
@@ -500,4 +508,4 @@ const FinancialStatistics = () => {
   )
 }
 
-export default FinancialStatistics
+export default FinancialStatisticsPdf

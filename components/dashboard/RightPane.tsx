@@ -1,15 +1,23 @@
 import useStorage from '../../hooks/useStorage'
-import { createStyles, Group, Stack, Tabs, Text } from '@mantine/core'
-import ExportButton from './ExportButton'
+import {
+  Card,
+  createStyles,
+  Group,
+  Image,
+  InputProps,
+  Stack,
+  Tabs,
+  Text,
+} from '@mantine/core'
+import { ExportButton } from './ExportButton'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
 import EodBalance from './EODBalanceCard'
-import StockStatisticsx from './StocksStatistics'
 import StockStatistics from './stockStats'
 import { TotalBalance } from './TotalBalance'
 import useAccountStore from '../Store/Account'
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useEffect } from 'react'
 const useStyles = createStyles((theme) => ({
   header: {
@@ -51,7 +59,37 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-const RightPane = () => {
+const Empty = () => {
+  return (
+    <Card
+      // radius={'lg'}
+
+      style={{
+        boxShadow: '0px 2px 40px rgba(0, 0, 0, 0.1)',
+      }}
+      mr={15}
+    >
+      <Group
+        align={'center'}
+        style={{
+          flex: 1,
+          maxHeight: '53vh',
+          overflow: 'auto',
+          margin: 'auto',
+          alignItems: 'center'
+        }}
+      >
+        <Image src={'/icons/empty.png'}
+          alt="filter-icon"
+          height={300}
+          width={300}
+        />
+      </Group>
+    </Card>
+  )
+}
+
+const RightPane = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
   const { getItem } = useStorage()
   const { classes } = useStyles()
   const useAccount = useAccountStore()
@@ -109,7 +147,7 @@ const RightPane = () => {
             </Text>
           </div>
           <div style={{ justifyContent: 'flex-end' }}>
-            <ExportButton />
+            <ExportButton ref={ref} />
           </div>
         </Group>
         <Group>
@@ -129,7 +167,9 @@ const RightPane = () => {
           </Tabs.List>
 
           <Tabs.Panel value="financial" className={classes.tabsPanel}>
-            <FinancialStatistics />
+            {transactions.length != 0 &&
+              <FinancialStatistics />}
+            {transactions.length == 0 && <Empty />}
           </Tabs.Panel>
 
           <Tabs.Panel value="stocks" className={classes.tabsPanel}>
@@ -141,6 +181,6 @@ const RightPane = () => {
       </Stack>
     </>
   )
-}
+})
 
 export default RightPane
