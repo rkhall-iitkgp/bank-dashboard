@@ -4,7 +4,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Heading from '../reusable-components/Heading'
-
+import useStorage from '../../hooks/useStorage'
+import api from '../datams'
+import { useEffect } from 'react'
 const useStyles = createStyles((theme) => ({
   wrapper: {
     backgroundColor: `#EEEEEE`,
@@ -193,14 +195,45 @@ interface props {
   setIsfilteropen: Function
   bankAccountList: any[]
   setIsAddAccountPopupOpen: Function
+  SetIsKycPermissionPopUpOpen: Function
 }
-export function AnalysisType({ setdropfiles, setIsanalysisopen, setIsfilteropen, bankAccountList, setIsAddAccountPopupOpen }: props) {
+export function AnalysisType({ setdropfiles, setIsanalysisopen, setIsfilteropen, bankAccountList, setIsAddAccountPopupOpen,SetIsKycPermissionPopUpOpen }: props) {
   const { classes } = useStyles()
   const [click, setClick] = useState(false)
   const [type, setType] = useState<number | undefined>(undefined)
+  const { getItem } = useStorage()
+  const [result, setResult] = useState(1)
   const [account, setAccount] = useState({
     id: 1,
   })
+  const GetKycStatus = () => {
+    const accessToken = getItem('access_token', 'session')
+    console.log(accessToken)
+    const user_id = getItem('user_id')
+    const accLength = JSON.stringify(getItem('accounts'))?.length
+    const response = api
+      .get(`/user/getkyc/`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        response.data.message === 'KYC done' && setResult(1)
+        console.log(response.data.message);
+
+      })
+      .catch((err) => {
+        err.response.data.message === 'KYC not done' && setResult(0)
+        console.log(err.response.data.message)
+      })
+  }
+
+  useEffect(() => {
+    GetKycStatus()
+    console.log(result)
+    // setResult(0);
+  }, [])
   let fetchedAccount = [
     { id: 1, name: 'Upload Transactions', src: `upi1` },
     { id: 2, name: 'Fetch Transactions', src: `bank-building-white` },
@@ -222,7 +255,10 @@ export function AnalysisType({ setdropfiles, setIsanalysisopen, setIsfilteropen,
         <div className={classes.button1} onClick={() => {
           setdropfiles(true)
           setIsanalysisopen(false)
-          if (bankAccountList.length === 0) {
+          if(result===0){
+            SetIsKycPermissionPopUpOpen(true);
+          }
+          else if (bankAccountList.length === 0) {
             setIsAddAccountPopupOpen(true)
           } else {
             setIsfilteropen(true)
@@ -237,7 +273,7 @@ export function AnalysisType({ setdropfiles, setIsanalysisopen, setIsfilteropen,
       );
     }
   };
-
+  
   return (
     // <div className={classes.wrapper}>
     <div className={classes.form}>

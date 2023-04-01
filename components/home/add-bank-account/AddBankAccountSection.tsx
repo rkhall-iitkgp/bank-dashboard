@@ -1,4 +1,9 @@
 import styled from '@emotion/styled'
+import { createStyles } from '@mantine/core'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import useStorage from '../../../hooks/useStorage'
+import { useEffect } from 'react'
 import {
   Button,
   ButtonProps,
@@ -6,7 +11,7 @@ import {
   Image,
   Loader,
 } from '@mantine/core'
-
+import api from '../../datams'
 const Oflex = styled.div`
   display: flex;
   flex-direction: row;
@@ -130,17 +135,64 @@ interface Props {
   setIsAddAccountPopupOpen: Function
   bankAccountList: any[]
   loading: any
+  SetIsKycPermissionPopUpOpen:Function
 }
 export default function BankAccount({
   bankAccountList,
   setIsAddAccountPopupOpen,
   loading,
+  SetIsKycPermissionPopUpOpen,
 }: Props) {
+
+  const [click, setClick] = useState(false)
+  const [type, setType] = useState<number | undefined>(undefined)
+  const { getItem } = useStorage()
+  const [result, setResult] = useState(1)
+  const [account, setAccount] = useState({
+    id: 1,
+  })
+  const GetKycStatus = () => {
+    const accessToken = getItem('access_token', 'session')
+    console.log(accessToken)
+    const user_id = getItem('user_id')
+    const accLength = JSON.stringify(getItem('accounts'))?.length
+    const response = api
+      .get(`/user/getkyc/`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        response.data.message === 'KYC done' && setResult(1)
+        console.log(response.data.message);
+
+      })
+      .catch((err) => {
+        err.response.data.message === 'KYC not done' && setResult(0)
+        console.log(err.response.data.message)
+      })
+  }
+
+  useEffect(() => {
+    GetKycStatus()
+    console.log(result)
+    // setResult(0);
+  }, [])
   return (
     <Container>
       <Iflex>
         <AddBankAccountText>Add Bank Account</AddBankAccountText>
-        <AddAccountButton onClick={() => setIsAddAccountPopupOpen(true)}>
+      
+        <AddAccountButton onClick={() => {
+          if(result===0){
+            SetIsKycPermissionPopUpOpen(true)
+          }
+          else{
+            setIsAddAccountPopupOpen(true)
+          }
+          
+        }}>
           Add Account
         </AddAccountButton>
       </Iflex>
@@ -162,7 +214,17 @@ export default function BankAccount({
         })}
 
         <AddAnotherBox>
-          <PlusImageContainer onClick={() => setIsAddAccountPopupOpen(true)}>
+          <PlusImageContainer onClick={() => 
+            {
+              if(result===0){
+                SetIsKycPermissionPopUpOpen(true)
+              }
+              else{
+                setIsAddAccountPopupOpen(true)
+              }
+              
+            }
+            }>
             <Image src="images/frame.png" alt="add" />
           </PlusImageContainer>
         </AddAnotherBox>

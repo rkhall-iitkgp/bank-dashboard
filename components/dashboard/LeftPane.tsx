@@ -172,7 +172,7 @@ const LeftPane = ({ accountsList, useAccount }: Props) => {
           </Group>
         </>}
         {/* <EodBalance balance="$1,23,456" comparision={4.6} /> */}
-
+        
         <RecentTransactions transactions={useAccount.Transaction} />
       </ContainerLeft>
     </>

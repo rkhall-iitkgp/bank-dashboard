@@ -94,8 +94,8 @@ const Home: NextPage = () => {
       />
       <Navbar dashClickHandler={() => dashClickHandler(accLength, kycStatus)} />
       <SeeYourAnalysis
-        dashClickHandler={() => setisanalysisopen(true)}
-      />
+        dashClickHandler={() => setisanalysisopen(true) }
+      />  
       <Payment
         isKycPermissionPopUpOpen={isKycPermissionPopUpOpen}
         SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
@@ -105,6 +105,7 @@ const Home: NextPage = () => {
       <BankAccount
         bankAccountList={bankAccountList}
         setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
+        SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
         loading={loading}
       />
       <OfferCardsRow />
@@ -126,7 +127,8 @@ const Home: NextPage = () => {
       <AnalysisPopUp
         bankAccountList={bankAccountList}
         setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
-        isanalysisopen={isanalysisopen} setIsfilteropen={setIsfilteropen} setIsanalysisopen={setisanalysisopen} />
+        isanalysisopen={isanalysisopen} setIsfilteropen={setIsfilteropen} setIsanalysisopen={setisanalysisopen}
+        SetIsKycPermissionPopUpOpen={setIsKycPermissionPopUpOpen} />
     </>
   )
 }

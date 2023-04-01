@@ -8,9 +8,9 @@ interface props {
     setIsfilteropen: Function
     setIsAddAccountPopupOpen: Function
     bankAccountList: any[]
-
+    SetIsKycPermissionPopUpOpen: Function
 }
-const AnalysisPopUp = ({ isanalysisopen, setIsanalysisopen, setIsAddAccountPopupOpen, setIsfilteropen, bankAccountList }: props) => {
+const AnalysisPopUp = ({ isanalysisopen, setIsanalysisopen, setIsAddAccountPopupOpen, setIsfilteropen, bankAccountList,SetIsKycPermissionPopUpOpen }: props) => {
     const [dropfiles, setDropfiles] = useState(false)
 
     useEffect(() => {
@@ -32,7 +32,7 @@ const AnalysisPopUp = ({ isanalysisopen, setIsanalysisopen, setIsAddAccountPopup
             padding={0}
         >
             {dropfiles ? <AnalysisType setdropfiles={setDropfiles} setIsfilteropen={setIsfilteropen} bankAccountList={bankAccountList}
-                setIsanalysisopen={setIsanalysisopen} setIsAddAccountPopupOpen={setIsAddAccountPopupOpen} /> : <DropFiles setdropfiles={setDropfiles} setIsanalysisOpen={setIsanalysisopen} />}
+                setIsanalysisopen={setIsanalysisopen} setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}  SetIsKycPermissionPopUpOpen={SetIsKycPermissionPopUpOpen} /> : <DropFiles setdropfiles={setDropfiles} setIsanalysisOpen={setIsanalysisopen} />}
         </Modal>
     )
 }

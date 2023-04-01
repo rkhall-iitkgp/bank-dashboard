@@ -160,6 +160,7 @@ const RecentTransactions = (prop: {
         Recent Transactions
       </Text>
       <div style={{ maxHeight: '64vh', overflow: 'auto' }}>
+      
         {prop.transactions?.map((t) => (
           <div key={t.id}>
             <TransactionCard data={t} />
