@@ -115,10 +115,11 @@ const AccountSelect = (prop: {
   )
 }
 interface props {
-  todashboard: any,
-  close: Function,
+  todashboard: any
+  close: Function
   setIsanalysisopen: Function
 }
+
 const Filter = ({ todashboard, close, setIsanalysisopen }: props) => {
   const useAccount = useAccountStore()
   const [id, setId] = useState(1)
