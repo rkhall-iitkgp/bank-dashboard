@@ -87,9 +87,9 @@ const SpendingDonut = (props: {
           type: 'donut',
           events: {
             dataPointSelection(e, chart, options) {
-              props.setSelection(parseInt(e?.target?.getAttribute('j')))
-              props.setValue(parseInt(e?.target?.getAttribute('data:value')))
-              props.setColor(e?.target?.getAttribute('fill'))
+              props.setSelection(parseInt(e?.target?.getAttribute('j') || -1))
+              props.setValue(parseInt(e?.target?.getAttribute('data:value') || -1))
+              props.setColor(e?.target?.getAttribute('fill') || '#FFF')
             },
           },
         },

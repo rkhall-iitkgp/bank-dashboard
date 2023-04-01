@@ -191,6 +191,7 @@ export function VerifyUPI() {
       const upis = account?.map((account: { upi: string | null }) => account.upi);
       console.log(upis);
       setUpiValue(upis[0])
+      setItem('upi', upis[0])
 
       // let upi = []
       // let ele;
@@ -290,7 +291,7 @@ export function VerifyUPI() {
                 </Text>
               }
             /> */}
-            <NativeSelect value={upiValue} onChange={(event) => { console.log(event.currentTarget.value); setUpiValue(event.currentTarget.value); setItem('upi', event.currentTarget.value) }} data={data} onClick={upiValue !== '' ? handleClick1 : handleClick2} />
+            <NativeSelect value={upiValue} onChange={(event) => { console.log(event.currentTarget.value); setUpiValue(event.currentTarget.value); setItem('upi', event.currentTarget.value) }} defaultValue={"UPI"} data={data} onClick={upiValue !== '' ? handleClick1 : handleClick2} />
           </div>
 
           <div className={classes.buttonContainer}>

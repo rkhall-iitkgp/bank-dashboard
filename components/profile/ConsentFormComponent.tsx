@@ -1,6 +1,6 @@
-import {Button, createStyles, Radio} from '@mantine/core'
-import {useRouter} from 'next/router'
-import React, {useState} from 'react'
+import { Button, createStyles, Radio } from '@mantine/core'
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
 
 const useStyles = createStyles((theme) => ({
   wrap: {
@@ -106,7 +106,7 @@ interface Props {
 }
 const ConsentFormComponent = ({ id, accountselected }: Props) => {
   const { classes } = useStyles()
-  const [data, setData] = useState<string>('1')
+  const [data, setData] = useState<string | null>(null)
   // console.log('accountselected :', accountselected)
   const router = useRouter()
 
@@ -144,6 +144,7 @@ const ConsentFormComponent = ({ id, accountselected }: Props) => {
 
         <div className={classes.button}>
           <Button
+            disabled={data ? false : true}
             size="lg"
             className={classes.control}
             onClick={() => {
