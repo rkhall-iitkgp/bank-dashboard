@@ -1,9 +1,9 @@
-import {Button, createStyles, Text} from '@mantine/core'
+import { Button, createStyles, Text } from '@mantine/core'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import useStorage from '../../../hooks/useStorage'
-import {Key} from 'react'
+import { Key } from 'react'
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -79,11 +79,13 @@ interface Props {
 
 const AccountCard = ({ bankName, value }: Props) => {
   const { classes } = useStyles()
+  const { origin } = window.location
+
   return (
     <div>
       <div className={classes.accountContainer}>
         <Image
-          src={'/../public/icons/sbi.png'}
+          src={`${origin}/icons/sbi.png`}
           width={20}
           height={20}
           alt={''}
@@ -104,7 +106,7 @@ const AccountCard = ({ bankName, value }: Props) => {
             color: '#000000',
           }}
         >
-          {"****" + value?.slice(8, 12)}
+          {'****' + value?.slice(8, 12)}
         </Text>
       </div>
     </div>
@@ -115,7 +117,7 @@ export function ProfileCard() {
   const { classes } = useStyles()
   const { getItem } = useStorage()
 
-  let BankAccount = JSON.parse(getItem("accounts"))
+  let BankAccount = JSON.parse(getItem('accounts'))
   // let BankAccount = [
   //   { id: 1, bankName: 'sbi', value: '****1234' },
   //   { id: 2, bankName: 'sbi', value: '****4235' },
@@ -140,7 +142,7 @@ export function ProfileCard() {
         }}
       >
         <Image
-          src={'/../public/icons/profilePhoto.png'}
+          src={`/icons/profilePhoto.png`}
           width={80}
           height={80}
           alt={''}
@@ -156,7 +158,7 @@ export function ProfileCard() {
             color: '#000000',
           }}
         >
-          {getItem("name")}
+          {getItem('name')}
         </span>
         <span
           style={{
@@ -168,7 +170,7 @@ export function ProfileCard() {
             color: '#4D4B4B',
           }}
         >
-          {getItem("email")}
+          {getItem('email')}
         </span>
       </div>
       <div
@@ -202,7 +204,9 @@ export function ProfileCard() {
             color: '#000000',
           }}
         >
-          {getItem("contact_no").slice(0, 3) + " " + getItem("contact_no").slice(3)}
+          {getItem('contact_no').slice(0, 3) +
+            ' ' +
+            getItem('contact_no').slice(3)}
         </span>
       </div>
       <div
@@ -226,16 +230,25 @@ export function ProfileCard() {
           Bank Accounts
         </span>
         <div className={classes.accountCollection}>
-          {BankAccount?.map((ele: { id: Key | null | undefined; bankName: string | undefined; account_no: string | undefined }, key: any) => {
-            return (
-              <span key={ele.id}>
-                <AccountCard
-                  bankName={ele.bankName}
-                  value={ele.account_no}
-                ></AccountCard>
-              </span>
-            )
-          })}
+          {BankAccount?.map(
+            (
+              ele: {
+                id: Key | null | undefined
+                bankName: string | undefined
+                account_no: string | undefined
+              },
+              key: any,
+            ) => {
+              return (
+                <span key={ele.id}>
+                  <AccountCard
+                    bankName={ele.bankName}
+                    value={ele.account_no}
+                  ></AccountCard>
+                </span>
+              )
+            },
+          )}
         </div>
       </div>
 
@@ -254,7 +267,7 @@ export function ProfileCard() {
           </span>{' '}
           &nbsp;{' '}
           <Image
-            src={'/../public/icons/settings.png'}
+            src={`/icons/settings.png`}
             width={18}
             height={18}
             alt={''}
@@ -272,13 +285,14 @@ export function ProfileCard() {
           }}
           onClick={() => {
             sessionStorage.clear()
+            window.location.href = '/'
           }}
         >
           Logout
         </span>{' '}
         &nbsp;{' '}
         <Image
-          src={'/../public/icons/logout.png'}
+          src={`/icons/logout.png`}
           width={18}
           height={18}
           alt={''}

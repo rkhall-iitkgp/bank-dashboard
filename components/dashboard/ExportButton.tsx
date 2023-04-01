@@ -17,12 +17,11 @@ const useStyles = createStyles((theme) => ({
     justifyContent: `space-around`,
   },
 }))
-
 export const ExportButton = React.forwardRef<HTMLDivElement, InputProps>(
   (props, ref) => {
-    const { classes } = useStyles()
-    const [selected, setSelected] = useState()
-    const accounts = useAccountStore()
+  const { classes } = useStyles()
+  const [selected, setSelected] = useState()
+  const accounts = useAccountStore()
 
     const handleExportJSON = () => {
       const jsonStr = JSON.stringify(accounts)

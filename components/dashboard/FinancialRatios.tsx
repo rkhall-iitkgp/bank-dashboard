@@ -68,7 +68,18 @@ const RatioCard = ({ ratioName, value }: Props) => {
 }
 
 export function FinancialRatios() {
+
   let factors = [239.74, 946.28]
+
+  let financialRatios = [
+    { id: 1, ratioName: 'Liquidity Ratio', value: `NA` },
+    { id: 2, ratioName: 'Debt to Asset Ratio', value: `NA` },
+    { id: 3, ratioName: 'Data Service Ratio', value: `NA` },
+    { id: 4, ratioName: 'Savings Ratio', value: `NA` },
+    { id: 5, ratioName: 'Solvency Ratio', value: `NA` },
+    { id: 6, ratioName: 'Life Insurance Coverage Ratio', value: `NA` },
+  ]
+
 
   return (
     <Card radius={'lg'} style={{ flex: 5 }} mr={15} p={0}>

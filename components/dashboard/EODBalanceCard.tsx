@@ -12,7 +12,8 @@ const EodBalance = (props: { balance: string; comparision: number }) => {
         justifyContent: 'space-between',
         width: '220px',
         height: '155px',
-        flex: 1.25
+        flex: 1.25,
+        paddingLeft: '0',
       }}
     >
       <Stack
@@ -20,13 +21,13 @@ const EodBalance = (props: { balance: string; comparision: number }) => {
         style={{
           flex: 2,
         }}
-        justify='flex-start'
+        justify="flex-start"
       >
         <Text
           c={'#7E7E7E'}
           fw={500}
           ff="Montserrat"
-          style={{ lineHeight: 0.8 }}
+          style={{ lineHeight: 0.8, marginTop: 0 }}
           fz="0.9rem"
           mt={20}
         >

@@ -20,9 +20,11 @@ const useAccountStore = create(
             mode: '',
             category: '',
             id: '',
+            balance: 0
         }],
         Loading: false,
-        flag: true
+        flag: true,
+        uploaded: true,
     },
         (set, get) => ({
             setTransaction: () => {

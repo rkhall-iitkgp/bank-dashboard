@@ -235,12 +235,12 @@ export function SelectBeneficiaryBank() {
         <div className={classes.forminside}>
           <div className={classes.titlebox}>
             <div className={classes.titlebold}>
-              <span>Select Beneficiary’s Bank</span>
+              <span>Select Beneficiary's Bank</span>
             </div>
           </div>
           <div className={classes.accountContainer}>
             <AccountType
-              src="/../public/icons/sbi.png"
+              src={`/icons/sbi.png`}
               id={1}
               setAccount={setAccount}
               handleClick={handleClick}
@@ -248,7 +248,7 @@ export function SelectBeneficiaryBank() {
               bankdesc="(Beneficiary is a SBI account holder)"
             />
             <AccountType
-              src="/../public/icons/bank-building.png"
+              src={`/icons/bank-building.png`}
               id={2}
               handleClick={handleClick}
               setAccount={setAccount}
@@ -266,7 +266,7 @@ export function SelectBeneficiaryBank() {
                   pathname: '/bank-transfer/payment-form',
                   query: {
                     selfOrOther: account,
-                    id: data.id,
+                    dacno: data.dacno,
                   },
                 }}
               >

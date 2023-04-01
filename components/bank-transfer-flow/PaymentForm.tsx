@@ -212,8 +212,13 @@ export function PaymentForm(props: { sbi: any }) {
   const { getItem } = useStorage()
   let account
   try {
+    console.log(JSON.parse(getItem('accounts')??'[]'), data.dacno);
+    
     account = JSON.parse(getItem('accounts') ?? '[]')?.filter(
-      (v: { id: number }) => v.id + '' == data.id,
+      (v: { account_no: number }) => {
+        
+        return v.account_no+'' === (data.dacno)
+      }
     )[0]
   } catch {
     console.log('JSON parsing error')
@@ -291,7 +296,7 @@ export function PaymentForm(props: { sbi: any }) {
       }
     }
   }
-  function handleClick2() {}
+  function handleClick2() { }
 
   useEffect(() => {
     if (form.values.account_no === '') {
@@ -314,11 +319,11 @@ export function PaymentForm(props: { sbi: any }) {
       })
       setButtonText('Verify')
     }
-    return () => {}
+    return () => { }
   }, [form.values.account_no])
 
   return (
-    <Box component="form" mx="auto" onSubmit={form.onSubmit(() => {})}>
+    <Box component="form" mx="auto" onSubmit={form.onSubmit(() => { })}>
       {/* <form onSubmit={form.onSubmit(console.log)}> */}
       <div className={classes.wrapper}>
         <div className={classes.form}>
@@ -495,7 +500,6 @@ export function PaymentForm(props: { sbi: any }) {
                           ifsc: form.values.ifsc,
                           ...router.query,
                           account_no: form.values.account_no,
-                          description: form.values.description,
                         },
                       })
                     }
