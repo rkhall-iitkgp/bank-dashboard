@@ -92,27 +92,6 @@ const useStyles = createStyles((theme) => ({
       cursor: `pointer`,
     },
   },
-  inputAmount: {
-    backgroundColor: theme.white,
-    borderColor: theme.colors.gray[4],
-    color: theme.colors.gray[6],
-    fontSize: '1rem',
-    height: '1.2rem',
-    fontFamily: 'Montserrat',
-    ':focus': {
-      borderColor: 'blue',
-    },
-    ':disabled': {
-      color: '#000',
-      backgroundColor: '#fff',
-      opacity: `0.8`,
-      height: '20px',
-    },
-    border: '0',
-    borderRadius: '0',
-    background: 'transparent',
-    borderBottom: `2px solid #ccc`,
-
   buttonContainer: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -201,7 +180,7 @@ const useStyles = createStyles((theme) => ({
     paddingTop: `0.25rem`,
     fontWeight: 600,
   },
-}}))
+}))
 
 //   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 

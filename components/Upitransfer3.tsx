@@ -3,7 +3,7 @@ import {
   TextInput,
   getStylesRef,
 } from '@mantine/core'
-import Heading from './SmallComponents/Heading'
+import Heading from './reusable-components/Heading'
 import ButtonGroup from './reusable-components/ButtonGroup'
 const useStyles = createStyles((theme) => ({
   wrapper: {

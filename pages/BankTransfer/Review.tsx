@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Reviewdetailsbank } from '../../components/ReviewDetailsbank'
+import { ReviewDetailsBank } from '../../components/bank-transfer-flow/ReviewDetailsBank'
 
 const Review = () => {
     let isSbi;
@@ -12,6 +12,6 @@ const Review = () => {
         }
       },[])
     return (
-        <Reviewdetailsbank sbi={isSbi} />
+        <ReviewDetailsBank sbi={isSbi} />
     )
 }

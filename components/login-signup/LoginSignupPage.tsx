@@ -103,7 +103,6 @@ const useStyles = createStyles((theme) => ({
     paddingLeft: 0,
     position: `relative`,
     marginTop: `0 !important`,
-    paddingLeft: 0,
   },
   control: {
     backgroundColor: `#006AE4`,
@@ -146,14 +145,6 @@ const useStyles = createStyles((theme) => ({
     width: `125px`,
     backgroundColor: `black`,
     borderRadius: `20px`,
-    fontFamily: `Montserrat`,
-  },
-  otpbutton: {
-    height: `36px`,
-    width: `364px`,
-    background: `#006AE4`,
-    borderRadius: `30px`,
-    marginTop: `20px`,
     fontFamily: `Montserrat`,
   },
   imagecontainer: {
