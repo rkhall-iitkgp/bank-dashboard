@@ -1,5 +1,5 @@
 import useStorage from '../../hooks/useStorage'
-import { createStyles, Group, Stack, Tabs, Text } from '@mantine/core'
+import { Card, createStyles, Group, Image, Stack, Tabs, Text } from '@mantine/core'
 import ExportButton from './ExportButton'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
@@ -49,6 +49,36 @@ const useStyles = createStyles((theme) => ({
     border: 'none',
   },
 }))
+
+const Empty = () => {
+  return (
+    <Card
+      // radius={'lg'}
+
+      style={{
+        boxShadow: '0px 2px 40px rgba(0, 0, 0, 0.1)',
+      }}
+      mr={15}
+    >
+      <Group
+        align={'center'}
+        style={{
+          flex: 1,
+          maxHeight: '53vh',
+          overflow: 'auto',
+          margin: 'auto',
+          alignItems: 'center'
+        }}
+      >
+        <Image src={'/icons/empty.png'}
+          alt="filter-icon"
+          height={300}
+          width={300}
+        />
+      </Group>
+    </Card>
+  )
+}
 
 const RightPane = () => {
   const { getItem } = useStorage()
@@ -121,7 +151,9 @@ const RightPane = () => {
           </Tabs.List>
 
           <Tabs.Panel value="financial" className={classes.tabsPanel}>
-            <FinancialStatistics />
+            {transactions.length != 0 &&
+              <FinancialStatistics />}
+            {transactions.length == 0 && <Empty />}
           </Tabs.Panel>
 
           <Tabs.Panel value="stocks" className={classes.tabsPanel}>

@@ -58,6 +58,7 @@ const TransactionCard = (props: {
       my={12}
       p={20}
       mx={8}
+      key={data.id}
     >
       <Group px={8} style={{ justifyContent: 'space-between' }}>
         <Stack>
@@ -160,11 +161,12 @@ const RecentTransactions = (prop: {
         Recent Transactions
       </Text>
       <div style={{ maxHeight: '64vh', overflow: 'auto' }}>
-        {prop.transactions?.map((t) => (
-          <div key={t.id}>
+        {transactions.length == 0 && <Text>No New Transaction</Text>}
+        {
+          transactions.length != 0 && transactions?.map((t) => (
             <TransactionCard data={t} />
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
   )
