@@ -101,10 +101,8 @@ const LeftPane = ({ accountsList, useAccount }: Props) => {
   console.log('useAccount',useAccount)
   const [account, setaccount] = useState(0);
   const uploaded = useAccountStore(state => state.uploaded)
-  useEffect(() => {
-    console.log('uploaded', uploaded)
-  }, [uploaded])
-  
+
+
   return (
     <>
       <Modal
@@ -121,8 +119,8 @@ const LeftPane = ({ accountsList, useAccount }: Props) => {
         {/* <Filter account={account} setAccount={setaccount} /> */}
       </Modal>
       <ContainerLeft>
-        <FilterRow style={{ justifyContent: 'space-between' }}>
-          {!uploaded && <FilterCard onClick={open}>
+        {!uploaded && <><FilterRow style={{ justifyContent: 'space-between' }}>
+          <FilterCard onClick={open}>
             Apply Filter
             <Image
               src={'icons/filter.png'}
@@ -130,7 +128,7 @@ const LeftPane = ({ accountsList, useAccount }: Props) => {
               height={20}
               width={20}
             />
-          </FilterCard>}
+          </FilterCard>
           <SelectBankAccount>
             <Select
               icon={
@@ -155,23 +153,24 @@ const LeftPane = ({ accountsList, useAccount }: Props) => {
               data={accountsList}
             />
           </SelectBankAccount>
+
         </FilterRow>
 
-        <Group style={{ justifyContent: 'space-evenly' }}>
-          <CashCard
-            num={useAccount.Transaction?.filter(v => v.credit > 0)?.map(v => v.credit)}
-            type={'deposit'}
-            limit={depositLimit}
-            setLimit={setDepositLimit}
-          />
-          <CashCard
-            num={useAccount.Transaction?.filter(v => v.debit > 0)?.map(v => v.debit)}
-            type={'withdrawl'}
-            limit={withdrawlLimit}
-            setLimit={setWithdrawlLimit}
-          />
-        </Group>
-
+          <Group style={{ justifyContent: 'space-evenly' }}>
+            <CashCard
+              num={useAccount.Transaction?.filter(v => v.credit > 0)?.map(v => v.credit)}
+              type={'deposit'}
+              limit={depositLimit}
+              setLimit={setDepositLimit}
+            />
+            <CashCard
+              num={useAccount.Transaction?.filter(v => v.debit > 0)?.map(v => v.debit)}
+              type={'withdrawl'}
+              limit={withdrawlLimit}
+              setLimit={setWithdrawlLimit}
+            />
+          </Group>
+        </>}
         {/* <EodBalance balance="$1,23,456" comparision={4.6} /> */}
 
         <RecentTransactions transactions={useAccount.Transaction} />

@@ -79,13 +79,12 @@ interface Props {
 
 const AccountCard = ({ bankName, value }: Props) => {
   const { classes } = useStyles()
-  const { origin } = window.location;
 
   return (
     <div>
       <div className={classes.accountContainer}>
         <Image
-          src={`${origin}/icons/sbi.png`}
+          src={`/icons/sbi.png`}
           width={20}
           height={20}
           alt={''}
@@ -106,7 +105,7 @@ const AccountCard = ({ bankName, value }: Props) => {
             color: '#000000',
           }}
         >
-          {"****" + value?.slice(8, 12)}
+          {'****' + value?.slice(8, 12)}
         </Text>
       </div>
     </div>
@@ -117,7 +116,7 @@ export function ProfileCard() {
   const { classes } = useStyles()
   const { getItem } = useStorage()
 
-  let BankAccount = JSON.parse(getItem("accounts"))
+  let BankAccount = JSON.parse(getItem('accounts'))
   // let BankAccount = [
   //   { id: 1, bankName: 'sbi', value: '****1234' },
   //   { id: 2, bankName: 'sbi', value: '****4235' },
@@ -158,7 +157,7 @@ export function ProfileCard() {
             color: '#000000',
           }}
         >
-          {getItem("name")}
+          {getItem('name')}
         </span>
         <span
           style={{
@@ -170,7 +169,7 @@ export function ProfileCard() {
             color: '#4D4B4B',
           }}
         >
-          {getItem("email")}
+          {getItem('email')}
         </span>
       </div>
       <div
@@ -204,7 +203,9 @@ export function ProfileCard() {
             color: '#000000',
           }}
         >
-          {getItem("contact_no").slice(0, 3) + " " + getItem("contact_no").slice(3)}
+          {getItem('contact_no').slice(0, 3) +
+            ' ' +
+            getItem('contact_no').slice(3)}
         </span>
       </div>
       <div
@@ -228,16 +229,25 @@ export function ProfileCard() {
           Bank Accounts
         </span>
         <div className={classes.accountCollection}>
-          {BankAccount?.map((ele: { id: Key | null | undefined; bankName: string | undefined; account_no: string | undefined }, key: any) => {
-            return (
-              <span key={ele.id}>
-                <AccountCard
-                  bankName={ele.bankName}
-                  value={ele.account_no}
-                ></AccountCard>
-              </span>
-            )
-          })}
+          {BankAccount?.map(
+            (
+              ele: {
+                id: Key | null | undefined
+                bankName: string | undefined
+                account_no: string | undefined
+              },
+              key: any,
+            ) => {
+              return (
+                <span key={ele.id}>
+                  <AccountCard
+                    bankName={ele.bankName}
+                    value={ele.account_no}
+                  ></AccountCard>
+                </span>
+              )
+            },
+          )}
         </div>
       </div>
 
@@ -274,6 +284,7 @@ export function ProfileCard() {
           }}
           onClick={() => {
             sessionStorage.clear()
+            window.location.href = '/'
           }}
         >
           Logout
