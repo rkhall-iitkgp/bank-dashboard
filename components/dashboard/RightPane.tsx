@@ -55,8 +55,13 @@ const RightPane = () => {
   const { getItem } = useStorage()
   const { classes } = useStyles()
   const useAccount = useAccountStore()
-  const transactions = useAccount.Transaction
-
+  let transactions = useAccount.Transaction
+  const uploaded = useAccountStore(state => state.uploaded)
+  if (uploaded) {
+    transactions = transactions.sort((a, b) => {
+      return dayjs(a.date).toDate().getTime() - dayjs(b.date).toDate().getTime()
+    })
+  }
   let thisbalance = transactions.at(-1)?.balance || 0
 
   let accounts = getItem('accounts')
@@ -64,17 +69,19 @@ const RightPane = () => {
 
   let currentDay = dayjs(new Date())
   let currentBalance = 0, sum = 0, numDays = 0;
-  for (let i = dayjs(transactions.at(0)?.date || new Date()); i < currentDay; i = i.add(1, 'day')) {
+
+  for (let i = dayjs(transactions.at(0)?.date || new Date()); i <= currentDay; i = i.add(1, 'day')) {
     currentBalance = transactions.filter(x => i.isSame(x.date, 'date')).at(-1)?.balance || currentBalance;
     sum += currentBalance
     numDays++;
   }
+  console.log(sum, numDays)
 
   let lastweek = dayjs(new Date()).subtract(1, 'week');
   let lastWeekFiltered = transactions.filter(x => dayjs(x.date) < lastweek);
   let lastWeekBalance = lastWeekFiltered.at(-1)?.balance
   let lastweeksum = 0, lastweeknumdays = 0, lastweekcurrentbalance = 0;
-  for (let i = dayjs(transactions.at(0)?.date || new Date()); i < lastweek; i = i.add(1, 'day')) {
+  for (let i = dayjs(transactions.at(0)?.date || new Date()); i <= lastweek; i = i.add(1, 'day')) {
     lastweekcurrentbalance = transactions.filter(x => i.isSame(x.date, 'date')).at(-1)?.balance || lastweekcurrentbalance;
     lastweeksum += lastweekcurrentbalance
     lastweeknumdays++;

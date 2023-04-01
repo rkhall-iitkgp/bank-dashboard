@@ -85,8 +85,8 @@ export default function ExportButton() {
       <Menu.Dropdown>
         {/* <Menu.Item onClick={handleExportPDF}>Export as PDF</Menu.Item> */}
         {/* <Menu.Item onClick={handleExportCSV}>Export as CSV</Menu.Item> */}
-        <Menu.Item onClick={handleExportJSON}>Export as JSON</Menu.Item>
-        <Menu.Item ><CSVLink {...csvReport}>Export as CSV</CSVLink></Menu.Item>
+        <Menu.Item onClick={handleExportJSON}>Download as JSON</Menu.Item>
+        <Menu.Item ><CSVLink {...csvReport}>Download as CSV</CSVLink></Menu.Item>
         <Menu.Item>Send an Email</Menu.Item>
       </Menu.Dropdown>
 

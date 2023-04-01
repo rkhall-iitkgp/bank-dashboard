@@ -269,11 +269,11 @@ const FinancialStatistics = () => {
 
     let dateslist = Array.from(datelegends);
 
-    // dateslist.sort((a, b) => {
-    //   let A = new Date(a);
-    //   let B = new Date(b);
-    //   return A > B ? 1 : -1
-    // })
+    dateslist.sort((a, b) => {
+      let A = new Date(a);
+      let B = new Date(b);
+      return A > B ? 1 : -1
+    })
 
     dateslist.forEach(k => {
       let datefiltered = transactions.filter(x => x.date === k)
@@ -298,14 +298,14 @@ const FinancialStatistics = () => {
     console.log('filteredTransactions', newfilteredTransactions)
     let datelegends = new Set<string>();
     let datedata: { x: string, y: number }[] = [];
-    filteredTransactions.forEach(v => datelegends.add(v.date))
+    newfilteredTransactions.forEach(v => datelegends.add(v.date))
     let dateslist = Array.from(datelegends);
 
     let totaltal = 0
     dateslist.forEach(k => {
       let total = 0;
       console.log(k)
-      filteredTransactions.filter(x => x.date === k).forEach(x => {
+      newfilteredTransactions.filter(x => x.date === k).forEach(x => {
         total += x.debit
       })
       datedata.push({ x: k, y: total });
