@@ -10,6 +10,7 @@ import { notifications } from '@mantine/notifications';
 
 import { hasLength, isInRange, matches, useForm } from '@mantine/form';
 import api from '../../datams'
+import useAccountStore from '../../Store/Account'
 import { useRouter } from 'next/router'
 
 const useStyles = createStyles((theme) => ({
@@ -175,8 +176,6 @@ export function AddAccountFormPopup({
     },
   });
   useEffect(() => {
-
-
     return () => {
       api.get(`/user/accounts/${getItem("user_id")}/`, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } })
         .then((response) => {

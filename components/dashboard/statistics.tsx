@@ -173,29 +173,29 @@ const WeeklySpendingChart = (props: { data: { x: string; y: number }[], name: st
 //   { x: '05/15/2014', y: 5500.0 },
 // ]
 const MontlySpendingData = [
-  { x: 'Apr', y: 400 },
-  { x: 'May', y: 420 },
-  { x: 'Jun', y: 440 },
-  { x: 'Jul', y: 480 },
-  { x: 'Aug', y: 530 },
-  { x: 'Sep', y: 590 },
-  { x: 'Oct', y: 690 },
-  { x: 'Nov', y: 690 },
+  { x: 'Apr', y: 0 },
+  { x: 'May', y: 0 },
+  { x: 'Jun', y: 0 },
+  { x: 'Jul', y: 0 },
+  { x: 'Aug', y: 0 },
+  { x: 'Sep', y: 0 },
+  { x: 'Oct', y: 0 },
+  { x: 'Nov', y: 0 },
 ]
 
 const WeeklySpendingData = {
-  Jan: [{ y: 50, x: '1' }],
-  Feb: [{ y: 50, x: '1' }],
-  Mar: [{ y: 50, x: '1' }],
-  Apr: [{ y: 50, x: '1' }],
-  May: [{ y: 50, x: '1' }],
-  Jun: [{ y: 50, x: '1' }],
-  Jul: [{ y: 50, x: '1' }],
-  Aug: [{ y: 50, x: '1' }],
-  Sep: [{ y: 50, x: '1' }],
-  Oct: [{ y: 50, x: '1' }],
-  Nov: [{ y: 50, x: '1' }],
-  Dec: [{ y: 50, x: '1' }],
+  Jan: [{ y: 0, x: '1' }],
+  Feb: [{ y: 0, x: '1' }],
+  Mar: [{ y: 0, x: '1' }],
+  Apr: [{ y: 0, x: '1' }],
+  May: [{ y: 0, x: '1' }],
+  Jun: [{ y: 0, x: '1' }],
+  Jul: [{ y: 0, x: '1' }],
+  Aug: [{ y: 0, x: '1' }],
+  Sep: [{ y: 0, x: '1' }],
+  Oct: [{ y: 0, x: '1' }],
+  Nov: [{ y: 0, x: '1' }],
+  Dec: [{ y: 0, x: '1' }],
 }
 
 const InsightList = [
@@ -269,20 +269,21 @@ const FinancialStatistics = () => {
 
     let dateslist = Array.from(datelegends);
 
-    dateslist.sort((a, b) => {
-      let A = new Date(a);
-      let B = new Date(b);
-      return A > B ? 1 : -1
-    })
+    // dateslist.sort((a, b) => {
+    //   let A = new Date(a);
+    //   let B = new Date(b);
+    //   return A > B ? 1 : -1
+    // })
 
     dateslist.forEach(k => {
       let datefiltered = transactions.filter(x => x.date === k)
-      datefiltered.sort((a, b) => {
-        let A = new Date(a.date);
-        let B = new Date(b.date);
-        return A > B ? 1 : -1
-      })
+      // datefiltered.sort((a, b) => {
+      //   let A = new Date(a.date);
+      //   let B = new Date(b.date);
+      //   return A > B ? 1 : -1
+      // })
       // .forEach(x => { total += x.credit - x.debit })
+      console.log(`x = ${k} y = ${datefiltered.at(-1)?.balance}`)
       datedata.push({ x: k, y: datefiltered.at(-1)?.balance || 0 });
     })
 
@@ -298,12 +299,6 @@ const FinancialStatistics = () => {
     let datedata: { x: string, y: number }[] = [];
     filteredTransactions.forEach(v => datelegends.add(v.date))
     let dateslist = Array.from(datelegends);
-
-    dateslist.sort((a, b) => {
-      let A = new Date(a);
-      let B = new Date(b);
-      return A > B ? 1 : -1
-    })
 
     let totaltal = 0
     dateslist.forEach(k => {
