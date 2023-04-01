@@ -118,7 +118,6 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 interface Props {
   accountsList: any[]
   useAccount: any
-  increment: any
 }
 const LeftPane = React.forwardRef<HTMLDivElement, Props>(
   ({ accountsList, useAccount }, ref) => {
