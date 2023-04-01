@@ -175,6 +175,7 @@ export function AddAccountFormPopup({
 
     },
   });
+  const router = useRouter()
   useEffect(() => {
     return () => {
       api.get(`/user/accounts/${getItem("user_id")}/`, { headers: { "Authorization": `Bearer ${getItem("access_token")}` } })
@@ -313,7 +314,7 @@ export function AddAccountFormPopup({
                               withCloseButton: true,
                               autoClose: 5000,
                               title: "Unsuccessful",
-                              message: err.response.data?.message,
+                              message: err?.response?.data?.message,
                               color: 'red',
                               icon: <IconX size={"1.1rem"} />,
                               loading: false,
@@ -344,7 +345,7 @@ export function AddAccountFormPopup({
                             loading: false,
                           });
                           // sessionStorage.setItem('bankAccountList', JSON.stringify(bankAccountList))
-                          useRouter().reload()
+                          router.reload()
                           console.log(response)
                         })
                         .catch((err) => {
@@ -354,7 +355,7 @@ export function AddAccountFormPopup({
                             withCloseButton: true,
                             autoClose: 5000,
                             title: "Unsuccessful",
-                            message: err.response.data?.message,
+                            message: err?.response?.data?.message,
                             color: 'red',
                             icon: <IconX size={"1.1rem"} />,
                             loading: false,

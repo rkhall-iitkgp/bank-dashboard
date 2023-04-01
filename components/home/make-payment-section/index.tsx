@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import useStorage from '../../../hooks/useStorage'
 import api from '../../datams'
 import MakePaymentCard from './MakePaymentCards'
+import { useRouter } from 'next/router'
 
 const _StyledButton = styled(Button)`
   border-radius: 30px;
@@ -64,12 +65,11 @@ export default function Payment({
       })
   }
   // const [accLength, setAccLength] = useState('[]')
-  // useEffect(() => {
-  //   GetKycStatus()
-  //   // setResult(0)
-  //   setAccLength(getItem('accounts'))
-  //   console.log(result)
-  // }, [])
+  useEffect(() => {
+    GetKycStatus()
+    // setResult(0)
+  }, [])
+  const router = useRouter()
   return (
     <div style={{ marginLeft: '3vw', marginRight: `3vw`, marginTop: '3vh' }}>
       <Card shadow="sm" padding="xs" radius="lg" withBorder bg={'#E0EEFF'}>
@@ -88,101 +88,45 @@ export default function Payment({
           style={{ justifyContent: 'space-evenly', alignItems: 'flex-start' }}
           my={12}
         >
-          {result === 0 && (
-            <div
-              onClick={() => {
-                SetIsKycPermissionPopUpOpen(true)
-              }}
-            >
-              <MakePaymentCard
-                imageAddress="icons/bank-building-white.png"
-                cardText="Bank Transfer"
-                alt="Bank Transfer"
-              />
-            </div>
-          )}
 
-          {result === 1 && bankAccountList?.length !== 0 && (
-            <Link href="/bank-transfer" style={{ textDecoration: 'none' }}>
-              <MakePaymentCard
-                imageAddress="icons/bank-building-white.png"
-                cardText="Bank Transfer"
-                alt="Bank Transfer"
-              />
-            </Link>
-          )}
-          {result === 1 && bankAccountList?.length === 0 && (
-            <div
-              onClick={() => {
+          <div
+            onClick={() => {
+              if (result === 0) {
+                SetIsKycPermissionPopUpOpen(true)
+              } else if (bankAccountList?.length === 0) {
                 setIsAddAccountPopupOpen(true)
-              }}
-            >
-              <MakePaymentCard
-                imageAddress="icons/bank-building-white.png"
-                cardText="Bank Transfer"
-                alt="Bank Transfer"
-              />
-            </div>
-          )}
+              } else {
+                router.push("/bank-transfer")
+              }
+            }}
+          >
+            <MakePaymentCard
+              imageAddress="icons/bank-building-white.png"
+              cardText="Bank Transfer"
+              alt="Bank Transfer"
+            />
+          </div>
 
-          {result === 0 && (
-            <div
-              onClick={() => {
+
+          <div
+            onClick={() => {
+              if (result === 0) {
                 SetIsKycPermissionPopUpOpen(true)
-              }}
-            >
-              <MakePaymentCard
-                imageAddress="icons/upi.png"
-                cardText="UPI Payment"
-                alt="UPI Payment"
-              />
-            </div>
-          )}
-
-          {result === 1 && bankAccountList?.length !== 0 && (
-            <Link href="/UPI" style={{ textDecoration: 'none' }}>
-              <MakePaymentCard
-                imageAddress="icons/upi.png"
-                cardText="UPI Payment"
-                alt="UPI Payment"
-              />
-            </Link>
-          )}
-          {result === 1 && bankAccountList?.length === 0 && (
-            <div
-              onClick={() => {
+              } else if (bankAccountList?.length === 0) {
                 setIsAddAccountPopupOpen(true)
-              }}
-            >
-              <MakePaymentCard
-                imageAddress="icons/upi.png"
-                cardText="UPI Payment"
-                alt="UPI Payment"
-              />
-            </div>
-          )}
+              } else {
+                router.push("/UPI")
+              }
+            }}
+          >
+            <MakePaymentCard
+              imageAddress="icons/upi.png"
+              cardText="UPI Payment"
+              alt="UPI Payment"
+            />
+          </div>
 
-          {/* {(result===0) ? (
-            <div
-              onClick={() => {
-                SetIsKycPermissionPopUpOpen(true)
-              }}
-            >
-              <MakePaymentCard
-                imageAddress="icons/upi.png"
-                cardText="UPI Payment"
-                alt="UPI Payment"
-              />
-            </div>
-          ) : (
-            <Link href="/UPI">
-              <MakePaymentCard
-                imageAddress="icons/upi.png"
-                cardText="UPI Payment"
-                alt="UPI Payment"
-              />
-            </Link>
-          )} */}
+
           <MakePaymentCard
             imageAddress="icons/payphone.png"
             cardText="Pay Phone Number"
