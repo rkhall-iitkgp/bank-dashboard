@@ -1,5 +1,5 @@
-import {Card, Stack, Text, TextInput} from '@mantine/core'
-import {useState} from 'react'
+import { Card, Stack, Text, TextInput } from '@mantine/core'
+import { useState } from 'react'
 
 const CashCard = (props: {
   num: number[]
@@ -9,23 +9,25 @@ const CashCard = (props: {
 }) => {
   const { num, type, limit, setLimit } = props
   const [showLimit, setShowLimit] = useState(false)
-  const [newLimit, setNewLimit] = useState(limit)
-  const [filteredNum, setFilteredNum] = useState(num.filter((n) => n <= limit))
 
   const bgc = type === 'withdrawl' ? '#FFE5E4' : '#E8F6F0'
   const ffc = type === 'withdrawl' ? '#D73331' : '#2CC578'
   const text =
     type === 'withdrawl' ? 'Large Cash Withdrawls' : 'Large Cash Deposits'
 
+  const [filteredNum, setFilteredNum] = useState(num.filter((n) => n <= limit))
+
   const handleFilterChange = (e) => {
-    setNewLimit(e.target.value)
+    const newLimit = e.target.value
+    setLimit(newLimit)
+    setFilteredNum(num.filter((n) => n <= newLimit))
   }
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       setShowLimit(false)
-      setLimit(newLimit)
-      setFilteredNum(num.filter((n) => n <= newLimit))
+      setLimit(e.target.value)
+      setFilteredNum(num.filter((n) => n <= e.target.value))
     }
   }
 
@@ -37,6 +39,7 @@ const CashCard = (props: {
         boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
         maxWidth: '200px',
         flex: 1,
+        paddingBottom: '1.75rem',
       }}
     >
       <Card.Section bg={bgc} py={6}>
@@ -46,12 +49,12 @@ const CashCard = (props: {
           ff="Montserrat"
           mx={40}
           align="center"
-          style={{ lineHeight: '1.2' }}
+          style={{ lineHeight: '1.2', margin: 'auto' }}
         >
           {text}
         </Text>
       </Card.Section>
-      <Stack align="center" my={15}>
+      <Stack align="center" my={15} style={{ marginBottom: '0' }}>
         <Text fz={24} c={ffc} fw={700} style={{ lineHeight: 0.8 }}>
           {filteredNum.length}
         </Text>
@@ -65,21 +68,21 @@ const CashCard = (props: {
         >
           Set Limit
         </Text>
-        <TextInput 
-          radius={'lg'} 
+        <TextInput
+          radius={'lg'}
           h={15}
-          style={{ 
+          style={{
             visibility: showLimit ? 'visible' : 'hidden',
             border: 'none',
             // boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.3)',
-          }} 
-          value={newLimit}
+          }}
           onChange={handleFilterChange}
           onKeyDown={handleKeyDown}
+          placeholder="Enter Amount Limit"
         />
       </Stack>
     </Card>
   )
 }
 
-export default CashCard;
+export default CashCard
