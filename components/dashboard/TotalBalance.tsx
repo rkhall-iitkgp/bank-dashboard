@@ -125,7 +125,7 @@ export function TotalBalance({ totalBalance, increment, timePeriod, accountNumbe
       </div>
       <div
         className={classes.subcontainer3}
-        style={{ backgroundColor: data.increment > 0 ? '#737373' : '#FFE5E4' }}
+        style={{ backgroundColor: data.increment > 0 ? '#ebf7e9' : '#FFE5E4' }}
       >
         <span
           style={{

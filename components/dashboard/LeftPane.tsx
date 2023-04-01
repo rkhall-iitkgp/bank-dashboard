@@ -21,7 +21,8 @@ import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
 import { TotalBalance } from './TotalBalance'
 import FinancialStatisticsPdf from './statisticsPdf'
-import FoodStatisticsPdf from './foodStatisticsPdf'
+import useStorage from '../../hooks/useStorage'
+import dayjs from 'dayjs'
 
 const FilterRow = styled.div`
   display: flex;
@@ -117,6 +118,7 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 interface Props {
   accountsList: any[]
   useAccount: any
+  increment: any
 }
 const LeftPane = React.forwardRef<HTMLDivElement, Props>(
   ({ accountsList, useAccount }, ref) => {
@@ -125,134 +127,167 @@ const LeftPane = React.forwardRef<HTMLDivElement, Props>(
     const [withdrawlLimit, setWithdrawlLimit] = useState(1000)
     const selectedBankAccount = useAccount.account_no
     const [opened, { open, close }] = useDisclosure(false)
+    const { getItem } = useStorage()
+    const [name, setName] = useState('');
+    useEffect(() => {
+      setName(getItem('name'));
+    }, [])
+    const transactions = useAccount.Transaction;
+    let currentDay = dayjs(new Date())
+    let currentBalance = 0, sum = 0, numDays = 0;
+    for (let i = dayjs(transactions.at(0)?.date || new Date()); i < currentDay; i = i.add(1, 'day')) {
+      currentBalance = transactions.filter(x => i.isSame(x.date, 'date')).at(-1)?.balance || currentBalance;
+      sum += currentBalance
+      numDays++;
+    }
+    let accounts = getItem('accounts')
+    let fetchedAccount = JSON.parse(accounts ? accounts : '[]').filter(v => v.account_no === useAccount.account_no)[0];
+    let lastweek = dayjs(new Date()).subtract(1, 'week');
+    let lastWeekFiltered = transactions.filter(x => dayjs(x.date) < lastweek);
+    let lastWeekBalance = lastWeekFiltered.at(-1)?.balance
+    let lastweeksum = 0, lastweeknumdays = 0, lastweekcurrentbalance = 0;
+    for (let i = dayjs(transactions.at(0)?.date || new Date()); i < lastweek; i = i.add(1, 'day')) {
+      lastweekcurrentbalance = transactions.filter(x => i.isSame(x.date, 'date')).at(-1)?.balance || lastweekcurrentbalance;
+      lastweeksum += lastweekcurrentbalance
+      lastweeknumdays++;
+    }
 
-  useEffect(() => {
-    accountsList.forEach(e => {
-      e.value = e.account_no
-      e.label = "****" + e.account_no.slice(8, 12)
-      e.image = 'icons/sbilogo.png'
-      e.name = e.account_no
-      e.description = e.account_no
-    })
+    useEffect(() => {
+      accountsList.forEach((e) => {
+        e.value = e.account_no
+        e.label = '****' + e.account_no.slice(8, 12)
+        e.image = 'icons/sbilogo.png'
+        e.name = e.account_no
+        e.description = e.account_no
+      })
+    }, [])
+    useEffect(() => {
+      console.log('useAccount.Transaction', useAccount.Transaction)
+      console.log('selectedBankAccount', selectedBankAccount)
+    }, [selectedBankAccount])
+    const [account, setaccount] = useState(0)
+    const uploaded = useAccountStore((state) => state.uploaded)
 
-  }, [])
-  useEffect(() => {
-    console.log('useAccount.Transaction', useAccount.Transaction)
-    console.log('selectedBankAccount', selectedBankAccount)
-  }, [selectedBankAccount])
-  const [account, setaccount] = useState(0);
-  const uploaded = useAccountStore(state => state.uploaded)
+    return (
+      <>
+        <Modal
+          radius={'lg'}
+          withCloseButton={false}
+          size="lg"
+          opened={opened}
+          onClose={close}
+          centered
+        >
+          <Filter
+            todashboard={false}
+            close={close}
+            setIsanalysisopen={(x) => {}}
+          />
+          {/* <Filter account={account} setAccount={setaccount} /> */}
+        </Modal>
+        <ContainerLeft>
+          {!uploaded && (
+            <>
+              <FilterRow style={{ justifyContent: 'space-between' }}>
+                <FilterCard onClick={open}>
+                  Apply Filter
+                  <Image
+                    src={'icons/filter.png'}
+                    alt="filter-icon"
+                    height={20}
+                    width={20}
+                  />
+                </FilterCard>
+                <SelectBankAccount>
+                  <Select
+                    icon={
+                      <Image
+                        src={'icons/sbilogo.png'}
+                        height={20}
+                        width={20}
+                        alt="sbi-logo"
+                      />
+                    }
+                    itemComponent={SelectItem}
+                    // searchable
+                    radius="lg"
+                    placeholder="Bank Account"
+                    value={selectedBankAccount}
+                    onChange={(e) => {
+                      if (e) {
+                        useAccount.account_no = e.toString()
+                        useAccount.setTransaction()
+                      }
+                    }}
+                    data={accountsList}
+                  />
+                </SelectBankAccount>
+              </FilterRow>
 
-
-  return (
-    <>
-      <Modal
-        radius={'lg'}
-        withCloseButton={false}
-        size="lg"
-        opened={opened}
-        onClose={close}
-        centered
-      >
-        <Filter todashboard={false} close={close} setIsanalysisopen={(x) => {
-
-        }} />
-        {/* <Filter account={account} setAccount={setaccount} /> */}
-      </Modal>
-      <ContainerLeft>
-        {!uploaded && <><FilterRow style={{ justifyContent: 'space-between' }}>
-          <FilterCard onClick={open}>
-            Apply Filter
-            <Image
-              src={'icons/filter.png'}
-              alt="filter-icon"
-              height={20}
-              width={20}
-            />
-          </FilterCard>
-          <SelectBankAccount>
-            <Select
-              icon={
-                <Image
-                  src={'icons/sbilogo.png'}
-                  height={20}
-                  width={20}
-                  alt="sbi-logo"
+              <Group style={{ justifyContent: 'space-evenly' }}>
+                <CashCard
+                  num={useAccount.Transaction?.filter((v) => v.credit > 0)?.map(
+                    (v) => v.credit,
+                  )}
+                  type={'deposit'}
+                  limit={depositLimit}
+                  setLimit={setDepositLimit}
                 />
-              }
-              itemComponent={SelectItem}
-              // searchable
-              radius="lg"
-              placeholder="Bank Account"
-              value={selectedBankAccount}
-              onChange={(e) => {
-                if (e) {
-                  useAccount.account_no = e.toString()
-                  useAccount.setTransaction()
-                }
-              }}
-              data={accountsList}
-            />
-          </SelectBankAccount>
-
-        </FilterRow>
-
-            <Group style={{ justifyContent: 'space-evenly' }}>
-              <CashCard
-                num={useAccount.Transaction?.filter((v) => v.credit > 0)?.map(
-                (v) => v.credit,
-              )}
-                type={'deposit'}
-                limit={depositLimit}
-                setLimit={setDepositLimit}
-              />
-              <CashCard
-                num={useAccount.Transaction?.filter((v) => v.debit > 0)?.map(
-                (v) => v.debit,
-              )}
-                type={'withdrawl'}
-                limit={withdrawlLimit}
-                setLimit={setWithdrawlLimit}
-              />
-            </Group>
-        </>}
+                <CashCard
+                  num={useAccount.Transaction?.filter((v) => v.debit > 0)?.map(
+                    (v) => v.debit,
+                  )}
+                  type={'withdrawl'}
+                  limit={withdrawlLimit}
+                  setLimit={setWithdrawlLimit}
+                />
+              </Group>
+            </>
+          )}
           {/* <EodBalance balance="$1,23,456" comparision={4.6} /> */}
           <RecentTransactions transactions={useAccount.Transaction} />
         </ContainerLeft>
 
         <div ref={ref}>
           <Print>
-            <h1 style={{ textAlign: 'center', color: '#0062d6', fontFamily: 'Montserrat' }}>shiftbank</h1>
-            <h3 style={{ marginLeft: 'left' }}>
-              Hello, {useAccount.name}! Here is your financial report.
+            <h1
+              style={{
+                textAlign: 'center',
+                color: '#0062d6',
+                fontFamily: 'Montserrat',
+              }}
+            >
+              shiftbank
+            </h1>
+            <h3 style={{ marginLeft: '10px' }}>
+              Hello,&nbsp;
+              <span style={{ color: '#0062d6' }}>{name + '!'}</span> Here
+              is your financial report.
             </h3>
-            <br />
-            <p>Explore your bank balance, recent transactions and analysis in the form of visually appealing graphs.</p>
-            <Group style={{ justifyContent: 'center', paddingInline: '2px' }}>
+            <p style={{ marginLeft: '10px' }}>
+              Explore your bank balance, recent transactions and analysis in the
+              form of visually appealing graphs.
+            </p>
+            <Group style={{ justifyContent: 'center', marginLeft: '10px' }}>
               <TotalBalance
-                totalBalance={useAccount.Transaction.at(-1)?.balance || 0}
-                increment={useAccount.Transaction.at(-1)?.increment || 0}
+                totalBalance={useAccount?.Transaction.at(-1)?.balance || 0}
+                increment={
+                  Math.round((fetchedAccount?.balance - (lastWeekBalance || 0)) * 100 / (lastWeekBalance || 1))} timePeriod={1} 
               />
+              <div style={{ fontSize: '13px' , width: '70%'}}>
               <FinancialRatios />
-              {/* <EodBalance
-                balance={
-                  dateslist.length != 0
-                    ? '$' + Math.round(sum / dateslist.length)
-                    : 'No Data'
-                }
-                comparision={4.6}
-              /> */}
+              </div>
             </Group>
             <br />
             <br />
-            <FinancialStatisticsPdf />
-            {/* <FoodStatisticsPdf /> */}
+            <div style={{ marginLeft: '10px', marginBottom: '200px'}}>
+              <FinancialStatisticsPdf />
+            </div>
             <br />
             <br />
-            <p style={{ marginLeft: '20px' }}>
-              Your recent transactions can be seen here.
-            </p>
-            <RecentTransactions transactions={useAccount.Transaction} />
+            <br />
+            <br />
+            <RecentTransactions transactions={useAccount?.Transaction} />
           </Print>
         </div>
       </>

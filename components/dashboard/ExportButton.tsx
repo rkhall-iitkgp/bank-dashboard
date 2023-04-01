@@ -4,6 +4,7 @@ import React, { LegacyRef, MutableRefObject, useState } from 'react'
 import useAccountStore from '../Store/Account'
 import { useReactToPrint } from 'react-to-print'
 import LeftPane from './LeftPane'
+import { CSVLink } from 'react-csv'
 
 const useStyles = createStyles((theme) => ({
   button: {
@@ -47,26 +48,43 @@ export const ExportButton = React.forwardRef<HTMLDivElement, InputProps>(
       },
     })
 
-    return (
-      <Menu shadow="md" width={200}>
-        <Menu.Target>
-          <Button className={classes.button}>
-            Export
-            <img
-              src="/icons/exportb.png"
-              alt="export"
-              width="18px"
-              height="18px"
-              style={{ marginLeft: `10px` }}
-            />
-          </Button>
-        </Menu.Target>
+  const headers = [
+    { label: "Date", key: "date" },
+    { label: "Description", key: "description" },
+    { label: "Credit", key: "credit" },
+    { label: "Debit", key: "debit" }, {
+      label: "Mode", key: "mode",
+    }, { label: "Category", key: "category" },
+    {
+      label: "Balance", key: "balance"
+    }
+  ];
+  const data = accounts.Transaction
+  const csvReport = {
+    data: data,
+    headers: headers,
+    filename: 'Transaction.csv'
+  };
+  return (
+    <Menu shadow="md" width={200}>
+      <Menu.Target>
+        <Button className={classes.button}>
+          Export
+          <img
+            src="/icons/exportb.png"
+            alt="export"
+            width="18px"
+            height="18px"
+            style={{ marginLeft: `10px` }}
+          />
+        </Button>
+      </Menu.Target>
 
         <Menu.Dropdown>
           <Menu.Item onClick={handleExportPDF}>
             <div>Export as PDF</div>
           </Menu.Item>
-          {/* <Menu.Item onClick={handleExportCSV}>Export as CSV</Menu.Item> */}
+          <Menu.Item ><CSVLink {...csvReport}>Export as CSV</CSVLink></Menu.Item>
           <Menu.Item onClick={handleExportJSON}>Export as JSON</Menu.Item>
           <Menu.Item>Send an Email</Menu.Item>
         </Menu.Dropdown>

@@ -20,7 +20,7 @@ const BalanceChart = (props: {
   ) : (
     <ReactApexChart
       type="area"
-      height={340}
+      height={260}
       width={350}
       margin={'auto'}
       options={{
@@ -40,10 +40,12 @@ const BalanceChart = (props: {
               color: '#636363',
               fontFamily: 'Montserrat',
               fontWeight: 500,
-              fontSize: '0.5rem',
+              fontSize: '6px',
             },
           },
           labels: {
+            show: true,
+            offsetY: -5,
             style: { fontFamily: 'Montserrat', fontWeight: 400 },
           },
         },
@@ -95,9 +97,9 @@ const SpendingDonut = (props: {
         },
         labels: props.legends,
         dataLabels: { style: { fontSize: '0.1rem' } },
-        legend: { fontFamily: 'Montserrat', fontWeight: 500 },
+        legend: { fontFamily: 'Montserrat', fontWeight: 500, offsetX: -120 },
       }}
-      width={400}
+      width={200}
     />
   )
 }
