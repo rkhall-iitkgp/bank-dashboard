@@ -254,7 +254,7 @@ const FinancialStatistics = () => {
 
     modelegends.forEach(k => {
       let total = 0;
-      transactions.filter(x => x.mode === k).forEach(x => { total += x.credit - x.debit })
+      transactions.filter(x => x.mode === k).filter(v => v.debit > 0).forEach(x => { total += x.debit })
       modedata.push({ mode: k, value: total });
     })
 
@@ -287,18 +287,18 @@ const FinancialStatistics = () => {
   useEffect(() => {
     const newfilteredTransactions = transactions
       .filter(v => PieCategoryData[categoryIndex !== -1 ? categoryIndex : 0]?.mode === v.category).filter(v => v.debit > 0);
-    setFilteredTransaction(JSON.parse(JSON.stringify(newfilteredTransactions)));
+    setFilteredTransaction(newfilteredTransactions || []);
     console.log('filteredTransactions', newfilteredTransactions)
     let datelegends = new Set<string>();
     let datedata: { x: string, y: number }[] = [];
-    filteredTransactions.forEach(v => datelegends.add(v.date))
+    newfilteredTransactions.forEach(v => datelegends.add(v.date))
     let dateslist = Array.from(datelegends);
 
     let totaltal = 0
     dateslist.forEach(k => {
       let total = 0;
       console.log(k)
-      filteredTransactions.filter(x => x.date === k).forEach(x => {
+      newfilteredTransactions.filter(x => x.date === k).forEach(x => {
         total += x.debit
       })
       datedata.push({ x: k, y: total });
