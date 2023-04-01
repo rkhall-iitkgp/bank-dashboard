@@ -250,7 +250,7 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
         const transactions = trxn?.data;
         const columns = trxn?.columns;
         const UserDebtToIncome = response.data.UserDebtToIncome
-        useAccountStore.setState({ DTI_ratio: UserDebtToIncome })
+        useAccountStore.setState({ DTI_ratio: UserDebtToIncome, uploaded: true })
         console.log(transactions);
         console.log(columns);
 
@@ -395,10 +395,10 @@ export function DropFiles({ setdropfiles, setIsanalysisOpen }: props) {
                     }}>Back</div>
 
                     <div className={classes.button1} onClick={() => {
-                        setdropfiles(true)
                         onDrop(dropedfiles)
-                        setIsanalysisOpen(false)
                         useAccountStore.setState({ uploaded: true })
+                        setdropfiles(true)
+                        setIsanalysisOpen(false)
                         console.log(dropedfiles?.[0])
                     }}>Continue</div>
                 </div>

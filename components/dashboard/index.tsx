@@ -38,12 +38,13 @@ const Dashboard = () => {
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (!useAccount.account_no) {
-      router.replace('/home')
-      showNotification({ message: "Please re-enter your details" })
-    }
-  }, [])
+  // useEffect(() => {
+  //   console.log('useAccount.uploaded', useAccount.uploaded)
+  //   if (!useAccount.account_no && !useAccount.uploaded) {
+  //     router.replace('/home')
+  //     showNotification({ message: "Please re-enter your details" })
+  //   }
+  // }, [])
 
   const useAccount = useAccountStore();
   const { setItem } = useStorage()
@@ -65,11 +66,11 @@ const Dashboard = () => {
   let componentRef = useRef(null)
   return (
     <div style={{ backgroundColor: '#F4F4F4' }}>
-      <Navbar dashClickHandler={() => {}} />
+      <Navbar dashClickHandler={() => { }} />
 
       <Container>
         <LoadingOverlay visible={useAccount.Loading} overlayBlur={2} />
-        <LeftPane accountsList={ACCOUNTSDATA} useAccount={useAccount} ref={componentRef}/>
+        <LeftPane accountsList={ACCOUNTSDATA} useAccount={useAccount} ref={componentRef} />
         <RightPane ref={componentRef} />
       </Container>
     </div>

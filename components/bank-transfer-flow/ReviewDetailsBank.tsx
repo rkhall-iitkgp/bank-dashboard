@@ -192,14 +192,14 @@ export function ReviewDetailsBank(props: { sbi: any }) {
   const { getItem } = useStorage()
   const accessToken = getItem('access_token')
   const contact_no = getItem('contact_no')
-  let account
-  try {
-    account = JSON.parse(getItem('accounts') ?? '[]')?.filter(
-      (v: { account_no: number }) => v.account_no + '' == data.account_no,
-    )[0]
-  } catch {
-    console.log('JSON parsing error')
-  }
+  // let account
+  // try {
+  //   account = JSON.parse(getItem('accounts') ?? '[]')?.filter(
+  //     (v: { account_no: number }) => v.account_no + '' == data.account_no,
+  //   )[0]
+  // } catch {
+  //   console.log('JSON parsing error')
+  // }
 
   const handleContinue = () => {
     const response = transms
@@ -255,7 +255,7 @@ export function ReviewDetailsBank(props: { sbi: any }) {
                 label: classes.inputLabel,
                 root: classes.enterAmountContainer,
               }}
-              value={"****" + account?.account_no}
+              value={"****" + data?.dacno?.slice(8, 12) || " "}
               disabled
             />
 
