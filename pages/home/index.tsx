@@ -106,6 +106,7 @@ const Home: NextPage = () => {
         bankAccountList={bankAccountList}
         setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
         loading={loading}
+        SetIskycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
       />
       <OfferCardsRow />
       <AddAccountFormPopup
@@ -125,6 +126,7 @@ const Home: NextPage = () => {
       />
       <AnalysisPopUp
         bankAccountList={bankAccountList}
+        SetIskycPermissionPopUpOpen={setIsKycPermissionPopUpOpen}
         setIsAddAccountPopupOpen={setIsAddAccountPopupOpen}
         isanalysisopen={isanalysisopen} setIsfilteropen={setIsfilteropen} setIsanalysisopen={setisanalysisopen} />
     </>
