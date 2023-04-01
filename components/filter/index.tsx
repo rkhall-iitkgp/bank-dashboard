@@ -299,6 +299,7 @@ const Filter = ({ todashboard, close, setIsanalysisopen }: props) => {
       </div>
       <div className={classes.buttonCotainer}>
         <Button
+          mx={15}
           // disabled={!(mpin && id && account)}
           size="lg"
           className={classes.control}
@@ -310,6 +311,7 @@ const Filter = ({ todashboard, close, setIsanalysisopen }: props) => {
           Back
         </Button>
         <Button
+          mx={15}
           disabled={!(mpin && account)}
           size="lg"
           className={classes.control}

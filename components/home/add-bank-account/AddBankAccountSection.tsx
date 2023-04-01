@@ -6,7 +6,9 @@ import {
   Image,
   Loader,
 } from '@mantine/core'
-
+import api from '../../datams'
+import { useState, useEffect } from "react"
+import useStorage from '../../../hooks/useStorage'
 const Oflex = styled.div`
   display: flex;
   flex-direction: row;
@@ -130,17 +132,50 @@ interface Props {
   setIsAddAccountPopupOpen: Function
   bankAccountList: any[]
   loading: any
+  SetIskycPermissionPopUpOpen: Function
 }
 export default function BankAccount({
   bankAccountList,
   setIsAddAccountPopupOpen,
   loading,
+  SetIskycPermissionPopUpOpen
 }: Props) {
+  const [result, setResult] = useState(1)
+  const { getItem } = useStorage()
+  const GetKycStatus = () => {
+    const accessToken = getItem('access_token', 'session')
+    console.log(accessToken)
+    api
+      .get(`/user/getkyc/`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        response.data
+      })
+      .catch((err) => {
+        err.response.data.message == 'KYC not done' && setResult(0)
+        // console.log(err.response.data.message)
+      })
+  }
+  useEffect(() => {
+
+    GetKycStatus()
+  }, [])
+
   return (
     <Container>
       <Iflex>
         <AddBankAccountText>Add Bank Account</AddBankAccountText>
-        <AddAccountButton onClick={() => setIsAddAccountPopupOpen(true)}>
+        <AddAccountButton onClick={() => {
+          if (result === 0) {
+            SetIskycPermissionPopUpOpen(true)
+          } else {
+            setIsAddAccountPopupOpen(true)
+          }
+        }}>
           Add Account
         </AddAccountButton>
       </Iflex>
@@ -162,7 +197,13 @@ export default function BankAccount({
         })}
 
         <AddAnotherBox>
-          <PlusImageContainer onClick={() => setIsAddAccountPopupOpen(true)}>
+          <PlusImageContainer onClick={() => {
+            if (result === 0) {
+              SetIskycPermissionPopUpOpen(true)
+            } else {
+              setIsAddAccountPopupOpen(true)
+            }
+          }}>
             <Image src="images/frame.png" alt="add" />
           </PlusImageContainer>
         </AddAnotherBox>

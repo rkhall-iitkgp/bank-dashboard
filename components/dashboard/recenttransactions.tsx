@@ -145,7 +145,6 @@ const RecentTransactions = (prop: {
 
 }) => {
   // const { transactions } = prop;
-  const [transactions, setTransactions] = useState(prop.transactions);
   const { getItem } = useStorage();
   // useEffect(() => {
   //   console.log('useEffect of recte transactions')
@@ -161,9 +160,9 @@ const RecentTransactions = (prop: {
         Recent Transactions
       </Text>
       <div style={{ maxHeight: '64vh', overflow: 'auto' }}>
-        {transactions?.length == 0 && <Text fz={20} py={10} px={10}>No New Transaction</Text>}
+        {prop.transactions?.length == 0 && <Text fz={20} py={10} px={10}>No New Transaction</Text>}
         {
-          transactions?.length != 0 && transactions?.map((t) => (
+          prop.transactions?.length != 0 && prop.transactions?.map((t) => (
             <TransactionCard data={t} />
           ))
         }
