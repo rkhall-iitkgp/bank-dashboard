@@ -81,7 +81,13 @@ const useStyles = createStyles(() => ({
   },
 }))
 
-export function TotalBalance({ totalBalance, increment, timePeriod, accountNumber }) {
+interface Props{
+  totalBalance?: any;
+  increment?: any;
+  timePeriod?: any;
+  accountNumber?: any;
+}
+export function TotalBalance({ totalBalance, increment, timePeriod, accountNumber }:Props) {
   const { classes } = useStyles();
   const data = {
     totalBalance: totalBalance,

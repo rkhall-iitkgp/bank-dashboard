@@ -19,6 +19,7 @@ import RecentTransactions from './recenttransactions'
 import React from 'react'
 import { FinancialRatios } from './FinancialRatios'
 import FinancialStatistics from './statistics'
+import { TotalBalance } from './TotalBalance'
 
 const FilterRow = styled.div`
   display: flex;
@@ -60,6 +61,12 @@ const ContainerLeft = styled(Container)`
   }
   @media (max-width: 1200px) {
     flex: 2;
+  }
+`
+
+const Print = styled.div`
+  @media screen{
+    display: none;
   }
 `
 
@@ -183,10 +190,18 @@ const LeftPane = React.forwardRef<HTMLDivElement, Props>(
           {/* <EodBalance balance="$1,23,456" comparision={4.6} /> */}
           <RecentTransactions transactions={useAccount.Transaction} />
         </ContainerLeft>
-        <div ref = {ref}>
-          <RecentTransactions transactions={useAccount.Transaction} />
-          <FinancialStatistics />
+
+        <div ref={ref}>
+          <Print>
           <FinancialRatios />
+          <FinancialStatistics />
+          <Group style={{ justifyContent: 'space-evenly' }}>
+          <TotalBalance totalBalance={useAccount.Transaction.at(-1)?.balance || 0} />
+          <CashCard />
+          <CashCard />
+          <RecentTransactions transactions={useAccount.Transaction} />
+          </Group>
+          </Print>
         </div>
       </>
     )

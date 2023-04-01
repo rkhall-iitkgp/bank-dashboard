@@ -2,16 +2,38 @@ import FinancialStatistics from '../components/dashboard/statistics'
 import { FinancialRatios } from '../components/dashboard/FinancialRatios'
 import { TotalBalance } from '../components/dashboard/TotalBalance'
 import RecentTransactions from '../components/dashboard/recenttransactions'
-import LeftPane from '../components/profile/LeftPane'
 import { Flex, Group } from '@mantine/core'
+import useAccountStore from '../components/Store/Account'
+import { useRef } from 'react'
+import styled from '@emotion/styled'
+import React from 'react'
 
-export default function DashboardPdf(ref) {
+const Container = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+`
+
+function DashboardPdf(ref) {
+  const useAccount = useAccountStore()
+
   return (
     <div ref={ref}>
-      {/* <TotalBalance /> */}
-      <FinancialRatios />
+      <Container>
+        <TotalBalance
+          totalBalance={undefined}
+          increment={undefined}
+          timePeriod={undefined}
+          accountNumber={undefined}
+        />
+        <FinancialRatios />
       <FinancialStatistics />
-      {/* <RecentTransactions /> */}
+      <RecentTransactions transactions={useAccount.Transaction} />
+      </Container>
     </div>
   )
 }
+
+export default React.forwardRef(DashboardPdf);
+
