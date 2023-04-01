@@ -116,7 +116,8 @@ const StyledTexthead4 = styled.div`
 
 export default function PaymentSuccessful() {
   const router = useRouter()
-  const data = router.query;
+  let data = router.query;
+  console.log(data)
   const { getItem, setItem } = useStorage();
 
   const [bankAccountList, setBankAccountList] = useState<any[]>([
@@ -127,9 +128,10 @@ export default function PaymentSuccessful() {
 
   const GetAccounts = () => {
     const accessToken = getItem('access_token')
-    console.log(accessToken)
+    console.log(accessToken)    
+    console.log(data);
+    console.log(router.query)
     const user_id = getItem('user_id')
-
     const response = datams
       .get(`/user/accounts/${user_id}`, {
         headers: {
@@ -145,9 +147,8 @@ export default function PaymentSuccessful() {
           temp.push(acc)
           setBankAccountList(temp)
         })
-        // console.log('bank accounts list =', bankAccountList)
-
-        setAcc(bankAccountList.filter(v => v.id == data.id)[0]);
+        setAcc(bankAccountList.filter(v => v.account_no === data.dacno)[0]);
+        console.log(bankAccountList)
         setItem('accounts', response.request.responseText)
         return response
       })

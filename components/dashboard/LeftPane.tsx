@@ -98,6 +98,11 @@ const LeftPane = ({ accountsList, useAccount }: Props) => {
     console.log('selectedBankAccount', selectedBankAccount)
   }, [selectedBankAccount])
   const [account, setaccount] = useState(0);
+  const uploaded = useAccountStore(state => state.uploaded)
+  useEffect(() => {
+    console.log('uploaded', uploaded)
+
+  }, [uploaded])
 
   return (
     <>
@@ -109,12 +114,14 @@ const LeftPane = ({ accountsList, useAccount }: Props) => {
         onClose={close}
         centered
       >
-        <Filter todashboard={false} close={close} />
+        <Filter todashboard={false} close={close} setIsanalysisopen={(x) => {
+
+        }} />
         {/* <Filter account={account} setAccount={setaccount} /> */}
       </Modal>
       <ContainerLeft>
         <FilterRow style={{ justifyContent: 'space-between' }}>
-          <FilterCard onClick={open}>
+          {!uploaded && <FilterCard onClick={open}>
             Apply Filter
             <Image
               src={'icons/filter.png'}
@@ -122,7 +129,7 @@ const LeftPane = ({ accountsList, useAccount }: Props) => {
               height={20}
               width={20}
             />
-          </FilterCard>
+          </FilterCard>}
           <SelectBankAccount>
             <Select
               icon={

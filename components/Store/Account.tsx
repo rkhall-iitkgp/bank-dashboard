@@ -23,7 +23,8 @@ const useAccountStore = create(
             balance: 0
         }],
         Loading: false,
-        flag: true
+        flag: true,
+        uploaded: true,
     },
         (set, get) => ({
             setTransaction: () => {

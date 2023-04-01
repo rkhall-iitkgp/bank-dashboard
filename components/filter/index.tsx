@@ -44,11 +44,15 @@ const useStyles = createStyles(() => ({
     lineHeight: '26px',
     backgroundColor: `#006AE4`,
     borderRadius: `20px`,
-    width: `300px`,
+    width: `250px`,
     marginLeft: `auto`,
     marginRight: 0,
     display: `block`
   },
+  buttonCotainer: {
+    display: `flex`,
+    justifyContent: `space-between`
+  }
 }))
 
 const PeriodItem = (prop: {
@@ -112,9 +116,10 @@ const AccountSelect = (prop: {
 }
 interface props {
   todashboard: any,
-  close: Function
+  close: Function,
+  setIsanalysisopen: Function
 }
-const Filter = ({ todashboard, close }: props) => {
+const Filter = ({ todashboard, close, setIsanalysisopen }: props) => {
   const useAccount = useAccountStore()
   const [id, setId] = useState(1)
   const { getItem } = useStorage()
@@ -216,18 +221,31 @@ const Filter = ({ todashboard, close }: props) => {
           </>
         )}
       </div>
-      <div>
+      <div className={classes.buttonCotainer}>
+        <Button
+          // disabled={!(mpin && id && account)}
+          size="lg"
+          className={classes.control}
+          onClick={() => {
+            setIsanalysisopen(true)
+            close()
+          }}
+        >
+          Back
+        </Button>
         <Button
           disabled={!(mpin && account)}
           size="lg"
           className={classes.control}
           onClick={() => {
+
             if (mpin && id && account && todashboard) {
-              useAccount.account_no = account;
               useAccount.mpin = mpin;
+              useAccount.account_no = account;
               useAccount.startDate = form.values.Datefrom;
               useAccount.endDate = form.values.Dateto;
               useAccount.setTransaction();
+              useAccountStore.setState({ uploaded: false })
               router.push("/dashboard")
             } else if (mpin && id && account && !todashboard) {
               useAccount.account_no = account;
